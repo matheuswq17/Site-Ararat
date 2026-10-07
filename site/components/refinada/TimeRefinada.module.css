@@ -1,0 +1,395 @@
+/* Time (/previa/refinada, rodada 7): seção off-white da marca, títulos navy, dourado só na seleção,
+   retrato em cor natural sem moldura; lista com divisores finos. */
+.section {
+  --t-ink: var(--navy-900);
+  --t-text: #3e4c5c;
+  --t-muted: #5d6878;
+  --t-line: rgba(13, 27, 42, 0.12);
+  --t-line-strong: rgba(13, 27, 42, 0.2);
+  --t-gold: var(--gold-500); /* traços e marcas */
+  --t-gold-text: #7f6214; /* dourado para TEXTO sobre o off-white (contraste ≥ 4,5:1) */
+  position: relative;
+  padding-block: clamp(88px, 13vh, 160px);
+  /* Vem logo após a paisagem da Ciência (mesmo off-white): a base das curvas já separa as seções. */
+  padding-top: clamp(40px, 7vh, 88px);
+  background: var(--white-100);
+  color: var(--t-text);
+  isolation: isolate;
+}
+
+.header {
+  max-width: 760px;
+}
+
+.eyebrow {
+  color: var(--t-gold-text);
+}
+
+.title {
+  margin-top: 14px;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.06;
+  color: var(--t-ink);
+}
+
+.intro {
+  margin-top: 16px;
+  font-size: 1.125rem;
+  color: var(--t-text);
+  max-width: 52ch;
+}
+
+.layout {
+  margin-top: clamp(40px, 6vh, 72px);
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1fr);
+  gap: clamp(40px, 6vw, 112px);
+  align-items: start;
+}
+
+/* ---- Retrato grande (desktop) ---- */
+.portraitCol {
+  position: sticky;
+  top: 104px;
+  max-width: 440px;
+  width: 100%;
+}
+
+.portrait {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #e9edf2;
+}
+
+.portraitImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  /* Fallback (sem o módulo): troca direta, só depois de decodificada. */
+  transition: none;
+}
+
+/* Sem JS: o integrante aberto define o retrato (:has). Tudo fechado: quadro neutro (sem Matheus). */
+.layout:not([data-js]):has(details[data-id="matheus"][open]) .portraitImg[data-id="matheus"],
+.layout:not([data-js]):has(details[data-id="miguel"][open]) .portraitImg[data-id="miguel"],
+.layout:not([data-js]):has(details[data-id="rodrigo"][open]) .portraitImg[data-id="rodrigo"],
+.layout:not([data-js]):has(details[data-id="hartmann"][open]) .portraitImg[data-id="hartmann"],
+.layout:not([data-js]):has(details[data-id="victor"][open]) .portraitImg[data-id="victor"],
+/* Com JS: o retrato mostrado (já decodificado) — o anterior fica até o próximo estar pronto. */
+.layout[data-js] .portrait[data-shown="matheus"] .portraitImg[data-id="matheus"],
+.layout[data-js] .portrait[data-shown="miguel"] .portraitImg[data-id="miguel"],
+.layout[data-js] .portrait[data-shown="rodrigo"] .portraitImg[data-id="rodrigo"],
+.layout[data-js] .portrait[data-shown="hartmann"] .portraitImg[data-id="hartmann"],
+.layout[data-js] .portrait[data-shown="victor"] .portraitImg[data-id="victor"] {
+  opacity: 1;
+}
+
+/* Raiz do módulo do Motion (retrato pontilhado). Recebe o hover do cursor. */
+.stage {
+  position: absolute;
+  inset: 0;
+}
+/* Com o módulo: as fotos empilhadas do Site saem (e, sendo lazy, nem chegam a carregar). */
+.portrait[data-motor="modulo"] .portraitImg {
+  display: none;
+}
+.portrait[data-motor="modulo"] {
+  background: transparent; /* recorte sobre o off-white da seção */
+}
+.stage :global(.rp-falha:not([hidden])) {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--t-muted);
+  background: #e9edf2;
+  border-radius: var(--radius-md);
+}
+
+.portraitBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+  margin-top: 12px;
+}
+
+.portraitName {
+  font-family: var(--font-title);
+  font-weight: 500;
+  font-size: 0.92rem;
+  color: var(--t-ink);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.loading {
+  color: var(--t-muted);
+  font-weight: 400;
+}
+
+
+/* ---- Lista ---- */
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--t-line-strong);
+}
+
+.item {
+  border-bottom: 1px solid var(--t-line);
+}
+
+.member {
+  position: relative;
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: 2.4rem minmax(0, 1fr) 24px;
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+  padding: 18px 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.summary::-webkit-details-marker {
+  display: none;
+}
+
+.summary:focus-visible {
+  outline: 2px solid var(--t-gold-text);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.num {
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--t-muted);
+  transition: color 200ms ease;
+}
+
+.who {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.name {
+  font-family: var(--font-title);
+  font-weight: 500;
+  font-size: clamp(1.15rem, 1.6vw, 1.45rem);
+  line-height: 1.2;
+  color: var(--t-ink);
+  overflow-wrap: anywhere;
+  transition: color 200ms ease;
+}
+
+.role {
+  font-size: 0.95rem;
+  color: var(--t-muted);
+  line-height: 1.35;
+}
+
+/* Selecionado: dourado. Hover só sugere (sublinhado fino), sem trocar o integrante. */
+.member[open] > .summary .num {
+  color: var(--t-gold-text);
+}
+.member[open] > .summary .name {
+  color: var(--t-gold-text);
+}
+.member:not([open]) > .summary:hover .name {
+  text-decoration: underline;
+  text-decoration-color: var(--t-gold);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+}
+
+/* Barra dourada à esquerda do integrante aberto. */
+.member[open]::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 20px;
+  bottom: 20px;
+  width: 2px;
+  background: var(--t-gold);
+}
+
+.chev {
+  width: 10px;
+  height: 10px;
+  justify-self: end;
+  border-right: 1.6px solid var(--t-muted);
+  border-bottom: 1.6px solid var(--t-muted);
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform 250ms ease;
+}
+
+.member[open] > .summary .chev {
+  transform: rotate(225deg) translate(-2px, -2px);
+}
+
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  padding: 0 0 24px calc(2.4rem + 12px);
+}
+
+.inlineImg {
+  display: none;
+}
+
+.text {
+  min-width: 0;
+}
+
+.resumo {
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: var(--t-text);
+  max-width: 60ch;
+}
+
+.more {
+  margin-top: 10px;
+}
+
+.moreSummary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-family: var(--font-title);
+  font-weight: 500;
+  font-size: 0.92rem;
+  color: var(--t-gold-text);
+  cursor: pointer;
+  list-style: none;
+}
+
+.moreSummary::-webkit-details-marker {
+  display: none;
+}
+
+.moreSummary::after {
+  content: "+";
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.more[open] > .moreSummary::after {
+  content: "−";
+}
+
+.moreSummary:focus-visible {
+  outline: 2px solid var(--t-gold-text);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.resto {
+  margin-top: 4px;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--t-text);
+  max-width: 60ch;
+}
+
+.nota {
+  margin-top: clamp(28px, 4vh, 40px);
+  max-width: 70ch;
+  color: var(--t-muted);
+}
+
+.semFoto {
+  display: grid;
+  place-items: center;
+  font-family: var(--font-title);
+  font-weight: 500;
+  font-size: 2.4rem;
+  letter-spacing: 0.08em;
+  color: var(--t-muted);
+  background: #e3e8ee;
+}
+
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Pausa geral e movimento reduzido: troca imediata. */
+:global(html[data-motion="paused"]) .portraitImg,
+:global(html[data-motion="paused"]) .chev,
+:global(html[data-motion="paused"]) .name,
+:global(html[data-motion="paused"]) .num {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portraitImg,
+  .chev,
+  .name,
+  .num {
+    transition: none;
+  }
+}
+
+/* ---- Celular e tablet: acordeão, retrato (foto íntegra) dentro do integrante aberto ---- */
+@media (max-width: 959px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .portraitCol {
+    display: none;
+  }
+  .member[open]::before {
+    left: -10px;
+  }
+  .body {
+    grid-template-columns: 132px minmax(0, 1fr);
+    align-items: start;
+    padding-left: 0;
+  }
+  .inlineImg {
+    display: block;
+    width: 132px;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    background: #e9edf2;
+  }
+  .inlineImg.semFoto {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .inlineImg {
+    width: 148px;
+  }
+}

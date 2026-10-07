@@ -1,0 +1,232 @@
+/* Ciência (/previa/refinada): 1ª camada curta em três blocos + expansão com os detalhes. */
+.summary {
+  margin-top: clamp(36px, 6vh, 64px);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(16px, 2.4vw, 32px);
+}
+
+.card {
+  border-top: 2px solid var(--gold-500);
+  padding-top: 18px;
+}
+
+.cardTitle {
+  font-family: var(--font-title);
+  font-size: 1.15rem;
+  color: var(--navy-900);
+}
+
+.facts,
+.principles {
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+  color: #3e4c5c;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.principles li {
+  font-family: var(--font-title);
+  font-weight: 500;
+  color: var(--navy-900);
+}
+
+.stage {
+  margin-top: 12px;
+  font-family: var(--font-title);
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--navy-900);
+}
+
+.limit,
+.note {
+  margin-top: 10px;
+  color: #3e4c5c;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+/* Expansão: <details>/<summary> nativo (sem JS), alvo de 48 px, foco visível. */
+.more {
+  margin-top: clamp(32px, 5vh, 48px);
+  border-top: 1px solid rgba(13, 27, 42, 0.22);
+  border-bottom: 1px solid rgba(13, 27, 42, 0.22);
+}
+
+.moreSummary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 56px;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-title);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--navy-900);
+}
+
+.moreSummary::-webkit-details-marker {
+  display: none;
+}
+
+.moreSummary:focus-visible {
+  outline: 2px solid var(--gold-ink, #856514);
+  outline-offset: 4px;
+}
+
+.chev {
+  width: 12px;
+  height: 12px;
+  flex: none;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translate(-3px, -3px);
+  transition: transform var(--duration-base) var(--ease-standard);
+}
+
+.more[open] .chev {
+  transform: rotate(225deg) translate(-3px, -3px);
+}
+
+.moreBody {
+  display: grid;
+  gap: 32px;
+  padding-bottom: 32px;
+}
+
+.detTitle {
+  font-family: var(--font-title);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--navy-900);
+  margin-bottom: 14px;
+}
+
+@media (max-width: 1100px) {
+  .summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .summary {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.cardText {
+  margin-top: 10px;
+  color: #3e4c5c;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.stageLine {
+  margin-top: clamp(20px, 3vh, 28px);
+  color: #3e4c5c;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.stageLine .stage {
+  display: inline;
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* Cartão editorial da publicação (rodada 6): periódico e ano, título curto, pergunta, referência
+   completa com DOI e ação. Fundo claro da seção; borda dourada à esquerda, sem aparência de anúncio. */
+.pub {
+  margin-top: clamp(28px, 4vh, 44px);
+  padding: clamp(20px, 3vw, 32px);
+  border-left: 3px solid var(--gold-500);
+  background: rgba(13, 27, 42, 0.04);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  max-width: 900px;
+  display: grid;
+  gap: 12px;
+}
+
+.pubKicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  font-family: var(--font-title);
+  font-size: var(--fs-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #7a5c12;
+}
+
+.pubTitle {
+  font-family: var(--font-title);
+  font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+  line-height: 1.2;
+  color: var(--navy-900);
+}
+
+.pubQuestion {
+  color: #2c3a4a;
+  font-size: 1.02rem;
+  line-height: 1.55;
+}
+
+.pubLabel {
+  font-family: var(--font-title);
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.pubRef {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #4a5868;
+  overflow-wrap: anywhere;
+}
+
+.pubRef cite {
+  font-style: italic;
+}
+
+.pubLink {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: var(--radius-pill);
+  background: var(--navy-900);
+  color: var(--white-100);
+  font-family: var(--font-title);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.pubLink:hover,
+.pubLink:focus-visible {
+  background: #13283d;
+  outline: 2px solid var(--gold-500);
+  outline-offset: 2px;
+}
+
+.pubExt {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.pubNote {
+  font-size: 0.88rem;
+  color: #4a5868;
+}

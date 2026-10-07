@@ -1,0 +1,134 @@
+/* Passagem Jornada → Plataforma: trecho curto, mesmo fundo do fim da jornada e do
+   início da Plataforma (#0b1724) — sem bordas, para ler como continuação. */
+.section {
+  background: #0b1724;
+  padding-block: 0 clamp(28px, 6vh, 64px);
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 0 clamp(20px, 3vw, 40px);
+  align-items: stretch;
+}
+
+.trace {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: clamp(150px, 22vh, 220px);
+}
+
+.line {
+  flex: 1;
+  width: 1.5px;
+  background: linear-gradient(180deg, rgba(212, 175, 55, 0) 0%, rgba(212, 175, 55, 0.55) 45%, var(--gold-500) 100%);
+  transform-origin: top center;
+}
+
+.arc {
+  width: 64px;
+  height: 26px;
+  margin-top: 10px;
+  overflow: visible;
+}
+
+.arc path {
+  fill: none;
+  stroke: var(--gold-500);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 0;
+}
+
+.copy {
+  align-self: end;
+  padding-bottom: 2px;
+}
+
+.title {
+  font-size: clamp(1.9rem, 3.6vw, 3rem);
+  font-weight: 800;
+  line-height: 1.08;
+}
+
+.text {
+  margin-top: 16px;
+  max-width: 58ch;
+  font-size: 1.05rem;
+  color: var(--gray-200);
+}
+
+/* Entrada (TextReveal): pendente = traço recolhido; "in" = traço desce e o arco se desenha. */
+.inner[data-reveal-state="pending"] .line {
+  transform: scaleY(0);
+}
+
+.inner[data-reveal-state="pending"] .arc path {
+  stroke-dashoffset: 1;
+}
+
+.inner[data-reveal-state="in"] .line {
+  animation: passage-line 700ms var(--ease-out) both;
+}
+
+.inner[data-reveal-state="in"] .arc path {
+  animation: passage-arc 420ms var(--ease-out) 560ms both;
+}
+
+@keyframes passage-line {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes passage-arc {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+:global(html[data-motion="paused"]) .inner .line,
+:global(html[data-motion="paused"]) .inner .arc path {
+  animation: none !important;
+  transform: none !important;
+  stroke-dashoffset: 0 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inner .line,
+  .inner .arc path {
+    animation: none !important;
+    transform: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .inner {
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 0 16px;
+  }
+
+  .arc {
+    width: 40px;
+    height: 17px;
+  }
+
+  .trace {
+    min-height: 120px;
+  }
+
+  .text {
+    font-size: 1rem;
+  }
+}

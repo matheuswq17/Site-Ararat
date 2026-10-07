@@ -1,0 +1,658 @@
+.section {
+  position: relative;
+  padding-top: clamp(96px, 14vh, 160px);
+  padding-bottom: clamp(64px, 10vh, 120px);
+  background:
+    linear-gradient(180deg, var(--navy-950) 0%, var(--navy-900) 22%, var(--navy-900) 80%, #0b1724 100%);
+}
+
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 24px 64px;
+  align-items: end;
+  margin-bottom: clamp(32px, 6vh, 72px);
+}
+
+.intro :global(.eyebrow) {
+  grid-column: 1 / -1;
+}
+
+.title {
+  font-size: var(--fs-h2);
+  font-weight: 800;
+}
+
+.lead {
+  font-size: 1.125rem;
+  color: var(--gray-200);
+  max-width: 46ch;
+}
+
+.human {
+  grid-column: 2;
+  margin-top: -8px;
+  font-size: 0.95rem;
+  color: var(--gold-300);
+}
+
+/* Trecho com arte sticky (desktop) */
+.track {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.6fr);
+  gap: clamp(32px, 5vw, 80px);
+}
+
+.stickyCol {
+  position: sticky;
+  top: var(--header-h);
+  align-self: start;
+  height: calc(100vh - var(--header-h));
+  display: flex;
+  align-items: center;
+}
+
+.stage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.frame {
+  position: relative;
+  width: min(100%, calc((100vh - var(--header-h) - 190px) * 6 / 5));
+  aspect-ratio: 6 / 5;
+  margin-inline: auto;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--navy-950);
+  box-shadow:
+    0 0 0 1px var(--border-subtle),
+    0 30px 80px rgba(0, 0, 0, 0.45);
+}
+
+.fallback,
+.motionLayer {
+  position: absolute;
+  inset: 0;
+}
+
+.fallback {
+  transition: opacity var(--duration-slow) var(--ease-standard);
+}
+
+.stage[data-motion-status="ready"] .fallback {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.corner {
+  position: absolute;
+  inset: 14px;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--gold-500), var(--gold-500)) top left / 22px 1px no-repeat,
+    linear-gradient(var(--gold-500), var(--gold-500)) top left / 1px 22px no-repeat,
+    linear-gradient(var(--gold-500), var(--gold-500)) bottom right / 22px 1px no-repeat,
+    linear-gradient(var(--gold-500), var(--gold-500)) bottom right / 1px 22px no-repeat;
+  opacity: 0.8;
+}
+
+.caption {
+  margin: 0;
+}
+
+/* Controles */
+.controls {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.rail {
+  position: relative;
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.railTrack {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(176, 184, 193, 0.28);
+}
+
+.railFill {
+  position: absolute;
+  inset: -0.5px 0;
+  background: var(--gold-500);
+  transform-origin: left center;
+}
+
+.stepButton {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  min-height: 52px;
+  padding: 14px 8px 6px 0;
+  background: none;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+  color: var(--gray-300);
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  transition: color var(--duration-base) var(--ease-standard);
+}
+
+.stepButton::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: 0;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 1.5px solid var(--gray-300);
+  background: var(--navy-900);
+  transition: all var(--duration-base) var(--ease-standard);
+}
+
+.stepButton[data-reached]::before {
+  border-color: var(--gold-500);
+}
+
+.stepButton[aria-pressed="true"]::before {
+  background: var(--gold-500);
+  border-color: var(--gold-500);
+  box-shadow: 0 0 0 5px rgba(212, 175, 55, 0.18);
+}
+
+.stepButton:hover,
+.stepButton[aria-pressed="true"] {
+  color: var(--white-100);
+}
+
+.stepButton[aria-pressed="true"] .stepLabel {
+  font-weight: 600;
+}
+
+.stepNum {
+  font-size: 0.75rem;
+  color: var(--gold-400);
+  letter-spacing: 0.08em;
+}
+
+.pause {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--gray-200);
+  font-size: 0.8rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.pause:hover:not(:disabled) {
+  border-color: var(--gold-500);
+  color: var(--white-100);
+}
+
+.pause:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.pauseIcon {
+  width: 10px;
+  height: 10px;
+  border-left: 3px solid currentColor;
+  border-right: 3px solid currentColor;
+}
+
+.pauseIcon[data-paused="true"] {
+  border: 0;
+  border-left: 9px solid currentColor;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  width: 0;
+  height: 0;
+}
+
+/* Textos das etapas */
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.step {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  scroll-margin-top: 10vh;
+}
+
+.stepInner {
+  opacity: 0.38;
+  transition: opacity var(--duration-slow) var(--ease-standard);
+}
+
+.step[data-active] .stepInner {
+  opacity: 1;
+}
+
+.stepKicker {
+  font-family: var(--font-title);
+  font-size: var(--fs-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gray-300);
+}
+
+.stepKicker span {
+  color: var(--gold-400);
+  margin-right: 6px;
+}
+
+.stepTitle {
+  margin-top: 12px;
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-weight: 700;
+}
+
+.step[data-active] .stepTitle {
+  color: var(--white-100);
+}
+
+.stepText {
+  margin-top: 16px;
+  color: var(--gray-200);
+  font-size: 1.05rem;
+}
+
+.stepDetail {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-default);
+  color: var(--gold-300);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 959px) {
+  .intro {
+    grid-template-columns: 1fr;
+  }
+
+  .human {
+    grid-column: 1;
+    margin-top: 0;
+  }
+
+  .track {
+    /* r06: minmax(0, …) — sem isso, o conteúdo mínimo dos botões alargava a coluna em 320 px. */
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .stickyCol {
+    position: relative;
+    top: auto;
+    height: auto;
+  }
+
+  .frame {
+    width: 100%;
+  }
+
+  .frame[data-layout="portrait"] {
+    aspect-ratio: 4 / 5;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .pause {
+    align-self: flex-start;
+  }
+
+  .step {
+    min-height: 0;
+    padding-block: 28px;
+    border-top: 1px solid var(--border-subtle);
+    scroll-margin-top: calc(var(--header-h) + 16px);
+  }
+
+  .stepInner {
+    opacity: 1;
+  }
+
+  .step[data-active] .stepKicker {
+    color: var(--white-100);
+  }
+}
+
+@media (max-width: 560px) {
+  .rail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 8px;
+  }
+
+  .railTrack {
+    display: none;
+  }
+
+  .stepButton {
+    padding: 12px 12px 12px 30px;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    margin: 0 4px;
+    align-items: center;
+  }
+
+  .stepButton::before {
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+  }
+
+  .stepButton[aria-pressed="true"] {
+    border-color: rgba(212, 175, 55, 0.6);
+    background: rgba(212, 175, 55, 0.08);
+  }
+}
+
+/* r06 — 320–360 px: "Segmentação" cabe no botão (antes ultrapassava em 320). */
+@media (max-width: 360px) {
+  .stepButton {
+    gap: 6px;
+    padding: 12px 6px 12px 26px;
+    margin: 0 2px;
+    font-size: 0.86rem;
+  }
+
+  .stepButton::before {
+    left: 9px;
+  }
+}
+
+/* ───── Rótulos HTML posicionados pelo evento ararat:journey-layout (v1.1) ───── */
+.labelLayer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.sceneLabel {
+  position: absolute;
+  /* ponto = centro superior do rótulo ancorado pela borda inferior */
+  transform: translate(-50%, -100%);
+  max-width: 90px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(8, 15, 24, 0.78);
+  font-family: var(--font-title);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  color: var(--gray-200);
+  white-space: nowrap;
+  transition:
+    color var(--duration-base) var(--ease-standard),
+    background-color var(--duration-base) var(--ease-standard);
+}
+
+.sceneLabel[data-emphasis] {
+  color: var(--navy-950);
+  background: var(--gold-500);
+}
+
+.legend {
+  color: var(--gold-300);
+}
+
+/* Resumo da etapa ativa junto da cena (oculto no desktop). */
+.summary {
+  display: none;
+}
+
+@media (max-width: 959px) {
+  .summary {
+    display: block;
+    padding: 14px 16px;
+    border-left: 2px solid var(--gold-500);
+    background: rgba(8, 15, 24, 0.55);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+
+  .summaryKicker {
+    font-family: var(--font-title);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--white-100);
+  }
+
+  .summaryKicker span {
+    color: var(--gold-400);
+    margin-right: 4px;
+  }
+
+  .summaryText {
+    margin-top: 6px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--gray-200);
+  }
+
+  .stage {
+    gap: 12px;
+  }
+
+  .caption {
+    order: 10;
+  }
+}
+
+@media (max-width: 959px) and (prefers-reduced-motion: no-preference) {
+  .summary {
+    animation: summaryIn 260ms var(--ease-out);
+  }
+}
+
+:global(html[data-motion="paused"]) .summary {
+  animation: none;
+}
+
+@keyframes summaryIn {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Celular/tablet: cena → etapas → resumo da etapa ativa → pausa → aviso. */
+@media (max-width: 959px) {
+  .controls {
+    display: contents;
+  }
+
+  .rail {
+    order: 2;
+  }
+
+  .summary {
+    order: 3;
+  }
+
+  .pause {
+    order: 4;
+    align-self: flex-start;
+  }
+}
+
+/* Quadro 4:5 no celular definido só pelo CSS (antes dependia do data-layout, que é
+   decidido após a hidratação — evitava-se um deslocamento de layout no quadro). */
+@media (max-width: 599px) {
+  .frame {
+    aspect-ratio: 4 / 5;
+  }
+}
+
+/* ───── Variante "opening" (só /previa): a jornada recebe a passagem da home ─────
+   Pistas com altura 0 por padrão (layout estático: sem JS, movimento reduzido, pausa
+   salva). O layout de abertura (head script → <style id="ararat-opening">) dá a elas a
+   altura da passagem via [data-opening="runway-…"]. */
+.openingHold {
+  display: contents;
+}
+
+.runwayDesktop,
+.runwayMobile {
+  height: 0;
+}
+
+.runwayMobile {
+  display: none;
+}
+
+.openingCol {
+  min-width: 0;
+}
+
+.openingIntro {
+  padding-top: clamp(32px, 8vh, 96px);
+  padding-bottom: clamp(8px, 4vh, 40px);
+}
+
+.openingTitle {
+  margin-top: 14px;
+  font-size: clamp(1.9rem, 3vw, 2.7rem);
+  font-weight: 700;
+  line-height: 1.08;
+}
+
+.openingLead {
+  margin-top: 14px;
+  font-size: 1.02rem;
+  color: var(--gray-200);
+  max-width: 40ch;
+}
+
+@media (max-width: 959px) {
+  .openingHold {
+    display: block;
+  }
+
+  .runwayDesktop {
+    display: none;
+  }
+
+  .runwayMobile {
+    display: block;
+  }
+
+  .openingIntro {
+    padding-top: clamp(28px, 6vh, 56px);
+    padding-bottom: 8px;
+  }
+}
+
+/* /previa: cena ainda carregando depois da passagem — controles ocultos (sem parecer
+   disponíveis enquanto inert), com o espaço preservado; o aviso fica no lugar deles. */
+.controls[data-waiting] {
+  visibility: hidden;
+}
+
+/* /previa: falha definitiva da RM — aviso discreto no próprio quadro (nunca um quadro vazio). */
+.frameNote {
+  position: absolute;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: calc(100% - 48px);
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  text-align: center;
+  color: var(--gray-200);
+}
+
+/* /previa/refinada — etapas compactas no celular: a linha curta (detail) fica visível; o texto
+   longo vai para "Ler mais" (o resumo ativo junto do quadro já o mostra). Desktop: texto inteiro. */
+.stepMore {
+  display: none;
+}
+
+@media (max-width: 959px) {
+  .stepTextWide {
+    display: none;
+  }
+
+  .stepMore {
+    display: block;
+    margin-top: 10px;
+  }
+
+  .stepMore > summary {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    cursor: pointer;
+    font-family: var(--font-title);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--gray-200);
+    text-decoration: underline;
+    text-decoration-color: rgba(212, 175, 55, 0.6);
+    text-underline-offset: 5px;
+  }
+
+  .stepMore > summary:focus-visible {
+    outline: 2px solid var(--gold-500);
+    outline-offset: 3px;
+  }
+
+  .stepMore .stepText {
+    margin-top: 6px;
+  }
+
+  .stepMore + * {
+    margin-top: 0;
+  }
+}
+
+/* Na compacta, a linha curta vem logo depois do verbo (sem o texto longo acima). */
+@media (max-width: 959px) {
+  .stepTextWide + .stepDetail {
+    margin-top: 10px;
+    padding-top: 0;
+    border-top: 0;
+  }
+}
+
+/* /previa/refinada — chegada à jornada: "Como funciona" abaixo do cabeçalho fixo (antes, em
+   1280×720, a linha começava em y≈57 sob um cabeçalho de 73 px). Só desktop (coluna de textos). */
+@media (min-width: 960px) {
+  .openingIntro[data-safe] {
+    padding-top: max(clamp(32px, 8vh, 96px), calc(var(--header-h) + 28px));
+  }
+}

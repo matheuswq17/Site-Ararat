@@ -1,0 +1,175 @@
+{
+  "schemaVersion": 1,
+  "name": "ararat-home-v2-exp",
+  "version": "0.2.0-draft",
+  "status": "draft",
+  "scope": "Somente a rota /previa. Não substitui o pacote journey 0.4.0 ready de /motion/.",
+  "builtAt": "2026-10-05T18:16:16.577Z",
+  "sculpture": {
+    "entry": "web/home-sculpture.js",
+    "exports": [
+      "createHomeSculpture",
+      "homeComposition"
+    ],
+    "driver": {
+      "entry": "web/previa-driver.js",
+      "exports": [
+        "connectHomeSculpture"
+      ],
+      "note": "liga a escultura ao layout real da /previa (art, target, ready, arc, p)"
+    },
+    "implementation": "canvas2d",
+    "artPosters": {
+      "arte-escultura-desktop": {
+        "pose": "assentada (abertura concluída, ambiente fase 0, passagem 0) — idêntica ao 1º quadro do módulo nessa área",
+        "areaCss": {
+          "w": 1100,
+          "h": 660,
+          "aspect": "5:3 (1000/600, slot desktop da /previa)",
+          "ratio": 1.667
+        },
+        "pixels": {
+          "w": 2200,
+          "h": 1320,
+          "scale": 2
+        },
+        "background": {
+          "navy": "#0D1B2A (navy-900)",
+          "transparente": "alfa; usar sobre o fundo do hero"
+        },
+        "objeto": {
+          "note": "limites visuais em px CSS da área (arco + relevo); a base pode passar da borda inferior em outras proporções",
+          "bounds": {
+            "x": 90,
+            "y": 8.1,
+            "w": 919.9,
+            "h": 580.9
+          },
+          "arco": {
+            "cx": 550,
+            "cy": 380.7,
+            "r": 369.6,
+            "de": 172,
+            "ate": 368,
+            "topo": 11.1
+          },
+          "relevo": {
+            "raioBase": 336,
+            "layout": "wide",
+            "simplificado": false
+          }
+        },
+        "regra": "Composição proporcional à área: arcR = min(0,34·w, 0,56·h, 400) (w ≥ 600) ou min(0,46·w, 0,56·h); topo do arco a ~3% de arcR do topo da área."
+      },
+      "arte-escultura-movel": {
+        "pose": "assentada (abertura concluída, ambiente fase 0, passagem 0) — idêntica ao 1º quadro do módulo nessa área",
+        "areaCss": {
+          "w": 390,
+          "h": 312,
+          "aspect": "5:4 (10/8, slot celular da /previa)",
+          "ratio": 1.25
+        },
+        "pixels": {
+          "w": 780,
+          "h": 624,
+          "scale": 2
+        },
+        "background": {
+          "navy": "#0D1B2A (navy-900)",
+          "transparente": "alfa; usar sobre o fundo do hero"
+        },
+        "objeto": {
+          "note": "limites visuais em px CSS da área (arco + relevo); a base pode passar da borda inferior em outras proporções",
+          "bounds": {
+            "x": -24,
+            "y": 3,
+            "w": 438,
+            "h": 276.2
+          },
+          "arco": {
+            "cx": 195,
+            "cy": 180.7,
+            "r": 174.7,
+            "de": 172,
+            "ate": 368,
+            "topo": 6
+          },
+          "relevo": {
+            "raioBase": 158.8,
+            "layout": "narrow",
+            "simplificado": true
+          }
+        },
+        "regra": "Composição proporcional à área: arcR = min(0,34·w, 0,56·h, 400) (w ≥ 600) ou min(0,46·w, 0,56·h); topo do arco a ~3% de arcR do topo da área."
+      }
+    }
+  },
+  "journey": {
+    "entry": "web/journey.js",
+    "stylesheet": "web/journey.css",
+    "version": "0.4.1-exp",
+    "basedOn": "0.4.0 (ready)",
+    "exports": [
+      "createJourneyScene",
+      "getJourneyStartArc"
+    ],
+    "extensions": {
+      "start-arc-v1": "scene.getStartArc() → {cx,cy,r,a0,span,opacity,width,W,H} em px do container, ou null até a imagem e o mapa estarem prontos; o mesmo valor em data-start-arc (JSON) no nó .ararat-journey; export puro getJourneyStartArc(map,W,H). Aditivo: API v1/v1.1, evento e poses inalterados."
+    },
+    "capabilities": [
+      "image-load-attribute-v1",
+      "journey-layout-event-v1",
+      "start-arc-v1"
+    ]
+  },
+  "files": [
+    {
+      "path": "web/home-sculpture.js",
+      "sizeBytes": 23265
+    },
+    {
+      "path": "web/journey.css",
+      "sizeBytes": 1287
+    },
+    {
+      "path": "web/journey.js",
+      "sizeBytes": 38944
+    },
+    {
+      "path": "web/previa-driver.js",
+      "sizeBytes": 3811
+    },
+    {
+      "path": "assets/arte-escultura-desktop-transparente.webp",
+      "sizeBytes": 420594
+    },
+    {
+      "path": "assets/arte-escultura-desktop.json",
+      "sizeBytes": 1056
+    },
+    {
+      "path": "assets/arte-escultura-desktop.webp",
+      "sizeBytes": 78468
+    },
+    {
+      "path": "assets/arte-escultura-movel-transparente.webp",
+      "sizeBytes": 67580
+    },
+    {
+      "path": "assets/arte-escultura-movel.json",
+      "sizeBytes": 1045
+    },
+    {
+      "path": "assets/arte-escultura-movel.webp",
+      "sizeBytes": 19964
+    },
+    {
+      "path": "assets/mri-base.webp",
+      "sizeBytes": 120988
+    },
+    {
+      "path": "assets/mri-map.json",
+      "sizeBytes": 4102
+    }
+  ]
+}

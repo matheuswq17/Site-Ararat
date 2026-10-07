@@ -1,0 +1,100 @@
+{
+ "fonte": {
+  "hub": {
+   "arquivo": "references/produto/capturas-2026-10-06/hub-demo.png",
+   "largura": 1672,
+   "altura": 941,
+   "bytes": 1537200,
+   "sha256": "5e3f7e19e32d29038975bb3bc25920a7dcd014d54576b69f74e136e3ee7e1d3e"
+  },
+  "viewer": {
+   "arquivo": "references/produto/capturas-2026-10-06/viewer-demo.png",
+   "largura": 1600,
+   "altura": 900,
+   "bytes": 1344468,
+   "sha256": "30bb264f6fe8c2a1309bfc978712507a8c91a203ae3da6df9f7fa070576bc133"
+  }
+ },
+ "arquivos": [
+  {
+   "arquivo": "public/product/refinada/hub-640.webp",
+   "largura": 640,
+   "altura": 360,
+   "bytes": 17460
+  },
+  {
+   "arquivo": "public/product/refinada/hub-960.webp",
+   "largura": 960,
+   "altura": 540,
+   "bytes": 32940
+  },
+  {
+   "arquivo": "public/product/refinada/hub-1280.webp",
+   "largura": 1280,
+   "altura": 720,
+   "bytes": 51666
+  },
+  {
+   "arquivo": "public/product/refinada/hub-1672.webp",
+   "largura": 1672,
+   "altura": 941,
+   "bytes": 75906
+  },
+  {
+   "arquivo": "public/product/refinada/viewer-800.webp",
+   "largura": 800,
+   "altura": 450,
+   "bytes": 59602
+  },
+  {
+   "arquivo": "public/product/refinada/viewer-1200.webp",
+   "largura": 1200,
+   "altura": 675,
+   "bytes": 108632
+  },
+  {
+   "arquivo": "public/product/refinada/viewer-1600.webp",
+   "largura": 1600,
+   "altura": 900,
+   "bytes": 165468
+  },
+  {
+   "arquivo": "public/product/refinada/hub-fila-640.webp",
+   "largura": 640,
+   "altura": 322,
+   "bytes": 16454
+  },
+  {
+   "arquivo": "public/product/refinada/hub-fila-461.webp",
+   "largura": 461,
+   "altura": 232,
+   "bytes": 9698
+  },
+  {
+   "arquivo": "public/product/refinada/viewer-axial-500.webp",
+   "largura": 500,
+   "altura": 370,
+   "bytes": 33824
+  },
+  {
+   "arquivo": "public/product/refinada/viewer-axial-360.webp",
+   "largura": 360,
+   "altura": 266,
+   "bytes": 22212
+  }
+ ],
+ "recorte:hub-fila": {
+  "fonte": "hub",
+  "left": 62,
+  "top": 238,
+  "width": 640,
+  "height": 322
+ },
+ "recorte:viewer-axial": {
+  "fonte": "viewer",
+  "left": 232,
+  "top": 84,
+  "width": 500,
+  "height": 370
+ }
+}

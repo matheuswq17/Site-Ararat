@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "status": "ready",
+  "version": "fixture-0.0.1",
+  "entry": "web/journey.js",
+  "stylesheet": "web/journey.css",
+  "poster": "assets/journey-poster.webp",
+  "posterWidth": 800,
+  "posterHeight": 600,
+  "implementation": "svg",
+  "files": [
+    {
+      "path": "web/journey.js",
+      "sizeBytes": 1129
+    },
+    {
+      "path": "web/journey.css",
+      "sizeBytes": 115
+    },
+    {
+      "path": "assets/journey-poster.webp",
+      "sizeBytes": 936
+    }
+  ]
+}

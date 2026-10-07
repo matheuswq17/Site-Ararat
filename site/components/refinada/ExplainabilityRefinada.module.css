@@ -1,0 +1,27 @@
+/* Leitura em 2 passos (de onde vem + quanto pesou): "o que descreve" vira uma linha do 1º passo. */
+.reading .aspect {
+  margin-top: 8px;
+  color: var(--gray-300);
+  font-size: 0.95rem;
+}
+
+.more {
+  margin-top: 6px;
+}
+
+.moreSummary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-title);
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--gold-400);
+  cursor: pointer;
+}
+
+.moreSummary:focus-visible {
+  outline: 2px solid var(--gold-500);
+  outline-offset: 2px;
+  border-radius: 4px;
+}

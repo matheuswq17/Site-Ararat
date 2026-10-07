@@ -1,0 +1,221 @@
+/* Captura do produto (Plataforma, /previa/refinada). A interface capturada fica como está (tema
+   claro do Hub, teal escuro do Viewer); o brand system do site entra só na moldura externa. */
+.figure {
+  margin: 0;
+  min-width: 0;
+}
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 14px;
+  margin-bottom: 10px;
+}
+
+.rotulo {
+  font-family: var(--font-title);
+  font-size: var(--fs-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-400);
+}
+
+.demo {
+  font-size: 0.8rem;
+  color: var(--gray-300);
+}
+
+.window {
+  position: relative;
+  aspect-ratio: var(--ar);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #0d1a26;
+  box-shadow:
+    0 0 0 1px var(--border-default),
+    0 34px 80px rgba(0, 0, 0, 0.5);
+}
+
+.figure:not([data-destaque]) .marker {
+  min-width: 24px;
+  height: 24px;
+  font-size: 0.68rem;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.24), 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.figure[data-destaque] .window {
+  box-shadow:
+    0 0 0 1px rgba(212, 175, 55, 0.38),
+    0 40px 100px rgba(0, 0, 0, 0.55);
+}
+
+.shot {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.marker {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  min-width: 30px;
+  height: 30px;
+  padding: 0 6px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-title);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--navy-950);
+  background: var(--gold-500);
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.24), 0 6px 18px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+}
+
+.recorteNota {
+  display: none;
+}
+
+.caption {
+  margin-top: 10px;
+}
+
+.falha {
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  border: 1px dashed rgba(176, 184, 193, 0.35);
+  border-radius: var(--radius-lg);
+  color: var(--gray-300);
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.trigger {
+  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-title);
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--white-100);
+  text-decoration: none;
+}
+
+.trigger:hover,
+.trigger:focus-visible {
+  border-color: var(--gold-500);
+}
+
+.trigger svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Celular: recorte útil (proporção do recorte), sem marcadores; rótulo do recorte visível. */
+@media (max-width: 600px) {
+  .window {
+    aspect-ratio: var(--ar-m);
+  }
+  .marker {
+    display: none;
+  }
+  .recorteNota {
+    display: inline;
+  }
+}
+
+/* ---- Captura completa (diálogo) ---- */
+.dialog {
+  width: min(1400px, calc(100vw - 24px));
+  max-height: calc(100dvh - 24px);
+  padding: 0;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--navy-950);
+  color: var(--white-100);
+}
+
+.dialog::backdrop {
+  background: rgba(3, 7, 12, 0.82);
+}
+
+.inner {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  max-height: calc(100dvh - 26px);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 12px 10px 18px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.dlgTitle {
+  font-family: var(--font-title);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.close {
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--white-100);
+  font-family: var(--font-title);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus-visible {
+  border-color: var(--gold-500);
+}
+
+.scroller {
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.scroller:focus-visible {
+  outline: 2px solid var(--gold-500);
+  outline-offset: -2px;
+}
+
+/* Desktop: inteira na largura do diálogo. Celular: 1100 px de largura, percorrida por rolagem
+   (proporção original, sem recorte). */
+.full {
+  display: block;
+  width: 100%;
+  min-width: 1100px;
+  height: auto;
+}
+
+@media (min-width: 1100px) {
+  .full {
+    min-width: 0;
+  }
+}
+
+.dlgCaption {
+  padding: 10px 18px 14px;
+  font-size: 0.85rem;
+  color: var(--gray-300);
+  border-top: 1px solid var(--border-subtle);
+}

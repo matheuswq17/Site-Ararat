@@ -1,0 +1,193 @@
+/* Seção clara (inspiração: proposta C) — tokens de tema claro da marca. */
+.section {
+  /* Dourado escurecido para TEXTO sobre fundo claro: #856514 = 5,06:1 sobre #F5F7FA
+     (gold-600 #B8912A media 2,75:1). O ouro da marca segue nos acentos não textuais. */
+  --gold-ink: #856514;
+  position: relative;
+  background: var(--white-100);
+  color: var(--navy-900);
+  padding-top: clamp(88px, 13vh, 150px);
+  overflow: hidden;
+}
+
+.eyebrow {
+  color: var(--gold-ink);
+}
+
+.head {
+  max-width: 860px;
+}
+
+.title {
+  margin-top: 14px;
+  font-size: clamp(2rem, 4vw, 3.3rem);
+  font-weight: 800;
+  line-height: 1.06;
+  color: var(--navy-900);
+}
+
+.lead {
+  margin-top: 18px;
+  font-size: 1.1rem;
+  color: #3e4c5c;
+  max-width: 52ch;
+  padding-left: 18px;
+  border-left: 2px solid var(--gold-500);
+}
+
+/* r06 — editorial: cada parte é uma linha (título à esquerda, termos à direita). */
+.parts {
+  margin-top: clamp(40px, 7vh, 80px);
+  border-top: 1px solid rgba(13, 27, 42, 0.22);
+}
+
+.part {
+  display: grid;
+  grid-template-columns: minmax(0, 0.34fr) minmax(0, 0.66fr);
+  gap: 20px clamp(28px, 5vw, 80px);
+  padding-block: clamp(28px, 4vh, 44px);
+  border-bottom: 1px solid rgba(13, 27, 42, 0.12);
+}
+
+.partHead {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-content: start;
+  gap: 4px 14px;
+}
+
+.partNum {
+  font-family: var(--font-title);
+  font-size: 2.2rem;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--gold-ink);
+}
+
+.partTitle {
+  align-self: center;
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  color: var(--navy-900);
+}
+
+.partNote {
+  grid-column: 2;
+  margin-top: 8px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: #3e4c5c;
+  max-width: 34ch;
+}
+
+.items {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px clamp(24px, 3vw, 48px);
+}
+
+.item dt {
+  font-family: var(--font-title);
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--navy-900);
+}
+
+.item dd {
+  margin: 6px 0 0;
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: #3e4c5c;
+}
+
+.evidence {
+  margin-top: clamp(32px, 5vh, 56px);
+}
+
+.evidence ul {
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+  color: #3e4c5c;
+}
+
+.evidence a {
+  color: var(--navy-900);
+  font-weight: 600;
+}
+
+.evKind {
+  font-family: var(--font-title);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-ink);
+}
+
+.evMeta {
+  color: #3e4c5c;
+}
+
+.statement {
+  margin-top: clamp(44px, 7vh, 80px);
+  font-family: var(--font-title);
+  font-size: clamp(1.35rem, 2.4vw, 2.1rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  max-width: 28ch;
+  color: var(--navy-900);
+}
+
+.statement span {
+  white-space: nowrap;
+}
+
+.em {
+  color: var(--gold-ink);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: #3e4c5c;
+  max-width: 70ch;
+}
+
+.landscape {
+  position: relative;
+  margin-top: clamp(24px, 6vh, 64px);
+  height: clamp(160px, 22vw, 300px);
+}
+
+.landNote {
+  position: absolute;
+  right: var(--gutter);
+  bottom: 16px;
+  color: #4a5868;
+}
+
+@media (max-width: 900px) {
+  .part {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .items {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .partNote {
+    grid-column: 1 / -1;
+  }
+
+  .statement span {
+    white-space: normal;
+  }
+}

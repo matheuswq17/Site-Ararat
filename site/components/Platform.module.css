@@ -1,0 +1,310 @@
+/* Plataforma — percurso de uso: título compacto, faixa de etapas, paradas.
+   Continua o fundo da passagem (#0b1724), sem borda superior. */
+.section {
+  position: relative;
+  padding-block: clamp(40px, 7vh, 80px) clamp(88px, 13vh, 150px);
+  background:
+    var(--pattern-topo),
+    linear-gradient(180deg, #0b1724 0%, var(--navy-800) 100%);
+}
+
+.header {
+  max-width: 900px;
+}
+
+.title {
+  margin-top: 14px;
+  font-size: clamp(2rem, 4vw, 3.3rem);
+  font-weight: 800;
+  line-height: 1.06;
+}
+
+.gold {
+  color: var(--gold-500);
+}
+
+.lead {
+  margin-top: 16px;
+  font-size: 1.125rem;
+  color: var(--gray-200);
+  max-width: 52ch;
+}
+
+/* ── Faixa de etapas: linha dourada contínua com quatro marcos ── */
+.route {
+  list-style: none;
+  margin: clamp(36px, 6vh, 64px) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0 clamp(16px, 2.4vw, 36px);
+  position: relative;
+}
+
+.route::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 6px;
+  height: 1.5px;
+  background: linear-gradient(90deg, var(--gold-500) 0%, rgba(212, 175, 55, 0.35) 100%);
+}
+
+.routeItem {
+  position: relative;
+  padding-top: 30px;
+}
+
+.routeItem::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--navy-900);
+  border: 1.5px solid var(--gold-500);
+}
+
+.routeItem:first-child::before {
+  background: var(--gold-500);
+}
+
+.routeNum {
+  font-family: var(--font-title);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--gold-400);
+}
+
+.routeTitle {
+  margin-top: 6px;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.routeText {
+  margin-top: 8px;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--gray-300);
+  max-width: 30ch;
+}
+
+/* ── Paradas ── */
+.stop {
+  margin-top: clamp(56px, 9vh, 104px);
+}
+
+.stopLabel {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-family: var(--font-title);
+  font-size: var(--fs-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gray-200);
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.stopLabel span {
+  color: var(--gold-400);
+  letter-spacing: 0.1em;
+}
+
+.hub {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: center;
+}
+
+.figure {
+  margin: 0;
+}
+
+.window {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px var(--border-default),
+    0 40px 90px rgba(0, 0, 0, 0.5),
+    0 0 0 6px rgba(212, 175, 55, 0.04);
+}
+
+.shot {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.marker {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-title);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--navy-950);
+  background: var(--gold-500);
+  box-shadow: 0 0 0 6px rgba(212, 175, 55, 0.22), 0 6px 18px rgba(0, 0, 0, 0.5);
+}
+
+.caption {
+  display: block;
+  margin-top: 14px;
+}
+
+.points {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 22px;
+}
+
+.points li {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: 12px;
+  color: var(--gray-200);
+  font-size: 0.98rem;
+}
+
+.pointNum {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: var(--navy-950);
+  background: var(--gold-500);
+}
+
+.pointTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--white-100);
+}
+
+.viewer {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 28px 64px;
+}
+
+.viewerTitle {
+  font-family: var(--font-title);
+  font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+  font-weight: 700;
+  line-height: 1.12;
+  color: var(--white-100);
+}
+
+.viewerNote {
+  margin-top: 16px;
+  font-size: 0.95rem;
+  color: var(--gray-300);
+}
+
+.groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.groupTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--white-100);
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.groupTitle span {
+  color: var(--gold-400);
+  font-size: 0.78rem;
+  margin-right: 6px;
+}
+
+.features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.features li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.98rem;
+  color: var(--gray-200);
+}
+
+@media (max-width: 959px) {
+  .route {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  /* Vertical no móvel: a linha desce à esquerda, cada marco com o texto ao lado. */
+  .route::before {
+    left: 6px;
+    right: auto;
+    top: 6px;
+    bottom: 6px;
+    width: 1.5px;
+    height: auto;
+    background: linear-gradient(180deg, var(--gold-500) 0%, rgba(212, 175, 55, 0.35) 100%);
+  }
+
+  .routeItem {
+    padding: 0 0 22px 32px;
+  }
+
+  .routeItem:last-child {
+    padding-bottom: 0;
+  }
+
+  .routeTitle {
+    margin-top: 2px;
+  }
+
+  .routeText {
+    max-width: 46ch;
+  }
+
+  .hub,
+  .viewer {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .marker {
+    width: 22px;
+    height: 22px;
+    font-size: 0.65rem;
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.22);
+  }
+}
+
+@media (max-width: 600px) {
+  .groups {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

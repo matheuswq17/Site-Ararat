@@ -1,0 +1,68 @@
+.figure {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.camera {
+  transform-box: view-box;
+}
+
+.image {
+  image-rendering: auto;
+}
+
+/* Imagem indisponível: o quadro mantém fundo da marca; texto da página segue intacto. */
+.figure[data-image-failed] .image {
+  display: none;
+}
+
+/* Chegada tardia da RM: revelação curta (sem repetir a abertura). */
+.figure[data-mri-state="loading"] .image {
+  opacity: 0;
+}
+
+.figure[data-mri-state="loaded"] .image {
+  transition: opacity 220ms var(--ease-out);
+}
+
+:global(html[data-motion="paused"]) .figure .image {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .figure .image {
+    transition: none !important;
+  }
+}
+
+.status {
+  font-family: var(--font-body);
+  font-size: 15px;
+  fill: var(--gray-300);
+  letter-spacing: 0.02em;
+  visibility: hidden;
+}
+
+/* Espera real (após a hidratação) e erro. Antes da hidratação, quem mostra é o portão
+   do <head> (regra global em app/intro-script.ts). Entrada com leve atraso para não
+   piscar em rede rápida; em pausa/movimento reduzido aparece direto. */
+.figure[data-mri-state="loading"] .status,
+.figure[data-image-failed] .status {
+  visibility: visible;
+}
+
+.figure[data-mri-state="loading"] .status {
+  animation: ararat-fade-in 240ms var(--ease-out) 450ms both;
+}
+
+:global(html[data-motion="paused"]) .figure .status {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .figure .status {
+    animation: none !important;
+  }
+}

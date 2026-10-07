@@ -1,0 +1,190 @@
+{
+ "fontes": {
+  "matheus": {
+   "arquivo": "site/media-fontes/time/matheus.jpeg",
+   "largura": 1292,
+   "altura": 1600,
+   "bytes": 141234,
+   "sha256": "ed6177d91beb52326239015b9bedd896e983e118b5ff97bffb20b8aa5d225f37",
+   "recorte": {
+    "left": 273,
+    "top": 225,
+    "width": 746,
+    "height": 933
+   }
+  },
+  "miguel": {
+   "arquivo": "site/media-fontes/time/Miguel.png",
+   "largura": 1179,
+   "altura": 1334,
+   "bytes": 2032867,
+   "sha256": "9dbc6648819ca67a78e964683eed2a91a8db99d78080d8791efcb25f57bdfd33",
+   "recorte": {
+    "left": 121,
+    "top": 0,
+    "width": 938,
+    "height": 1173
+   }
+  },
+  "rodrigo": {
+   "arquivo": "site/media-fontes/time/rodrigo_gobbo.jpeg",
+   "largura": 1280,
+   "altura": 853,
+   "bytes": 64317,
+   "sha256": "1bc8d1a1b694e681dc2a8e85257a37ae0df1ec0aeca65a32964643afa4db7f3c",
+   "recorte": {
+    "left": 297,
+    "top": 0,
+    "width": 552,
+    "height": 690
+   }
+  },
+  "hartmann": {
+   "arquivo": "site/media-fontes/time/Hartmann.png",
+   "largura": 1181,
+   "altura": 1331,
+   "bytes": 1880283,
+   "sha256": "bca23e0c321df7a6b40641c6bdcfc30868bb27d3993891b82b3fa92ee4f44f06",
+   "recorte": {
+    "left": 106,
+    "top": 0,
+    "width": 960,
+    "height": 1200
+   }
+  },
+  "victor": {
+   "arquivo": "site/media-fontes/time/victor.jpg",
+   "largura": 400,
+   "altura": 400,
+   "bytes": 26506,
+   "sha256": "b7f96ec649b03fef57e8fc098fe97bb9d2d21f41d3c39ff4cf05a8962640a30d",
+   "recorte": {
+    "left": 33,
+    "top": 0,
+    "width": 304,
+    "height": 380
+   }
+  }
+ },
+ "arquivos": [
+  {
+   "id": "matheus",
+   "arquivo": "public/refinada/time/matheus-240.webp",
+   "largura": 240,
+   "altura": 300,
+   "bytes": 7404
+  },
+  {
+   "id": "matheus",
+   "arquivo": "public/refinada/time/matheus-360.webp",
+   "largura": 360,
+   "altura": 450,
+   "bytes": 13768
+  },
+  {
+   "id": "matheus",
+   "arquivo": "public/refinada/time/matheus-560.webp",
+   "largura": 560,
+   "altura": 700,
+   "bytes": 24540
+  },
+  {
+   "id": "matheus",
+   "arquivo": "public/refinada/time/matheus-746.webp",
+   "largura": 746,
+   "altura": 933,
+   "bytes": 35190
+  },
+  {
+   "id": "miguel",
+   "arquivo": "public/refinada/time/miguel-240.webp",
+   "largura": 240,
+   "altura": 300,
+   "bytes": 9690
+  },
+  {
+   "id": "miguel",
+   "arquivo": "public/refinada/time/miguel-360.webp",
+   "largura": 360,
+   "altura": 450,
+   "bytes": 16998
+  },
+  {
+   "id": "miguel",
+   "arquivo": "public/refinada/time/miguel-560.webp",
+   "largura": 560,
+   "altura": 700,
+   "bytes": 32104
+  },
+  {
+   "id": "miguel",
+   "arquivo": "public/refinada/time/miguel-880.webp",
+   "largura": 880,
+   "altura": 1100,
+   "bytes": 60332
+  },
+  {
+   "id": "rodrigo",
+   "arquivo": "public/refinada/time/rodrigo-240.webp",
+   "largura": 240,
+   "altura": 300,
+   "bytes": 6730
+  },
+  {
+   "id": "rodrigo",
+   "arquivo": "public/refinada/time/rodrigo-360.webp",
+   "largura": 360,
+   "altura": 450,
+   "bytes": 12056
+  },
+  {
+   "id": "rodrigo",
+   "arquivo": "public/refinada/time/rodrigo-552.webp",
+   "largura": 552,
+   "altura": 690,
+   "bytes": 21496
+  },
+  {
+   "id": "hartmann",
+   "arquivo": "public/refinada/time/hartmann-240.webp",
+   "largura": 240,
+   "altura": 300,
+   "bytes": 8090
+  },
+  {
+   "id": "hartmann",
+   "arquivo": "public/refinada/time/hartmann-360.webp",
+   "largura": 360,
+   "altura": 450,
+   "bytes": 14052
+  },
+  {
+   "id": "hartmann",
+   "arquivo": "public/refinada/time/hartmann-560.webp",
+   "largura": 560,
+   "altura": 700,
+   "bytes": 25412
+  },
+  {
+   "id": "hartmann",
+   "arquivo": "public/refinada/time/hartmann-880.webp",
+   "largura": 880,
+   "altura": 1100,
+   "bytes": 48054
+  },
+  {
+   "id": "victor",
+   "arquivo": "public/refinada/time/victor-240.webp",
+   "largura": 240,
+   "altura": 300,
+   "bytes": 6416
+  },
+  {
+   "id": "victor",
+   "arquivo": "public/refinada/time/victor-304.webp",
+   "largura": 304,
+   "altura": 380,
+   "bytes": 9380
+  }
+ ]
+}

@@ -1,0 +1,108 @@
+/* Copiado de references/brand/tokens-fonte.css (fonte: material de marca ARARAT). Não editar valores de marca aqui; extensões do site ficam em styles/site.css. */
+:root{
+--navy-950:#080f18;--navy-900:#0D1B2A;--navy-800:#132436;--navy-700:#1B3049;--navy-600:#243c5a;
+--blue-500:#415A77;--blue-400:#5B7699;--blue-300:#7A93B3;
+--gray-300:#B0B8C1;--gray-200:#C9CFD6;--white-100:#F5F7FA;--white-000:#FFFFFF;
+--gold-600:#B8912A;--gold-500:#D4AF37;--gold-400:#E1C465;--gold-300:#EEDBA0;
+--green-500:#3FA772;--green-400:#5FC492;--green-900:#123524;
+--red-500:#D75B5B;--red-400:#E88080;--red-900:#3A1414;
+--amber-500:#D9A441;--amber-900:#3A2C0F;
+
+--surface-app:var(--navy-900);
+--surface-raised:var(--navy-800);
+--surface-sunken:var(--navy-950);
+--surface-overlay:var(--navy-700);
+--surface-card:var(--navy-800);
+--surface-card-hover:var(--navy-700);
+--surface-input:var(--navy-950);
+--surface-selected:rgba(212,175,55,0.10);
+
+--border-subtle:rgba(176,184,193,0.14);
+--border-default:rgba(176,184,193,0.22);
+--border-strong:rgba(176,184,193,0.34);
+--border-focus:var(--gold-500);
+
+--text-primary:var(--white-100);
+--text-secondary:var(--gray-300);
+--text-tertiary:rgba(176,184,193,0.62);
+--text-disabled:rgba(176,184,193,0.38);
+--text-on-gold:var(--navy-950);
+--text-link:var(--gold-400);
+
+--brand-gold:var(--gold-500);
+--brand-navy:var(--navy-900);
+--brand-blue:var(--blue-500);
+
+--accent-focus:var(--gold-500);
+--accent-selected:var(--gold-500);
+
+--status-success:var(--green-500);
+--status-success-bg:var(--green-900);
+--status-warning:var(--amber-500);
+--status-warning-bg:var(--amber-900);
+--status-error:var(--red-500);
+--status-error-bg:var(--red-900);
+--status-info:var(--blue-400);
+--status-info-bg:rgba(65,90,119,0.28);
+--status-neutral:var(--gray-300);
+--status-neutral-bg:rgba(176,184,193,0.14);
+
+--risk-low:var(--green-500);
+--risk-low-bg:rgba(63,167,114,0.14);
+--risk-intermediate:var(--gold-500);
+--risk-intermediate-bg:rgba(212,175,55,0.14);
+--risk-high:var(--red-500);
+--risk-high-bg:rgba(215,91,91,0.14);
+}
+:root[data-theme="light"]{
+--surface-app:var(--white-100);
+--surface-raised:#FFFFFF;
+--surface-sunken:#E9EDF2;
+--surface-overlay:#FFFFFF;
+--surface-card:#FFFFFF;
+--surface-card-hover:#F0F3F7;
+--surface-input:#FFFFFF;
+--surface-selected:rgba(212,175,55,0.14);
+--border-subtle:rgba(13,27,42,0.08);
+--border-default:rgba(13,27,42,0.14);
+--border-strong:rgba(13,27,42,0.24);
+--text-primary:var(--navy-900);
+--text-secondary:#3E4C5C;
+--text-tertiary:#6B7686;
+--text-disabled:#9AA3AF;
+--text-link:var(--gold-600);
+}
+
+
+:root{
+--space-0:0px;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;
+--space-5:20px;--space-6:24px;--space-7:32px;--space-8:40px;--space-9:48px;--space-10:64px;
+
+--radius-xs:4px;--radius-sm:6px;--radius-md:8px;--radius-lg:12px;--radius-xl:16px;--radius-pill:999px;
+
+--gap-tight:6px;--gap-default:12px;--gap-loose:20px;
+
+--container-max:1440px;
+--sidebar-width:220px;
+--panel-width:340px;
+}
+
+
+:root{
+--shadow-sm:0 1px 2px rgba(0,0,0,0.24);
+--shadow-md:0 4px 12px rgba(0,0,0,0.32);
+--shadow-lg:0 12px 32px rgba(0,0,0,0.42);
+--shadow-gold-glow:0 0 0 1px rgba(212,175,55,0.4),0 0 20px rgba(212,175,55,0.12);
+--shadow-focus-ring:0 0 0 3px rgba(212,175,55,0.28);
+
+--ease-standard:cubic-bezier(.4,0,.2,1); /* @kind other */
+--duration-fast:120ms; /* @kind other */
+--duration-base:180ms; /* @kind other */
+--duration-slow:280ms; /* @kind other */
+
+--blur-panel:16px;
+
+--contour-line:rgba(176,184,193,0.06);
+--gradient-arc-gold:linear-gradient(180deg,var(--gold-400),var(--gold-600));
+--pattern-topo:repeating-radial-gradient(circle at 30% 20%,transparent 0,transparent 26px,var(--contour-line) 27px,var(--contour-line) 28px);
+}

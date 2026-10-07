@@ -1,0 +1,168 @@
+/* Fechamento da Ciência (/previa/refinada): frases + paisagem numa composição só.
+   As frases ocupam o "céu" à esquerda; a paisagem sobe por trás delas (sobreposição controlada),
+   com o cume principal à direita (u ≈ 0,64 do desenho), longe do texto. */
+.comp {
+  --gold-ink: #856514;
+  position: relative;
+  margin-top: clamp(40px, 6vh, 72px);
+  /* altura da paisagem: proporção do desenho (1440 × ~330) na largura da tela, com piso e teto */
+  --alt: clamp(170px, 24vw, 360px);
+  --sobe: clamp(48px, 7vw, 120px); /* quanto a paisagem sobe por trás das frases */
+}
+
+.frases {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding-inline: var(--gutter);
+  max-width: calc(var(--content-max) + var(--gutter) * 2);
+  margin-inline: auto;
+  display: grid;
+  gap: 0.18em;
+  font-family: var(--font-title);
+  font-size: clamp(1.35rem, 2.4vw, 2.1rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.22;
+  color: var(--navy-900);
+}
+
+.frase {
+  position: relative;
+  display: block;
+  justify-self: start;
+}
+
+/* Marca do trecho: traço dourado discreto à esquerda (decorativo; as frases já estão visíveis). */
+.frase::before {
+  content: "";
+  position: absolute;
+  left: -16px;
+  top: 0.2em;
+  bottom: 0.2em;
+  width: 2px;
+  background: var(--gold-500);
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+.frase[data-ativa]::before {
+  opacity: 1;
+}
+
+.decisao {
+  color: var(--gold-ink);
+  transition: color 450ms ease;
+}
+/* Com o módulo animando (proposta do Motion): a decisão chega ao dourado na etapa 4 e assim fica em toda
+   etapa posterior (5 = continuação crista → arco). Navy só nas etapas 0–3. Sem JS, pausa, reduzido ou falha,
+   segue dourada como na composição estática. */
+.frases[data-topo-modo="animado"]:is([data-topo-etapa="0"], [data-topo-etapa="1"], [data-topo-etapa="2"], [data-topo-etapa="3"]) .decisao {
+  color: var(--navy-900);
+}
+
+.paisagem {
+  position: relative;
+  height: var(--alt);
+  margin-top: calc(var(--sobe) * -1);
+  pointer-events: none;
+}
+
+.svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none; /* o reset global limita svg a 100 % */
+  display: block;
+}
+
+.nota {
+  position: absolute;
+  right: var(--gutter);
+  bottom: 10px;
+  color: #4a5868;
+}
+
+:global(html[data-motion="paused"]) .frase::before,
+:global(html[data-motion="paused"]) .decisao {
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .frase::before,
+  .decisao {
+    transition: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .comp {
+    --alt: clamp(150px, 44vw, 210px);
+    --sobe: 24px;
+  }
+  .frase::before {
+    left: -12px;
+  }
+  .nota {
+    position: static;
+    display: block;
+    margin-top: 4px;
+    padding-inline: var(--gutter);
+    text-align: right;
+  }
+}
+
+/* ── Montanha 0.2.0 (Motion): enquadramento combinado — desenho 1440 × 360 (4:1), slice centrado na base.
+   ≥ 901 px: largura inteira, proporção 4:1 sem teto de altura, frases sobre o sopé à esquerda.
+   ≤ 900 px: paisagem inteira ABAIXO das frases (sem sobreposição); altura toda visível, laterais recortam.
+   docs/coordination/CIENCIA-MONTANHA-ENQUADRAMENTO-SITE.md */
+.comp[data-enquadramento="montanha"] {
+  --sobe: clamp(48px, 7vw, 110px);
+}
+@media (min-width: 901px) {
+  .comp[data-enquadramento="montanha"] .paisagem {
+    /* O SVG usa slice: um teto de altura cortaria o cume em telas largas. */
+    height: auto;
+    aspect-ratio: 4 / 1;
+  }
+}
+@media (max-width: 900px) {
+  .comp[data-enquadramento="montanha"] {
+    --alt: clamp(170px, 30vw, 240px);
+    --sobe: 0px;
+  }
+}
+@media (max-width: 600px) {
+  .comp[data-enquadramento="montanha"] {
+    --alt: clamp(150px, 44vw, 210px);
+    --sobe: 0px;
+  }
+}
+
+/* ── Montanha 0.3.0 (Motion): a MESMA montanha + arco do encerramento. Desenho 1440 × 432 (viewBox 0 -72 1440 432):
+   72 unidades de reserva ACIMA dos cumes para o arco; as coordenadas da montanha não mudam.
+   ≥ 901 px: mesmo princípio da correção do Codex (altura automática, proporção do desenho — aqui 10:3), sem teto
+             de altura: nenhum cume ou arco cortado em telas largas, nada deformado. --sobe igual; o arco ocupa o
+             espaço à direita das frases.
+   ≤ 900 px: paisagem abaixo das frases, alturas × 1,2 (mesma escala da montanha da 0.2.0); ≤ 600 px: mais 20 px de
+             respiro acima do arco. Combinado em docs/coordination/CIENCIA-ARCO-MEDIDAS-SITE.md + README do Motion 0.3.0. */
+.comp[data-enquadramento="montanha-arco"] {
+  --sobe: clamp(48px, 7vw, 110px);
+}
+@media (min-width: 901px) {
+  .comp[data-enquadramento="montanha-arco"] .paisagem {
+    height: auto;
+    aspect-ratio: 10 / 3;
+  }
+}
+@media (max-width: 900px) {
+  .comp[data-enquadramento="montanha-arco"] {
+    --alt: clamp(204px, 36vw, 288px);
+    --sobe: 0px;
+  }
+}
+@media (max-width: 600px) {
+  .comp[data-enquadramento="montanha-arco"] {
+    --alt: clamp(180px, 52.8vw, 252px);
+    --sobe: -20px; /* respiro de 20 px entre a última frase e o topo do arco */
+  }
+}

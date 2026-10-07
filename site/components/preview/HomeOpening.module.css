@@ -1,0 +1,350 @@
+/* PROPOSTA /previa — home com a escultura do Motion.
+   Este arquivo descreve o layout ESTÁTICO (sem JS, movimento reduzido, pausa salva):
+   hero com poster seguido da jornada em fluxo normal. O layout de ABERTURA é aplicado
+   antes da 1ª pintura pelo <style id="ararat-opening"> (app/intro-script.ts), com
+   seletores [data-opening=…]; ele só reposiciona estas mesmas camadas. */
+
+.root {
+  position: relative;
+}
+
+.layer {
+  position: relative;
+  container-type: inline-size;
+  background: var(--navy-900);
+  isolation: isolate;
+  /* clip (não hidden): não cria contêiner de rolagem, e o sticky interno segue a viewport */
+  overflow: clip;
+}
+
+/* Camada presa (só no layout de abertura): fundo + canvas do Motion. */
+.sticky {
+  display: none;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--navy-900);
+}
+
+.host {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Frente: texto e poster, em coluna com altura mínima de uma tela. O poster encosta na
+   base da tela (como na composição do Motion) e desce junto quando o texto precisa de
+   mais espaço — nunca cruza título, descrição ou ações. */
+.front {
+  position: relative;
+  z-index: 2;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  padding-top: calc(var(--header-h) + clamp(28px, 8vh, 104px));
+  pointer-events: none;
+}
+
+.content {
+  /* margem automática: em telas altas, o espaço livre se divide acima e abaixo do texto,
+     que fica centrado no espaço sobre a arte (a arte continua encostada na base). */
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  pointer-events: auto;
+}
+
+.eyebrow {
+  animation: var(--intro-fade, none) 360ms var(--ease-out) both;
+}
+
+/* Montserrat Bold 700 (comparado ao 800 da proposta anterior: mesma presença, desenho mais leve). */
+.title {
+  margin-top: clamp(14px, 2.2vh, 22px);
+  max-width: 14ch;
+  font-size: clamp(2.45rem, 6.1vw, 5.3rem);
+  font-weight: 700;
+  line-height: 1.03;
+  letter-spacing: -0.025em;
+  color: var(--white-100);
+}
+
+.line {
+  display: block;
+  animation: var(--intro-word, none) 620ms var(--ease-out) both;
+  animation-delay: calc(140ms + var(--i, 0) * 110ms);
+}
+
+.description {
+  margin-top: clamp(14px, 2.4vh, 24px);
+  max-width: 44ch;
+  font-size: clamp(1.02rem, 1.35vw, 1.18rem);
+  line-height: 1.55;
+  color: var(--gray-200);
+  animation: var(--intro-line, none) 460ms var(--ease-out) 360ms both;
+}
+
+.actions {
+  margin-top: clamp(22px, 3.4vh, 34px);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 16px;
+  animation: var(--intro-line, none) 460ms var(--ease-out) 480ms both;
+}
+
+/* Nota do estado científico: linha discreta sob as ações (antes ficava no canto inferior
+   direito, estreita demais em desktops menores). Fora da área da arte; some com o texto na
+   passagem. Celular: oculta, como antes (a 1ª tela prioriza texto, ação e arte). */
+.note {
+  margin-top: clamp(12px, 2vh, 18px);
+  max-width: 60ch;
+  text-align: center;
+  line-height: 1.45;
+  animation: var(--intro-fade, none) 460ms var(--ease-out) 560ms both;
+}
+
+@container (max-width: 599.98px) {
+  .note {
+    display: none;
+  }
+}
+
+/* Área da arte: abaixo das ações, com respiro próprio; empurrada para a base da tela. */
+.art {
+  margin-top: auto;
+  padding-top: 40px;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* Slot da arte = área para a qual o Motion gerou o poster oficial (metadados do pacote):
+   largura min(1100 px, largura útil), proporção 5:3 a partir de 600 px e 5:4 abaixo. A mesma
+   regra de largura (600 px) decide a composição "wide"/"narrow" do módulo, então poster e
+   canvas compõem a mesma área. */
+.picture {
+  display: block;
+  flex: none;
+  width: min(1100px, 100cqw);
+  aspect-ratio: var(--art-ratio-wide, 5 / 3);
+}
+
+.poster {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: opacity 280ms var(--ease-out);
+}
+
+@container (max-width: 599.98px) {
+  .picture {
+    width: 100cqw;
+    aspect-ratio: var(--art-ratio-narrow, 5 / 4);
+  }
+
+  .art {
+    padding-top: 24px;
+  }
+}
+
+/* Fundo com “janela” no contorno do quadro da jornada (só com o canvas ativo; o quadro em si
+   é coberto pelo próprio módulo, que só o revela com a cena pronta). */
+.surround {
+  display: none;
+}
+
+:global(html[data-motion="paused"]) .layer * {
+  animation: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layer * {
+    animation: none !important;
+  }
+}
+
+/* Celular: texto e ação primeiro; botões em coluna. */
+@media (max-width: 600px) {
+  .front {
+    padding-top: calc(var(--header-h) + 26px);
+  }
+
+  .title {
+    font-size: clamp(2.25rem, 10.6vw, 3.1rem);
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: 340px;
+  }
+
+  .actions :global(.btn) {
+    justify-content: center;
+  }
+}
+
+/* Telas baixas: menos respiro, para a arte se anunciar já na 1ª tela. */
+@media (max-height: 760px) and (min-width: 601px) {
+  .front {
+    padding-top: calc(var(--header-h) + clamp(20px, 5vh, 40px));
+  }
+
+  .title {
+    font-size: clamp(2.4rem, 5.3vw, 4.4rem);
+  }
+
+  .art {
+    padding-top: 32px;
+  }
+}
+
+@media (max-width: 600px) and (max-height: 700px) {
+  .front {
+    padding-top: calc(var(--header-h) + 14px);
+  }
+
+  .title {
+    margin-top: 10px;
+    font-size: clamp(2.05rem, 9.6vw, 2.7rem);
+  }
+
+  .description {
+    margin-top: 10px;
+    font-size: 0.97rem;
+    line-height: 1.5;
+  }
+
+  .actions {
+    margin-top: 16px;
+    gap: 10px;
+  }
+
+  .art {
+    padding-top: 16px;
+  }
+}
+
+/* Aviso “Carregando imagem de RM…”: sobre o espaço dos controles ocultos da jornada.
+   Fora dos grupos inert (leitura assistiva). A região de status fica sempre no DOM (anúncio
+   confiável); fora do carregamento tardio está vazia e não ocupa nada visível. */
+.wait {
+  position: fixed;
+  left: var(--wait-x, 0);
+  top: var(--wait-y, 0);
+  width: var(--wait-w, 0);
+  min-height: var(--wait-h, 0);
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.4;
+  color: var(--gray-200);
+  pointer-events: none;
+}
+
+.wait[data-active]::before {
+  content: "";
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold-500, #d4af37);
+  animation: ararat-wait-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes ararat-wait-pulse {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+
+:global(html[data-motion="paused"]) .wait::before {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wait::before {
+    animation: none;
+  }
+}
+
+/* Convite à rolagem (/previa/refinada): texto pequeno + traço, na base da 1ª TELA (a frente pode
+   passar da dobra). Não é CTA: aria-hidden (o conteúdo segue logo abaixo, alcançável por rolagem e
+   teclado). Desktop/tablet: no canto inferior esquerdo, alinhado à grade — fora da montanha e dos
+   botões. Celular alto: centrado na base, sobre o sopé já dissolvido. Celular baixo (≤ 700 px):
+   oculto, a arte ocupa a base. Some no começo da passagem (refinada.css); o traço desce 3 vezes
+   após a abertura; pausa/movimento reduzido: parado. */
+.invite {
+  position: absolute;
+  left: max(var(--gutter), calc((100cqw - var(--content-max)) / 2));
+  top: calc(100svh - clamp(64px, 9vh, 84px));
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  font-family: var(--font-title);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--gray-200);
+  text-shadow: 0 1px 10px rgba(8, 15, 24, 0.9);
+  pointer-events: none;
+}
+
+.inviteLine {
+  order: -1;
+  width: 1.5px;
+  height: 26px;
+  background: linear-gradient(180deg, var(--gold-500), rgba(212, 175, 55, 0.1));
+  transform-origin: top;
+  animation: ararat-invite 1.8s var(--ease-out) 2.4s 3 both;
+}
+
+@keyframes ararat-invite {
+  0% {
+    transform: scaleY(0.35);
+    opacity: 0.4;
+  }
+  55% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 0.85;
+  }
+}
+
+@container (max-width: 599.98px) {
+  .invite {
+    left: 50%;
+    transform: translateX(-50%);
+    top: calc(100svh - 58px);
+    flex-direction: column-reverse;
+    gap: 6px;
+  }
+
+  .inviteLine {
+    height: 18px;
+  }
+}
+
+@media (max-width: 600px) and (max-height: 700px) {
+  .invite {
+    display: none;
+  }
+}

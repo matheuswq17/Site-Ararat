@@ -1,0 +1,233 @@
+/* Plataforma (/previa/refinada): a interface em primeiro plano. Topografia reduzida a um traço
+   discreto no canto superior direito, mascarado — não passa atrás dos textos dos passos. */
+.section {
+  position: relative;
+  padding-block: clamp(40px, 7vh, 80px) clamp(88px, 13vh, 150px);
+  background: linear-gradient(180deg, #0b1724 0%, var(--navy-800) 100%);
+  isolation: isolate;
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--pattern-topo);
+  opacity: 0.45;
+  -webkit-mask-image: radial-gradient(60% 45% at 100% 0%, #000 0%, transparent 100%);
+  mask-image: radial-gradient(60% 45% at 100% 0%, #000 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.header {
+  max-width: 900px;
+}
+
+.title {
+  margin-top: 14px;
+  font-size: clamp(2rem, 4vw, 3.3rem);
+  line-height: 1.06;
+}
+
+.gold {
+  color: var(--gold-500);
+}
+
+.lead {
+  margin-top: 16px;
+  font-size: 1.125rem;
+  color: var(--gray-200);
+  max-width: 52ch;
+}
+
+/* Percurso: quatro passos curtos em linha (desktop) / lista (celular). */
+.steps {
+  list-style: none;
+  margin: clamp(28px, 4vh, 44px) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0 clamp(18px, 2.4vw, 32px);
+  border-top: 1px solid var(--border-default);
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 2.4rem minmax(0, 1fr);
+  gap: 10px;
+  padding: 16px 0;
+}
+
+.stepNum {
+  font-family: var(--font-title);
+  font-weight: 500;
+  font-size: 1.05rem;
+  color: var(--gold-500);
+  line-height: 1.4;
+}
+
+.stepAction {
+  font-family: var(--font-title);
+  font-size: 1.08rem;
+  line-height: 1.3;
+  color: var(--white-100);
+}
+
+.stepResult {
+  margin-top: 6px;
+  color: var(--gray-200);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Capturas: o Hub (início) menor, o Viewer (revisão) em destaque. */
+.media {
+  margin-top: clamp(24px, 4vh, 40px);
+  display: grid;
+  grid-template-columns: minmax(0, 0.62fr) minmax(0, 1fr);
+  gap: clamp(24px, 3vw, 44px);
+  align-items: start;
+}
+
+.documented {
+  margin-top: clamp(28px, 4vh, 44px);
+  padding: 18px 22px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.025);
+  max-width: 900px;
+}
+
+.docTitle {
+  font-family: var(--font-title);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--white-100);
+}
+
+.docList {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.docList li {
+  padding: 5px 12px;
+  border: 1px solid var(--border-default);
+  border-radius: 999px;
+  font-size: 0.88rem;
+  color: var(--gray-200);
+}
+
+.docNote {
+  margin-top: 12px;
+  font-size: 0.88rem;
+  color: var(--gray-300);
+  max-width: 70ch;
+}
+
+@media (max-width: 1100px) {
+  .steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 959px) {
+  .media {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  /* no empilhado, o percurso segue a ordem: Hub (01–02) e depois Viewer (03–04) */
+}
+
+@media (max-width: 600px) {
+  .steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .step {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+}
+
+/* Para quem (rodada 6): bloco compacto, dois públicos, sem cartões. */
+.audience {
+  margin-top: clamp(22px, 3vh, 32px);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 8px clamp(18px, 3vw, 40px);
+  align-items: baseline;
+  max-width: 980px;
+}
+
+.audienceTitle {
+  font-family: var(--font-title);
+  font-size: var(--fs-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-400);
+}
+
+.audienceList {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px clamp(18px, 3vw, 40px);
+}
+
+.audienceList dt {
+  font-family: var(--font-title);
+  font-weight: 500;
+  color: var(--white-100);
+}
+
+.audienceList dd {
+  margin: 4px 0 0;
+  color: var(--gray-200);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.docMore {
+  margin-top: 8px;
+}
+
+.docMoreSummary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-title);
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--gold-400);
+  cursor: pointer;
+}
+
+.docMoreSummary:focus-visible {
+  outline: 2px solid var(--gold-500);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.docMoreList {
+  margin: 4px 0 0;
+  padding-left: 1.1em;
+  display: grid;
+  gap: 6px;
+  color: var(--gray-300);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  max-width: 70ch;
+}
+
+@media (max-width: 760px) {
+  .audience {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .audienceList {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

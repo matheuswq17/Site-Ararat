@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "status": "ready",
+  "version": "fixture-mri-0.0.1",
+  "entry": "web/journey.js",
+  "stylesheet": "web/journey.css",
+  "poster": "assets/journey-poster.webp",
+  "implementation": "svg",
+  "files": [
+    {
+      "path": "web/journey.js",
+      "sizeBytes": 1129
+    },
+    {
+      "path": "web/journey.css",
+      "sizeBytes": 115
+    },
+    {
+      "path": "assets/journey-poster.webp",
+      "sizeBytes": 936
+    },
+    {
+      "path": "assets/mri-base.webp",
+      "sizeBytes": 120052
+    },
+    {
+      "path": "assets/mri-map.json",
+      "sizeBytes": 3269
+    }
+  ]
+}

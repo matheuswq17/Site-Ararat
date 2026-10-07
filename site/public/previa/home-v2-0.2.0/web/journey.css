@@ -1,0 +1,55 @@
+/* ARARAT MODEL — cena da jornada v0.2. Escopo isolado sob .ararat-journey; nenhum reset global. */
+.ararat-journey {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #0D1B2A;
+  contain: layout paint;
+  isolation: isolate;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.ararat-journey .ararat-journey__layer,
+.ararat-journey .ararat-journey__stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  display: block;
+}
+.ararat-journey .ararat-journey__stage {
+  opacity: 1;
+  transition: opacity 320ms cubic-bezier(.4, 0, .2, 1);
+}
+.ararat-journey[data-loaded="false"] .ararat-journey__stage,
+.ararat-journey[data-loaded="error"] .ararat-journey__stage {
+  opacity: 0;
+}
+.ararat-journey[data-reduced-motion="true"] .ararat-journey__stage {
+  transition: none;
+}
+.ararat-journey .ararat-journey__canvas {
+  overflow: hidden;
+}
+.ararat-journey .ararat-journey__bitmap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+.ararat-journey .ararat-journey__topo {
+  fill: none;
+  stroke: #B0B8C1;
+  stroke-opacity: 0.075;
+  stroke-width: 1;
+}

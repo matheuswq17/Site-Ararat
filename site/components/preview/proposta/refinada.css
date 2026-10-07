@@ -1,0 +1,333 @@
+/* VERSÃO CONJUNTA /previa/refinada — tipografia A escolhida pelo usuário:
+   Space Grotesk 500/600 (títulos) + Source Sans 3 400/600 (corpo). Montanha B: pacote experimental
+   0.4.0-draft do Motion (lib/home-preview.ts → REFINADA_PACKAGE).
+   Fontes locais WOFF2 (subconjunto latin, @fontsource 5.3.0), licença OFL em
+   public/previa/tipografia/fontes/<família>/OFL.txt — os mesmos arquivos da /previa/a.
+
+   1. PESOS REAIS. Cada @font-face declara o peso do arquivo (500, 600 · 400, 600), sem faixas.
+      Os componentes que pediam 300/400/700/800 recebem abaixo o peso existente que a /previa/a já
+      exibia (mesma aparência). font-synthesis: none (proposta.css) — nada de peso simulado.
+
+   2. CARREGAMENTO. font-display: swap + família de RESERVA com métricas ajustadas:
+      o texto aparece de imediato na reserva e troca sem reflow perceptível quando a fonte chega;
+      com 404/bloqueio fica legível na reserva. Reserva = Arial e equivalentes métricos
+      (Arial no Windows/macOS, Liberation Sans/Arimo no Linux/ChromeOS, Helvetica no iOS), com
+      size-adjust calibrado nos textos reais da página (tests/calibrar-reserva.mjs: largura média
+      dos textos com kerning e, depois, busca do valor que preserva as quebras de linha em
+      1440/1280/768/390/320) e ascent/descent-override das métricas verticais de cada fonte.
+      · Títulos 500 → Arial regular (107,5 %); 600 → Arial Bold (99,5 %).
+      · Rótulos em caixa-alta 500/600 → Arial / Arial Bold (91,5 %), reserva própria (abaixo).
+      · Corpo 400 → Arial regular (93 %); 600 → Arial Bold (90 %).
+      Na reserva, o texto da 1ª tela, os botões, os rótulos e os títulos mantêm as quebras nas 5
+      larguras conferidas; exceções medidas, todas abaixo da 1ª tela: o título do Contato em
+      320 px (2 → 3 linhas, "ARARAT" em caixa-alta mais largo na Arial) e 5 parágrafos longos
+      (±1 linha; a largura por palavra varia entre as fontes).
+      Onde size-adjust/overrides não existem (Safari < 17), a reserva fica sem ajuste: legível,
+      com pequena diferença de largura. */
+
+@font-face {
+  font-family: "ARARAT Titulo";
+  src: url("/previa/tipografia/fontes/space-grotesk/space-grotesk-latin-500-normal.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "ARARAT Titulo";
+  src: url("/previa/tipografia/fontes/space-grotesk/space-grotesk-latin-600-normal.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "ARARAT Texto";
+  src: url("/previa/tipografia/fontes/source-sans-3/source-sans-3-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "ARARAT Texto";
+  src: url("/previa/tipografia/fontes/source-sans-3/source-sans-3-latin-600-normal.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Reserva métrica (fontes do sistema; nenhum arquivo novo). */
+@font-face {
+  font-family: "ARARAT Titulo Reserva";
+  src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("LiberationSans"), local("Arimo"), local("Helvetica");
+  font-weight: 500;
+  size-adjust: 107.50%;
+  ascent-override: 91.53%;
+  descent-override: 27.16%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "ARARAT Titulo Reserva";
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Liberation Sans Bold"), local("LiberationSans-Bold"), local("Arimo Bold"), local("Helvetica Bold"), local("Helvetica-Bold");
+  font-weight: 600;
+  size-adjust: 99.50%;
+  ascent-override: 98.89%;
+  descent-override: 29.35%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "ARARAT Texto Reserva";
+  src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("LiberationSans"), local("Arimo"), local("Helvetica");
+  font-weight: 400;
+  size-adjust: 93.00%;
+  ascent-override: 110.11%;
+  descent-override: 43.01%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "ARARAT Texto Reserva";
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Liberation Sans Bold"), local("LiberationSans-Bold"), local("Arimo Bold"), local("Helvetica Bold"), local("Helvetica-Bold");
+  font-weight: 600;
+  size-adjust: 90.00%;
+  ascent-override: 113.78%;
+  descent-override: 44.44%;
+  line-gap-override: 0%;
+}
+
+/* Rótulos em caixa-alta (sobretítulos, rótulos de etapa): as maiúsculas da Space Grotesk são
+   mais estreitas, relativamente, que as minúsculas — a reserva calibrada no texto corrido as
+   alargaria (o sobretítulo do hero quebrava em 2 linhas no celular). Reserva própria para eles. */
+@font-face {
+  font-family: "ARARAT Rotulo Reserva";
+  src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("LiberationSans"), local("Arimo"), local("Helvetica");
+  font-weight: 500;
+  size-adjust: 91.50%;
+  ascent-override: 107.54%;
+  descent-override: 31.91%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "ARARAT Rotulo Reserva";
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Liberation Sans Bold"), local("LiberationSans-Bold"), local("Arimo Bold"), local("Helvetica Bold"), local("Helvetica-Bold");
+  font-weight: 600;
+  size-adjust: 91.50%;
+  ascent-override: 107.54%;
+  descent-override: 31.91%;
+  line-gap-override: 0%;
+}
+
+[data-tipografia="refinada"] {
+  --font-title: "ARARAT Titulo", "ARARAT Titulo Reserva", system-ui, sans-serif;
+  --font-body: "ARARAT Texto", "ARARAT Texto Reserva", system-ui, sans-serif;
+  /* Source Sans tem altura-x menor que Open Sans: corpo 18 px (desktop) / 17 px (celular). */
+  --fs-body: 1.125rem;
+  --fs-eyebrow: 0.78rem;
+  /* O corpo herda de <body> (já resolvido com a fonte base): o wrapper redefine a família. */
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  font-weight: 400;
+}
+
+/* Rótulos em caixa-alta: mesma fonte final, reserva própria. */
+[data-tipografia="refinada"] :is(
+    .eyebrow,
+    [class*="JourneyMriScene"][class*="__label"],
+    #jornada [class*="__stepKicker"],
+    #plataforma [class*="__stopLabel"],
+    #explicabilidade [class*="__stepLabel"],
+    #contato dt,
+    footer [class*="__tagline"],
+    [data-opening="invite"],
+    #plataforma [class*="__pendingLabel"]
+  ) {
+  font-family: "ARARAT Titulo", "ARARAT Rotulo Reserva", system-ui, sans-serif;
+}
+
+/* ── Composição A (copiada de tipografia-a.css; /previa/a fica intacta) ──────────────────────────────────────────────────────────────────
+   Space Grotesk é mais estreita que Montserrat 700 e tem detalhes próprios (a, g, t): o título
+   ganha tamanho e perde peso (600 → presença sem massa); tracking mais fechado no desktop.
+   Valores de composição para revisão, não aprovados. */
+[data-tipografia="refinada"] #hero-title {
+  font-weight: 600;
+  font-size: clamp(2.6rem, 6.7vw, 5.85rem);
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  max-width: 8.398em; /* 13ch da Space Grotesk 600 (0 = 0,646 em) */
+}
+[data-tipografia="refinada"] [data-opening="content"] p:not(.eyebrow):not(.ill-note) {
+  font-size: clamp(1.1rem, 1.45vw, 1.28rem);
+  line-height: 1.5;
+  max-width: 20.874em; /* 42ch da Source Sans 3 (0 = 0,497 em) */
+}
+[data-tipografia="refinada"] .eyebrow {
+  font-weight: 500;
+  letter-spacing: 0.22em;
+}
+[data-tipografia="refinada"] .btn {
+  font-family: var(--font-title);
+  font-weight: 500;
+  font-size: 1rem;
+  letter-spacing: 0;
+}
+[data-tipografia="refinada"] header nav a:not(.btn) {
+  font-family: var(--font-title);
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: 0;
+}
+/* Títulos de seção: 500 grande (sem massa), tracking −0,03em, entrelinha 1,04; quebra
+   equilibrada como na base ("Do Hub ao Viewer, / em quatro passos."). */
+[data-tipografia="refinada"] main section h2 {
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.04;
+}
+[data-tipografia="refinada"] #plataforma > div > header h2,
+[data-tipografia="refinada"] #explicabilidade h2 {
+  font-size: clamp(2.2rem, 4.5vw, 3.75rem);
+  max-width: 9.675em; /* 15ch da Space Grotesk 500 (0 = 0,645 em) */
+}
+/* Subtítulos e rótulos pequenos: 600 (peso necessário em corpo pequeno). */
+[data-tipografia="refinada"] main h3 {
+  font-weight: 600; /* tracking dos rótulos em caixa-alta (h3 de seção) mantido */
+}
+/* Corpo (Source Sans 3): 18 px desktop, entrelinha 1,6; leads um passo acima. */
+[data-tipografia="refinada"] main section p {
+  line-height: 1.6;
+}
+[data-tipografia="refinada"] #plataforma header p,
+[data-tipografia="refinada"] #explicabilidade header p {
+  font-size: 1.25rem;
+  line-height: 1.55;
+  max-width: 21.868em; /* 44ch da Source Sans 3 */
+}
+[data-tipografia="refinada"] .ill-note {
+  font-size: 0.95rem;
+  letter-spacing: 0;
+}
+
+@media (max-width: 600px) {
+  [data-tipografia="refinada"] {
+    --fs-body: 1.0625rem;
+  }
+  [data-tipografia="refinada"] #hero-title {
+    font-size: clamp(2.45rem, 11.6vw, 3.35rem);
+    letter-spacing: -0.025em;
+    line-height: 1.04;
+  }
+  [data-tipografia="refinada"] #plataforma > div > header h2,
+  [data-tipografia="refinada"] #explicabilidade h2 {
+    font-size: clamp(2rem, 9vw, 2.5rem);
+    letter-spacing: -0.025em;
+  }
+  [data-tipografia="refinada"] #plataforma header p,
+  [data-tipografia="refinada"] #explicabilidade header p {
+    font-size: 1.125rem;
+  }
+}
+
+/* Telas baixas (como a base): título menor para a arte se anunciar já na 1ª tela. */
+@media (max-height: 760px) and (min-width: 601px) {
+  [data-tipografia="refinada"] #hero-title {
+    font-size: clamp(2.5rem, 5.9vw, 4.85rem);
+  }
+}
+
+/* Celular baixo (≤ 700 px de altura, como a base): título menor para a arte aparecer. */
+@media (max-width: 600px) and (max-height: 700px) {
+  [data-tipografia="refinada"] #hero-title {
+    font-size: clamp(2.15rem, 10.6vw, 2.85rem);
+  }
+}
+
+
+/* ── Pesos explícitos ──────────────────────────────────────────────────────────────
+   Pedidos dos componentes que não existem nos arquivos, trocados pelo peso que a /previa/a já
+   exibia (a faixa do @font-face antigo levava 300/400 → 500 e 700/800 → 600 nos títulos;
+   700 → 600 no corpo). Nenhuma mudança de aparência; só o CSS passa a dizer a verdade.
+   Conferência: tests/pesos-fontes.mjs (nenhum texto com peso fora de 500/600 · 400/600). */
+
+/* Títulos 700 → 600 */
+[data-tipografia="refinada"] #plataforma [class*="__routeNum"],
+[data-tipografia="refinada"] #plataforma [class*="__routeTitle"],
+[data-tipografia="refinada"] #plataforma [class*="__marker"],
+[data-tipografia="refinada"] #plataforma [class*="__pointNum"],
+[data-tipografia="refinada"] #plataforma [class*="__pointTitle"],
+[data-tipografia="refinada"] #plataforma [class*="__viewerTitle"],
+[data-tipografia="refinada"] #plataforma [class*="__groupTitle"],
+[data-tipografia="refinada"] #ciencia [class*="__partTitle"],
+[data-tipografia="refinada"] #ciencia [class*="__item"] dt,
+[data-tipografia="refinada"] #jornada [class*="__stepTitle"],
+[data-tipografia="refinada"] #explicabilidade [class*="__reading"] > li::before {
+  font-weight: 600;
+}
+/* Títulos 300/400 → 500 (número de parte da Ciência; etapas não selecionadas da jornada;
+   barras da Explicabilidade; links do rodapé) */
+[data-tipografia="refinada"] #ciencia [class*="__partNum"],
+[data-tipografia="refinada"] #jornada [class*="__stepButton"]:not([aria-pressed="true"]) [class*="__stepLabel"],
+[data-tipografia="refinada"] #jornada [class*="__stepNum"],
+[data-tipografia="refinada"] #explicabilidade [class*="__bars"] li > span,
+[data-tipografia="refinada"] footer nav a {
+  font-weight: 500;
+}
+/* Corpo 700 → 600 */
+[data-tipografia="refinada"] :is(strong, b) {
+  font-weight: 600;
+}
+
+/* ── Estado científico no hero (sem a explicação da escultura) ───────────────────────
+   "Plataforma em validação científica": contraste maior que a nota ilustrativa (gray-200 sobre
+   navy) e corpo 15 px; também no celular, numa linha curta. */
+[data-tipografia="refinada"] [data-opening="note"] {
+  color: var(--gray-200);
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+}
+/* Celular: a base oculta a linha (< 600 px de container) para dar lugar à arte. Na versão conjunta
+   ela volta em celulares com altura (≥ 740 px), onde não empurra os cumes para fora da 1ª tela;
+   em celulares baixos continua oculta (o estado segue na Ciência e nos avisos da demonstração). */
+@media (max-width: 600px) and (min-height: 740px) {
+  [data-tipografia="refinada"] [data-opening="note"] {
+    display: block;
+    font-size: 0.875rem;
+    margin-top: 10px;
+  }
+}
+
+/* ── Larguras em ch → em ─────────────────────────────────────────────────────────────
+   "ch" é a largura do 0 da fonte EM USO: com a reserva ativa (rede lenta/404) as medidas
+   encolhiam ~7 % nos títulos (0 da Arial ajustada mais estreito) e alargavam ~4 % no corpo,
+   mudando quebras. Aqui ficam fixadas em em, com o 0 da fonte final — mesma medida que a
+   /previa/a exibe (Space Grotesk 500/600: 0,645/0,646 em · Source Sans 3 400: 0,497 em). */
+[data-tipografia="refinada"] #contato [class*="Contact-module"][class*="__title"] {
+  max-width: 11.61em; /* 18ch */
+}
+[data-tipografia="refinada"] #ciencia [class*="__statement"] {
+  max-width: 18.088em; /* 28ch, Space Grotesk 600 */
+}
+[data-tipografia="refinada"] #ciencia [class*="Science-module"][class*="__lead"] {
+  max-width: 25.844em; /* 52ch */
+}
+[data-tipografia="refinada"] #ciencia [class*="__partNote"] {
+  max-width: 16.898em; /* 34ch */
+}
+[data-tipografia="refinada"] #ciencia [class*="Science-module"][class*="__disclaimer"] {
+  max-width: 34.79em; /* 70ch */
+}
+[data-tipografia="refinada"] #plataforma [class*="__routeText"] {
+  max-width: 14.91em; /* 30ch */
+}
+@media (max-width: 959px) {
+  [data-tipografia="refinada"] #plataforma [class*="__routeText"] {
+    max-width: 22.862em; /* 46ch */
+  }
+}
+[data-tipografia="refinada"] #jornada [class*="__openingLead"] {
+  max-width: 19.88em; /* 40ch */
+}
+[data-tipografia="refinada"] #passagem [class*="Passage-module"][class*="__text"] {
+  max-width: 28.826em; /* 58ch */
+}
+
+/* Convite "Role para explorar": some logo no começo da passagem (o progresso é o mesmo da cena). */
+[data-opening="root"] [data-opening="invite"] {
+  opacity: calc(1 - var(--opening-p, 0) * 6);
+}

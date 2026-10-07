@@ -1,0 +1,477 @@
+.hero {
+  position: relative;
+  min-height: max(100svh, 720px);
+  max-height: 1100px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(120% 90% at 70% 40%, #14273c 0%, var(--navy-900) 45%, var(--navy-950) 100%);
+}
+
+.hero::after {
+  /* véu para legibilidade do texto sobre a cena */
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(8, 15, 24, 0.92) 0%, rgba(8, 15, 24, 0.55) 38%, rgba(8, 15, 24, 0) 62%),
+    linear-gradient(0deg, rgba(8, 15, 24, 0.95) 0%, rgba(8, 15, 24, 0) 40%);
+  pointer-events: none;
+}
+
+.art {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-top: var(--header-h);
+}
+
+/* Quadro com a proporção nativa da RM (sem distorção); altura limitada para
+   não ampliar além de ~1× a base de 802 px. */
+.artInner {
+  position: relative;
+  aspect-ratio: var(--img-ar, 1);
+  height: min(calc(100% - 40px), 780px);
+  margin-right: clamp(0px, 2vw, 40px);
+  transform-origin: 60% 50%;
+}
+
+.mri {
+  display: block;
+}
+
+:global(html[data-motion="paused"]) .artInner {
+  animation: none !important;
+}
+
+/* ───────── Abertura integrada (≈1,2 s) ─────────
+   Os nomes das animações vêm de variáveis --intro-* que só existem enquanto o
+   <style id="ararat-intro"> (injetado antes da 1ª pintura) estiver presente.
+   Sem ele — retorno na sessão, hash, pausa, movimento reduzido, sem JS — o
+   estado final é exibido direto. Keyframes globais em styles/site.css. */
+.mri {
+  animation: var(--intro-focus, none) 700ms var(--ease-out) both;
+}
+
+/* Arco: 0–250 ms aparece compacto (r = 44 px da base) no centro da arte, 0–700 ms
+   desenha, 250–950 ms cresce (raio geométrico) e desloca até o foco, 950–1150 ms
+   assentado. Termina na geometria permanente (transform none). */
+.arc {
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 0;
+  transform-box: view-box;
+  animation: var(--intro-arc, none) 1150ms linear both;
+}
+
+.arcFaint,
+.ticks,
+.leaders,
+.callouts {
+  animation: var(--intro-fade, none) 300ms var(--ease-out) 900ms both;
+}
+
+.introWord {
+  animation: var(--intro-word, none) 600ms var(--ease-out) both;
+  animation-delay: calc(120ms + var(--i, 0) * 80ms);
+}
+
+.introFade {
+  animation: var(--intro-fade, none) 320ms var(--ease-out) both;
+}
+
+.introLine {
+  animation: var(--intro-line, none) 450ms var(--ease-out) 300ms both;
+}
+
+.introLate {
+  animation-delay: 420ms;
+}
+
+:global(html[data-motion="paused"]) .mri,
+:global(html[data-motion="paused"]) .arc,
+:global(html[data-motion="paused"]) .arcFaint,
+:global(html[data-motion="paused"]) .ticks,
+:global(html[data-motion="paused"]) .leaders,
+:global(html[data-motion="paused"]) .callouts,
+:global(html[data-motion="paused"]) .introWord,
+:global(html[data-motion="paused"]) .introFade,
+:global(html[data-motion="paused"]) .introLine {
+  animation: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mri,
+  .arc,
+  .arcFaint,
+  .ticks,
+  .leaders,
+  .callouts,
+  .introWord,
+  .introFade,
+  .introLine {
+    animation: none !important;
+  }
+}
+
+
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    /* Profundidade (proposta A): ao sair do hero, a cena se aproxima — "entrar na imagem". */
+    .artInner {
+      animation: dive linear both;
+      animation-timeline: view();
+      animation-range: exit 0% exit 100%;
+    }
+  }
+}
+
+@keyframes dive {
+  to {
+    transform: scale(1.18);
+    opacity: 0.3;
+  }
+}
+
+.marks {
+  pointer-events: none;
+}
+
+.arc {
+  fill: none;
+  stroke: var(--gold-500);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.arcFaint {
+  fill: none;
+  stroke: rgba(212, 175, 55, 0.45);
+  stroke-width: 1.2;
+  stroke-dasharray: 2 6;
+  vector-effect: non-scaling-stroke;
+}
+
+.ticks,
+.leader {
+  fill: none;
+  stroke: var(--gold-500);
+  stroke-width: 1.2;
+  vector-effect: non-scaling-stroke;
+}
+
+.dot {
+  fill: var(--gold-400);
+}
+
+.callouts {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.callout {
+  position: absolute;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  background: rgba(8, 15, 24, 0.72);
+  backdrop-filter: blur(4px);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--white-100);
+  white-space: nowrap;
+}
+
+.above {
+  transform: translateY(calc(-100% - 8px));
+}
+
+.below {
+  transform: translateY(8px);
+}
+
+.content {
+  position: relative;
+  padding-top: calc(var(--header-h) + 48px);
+  padding-bottom: clamp(40px, 7vh, 88px);
+}
+
+.title {
+  margin-top: 18px;
+  font-size: clamp(3.1rem, 7.2vw, 7rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+}
+
+.subtitle {
+  margin-top: 14px;
+  font-family: var(--font-title);
+  font-size: clamp(1.5rem, 3.4vw, 3rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--white-100);
+}
+
+.description {
+  margin-top: 22px;
+  max-width: 56ch;
+  font-size: 1.075rem;
+  color: var(--gray-200);
+}
+
+.actions {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.steps {
+  margin-top: clamp(32px, 6vh, 64px);
+  max-width: 760px;
+}
+
+.steps ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid rgba(176, 184, 193, 0.28);
+}
+
+.steps li {
+  position: relative;
+}
+
+.steps li[data-first]::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 60%;
+  height: 2px;
+  background: var(--gold-500);
+}
+
+.steps a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding-top: 10px;
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  color: var(--gray-200);
+  text-decoration: none;
+}
+
+.steps a:hover {
+  color: var(--gold-300);
+}
+
+.steps li[data-first] a {
+  color: var(--white-100);
+  font-weight: 600;
+}
+
+.stepDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+}
+
+.steps li[data-first] .stepDot {
+  background: var(--gold-500);
+  border-color: var(--gold-500);
+}
+
+.note {
+  position: absolute;
+  right: var(--gutter);
+  bottom: 20px;
+  margin: 0;
+}
+
+@media (max-width: 1080px) {
+  .callouts,
+  .leaders {
+    display: none;
+  }
+}
+
+/* Tablet: texto e exame lado a lado, sem texto sobre o tecido. */
+@media (min-width: 761px) and (max-width: 1080px) {
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    min-height: auto;
+    max-height: none;
+    padding-top: var(--header-h);
+  }
+
+  .hero::after {
+    display: none;
+  }
+
+  .art {
+    position: relative;
+    inset: auto;
+    grid-column: 2;
+    grid-row: 1;
+    padding: 24px var(--gutter) 24px 0;
+    justify-content: center;
+    z-index: 0;
+  }
+
+  .artInner {
+    width: 100%;
+    height: auto;
+    margin: 0;
+  }
+
+  .content {
+    grid-column: 1;
+    grid-row: 1;
+    padding-top: 32px;
+    padding-bottom: 32px;
+    padding-right: 12px;
+  }
+
+  .title {
+    font-size: clamp(3rem, 7.4vw, 4.6rem);
+  }
+
+  .subtitle {
+    font-size: 1.45rem;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+
+  .actions .btn {
+    flex: 1 1 100%;
+    justify-content: space-between;
+  }
+
+  .steps ol {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .note {
+    position: static;
+    grid-column: 1 / -1;
+    padding: 0 var(--gutter) 24px;
+  }
+}
+
+@media (max-width: 760px) {
+  .hero {
+    min-height: auto;
+    max-height: none;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .art {
+    position: relative;
+    inset: auto;
+    padding-top: 0;
+    margin-top: var(--header-h);
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .artInner {
+    /* quadro mais baixo (3:2): corta topo/base, mantém pelve e região central */
+    aspect-ratio: 3 / 2;
+    height: auto;
+    width: min(100%, 560px);
+    margin: 0 auto;
+    opacity: 1;
+    animation: none;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 9%, #000 86%, transparent 100%);
+    mask-image: linear-gradient(180deg, transparent 0, #000 9%, #000 86%, transparent 100%);
+  }
+
+  .hero::after {
+    display: none;
+  }
+
+  .content {
+    padding-top: 0;
+    margin-top: 4px;
+    padding-bottom: 48px;
+  }
+
+  .title {
+    margin-top: 10px;
+    font-size: clamp(2.7rem, 12.6vw, 4.2rem);
+  }
+
+  .subtitle {
+    margin-top: 8px;
+    font-size: 1.3rem;
+  }
+
+  .description {
+    margin-top: 14px;
+    font-size: 0.98rem;
+    line-height: 1.55;
+  }
+
+  .actions {
+    margin-top: 20px;
+    gap: 10px;
+  }
+
+  .steps {
+    margin-top: 28px;
+  }
+
+  .steps ol {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .note {
+    position: static;
+    padding: 0 var(--gutter) 24px;
+  }
+
+  .actions .btn {
+    flex: 1 1 100%;
+    justify-content: space-between;
+  }
+}
+
+/* Atmosfera opcional (pacote Motion): atrás da RM, sem texto nem anatomia. */
+.atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-size: cover;
+  background-position: center right;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Tablet/celular: o exame fica em bloco próprio; a atmosfera (pensada para o
+   quadro amplo do desktop) não é exibida e permanece pausada fora da tela. */
+@media (max-width: 1080px) {
+  .atmosphere {
+    display: none;
+  }
+}

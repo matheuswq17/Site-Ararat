@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "name": "ararat-journey",
+  "version": "0.4.0",
+  "status": "ready",
+  "builtAt": "2026-10-02T17:32:08.610Z",
+  "entry": "web/journey.js",
+  "stylesheet": "web/journey.css",
+  "poster": "assets/journey-poster.webp",
+  "posterWidth": 1600,
+  "posterHeight": 900,
+  "implementation": "svg",
+  "renderer": "Imagem raster (mri-base.webp) com transformação CSS + SVG alinhado (segmentação, dados, conexões) + Canvas2D só para o plano elevado da glândula",
+  "baseImage": "assets/mri-base.webp",
+  "overlayMap": "assets/mri-map.json",
+  "poseStills": [
+    "assets/journey-pose-0.webp",
+    "assets/journey-pose-1.webp",
+    "assets/journey-pose-2.webp",
+    "assets/journey-pose-3.webp"
+  ],
+  "exports": [
+    "createJourneyScene"
+  ],
+  "capabilities": [
+    "image-load-attribute-v1",
+    "journey-layout-event-v1"
+  ],
+  "layoutEvent": {
+    "name": "ararat:journey-layout",
+    "target": "container passado a createJourneyScene (bubbles: false)",
+    "ids": [
+      "shape",
+      "texture",
+      "intensity"
+    ],
+    "anchor": "x/y normalizados 0..1 do ponto central da BORDA INFERIOR do rótulo; Site usa translate(-50%,-100%); espaço reservado de 90×24 px CSS acima de cada traço",
+    "emphasis": "texture durante o foco didático da Explicação (progress ≥ ~0,80); null nas demais poses. Ilustrativo, não é inferência."
+  },
+  "hero": {
+    "entry": "web/hero-atmosphere.js",
+    "stylesheet": "web/hero-atmosphere.css",
+    "poster": "assets/hero-atmosphere-poster.webp",
+    "posterWidth": 1600,
+    "posterHeight": 900,
+    "exports": [
+      "createHeroAtmosphere"
+    ]
+  },
+  "states": {
+    "imagem": 0,
+    "segmentacao": 0.3333333333333333,
+    "dados": 0.6666666666666666,
+    "explicacao": 1
+  },
+  "featureOrder": [
+    "forma",
+    "textura",
+    "intensidade"
+  ],
+  "illustrative": true,
+  "demonstrative": true,
+  "notes": "RM axial demonstrativa de origem a confirmar (licença/desidentificação pendentes). Máscaras derivadas da sobreposição demonstrativa fornecida; região = subregião central da segmentação, exemplo didático, não lesão. Histograma = valores 8-bit do PNG, ilustrativo. Contribuições ilustrativas, sem números. Nada disso é resultado do ARARAT ou validação clínica.",
+  "files": [
+    {
+      "path": "web/journey.js",
+      "role": "entry",
+      "sizeBytes": 37065
+    },
+    {
+      "path": "web/journey.css",
+      "role": "stylesheet",
+      "sizeBytes": 1287
+    },
+    {
+      "path": "web/hero-atmosphere.js",
+      "role": "hero-entry",
+      "sizeBytes": 5879
+    },
+    {
+      "path": "web/hero-atmosphere.css",
+      "role": "hero-stylesheet",
+      "sizeBytes": 3344
+    },
+    {
+      "path": "assets/mri-map.json",
+      "role": "overlay-map",
+      "sizeBytes": 4102,
+      "width": 806,
+      "height": 802
+    },
+    {
+      "path": "assets/hero-atmosphere-poster.webp",
+      "role": "hero-poster",
+      "sizeBytes": 18112,
+      "width": 1600,
+      "height": 900
+    },
+    {
+      "path": "assets/journey-pose-0.webp",
+      "role": "pose-still",
+      "sizeBytes": 55350,
+      "width": 1440,
+      "height": 810,
+      "progress": 0
+    },
+    {
+      "path": "assets/journey-pose-1.webp",
+      "role": "pose-still",
+      "sizeBytes": 56576,
+      "width": 1440,
+      "height": 810,
+      "progress": 0.3333333333333333
+    },
+    {
+      "path": "assets/journey-pose-2.webp",
+      "role": "pose-still",
+      "sizeBytes": 55182,
+      "width": 1440,
+      "height": 810,
+      "progress": 0.6666666666666666
+    },
+    {
+      "path": "assets/journey-pose-3.webp",
+      "role": "pose-still",
+      "sizeBytes": 52122,
+      "width": 1440,
+      "height": 810,
+      "progress": 1
+    },
+    {
+      "path": "assets/journey-poster.webp",
+      "role": "poster",
+      "sizeBytes": 62248,
+      "width": 1600,
+      "height": 900
+    },
+    {
+      "path": "assets/mri-base.webp",
+      "role": "base-image",
+      "sizeBytes": 126756,
+      "width": 806,
+      "height": 802
+    }
+  ]
+}

@@ -1,0 +1,416 @@
+{
+  "schemaVersion": 1,
+  "name": "ararat-home-montanha-exp",
+  "version": "0.4.0-draft",
+  "status": "draft",
+  "scope": "Somente a rota /previa (integração local experimental). Não substitui home-v2 0.2.1-draft nem o pacote journey 0.4.0 ready de /motion/. Sem aprovação visual final.",
+  "builtAt": "2026-10-06T01:17:09.639Z",
+  "sculpture": {
+    "entry": "web/home-sculpture.js",
+    "exports": [
+      "createHomeSculpture",
+      "createMountainSculpture",
+      "homeComposition",
+      "VERSION"
+    ],
+    "driver": {
+      "entry": "web/previa-driver.js",
+      "exports": [
+        "connectHomeSculpture"
+      ],
+      "note": "o mesmo da home-v2: liga a escultura ao layout real da /previa (art, target, ready, arc, p)"
+    },
+    "implementation": "canvas2d",
+    "representation": "Montanha B (escolhida pelo usuário), refinada: interpretação topográfica da marca ARARAT — não é geografia exata do monte real nem anatomia.",
+    "passage": "montanha → mapa topográfico (a câmera sobe) → janela circular sobre a RM real da jornada; só pelo progresso p (sem relógio próprio); entrega do arco start-arc-v1 como na 0.2.1",
+    "rest": "em repouso não há movimento ambiente nem laço de quadros",
+    "artPosters": {
+      "arte-escultura-desktop": {
+        "versao": "0.4.0-draft",
+        "pose": "assentada (abertura concluída, passagem 0) — idêntica ao 1º quadro do módulo nessa área",
+        "areaCss": {
+          "w": 1100,
+          "h": 660,
+          "aspect": "5:3 (slot desktop da /previa)",
+          "ratio": 1.667
+        },
+        "pixels": {
+          "w": 2200,
+          "h": 1320,
+          "scale": 2
+        },
+        "background": {
+          "navy": "#0D1B2A (navy-900)",
+          "transparente": "alfa; usar sobre o fundo do hero"
+        },
+        "objeto": {
+          "note": "px CSS da área: cume e pico secundário da montanha; arco dourado atrás dos cumes",
+          "cume": {
+            "x": 550,
+            "y": 83.2
+          },
+          "secundario": {
+            "x": 291.3,
+            "y": 151
+          },
+          "arco": {
+            "cx": 550,
+            "cy": 317.2,
+            "r": 308,
+            "de": 172,
+            "ate": 368,
+            "topo": 9.2,
+            "pontas": "dissolvidas (~14°) atrás do sopé"
+          },
+          "layout": "wide",
+          "simplificado": false
+        },
+        "traco": "curvas e arco com largura fixa em px CSS (como o canvas): este arquivo só tem o traço exato quando exibido a 1100 px de largura; para outras larguras, use as variantes de arte-escultura-variantes.json",
+        "regra": "arcR = min(0,28·w, 0,5·h, 340) (w ≥ 600) ou min(0,44·w, 0,56·h); topo do arco a ~3% de arcR do topo da área; cume a 0,24·arcR abaixo do topo do arco.",
+        "representacao": "Interpretação topográfica da montanha da marca ARARAT — não é geografia exata do monte real nem anatomia."
+      },
+      "arte-escultura-movel": {
+        "versao": "0.4.0-draft",
+        "pose": "assentada (abertura concluída, passagem 0) — idêntica ao 1º quadro do módulo nessa área",
+        "areaCss": {
+          "w": 390,
+          "h": 312,
+          "aspect": "5:4 (slot celular da /previa)",
+          "ratio": 1.25
+        },
+        "pixels": {
+          "w": 780,
+          "h": 624,
+          "scale": 2
+        },
+        "background": {
+          "navy": "#0D1B2A (navy-900)",
+          "transparente": "alfa; usar sobre o fundo do hero"
+        },
+        "objeto": {
+          "note": "px CSS da área: cume e pico secundário da montanha; arco dourado atrás dos cumes",
+          "cume": {
+            "x": 195,
+            "y": 47.2
+          },
+          "secundario": {
+            "x": 63.4,
+            "y": 81.7
+          },
+          "arco": {
+            "cx": 195,
+            "cy": 177.6,
+            "r": 171.6,
+            "de": 172,
+            "ate": 368,
+            "topo": 6,
+            "pontas": "dissolvidas (~14°) atrás do sopé"
+          },
+          "layout": "narrow",
+          "simplificado": true
+        },
+        "traco": "curvas e arco com largura fixa em px CSS (como o canvas): este arquivo só tem o traço exato quando exibido a 390 px de largura; para outras larguras, use as variantes de arte-escultura-variantes.json",
+        "regra": "arcR = min(0,28·w, 0,5·h, 340) (w ≥ 600) ou min(0,44·w, 0,56·h); topo do arco a ~3% de arcR do topo da área; cume a 0,24·arcR abaixo do topo do arco.",
+        "representacao": "Interpretação topográfica da montanha da marca ARARAT — não é geografia exata do monte real nem anatomia."
+      }
+    },
+    "artPosterVariants": "assets/arte-escultura-variantes.json",
+    "artPosterNote": "Curvas e arco têm largura fixa em px CSS. Exiba a variante desenhada na largura do slot (arte-escultura-variantes.json: famílias narrow < 600 px e wide ≥ 600 px, 1x/2x; pictureSlotSite segue a regra do leitor do Site). Os nomes canônicos (arte-escultura-{desktop,movel}[-transparente].webp) são 1100 e 390 px CSS, 2x."
+  },
+  "journey": {
+    "entry": "web/journey.js",
+    "stylesheet": "web/journey.css",
+    "version": "0.4.1-exp",
+    "basedOn": "0.4.0 (ready)",
+    "exports": [
+      "createJourneyScene",
+      "getJourneyStartArc"
+    ],
+    "extensions": {
+      "start-arc-v1": "scene.getStartArc() → {cx,cy,r,a0,span,opacity,width,W,H} em px do container, ou null até a imagem e o mapa estarem prontos; o mesmo valor em data-start-arc (JSON) no nó .ararat-journey; export puro getJourneyStartArc(map,W,H). Aditivo: API v1/v1.1, evento e poses inalterados."
+    },
+    "capabilities": [
+      "image-load-attribute-v1",
+      "journey-layout-event-v1",
+      "start-arc-v1"
+    ]
+  },
+  "integrity": {
+    "note": "sizeBytes e sha256 valem para os arquivos COMO ESTÃO NO DESTINO. A transferência para a máquina do usuário acrescenta a cada WebP um bloco C2PA (credenciais de conteúdo) de 5.768 bytes; os pixels não mudam. Recalcule no destino com scripts/sync-manifest.mjs e confira com --check (também depois de copiar para site/public/previa/...).",
+    "computedAt": "destino, 2026-10-06T01:24:13.138Z"
+  },
+  "files": [
+    {
+      "path": "web/home-sculpture.js",
+      "sizeBytes": 43526,
+      "sha256": "281fecee635db1cfb80c02287bf268f37a391ef6627d87e55a3468118322da6d"
+    },
+    {
+      "path": "web/journey.css",
+      "sizeBytes": 1287,
+      "sha256": "8d67158a3e9221376a0211f4efe8f16fc29fdb8a600681547e7db21358fd4730"
+    },
+    {
+      "path": "web/journey.js",
+      "sizeBytes": 38944,
+      "sha256": "0a490148e994921563fe493cc41323570b67954bf745ee4c3174c68270109c66"
+    },
+    {
+      "path": "web/previa-driver.js",
+      "sizeBytes": 3811,
+      "sha256": "f3ba20b4a991658748190a544ef63db8f7fa5517a7217221104c1fd9e87372fb"
+    },
+    {
+      "path": "assets/arte-escultura-desktop-transparente.webp",
+      "sizeBytes": 264646,
+      "sha256": "47c9bb23fb89c58b7cfe2387fac58b75f9bcaae1247bc7c57a2e5bb5b8cafd50",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-desktop-w1040@1x.webp",
+      "sizeBytes": 98246,
+      "sha256": "c81a92871aacc64240ad862bb50177e5ee773617d824c09ee91ea3ff6f7273ef",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-desktop-w1040@2x.webp",
+      "sizeBytes": 245016,
+      "sha256": "1500561bbef0a5e54e79e40623b802dee40e80cd96b9714538b66f303426dde1",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-desktop-w1100@1x.webp",
+      "sizeBytes": 106430,
+      "sha256": "0082627166dadc18cec38f15eff5246aad021d5316d7672f4fa7abd9f4c082d9",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-desktop-w1100@2x.webp",
+      "sizeBytes": 264646,
+      "sha256": "2300a0509e341b1bace9d9f3c7119e8dcb0dc2681fc61e54a28c7568b2e8675a",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-desktop-w600@1x.webp",
+      "sizeBytes": 48180,
+      "sha256": "14b101222e0a376c107d519ac82db6a06d1c17a16cc2a0c9f18a334a6397fa6d",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-desktop-w600@2x.webp",
+      "sizeBytes": 114970,
+      "sha256": "1a84be6c504ba49a79462654dc13d12641e7262230cafce93bc9600006e7f833",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-desktop-w680@1x.webp",
+      "sizeBytes": 56742,
+      "sha256": "3ebd95486bb43817500bebe9fea94c67ecfbf4650ca0494efd7bd11c25e53457",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-desktop-w680@2x.webp",
+      "sizeBytes": 136054,
+      "sha256": "e65036f10d1ababce538965209da5602653fe8f5d4dbba695eb4d2388f7d1ecb",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-desktop-w768@1x.webp",
+      "sizeBytes": 66510,
+      "sha256": "40cca4780fd0ff57f1012a845c4739eae8a347a1ec10ebc19123b62214c82017",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-desktop-w768@2x.webp",
+      "sizeBytes": 161380,
+      "sha256": "e8035f8c07e0a86092f81480b4b556165b991ff3a04638379f97060e125d79d3",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-desktop-w860@1x.webp",
+      "sizeBytes": 77428,
+      "sha256": "fd463e8ee0af8d69d0decf5933851e23d51be6a78577eca643f9477e1bc168aa",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-desktop-w860@2x.webp",
+      "sizeBytes": 188480,
+      "sha256": "7d548fcac972fd00bcaaac78f5aaacaa958dbdbb4882542f46a27a5b16bee537",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-desktop-w960@1x.webp",
+      "sizeBytes": 89000,
+      "sha256": "5c50da8583b762c00a4a1ba311c498b834d6fbd2344000cb03a1c0ad8ff3ae64",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-desktop-w960@2x.webp",
+      "sizeBytes": 219780,
+      "sha256": "189e817008c14deab6c85320d5f4a0620fed880cedcb46b7612b8fe00a47aab5",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-desktop.json",
+      "sizeBytes": 1412,
+      "sha256": "bc8696825f55a94ccabfe9a2665c5887159fd8d9693d12cf2887477a841a9133"
+    },
+    {
+      "path": "assets/arte-escultura-desktop.webp",
+      "sizeBytes": 64842,
+      "sha256": "3bac2ab2109ecbf79057de2f8e9ef1d45dde79cee2f6a10a733b4a097cfb43e3",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-movel-transparente.webp",
+      "sizeBytes": 87348,
+      "sha256": "4ccdf911b1394b72c35d99332bf51eea18fd21fd0d01c5a32a5dd4990ed5137d",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-movel-w320@1x.webp",
+      "sizeBytes": 30278,
+      "sha256": "118af4529753ed9895e93e1a543bbf9735e68b3ccc979eecebe3ab2b852cd2ba",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-movel-w320@2x.webp",
+      "sizeBytes": 68212,
+      "sha256": "f20374e2150388771686781c1adb47adbf8a37ce0044a4452d45087bcef1d353",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-movel-w360@1x.webp",
+      "sizeBytes": 35364,
+      "sha256": "2f3f266bb35afdcc1312529e7271783bbba41b64885f0029b96c35f6867070cb",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-movel-w360@2x.webp",
+      "sizeBytes": 78594,
+      "sha256": "3e05d0e9a5bdfde7c1b9172b96a590a6a8bc3c264dfbfc5207c9286375d737c0",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-movel-w390@1x.webp",
+      "sizeBytes": 38052,
+      "sha256": "99330b06a65e21aa42b75c9e2f592ed3e30a9a8ec74301c3838cc84e02ac5653",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-movel-w390@2x.webp",
+      "sizeBytes": 87348,
+      "sha256": "98881d8431c765312c31b5f6ff94a4317528caf00e696a7a754be9751450b549",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-movel-w430@1x.webp",
+      "sizeBytes": 42552,
+      "sha256": "890cc0227cc6897654ce31f5af43288fd860c4b43e2cd7d62867acdb50c5d24e",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-movel-w430@2x.webp",
+      "sizeBytes": 98934,
+      "sha256": "a4ae58aa7994c9c9d71921fabeb5606ce9de594fef2faa61f95bcee52cc2e9fa",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-movel-w520@1x.webp",
+      "sizeBytes": 53938,
+      "sha256": "74c2efc19aa49c55151ee79101386ce69fdb4b6fc91486370b7a44fc32fd1e63",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-movel-w520@2x.webp",
+      "sizeBytes": 127292,
+      "sha256": "a5a3a87f364104edbf664ba633f2a0f898c373c5ad0b6b12b18a1ee22283ae9e",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-movel.json",
+      "sizeBytes": 1408,
+      "sha256": "3b76949fe7c300d55b7ed29a96638d79c157f7c7e4e7f75deb13405a5f3ad617"
+    },
+    {
+      "path": "assets/arte-escultura-movel.webp",
+      "sizeBytes": 26976,
+      "sha256": "42b170fe6aa1a0fc391873b796836b13ed0ec26b200433ecb27629642af786f7",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/arte-escultura-variantes.json",
+      "sizeBytes": 14852,
+      "sha256": "8de843d13bb5bbac84368e26f970355c87f8be62f6d3315dd15c2564cd28782e"
+    },
+    {
+      "path": "assets/mri-base.webp",
+      "sizeBytes": 126756,
+      "sha256": "93c08113b461df9e04521f232c66a7cc046ec100e92bcff9a4efb71a3e34b1b6",
+      "c2pa": {
+        "chunkBytes": 5768
+      }
+    },
+    {
+      "path": "assets/mri-map.json",
+      "sizeBytes": 4102,
+      "sha256": "28adad19a2e1a127bbc86f23a60afd48a4882ea1bfa689b025676e8209d171a7"
+    }
+  ]
+}

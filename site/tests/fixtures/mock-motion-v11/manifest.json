@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "status": "ready",
+  "version": "fixture-v1.1-0.0.1",
+  "entry": "web/journey.js",
+  "stylesheet": "web/journey.css",
+  "poster": "assets/journey-poster.webp",
+  "implementation": "svg",
+  "capabilities": [
+    "image-load-attribute-v1",
+    "journey-layout-event-v1"
+  ],
+  "hero": {
+    "entry": "web/hero-atmosphere.js",
+    "stylesheet": "web/hero-atmosphere.css",
+    "poster": "assets/hero-atmosphere-poster.webp"
+  },
+  "files": [
+    {
+      "path": "web/journey.js",
+      "sizeBytes": 1972
+    },
+    {
+      "path": "web/journey.css",
+      "sizeBytes": 60
+    },
+    {
+      "path": "web/hero-atmosphere.js",
+      "sizeBytes": 768
+    },
+    {
+      "path": "web/hero-atmosphere.css",
+      "sizeBytes": 129
+    },
+    {
+      "path": "assets/journey-poster.webp",
+      "sizeBytes": 936
+    },
+    {
+      "path": "assets/mri-base.webp",
+      "sizeBytes": 120052
+    },
+    {
+      "path": "assets/mri-map.json",
+      "sizeBytes": 3269
+    },
+    {
+      "path": "assets/hero-atmosphere-poster.webp",
+      "sizeBytes": 2672
+    }
+  ]
+}

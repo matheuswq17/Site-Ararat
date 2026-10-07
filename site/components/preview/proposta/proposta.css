@@ -1,0 +1,51 @@
+/* PROPOSTAS /previa/a e /previa/b — partes comuns (não afetam "/" nem a /previa base).
+   Escopo: o wrapper [data-proposta] (display: contents) ou html:has([data-proposta]). */
+
+/* Wordmark preservado: Montserrat, como no guia da marca. */
+[data-proposta] {
+  --font-brand: "Montserrat Variable", "Montserrat", system-ui, sans-serif;
+  font-synthesis: none; /* nunca negrito/itálico sintético com os pesos reduzidos */
+}
+
+/* ── Barra de rolagem da marca (nativa) ─────────────────────────────────────────────
+   Trilho navy #0D1B2A, indicador dourado #D4AF37.
+   · Firefox: propriedades padrão (scrollbar-color/width); forma e largura são do sistema.
+   · Chromium/Safari: ::-webkit-scrollbar — largura utilizável (12 px) e indicador arredondado.
+     (No Chromium, definir scrollbar-color desativa os pseudo-elementos; por isso as propriedades
+     padrão ficam só onde ::-webkit-scrollbar não existe.)
+   · Alto contraste (forced-colors): nada é aplicado; vale a barra do sistema.
+   · Celular: barras sobrepostas do sistema (iOS/Android ignoram ou mantêm o comportamento nativo).
+   Arraste, clique no trilho, roda e teclado continuam sendo os do navegador: é a barra nativa. */
+@media not (forced-colors: active) {
+  @supports not selector(::-webkit-scrollbar) {
+    html:has([data-proposta]) {
+      scrollbar-color: #d4af37 #0d1b2a;
+      scrollbar-width: auto;
+    }
+  }
+  html:has([data-proposta])::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+    background: #0d1b2a;
+  }
+  html:has([data-proposta])::-webkit-scrollbar-track {
+    background: #0d1b2a;
+  }
+  html:has([data-proposta])::-webkit-scrollbar-thumb {
+    background: #d4af37;
+    border-radius: 999px;
+    border: 3px solid #0d1b2a; /* respiro: indicador de 6 px visíveis dentro da área de 12 px */
+    min-height: 48px;
+  }
+  html:has([data-proposta])::-webkit-scrollbar-thumb:hover {
+    background: #e1c465;
+    border-width: 2px;
+  }
+  html:has([data-proposta])::-webkit-scrollbar-thumb:active {
+    background: #e8d27f;
+    border-width: 2px;
+  }
+  html:has([data-proposta])::-webkit-scrollbar-corner {
+    background: #0d1b2a;
+  }
+}

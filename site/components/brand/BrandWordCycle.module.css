@@ -1,0 +1,30 @@
+/* Palavras de reserva empilhadas numa só célula: a caixa tem a largura da mais longa desde o
+   servidor. O texto visível fica por cima (absoluto) e NÃO mede a caixa: letras transitórias mais
+   largas (M, W…) não mudam a largura da marca nem empurram nada. */
+.cycle {
+  position: relative;
+  display: inline-grid;
+  justify-items: start;
+}
+
+.reserve {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+}
+
+.text {
+  contain: layout style;
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+}
+
+.reserve {
+  visibility: hidden;
+}
+
+/* Sem mudança de cor, brilho ou cursor durante a troca: só as letras. */
+.text {
+  font-variant-ligatures: none;
+}

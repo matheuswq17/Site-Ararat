@@ -1,0 +1,91 @@
+.art {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-md);
+  background: var(--navy-950);
+}
+
+.art[data-image-failed] image {
+  display: none;
+}
+
+.ovForma,
+.ovIntensidade,
+.ovTextura {
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--ease-standard);
+}
+
+.art[data-selected="forma"] .ovForma,
+.art[data-selected="intensidade"] .ovIntensidade,
+.art[data-selected="textura"] .ovTextura {
+  opacity: 1;
+}
+
+.art[data-selected="intensidade"] .ovIntensidade {
+  opacity: 0.92;
+}
+
+.contour {
+  fill: none;
+  stroke: var(--gold-400);
+  stroke-width: 1.6;
+  vector-effect: non-scaling-stroke;
+}
+
+.contour[data-strong] {
+  stroke: var(--gold-500);
+  stroke-width: 2.4;
+}
+
+.window {
+  fill: none;
+  stroke: var(--gold-500);
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+}
+
+.texBox {
+  fill: none;
+  stroke: var(--gold-300);
+  stroke-width: 1.6;
+  stroke-dasharray: 4 3;
+  vector-effect: non-scaling-stroke;
+}
+
+.texLink {
+  fill: none;
+  stroke: var(--gold-500);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.insetFrame {
+  fill: none;
+  stroke: var(--gold-500);
+  stroke-width: 1.6;
+  vector-effect: non-scaling-stroke;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ovForma,
+  .ovIntensidade,
+  .ovTextura {
+    transition: none;
+  }
+}
+
+.glandLine {
+  fill: none;
+  stroke: rgba(245, 247, 250, 0.75);
+  stroke-width: 1.2;
+  vector-effect: non-scaling-stroke;
+}
+
+.roiLine {
+  fill: rgba(212, 175, 55, 0.12);
+  stroke: var(--gold-500);
+  stroke-width: 1.6;
+  vector-effect: non-scaling-stroke;
+}

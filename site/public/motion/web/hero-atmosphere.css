@@ -1,0 +1,89 @@
+/* ARARAT MODEL — atmosfera do hero v0.4. Escopo .ararat-hero-atm; sem reset global.
+   Só animações CSS de transform/opacity e um brilho no arco; suspensas por data-paused e removidas por data-reduced-motion. */
+.ararat-hero-atm {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  background: radial-gradient(110% 85% at 70% 42%, #14273c 0%, #0D1B2A 48%, #080f18 100%);
+  contain: layout paint;
+}
+.ararat-hero-atm .ararat-hero-atm__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.ararat-hero-atm .ararat-hero-atm__topo {
+  fill: none;
+  stroke: #B0B8C1;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.ararat-hero-atm .ararat-hero-atm__arc {
+  fill: none;
+  stroke: #D4AF37;
+  stroke-opacity: 0.2;
+  stroke-width: 1.2;
+  vector-effect: non-scaling-stroke;
+}
+.ararat-hero-atm .ararat-hero-atm__sweep {
+  fill: none;
+  stroke: #E1C465;
+  stroke-opacity: 0.6;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 46 1000;
+  stroke-dashoffset: 46;
+  opacity: 0; /* v0.4: sem brilho na pose estática; não compete com o arco de abertura do Site */
+}
+.ararat-hero-atm .ararat-hero-atm__far,
+.ararat-hero-atm .ararat-hero-atm__near,
+.ararat-hero-atm .ararat-hero-atm__light {
+  transform-box: view-box;
+  transform-origin: 74% 47%;
+}
+.ararat-hero-atm .ararat-hero-atm__far { animation: ararat-hero-atm-far 11s ease-in-out infinite alternate; }
+.ararat-hero-atm .ararat-hero-atm__near { animation: ararat-hero-atm-near 12s ease-in-out infinite alternate; }
+.ararat-hero-atm .ararat-hero-atm__light { animation: ararat-hero-atm-light 10s ease-in-out infinite alternate; }
+.ararat-hero-atm .ararat-hero-atm__sweep { animation: ararat-hero-atm-sweep 12s cubic-bezier(.45, 0, .55, 1) 1.6s infinite both; } /* v0.4: começa depois da abertura (≤1,4 s) */
+
+@keyframes ararat-hero-atm-far {
+  from { transform: translate(0, 0) rotate(0deg); }
+  to { transform: translate(-10px, 6px) rotate(0.6deg); }
+}
+@keyframes ararat-hero-atm-near {
+  from { transform: translate(0, 0); }
+  to { transform: translate(14px, -8px); }
+}
+@keyframes ararat-hero-atm-light {
+  from { transform: translate(-18px, 4px); opacity: 0.75; }
+  to { transform: translate(22px, -6px); opacity: 1; }
+}
+@keyframes ararat-hero-atm-sweep {
+  0% { stroke-dashoffset: 46; opacity: 0; }
+  12% { opacity: 1; }
+  70% { stroke-dashoffset: -1000; opacity: 1; }
+  78%, 100% { stroke-dashoffset: -1000; opacity: 0; }
+}
+.ararat-hero-atm[data-paused="true"] .ararat-hero-atm__far,
+.ararat-hero-atm[data-paused="true"] .ararat-hero-atm__near,
+.ararat-hero-atm[data-paused="true"] .ararat-hero-atm__light,
+.ararat-hero-atm[data-paused="true"] .ararat-hero-atm__sweep {
+  animation-play-state: paused;
+}
+.ararat-hero-atm[data-reduced-motion="true"] .ararat-hero-atm__far,
+.ararat-hero-atm[data-reduced-motion="true"] .ararat-hero-atm__near,
+.ararat-hero-atm[data-reduced-motion="true"] .ararat-hero-atm__light,
+.ararat-hero-atm[data-reduced-motion="true"] .ararat-hero-atm__sweep {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ararat-hero-atm .ararat-hero-atm__far,
+  .ararat-hero-atm .ararat-hero-atm__near,
+  .ararat-hero-atm .ararat-hero-atm__light,
+  .ararat-hero-atm .ararat-hero-atm__sweep { animation: none; }
+}

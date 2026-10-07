@@ -1,0 +1,126 @@
+/* PROPOSTA B — Sora 600 (títulos) + IBM Plex Sans 400/500 (corpo).
+   Fontes locais WOFF2 (subconjunto latin), licença OFL em public/previa/tipografia/fontes/.
+   Sora só em 600 (faixa 100–900 → mesmo arquivo; sem negrito sintético). Plex: 400 e 500. */
+@font-face {
+  font-family: "ARARAT B Titulo";
+  src: url("/previa/tipografia/fontes/sora/sora-latin-600-normal.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "ARARAT B Texto";
+  src: url("/previa/tipografia/fontes/ibm-plex-sans/ibm-plex-sans-latin-400-normal.woff2") format("woff2");
+  font-weight: 100 449;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "ARARAT B Texto";
+  src: url("/previa/tipografia/fontes/ibm-plex-sans/ibm-plex-sans-latin-500-normal.woff2") format("woff2");
+  font-weight: 450 900;
+  font-style: normal;
+  font-display: block;
+}
+
+[data-tipografia="b"] {
+  --font-title: "ARARAT B Titulo", "Sora", system-ui, sans-serif;
+  --font-body: "ARARAT B Texto", "IBM Plex Sans", system-ui, sans-serif;
+  /* Plex tem altura-x próxima de Open Sans: corpo 17 px, entrelinha mais aberta. */
+  --fs-body: 1.0625rem;
+  --fs-eyebrow: 0.74rem;
+}
+
+/* O corpo herda de <body> (já resolvido com a fonte base): o wrapper redefine a família. */
+[data-tipografia] {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+}
+
+/* ── Composição B ──────────────────────────────────────────────────────────────────
+   Sora é larga e geométrica: o título fica um pouco menor que na base, com tracking mais fechado
+   (−0,04em) e entrelinha 1,06 para os acentos não encostarem. Plex no corpo, botões e menus
+   (500), com entrelinha mais aberta. Valores de composição para revisão, não aprovados. */
+[data-tipografia="b"] #hero-title {
+  font-weight: 600;
+  font-size: clamp(2.35rem, 5.75vw, 5rem);
+  letter-spacing: -0.04em;
+  line-height: 1.06;
+  max-width: 14ch;
+}
+[data-tipografia="b"] [data-opening="content"] p:not(.eyebrow):not(.ill-note) {
+  font-size: clamp(1.05rem, 1.3vw, 1.16rem);
+  line-height: 1.6;
+  max-width: 44ch;
+}
+[data-tipografia="b"] .eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+}
+[data-tipografia="b"] .btn {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.97rem;
+  letter-spacing: 0.005em;
+}
+[data-tipografia="b"] header nav a:not(.btn) {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: 0;
+}
+[data-tipografia="b"] main section h2 {
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+}
+[data-tipografia="b"] #plataforma > div > header h2,
+[data-tipografia="b"] #explicabilidade h2 {
+  font-size: clamp(1.95rem, 3.8vw, 3.15rem);
+  max-width: 16ch;
+}
+[data-tipografia="b"] main h3 {
+  font-weight: 600; /* tracking dos rótulos em caixa-alta (h3 de seção) mantido */
+}
+[data-tipografia="b"] main section p {
+  line-height: 1.65;
+}
+[data-tipografia="b"] #plataforma header p,
+[data-tipografia="b"] #explicabilidade header p {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  max-width: 46ch;
+}
+[data-tipografia="b"] .ill-note {
+  font-size: 0.9rem;
+  letter-spacing: 0;
+}
+
+@media (max-width: 600px) {
+  [data-tipografia="b"] #hero-title {
+    font-size: clamp(2.15rem, 10.2vw, 2.95rem);
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+  }
+  [data-tipografia="b"] #plataforma > div > header h2,
+  [data-tipografia="b"] #explicabilidade h2 {
+    font-size: clamp(1.8rem, 8vw, 2.25rem);
+    letter-spacing: -0.03em;
+  }
+  [data-tipografia="b"] #plataforma header p,
+  [data-tipografia="b"] #explicabilidade header p {
+    font-size: 1.0625rem;
+  }
+}
+
+@media (max-height: 760px) and (min-width: 601px) {
+  [data-tipografia="b"] #hero-title {
+    font-size: clamp(2.3rem, 5.1vw, 4.2rem);
+  }
+}
+
+@media (max-width: 600px) and (max-height: 700px) {
+  [data-tipografia="b"] #hero-title {
+    font-size: clamp(2rem, 9.4vw, 2.55rem);
+  }
+}

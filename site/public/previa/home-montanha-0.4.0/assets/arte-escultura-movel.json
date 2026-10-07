@@ -1,0 +1,44 @@
+{
+  "versao": "0.4.0-draft",
+  "pose": "assentada (abertura concluída, passagem 0) — idêntica ao 1º quadro do módulo nessa área",
+  "areaCss": {
+    "w": 390,
+    "h": 312,
+    "aspect": "5:4 (slot celular da /previa)",
+    "ratio": 1.25
+  },
+  "pixels": {
+    "w": 780,
+    "h": 624,
+    "scale": 2
+  },
+  "background": {
+    "navy": "#0D1B2A (navy-900)",
+    "transparente": "alfa; usar sobre o fundo do hero"
+  },
+  "objeto": {
+    "note": "px CSS da área: cume e pico secundário da montanha; arco dourado atrás dos cumes",
+    "cume": {
+      "x": 195,
+      "y": 47.2
+    },
+    "secundario": {
+      "x": 63.4,
+      "y": 81.7
+    },
+    "arco": {
+      "cx": 195,
+      "cy": 177.6,
+      "r": 171.6,
+      "de": 172,
+      "ate": 368,
+      "topo": 6,
+      "pontas": "dissolvidas (~14°) atrás do sopé"
+    },
+    "layout": "narrow",
+    "simplificado": true
+  },
+  "traco": "curvas e arco com largura fixa em px CSS (como o canvas): este arquivo só tem o traço exato quando exibido a 390 px de largura; para outras larguras, use as variantes de arte-escultura-variantes.json",
+  "regra": "arcR = min(0,28·w, 0,5·h, 340) (w ≥ 600) ou min(0,44·w, 0,56·h); topo do arco a ~3% de arcR do topo da área; cume a 0,24·arcR abaixo do topo do arco.",
+  "representacao": "Interpretação topográfica da montanha da marca ARARAT — não é geografia exata do monte real nem anatomia."
+}

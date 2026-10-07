@@ -1,0 +1,37 @@
+.inner {
+  grid-template-columns: minmax(0, 1.1fr) auto minmax(0, 1fr);
+}
+
+.brand {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+
+.logo {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 44px;
+  align-items: center;
+  text-decoration: none;
+}
+
+/* Tagline do logo oficial, agora em texto: caixa-alta espaçada como no logo, 13 px, legível. */
+.tagline {
+  max-width: 34ch;
+  font-family: var(--font-title);
+  font-weight: 500;
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1.6;
+  color: var(--gray-200);
+}
+
+@media (max-width: 760px) {
+  .inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* (o encolhimento da marca em telas estreitas fica no próprio BrandMark, tamanho lgFit) */

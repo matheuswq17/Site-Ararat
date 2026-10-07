@@ -1,0 +1,132 @@
+.mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--white-100);
+}
+
+.icon {
+  width: 54px;
+  height: auto;
+}
+
+.word {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  /* --font-brand: o wordmark não muda com a tipografia das propostas (/previa/a, /previa/b). */
+  font-family: var(--font-brand, var(--font-title));
+  line-height: 1;
+}
+
+.ararat {
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.32em;
+}
+
+.model {
+  font-weight: 400;
+  font-size: 1.05rem;
+  letter-spacing: 0.32em;
+  color: var(--gray-200);
+}
+
+.lg .icon {
+  width: 72px;
+}
+
+.lg .ararat,
+.lg .model {
+  font-size: 1.25rem;
+}
+
+/* r06 — telas estreitas: a marca inteira (ícone + ARARAT MODEL) cabe na sua caixa e
+   deixa a faixa do menu (44 px + respiro) livre. Nada é cortado; só tamanho/tracking. */
+@media (max-width: 420px) {
+  .md {
+    gap: 10px;
+  }
+
+  .md .icon {
+    width: 44px;
+  }
+
+  .md .word {
+    gap: 7px;
+  }
+
+  .md .ararat,
+  .md .model {
+    font-size: 0.94rem;
+    letter-spacing: 0.24em;
+  }
+}
+
+@media (max-width: 340px) {
+  .md {
+    gap: 8px;
+  }
+
+  .md .icon {
+    width: 38px;
+  }
+
+  .md .ararat,
+  .md .model {
+    font-size: 0.86rem;
+    letter-spacing: 0.18em;
+  }
+}
+
+/* Com o ciclo MODEL ↔ PROSTATE (/previa/refinada) a marca reserva a largura de PROSTATE. Na faixa
+   em que o menu ainda é horizontal (1081–1240 px), a marca compacta para não encostar nos links. */
+@media (min-width: 1081px) and (max-width: 1240px) {
+  .md.cycling {
+    gap: 10px;
+  }
+
+  .md.cycling .icon {
+    width: 46px;
+  }
+
+  .md.cycling .word {
+    gap: 7px;
+  }
+
+  .md.cycling .ararat,
+  .md.cycling .model {
+    font-size: 0.94rem;
+    letter-spacing: 0.17em;
+  }
+}
+
+/* lgFit — rodapé da /previa/refinada: em 320 px a marca lg (ícone 56 + ARARAT MODEL a 1,25 rem,
+   tracking 0,32 em) chegava a 349 px. Encolhe tamanho/tracking, sem cortar nem quebrar a marca. */
+@media (max-width: 420px) {
+  .lgFit {
+    gap: 10px;
+  }
+  .lgFit .icon {
+    width: 52px;
+  }
+  .lgFit .word {
+    gap: 8px;
+  }
+  .lgFit .ararat,
+  .lgFit .model {
+    font-size: 1.05rem;
+    letter-spacing: 0.22em;
+  }
+}
+
+@media (max-width: 340px) {
+  .lgFit .icon {
+    width: 46px;
+  }
+  .lgFit .ararat,
+  .lgFit .model {
+    font-size: 0.98rem;
+    letter-spacing: 0.18em;
+  }
+}

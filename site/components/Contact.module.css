@@ -1,0 +1,195 @@
+.section {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(96px, 15vh, 180px);
+  background:
+    radial-gradient(70% 80% at 85% 60%, #14273c 0%, var(--navy-900) 55%, var(--navy-950) 100%);
+  isolation: isolate;
+}
+
+.arc {
+  position: absolute;
+  z-index: -1;
+  right: max(-8vw, -120px);
+  bottom: 12%;
+  width: min(42vw, 560px);
+  opacity: 0.16;
+}
+
+.mountain {
+  width: 100%;
+  height: auto;
+}
+
+.title {
+  margin-top: 16px;
+  font-size: clamp(2.1rem, 4.4vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.05;
+  max-width: 18ch;
+}
+
+.arrow {
+  margin-left: 8px;
+  transition: transform 200ms var(--ease-out);
+}
+
+/* Seta do sistema de ícones (/previa/refinada): 1em, alinhada à linha do texto. */
+.arrowIcon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.arrowIcon svg {
+  width: 1.05em;
+  height: 1.05em;
+  flex: none;
+}
+
+.action:hover .arrow,
+.action:focus-visible .arrow {
+  transform: translateX(3px);
+}
+
+:global(html[data-motion="paused"]) .arrow {
+  transition: none;
+}
+
+.paths {
+  margin: clamp(36px, 6vh, 60px) 0 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px clamp(32px, 5vw, 72px);
+  max-width: 980px;
+}
+
+.path {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  border-top: 2px solid var(--gold-500);
+  color: var(--gray-200);
+}
+
+.path + .path {
+  border-top-color: rgba(212, 175, 55, 0.45);
+}
+
+.pathTitle {
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  color: var(--white-100);
+}
+
+.facts {
+  margin: 16px 0 0;
+  display: grid;
+  gap: 14px;
+}
+
+.facts dt {
+  font-family: var(--font-title);
+  font-size: var(--fs-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-400);
+}
+
+.facts dd {
+  margin: 5px 0 0;
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+.actions {
+  margin-top: auto;
+  padding-top: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  align-items: center;
+}
+
+.action {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-title);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--white-100);
+  text-decoration: underline;
+  text-decoration-color: rgba(212, 175, 55, 0.6);
+  text-underline-offset: 6px;
+}
+
+.action:hover,
+.action:focus-visible {
+  text-decoration-color: var(--gold-500);
+}
+
+.primary {
+  padding: 0 18px;
+  border-radius: var(--radius-pill);
+  background: var(--gold-500);
+  color: var(--navy-950);
+  text-decoration: none;
+}
+
+.channel {
+  margin-top: 40px;
+  display: inline-flex;
+  gap: 12px;
+  align-items: baseline;
+  padding: 14px 18px;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-md);
+  font-size: 0.92rem;
+  color: var(--gray-200);
+  max-width: 860px;
+}
+
+.channelDot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--amber-500);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 760px) {
+  .paths {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .arc {
+    width: 110vw;
+    right: -30vw;
+    bottom: -6%;
+    opacity: 0.12;
+  }
+}
+
+/* /previa/refinada sem canal: a ação preparada aparece como texto, sem aparência de botão ativo. */
+.pending {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  padding-top: 14px;
+  border-top: 1px dashed rgba(176, 184, 193, 0.3);
+}
+
+.pendingLabel {
+  font-family: var(--font-title);
+  font-weight: 400;
+  color: var(--gray-300);
+}
+
+.pendingState {
+  font-size: 0.85rem;
+  color: var(--gray-300);
+}
