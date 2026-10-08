@@ -25,6 +25,7 @@
 !/motion/proposta/home-montanha-b/
 !/motion/proposta/time-interativo/
 !/motion/proposta/topo-revisao/
+!/motion/proposta/plataforma-fluxo/
 /motion/proposta/home-montanha-b/*
 !/motion/proposta/home-montanha-b/src/
 !/motion/proposta/home-montanha-b/geometry/
@@ -33,6 +34,9 @@
 /motion/proposta/topo-revisao/*
 !/motion/proposta/topo-revisao/src/
 !/motion/proposta/topo-revisao/geometry/
+/motion/proposta/plataforma-fluxo/*
+!/motion/proposta/plataforma-fluxo/src/
+!/motion/proposta/plataforma-fluxo/geometria/
 
 **/node_modules/
 **/__pycache__/
