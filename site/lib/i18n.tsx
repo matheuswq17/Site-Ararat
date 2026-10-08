@@ -24,6 +24,8 @@ export function translate<T>(value: T, locale: Locale): T {
       [/^Ler biografia de (.+)$/, "Read biography of $1"],
       [/^Percurso em (\d+) etapas, do Hub ao Viewer e de volta$/, "A $1-step journey from Hub to Viewer and back"],
       [/^Os tons de cinza (da região|da janela central) numa escala de cor, para ficarem comparáveis\.$/, "Grayscale values shown on a color scale for comparison."],
+      // brand-sinal-v1 (Intensidade em curvas de iso-intensidade, sem mapa de cores).
+      [/^Os tons de cinza (da região|da janela central) em curvas de mesma intensidade, para ficarem comparáveis\.$/, "Grayscale values traced as lines of equal intensity, for comparison."],
     ];
     for (const [pattern, replacement] of patterns) {
       if (pattern.test(key)) { translated = key.replace(pattern, replacement); break; }

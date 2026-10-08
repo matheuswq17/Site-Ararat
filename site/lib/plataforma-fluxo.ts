@@ -172,8 +172,15 @@ export const MODULOS_FLUXO: Record<string, ModuloFluxo> = {
     base: "/refinada/plataforma-fluxo-0.1.0/assets/",
     exportName: "createPlataformaFluxo",
   },
+  // brand-sinal-v1: fluxo 0.3.0-sinal do Motion (@ 99c91c8; 1/1): só anéis/contornos neutros; assets do 0.1.0 (mesmos sha256)
+  "0.3.0-sinal": {
+    versao: "0.3.0-sinal",
+    url: "/refinada/plataforma-fluxo-0.3.0-sinal/plataforma-fluxo.js",
+    base: "/refinada/plataforma-fluxo-0.1.0/assets/",
+    exportName: "createPlataformaFluxo",
+  },
 };
-export const MODULO_FLUXO_PADRAO: string | null = "0.1.0";
+export const MODULO_FLUXO_PADRAO: string | null = "0.3.0-sinal";
 
 export type EstadoFluxo = { modo: "animado" | "estatico"; etapa: number; nome: string; progresso: number; layout: string; carregado: string; falha: string | null };
 export type PlataformaFluxoModulo = {

@@ -125,7 +125,10 @@ export function TimeRefinada() {
         interativo: "auto",
         paused: opRef.current.paused,
         reducedMotion: "auto",
-        cor: "natural",
+        // brand-sinal-v1: P&B de EXIBIÇÃO feito pelo próprio módulo 0.4.0-sinal (img.rp-foto: grayscale(1)
+        // contrast(1.04)); o CSS do Site aplica o MESMO tratamento só às <img> que o módulo não controla
+        // (estático, celular, sem JS, módulo ausente) — nunca filtro duplo. Arquivos de foto intactos.
+        cor: "mono",
         onEstado: (e) => setEst({ ...e }),
       });
     } catch {

@@ -58,9 +58,10 @@ export type RetratoPontilhado = {
 export type CreateStipplePortrait = (raiz: HTMLElement, opts: RetratoOpts) => RetratoPontilhado;
 
 export const TIME_RETRATO_PACKAGE = {
-  baseUrl: "/refinada/time-interativo-0.2.0/",
-  modulo: "/refinada/time-interativo-0.2.0/src/retrato-pontilhado.js",
-  version: "0.2.0-draft",
+  // brand-sinal-v1: retrato 0.4.0-sinal do Motion (@ 99c91c8; 12/12): pontos gray-20; fotos iguais à 0.2.0
+  baseUrl: "/refinada/time-interativo-0.4.0-sinal/",
+  modulo: "/refinada/time-interativo-0.4.0-sinal/src/retrato-pontilhado.js",
+  version: "0.4.0-sinal",
   exportName: "createStipplePortrait",
 } as const;
 

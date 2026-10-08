@@ -962,8 +962,11 @@ html:has([data-marca="sinal"]) .skip-link {
   --t-gold: var(--ararat-gray-5);
   --t-gold-text: var(--ararat-gray-5);
 }
-[data-marca="sinal"] #time [data-shown] {
-  filter: grayscale(1);
+/* P&B de exibição: o módulo 0.4.0-sinal aplica grayscale(1) contrast(1.04) na própria img.rp-foto (cor:
+   "mono"); aqui o MESMO tratamento vai só para as <img> que o módulo não controla (fallback do Site,
+   acordeão do celular, sem JS). Sem filtro no contêiner, para não duplicar. */
+[data-marca="sinal"] #time img:not(.rp-foto) {
+  filter: grayscale(1) contrast(1.04);
 }
 [data-marca="sinal"] #time :is([class*="__portrait"], [class*="__failure"], [class*="__inlineImg"]) {
   background: #ededed;
@@ -976,10 +979,6 @@ html:has([data-marca="sinal"]) .skip-link {
 [data-marca="sinal"] #time [class*="__chev"] {
   border-color: var(--ararat-gray-50);
 }
-[data-marca="sinal"] #time [class*="__inlineImg"] img,
-[data-marca="sinal"] #time [class*="__inlineImg"] {
-  filter: grayscale(1);
-}
 /* Seleção aberta: nome em gray-5 600, fio de 1 px à esquerda (sem cor). */
 [data-marca="sinal"] #time [class*="__member"][open] > [class*="__summary"] [class*="__name"] {
   font-weight: 600;
@@ -989,20 +988,24 @@ html:has([data-marca="sinal"]) .skip-link {
 }
 
 /* Fechamento da Ciência (montanha + revisão humana) — texto sobre o claro. */
-/* A decisão "acende" por contraste: antes da etapa 4 em gray-40 (6:1), na etapa 4 e depois em gray-5
-   (17:1); as demais frases em gray-20 (text-body). Só cor muda (sem reflow). */
+/* Fechamento da Ciência, combinado com o Motion (0.5.0-sinal): frases 1–3 em gray-30 #474747 a 500
+   (8,6:1); a 4ª — a decisão — a 600 SEMPRE (peso fixo: trocar o peso na etapa causaria reflow) e "acende"
+   por contraste: gray-30 nas etapas 0–3 → gray-5 #111111 (17,5:1) na etapa 4 em diante. Nunca branco/preto puro. */
 [data-marca="sinal"] [class*="RevisaoHumanaRefinada"][class*="__comp"] {
   --gold-ink: var(--ararat-gray-5);
-  --navy-900: var(--ararat-gray-40);
+  --navy-900: var(--ararat-gray-30);
 }
 [data-marca="sinal"] [class*="RevisaoHumanaRefinada"][class*="__frases"] {
-  color: var(--ararat-gray-20);
+  color: var(--ararat-gray-30);
   font-family: var(--ararat-font-sans);
   font-weight: 500;
   letter-spacing: -0.02em;
 }
-[data-marca="sinal"] [class*="RevisaoHumanaRefinada"][class*="__frase"]::before {
-  background: var(--ararat-gray-5);
+[data-marca="sinal"] [class*="RevisaoHumanaRefinada"][class*="__decisao"] {
+  font-weight: 600;
+}
+[data-marca="sinal"] [class*="RevisaoHumanaRefinada"][class*="__frase"]:focus-visible {
+  outline-color: var(--ararat-gray-5);
 }
 [data-marca="sinal"] [class*="RevisaoHumanaRefinada"][class*="__nota"] {
   color: var(--ararat-gray-40);

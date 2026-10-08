@@ -44,10 +44,12 @@ export const PREVIEW_PACKAGE = {
  * A 0.6.0-draft fica em public/previa/home-montanha-0.6.0/ para comparação (e 0.5.0/0.4.0).
  * Só a /previa/refinada lê este pacote; /previa, /previa/a e /previa/b seguem na 0.2.1.
  */
+// brand-sinal-v1: montanha 0.9.0-sinal do Motion (experiment/brand-sinal-motion-v1 @ 99c91c8), copiada sem alteração
+// para public/previa/home-montanha-0.9.0-sinal/ e conferida (sync-manifest --check 71/71). A 0.7.0 segue em public/previa/.
 export const REFINADA_PACKAGE = {
-  dir: "home-montanha-0.7.0",
-  baseUrl: "/previa/home-montanha-0.7.0/",
-  version: "0.7.0-draft",
+  dir: "home-montanha-0.9.0-sinal",
+  baseUrl: "/previa/home-montanha-0.9.0-sinal/",
+  version: "0.9.0-sinal",
 } as const satisfies PreviewPackage;
 
 /** Largura máxima do slot da arte (CSS: width min(1100px, 100cqw)) e limite celular/desktop

@@ -5,6 +5,7 @@ import { useTranslation } from "@/lib/i18n";
 import { memo, type CSSProperties } from "react";
 import { visibleRect, type MriSource, type Pt, type Rect } from "@/lib/mri";
 import { MriFigure } from "../art/MriFigure";
+import { FILTROS_XAI, useMarcaTema } from "@/lib/marca-tema";
 import styles from "./JourneyMriScene.module.css";
 
 export type SceneLayout = "landscape" | "portrait";
@@ -97,6 +98,7 @@ type Props = {
  */
 export const JourneyMriScene = memo(function JourneyMriScene({ source, progress, layout }: Props) {
   const { t } = useTranslation();
+  const sinal = useMarcaTema() === "sinal";
   const s1 = clamp01(progress * 3);
   const s2 = clamp01(progress * 3 - 1);
   const s3 = clamp01(progress * 3 - 2);
@@ -167,8 +169,22 @@ export const JourneyMriScene = memo(function JourneyMriScene({ source, progress,
           <feColorMatrix type="saturate" values="0" />
           <feGaussianBlur stdDeviation="1.6" />
           <feConvolveMatrix order="3" kernelMatrix="-1 -1 -1 -1 8 -1 -1 -1 -1" preserveAlpha="true" />
-          <feColorMatrix type="matrix" values="0 0 0 0 0.88  0 0 0 0 0.73  0 0 0 0 0.25  5 5 5 0 -0.35" />
+          <feColorMatrix type="matrix" values={sinal ? FILTROS_XAI.sinal.bordas : FILTROS_XAI.base.bordas} />
         </filter>
+        {sinal ? (
+          /* ARARAT Sinal: curvas de iso-intensidade em gray-90 sobre a RM intacta (ver lib/marca-tema.tsx). */
+          <filter id={`${id}-ramp`} colorInterpolationFilters="sRGB">
+            <feColorMatrix type="saturate" values="0" />
+            <feGaussianBlur stdDeviation="1.4" />
+            <feComponentTransfer>
+              <feFuncR type="discrete" tableValues="0 0.2 0.4 0.6 0.8 1" />
+              <feFuncG type="discrete" tableValues="0 0.2 0.4 0.6 0.8 1" />
+              <feFuncB type="discrete" tableValues="0 0.2 0.4 0.6 0.8 1" />
+            </feComponentTransfer>
+            <feConvolveMatrix order="3" kernelMatrix="-1 -1 -1 -1 8 -1 -1 -1 -1" preserveAlpha="true" />
+            <feColorMatrix type="matrix" values={FILTROS_XAI.sinal.isoCurvas} />
+          </filter>
+        ) : (
         <filter id={`${id}-ramp`} colorInterpolationFilters="sRGB">
           <feColorMatrix type="saturate" values="0" />
           <feComponentTransfer>
@@ -182,6 +198,7 @@ export const JourneyMriScene = memo(function JourneyMriScene({ source, progress,
             <feFuncB type="table" tableValues="0.09 0.28 0.47 0.6 0.22 0.68" />
           </feComponentTransfer>
         </filter>
+        )}
       </defs>
 
       <rect {...rectProps(g.panel)} rx={10} className={styles.panel} style={{ opacity: 0.86 * s2 }} />

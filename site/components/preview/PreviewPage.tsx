@@ -17,6 +17,7 @@ import { FaqRefinada } from "@/components/refinada/FaqRefinada";
 import { TextReveal } from "@/components/motion/TextReveal";
 import { readPreviewConfig, readPreviewJourney, readPreviewMri } from "@/lib/home-preview.server";
 import { PREVIEW_PACKAGE, REFINADA_PACKAGE } from "@/lib/home-preview";
+import { MarcaTemaProvider } from "@/lib/marca-tema";
 import { COR_COBERTURA_SINAL, TITULO_SINAL, TITULO_SINAL_SECUNDARIA } from "@/lib/marca-sinal";
 
 const FONTS = "/previa/tipografia/fontes/";
@@ -99,7 +100,7 @@ export function PreviewPage({ proposta }: { proposta?: Proposta }) {
   // display: contents — o wrapper não cria caixa (layout idêntico ao da /previa).
   return (
     <div data-tipografia={proposta} data-proposta="" data-marca={refinada ? "sinal" : undefined} style={{ display: "contents" }}>
-      {content}
+      {refinada ? <MarcaTemaProvider tema="sinal">{content}</MarcaTemaProvider> : content}
     </div>
   );
 }
