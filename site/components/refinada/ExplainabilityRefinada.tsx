@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslation } from "@/lib/i18n";
+
 import { useState } from "react";
 import type { MriSource } from "@/lib/mri";
 import { ExplainMri, type FeatureKey } from "../art/ExplainMri";
@@ -70,6 +72,7 @@ const BY_RANK = [...FEATURES].sort((a, b) => EXEMPLO[b.key] - EXEMPLO[a.key]);
 const rankOf = (k: FeatureKey) => BY_RANK.findIndex((f) => f.key === k);
 
 export function ExplainabilityRefinada({ mri }: { mri: MriSource }) {
+  const { t } = useTranslation();
   const [selected, setSelected] = useState<FeatureKey>(BY_RANK[0].key);
   const feature = FEATURES.find((f) => f.key === selected)!;
   const hasMap = Boolean(mri.map);
@@ -78,23 +81,22 @@ export function ExplainabilityRefinada({ mri }: { mri: MriSource }) {
     <section id="explicabilidade" className={styles.section} aria-labelledby="xai-title" data-exemplo={BY_RANK.map((f) => f.key).join(">")}>
       <div className="wrap">
         <header className={styles.header}>
-          <p className="eyebrow">Explicabilidade</p>
+          <p className="eyebrow">{t("Explicabilidade")}</p>
           <h2 id="xai-title" className={styles.title} data-reveal="title">
-            <RevealWords text="IA médica precisa mostrar suas razões." />
+            <RevealWords text={t("IA médica precisa mostrar suas razões.")} />
           </h2>
           <p className={styles.lead} data-reveal="text">
-            Escolha uma família de características e confira na imagem de onde ela vem e quanto pesou neste exemplo.
-          </p>
+            {t("Escolha uma família de características e confira na imagem de onde ela vem e quanto pesou neste exemplo.")}</p>
         </header>
 
         <div className={styles.explorer}>
           <div className={styles.artWrap}>
             <ExplainMri source={mri} selected={feature.key} formaSoft />
-            <span className={styles.badge}>Exemplo ilustrativo</span>
+            <span className={styles.badge}>{t("Exemplo ilustrativo")}</span>
           </div>
 
           <div className={styles.panel}>
-            <div className={styles.choices} role="group" aria-label="Escolher família de características do exemplo">
+            <div className={styles.choices} role="group" aria-label={t("Escolher família de características do exemplo")}>
               {FEATURES.map((f) => (
                 <button
                   key={f.key}
@@ -104,26 +106,26 @@ export function ExplainabilityRefinada({ mri }: { mri: MriSource }) {
                   aria-controls="xai-reading"
                   onClick={() => setSelected(f.key)}
                 >
-                  {f.name}
+                  {t(f.name)}
                 </button>
               ))}
             </div>
 
-            <ol id="xai-reading" className={`${styles.reading} ${extra.reading}`} aria-label={`Leitura da família ${feature.name}`}>
+            <ol id="xai-reading" className={`${styles.reading} ${extra.reading}`} aria-label={t(`Leitura da família ${feature.name}`)}>
               <li>
-                <h3 className={styles.stepLabel}>De onde vem</h3>
-                <p>{feature.origin(hasMap)}</p>
+                <h3 className={styles.stepLabel}>{t("De onde vem")}</h3>
+                <p>{t(feature.origin(hasMap))}</p>
                 <p className={extra.aspect}>
-                  <strong>{feature.name}:</strong> {feature.aspect.charAt(0).toLowerCase() + feature.aspect.slice(1)}
+                  <strong>{t(feature.name)}{t(":")}</strong> {t(feature.aspect.charAt(0).toLowerCase() + feature.aspect.slice(1))}
                 </p>
               </li>
               <li>
-                <h3 className={styles.stepLabel}>Quanto pesou</h3>
-                <p data-reading={feature.key}>{RANK_TEXT[rankOf(feature.key)]}</p>
-                <ul className={styles.bars} aria-label="Contribuição relativa ilustrativa, da maior para a menor, sem valores">
+                <h3 className={styles.stepLabel}>{t("Quanto pesou")}</h3>
+                <p data-reading={feature.key}>{t(RANK_TEXT[rankOf(feature.key)])}</p>
+                <ul className={styles.bars} aria-label={t("Contribuição relativa ilustrativa, da maior para a menor, sem valores")}>
                   {BY_RANK.map((f) => (
                     <li key={f.key} data-active={selected === f.key || undefined} data-feature={f.key}>
-                      <span className={styles.barName}>{f.name}</span>
+                      <span className={styles.barName}>{t(f.name)}</span>
                       <span className={styles.barTrack} aria-hidden="true">
                         <span className={styles.barFill} style={{ width: `${EXEMPLO[f.key] * 100}%` }} />
                       </span>
@@ -135,19 +137,13 @@ export function ExplainabilityRefinada({ mri }: { mri: MriSource }) {
 
             {/* Aviso essencial visível junto da demonstração; detalhes em expansão (rodada 6). */}
             <p className={styles.disclaimer}>
-              Nesta demonstração, os pesos são ilustrativos e não representam uma saída do modelo, valores SHAP nem uma
-              estimativa de risco.
-            </p>
+              {t("Nesta demonstração, os pesos são ilustrativos e não representam uma saída do modelo, valores SHAP nem uma estimativa de risco.")}</p>
             <details className={extra.more}>
-              <summary className={extra.moreSummary}>Sobre este exemplo e o SHAP</summary>
+              <summary className={extra.moreSummary}>{t("Sobre este exemplo e o SHAP")}</summary>
               <p className={styles.disclaimer}>
-                Forma, textura e intensidade são famílias de características, representadas aqui de forma ilustrativa,
-                sobre uma imagem demonstrativa. A ordem das barras é ilustrativa.
-              </p>
+                {t("Forma, textura e intensidade são famílias de características, representadas aqui de forma ilustrativa, sobre uma imagem demonstrativa. A ordem das barras é ilustrativa.")}</p>
               <p className={styles.disclaimer}>
-                SHAP foi usado no estudo publicado para analisar contribuições por característica, que podem favorecer ou
-                contrariar uma classe. O painel XAI do Viewer mostrado ainda não está disponível nesta versão.
-              </p>
+                {t("SHAP foi usado no estudo publicado para analisar contribuições por característica, que podem favorecer ou contrariar uma classe. O painel XAI do Viewer mostrado ainda não está disponível nesta versão.")}</p>
             </details>
           </div>
         </div>

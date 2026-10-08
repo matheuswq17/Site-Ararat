@@ -1,3 +1,7 @@
+"use client";
+
+import { useTranslation } from "@/lib/i18n";
+
 import { RevealWords } from "../text/RevealWords";
 import { PlataformaFluxo } from "./PlataformaFluxo";
 import styles from "./PlatformRefinada.module.css";
@@ -38,33 +42,31 @@ const VIEWER_DOCUMENTADO_FLUXO = [
 ] as const;
 
 export function PlatformRefinada() {
+  const { t } = useTranslation();
   return (
     <section id="plataforma" className={styles.section} aria-labelledby="plataforma-title">
       <div className="wrap">
         <header className={styles.header}>
-          <p className="eyebrow">Plataforma</p>
+          <p className="eyebrow">{t("Plataforma")}</p>
           <h2 id="plataforma-title" className={styles.title} data-reveal="title">
-            <RevealWords text="Do Hub ao Viewer," />{" "}
+            <RevealWords text={t("Do Hub ao Viewer,")} />{t(" ")}
             <span className={styles.gold}>
-              <RevealWords text="em um caso público." start={4} />
+              <RevealWords text={t("em um caso público.")} start={4} />
             </span>
           </h2>
           <p className={styles.lead} data-reveal="text">
-            Uma plataforma local de apoio ao radiologista: o Hub organiza a fila e o processamento; o Viewer reúne
-            ferramentas para revisar imagem e região.
-          </p>
+            {t("Uma plataforma local de apoio ao radiologista: o Hub organiza a fila e o processamento; o Viewer reúne ferramentas para revisar imagem e região.")}</p>
         </header>
 
         {/* Para quem (rodada 6): públicos e tarefas documentadas, sem promessa de eficácia clínica. */}
         <div className={styles.audience} aria-labelledby="plataforma-para-quem">
           <h3 id="plataforma-para-quem" className={styles.audienceTitle}>
-            Para quem
-          </h3>
+            {t("Para quem")}</h3>
           <dl className={styles.audienceList}>
             {PARA_QUEM.map((a) => (
               <div key={a.who}>
-                <dt>{a.who}</dt>
-                <dd>{a.tasks}</dd>
+                <dt>{t(a.who)}</dt>
+                <dd>{t(a.tasks)}</dd>
               </div>
             ))}
           </dl>
@@ -74,20 +76,19 @@ export function PlatformRefinada() {
 
         <aside className={styles.documented} aria-labelledby="viewer-documentado">
           <h3 id="viewer-documentado" className={styles.docTitle}>
-            Também documentado no Viewer — não demonstrado nesta demonstração
-          </h3>
+            {t("Também documentado no Viewer — não demonstrado nesta demonstração")}</h3>
           <ul className={styles.docList}>
             {VIEWER_DOCUMENTADO_FLUXO.map((r) => (
-              <li key={r}>{r}</li>
+              <li key={r}>{t(r)}</li>
             ))}
           </ul>
           <details className={styles.docMore}>
-            <summary className={styles.docMoreSummary}>Sobre os módulos e as demonstrações</summary>
+            <summary className={styles.docMoreSummary}>{t("Sobre os módulos e as demonstrações")}</summary>
             <ul className={styles.docMoreList}>
-              <li>Segmentação, detecção e predição são módulos com configurações próprias; não constituem um único modelo validado.</li>
-              <li>A Jornada e a Explicabilidade desta página são demonstrações didáticas, separadas desta interface.</li>
-              <li>SHAP foi utilizado na pesquisa de classificação; o painel XAI do Viewer ainda está indisponível.</li>
-              <li>Um score do modelo não equivale, por si, a uma probabilidade clínica calibrada de câncer.</li>
+              <li>{t("Segmentação, detecção e predição são módulos com configurações próprias; não constituem um único modelo validado.")}</li>
+              <li>{t("A Jornada e a Explicabilidade desta página são demonstrações didáticas, separadas desta interface.")}</li>
+              <li>{t("SHAP foi utilizado na pesquisa de classificação; o painel XAI do Viewer ainda está indisponível.")}</li>
+              <li>{t("Um score do modelo não equivale, por si, a uma probabilidade clínica calibrada de câncer.")}</li>
             </ul>
           </details>
         </aside>

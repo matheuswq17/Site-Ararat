@@ -1,10 +1,13 @@
 "use client";
 
+import { useTranslation } from "@/lib/i18n";
+
 import { useEffect, useId, useRef, useState } from "react";
 import { NAV_ITEMS } from "@/lib/navigation";
 import { setMotionPaused, useMotionPaused } from "@/lib/motion-prefs";
 import { usePrefersReducedMotion } from "./motion/usePrefersReducedMotion";
 import { BrandMark } from "./BrandMark";
+import { LanguageSwitch } from "./LanguageSwitch";
 import styles from "./SiteHeader.module.css";
 
 /**
@@ -17,7 +20,9 @@ export function SiteHeader({
   brandWords,
   menuFocus = false,
   solid = false,
-}: { brandWords?: readonly string[]; menuFocus?: boolean; solid?: boolean } = {}) {
+  languageSwitch = false,
+}: { brandWords?: readonly string[]; menuFocus?: boolean; solid?: boolean; languageSwitch?: boolean } = {}) {
+  const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const menuId = useId();
@@ -56,12 +61,13 @@ export function SiteHeader({
   };
 
   return (
-    <header className={styles.header} data-scrolled={scrolled || open} data-open={open} data-solid={solid || undefined}>
+    <header className={styles.header} data-scrolled={scrolled || open} data-open={open} data-solid={solid || undefined} data-localized={languageSwitch || undefined}>
       <div className={styles.bar}>
-        <a href="#inicio" className={styles.brand} aria-label="ARARAT MODEL — início">
+        <a href="#inicio" className={styles.brand} aria-label={t("ARARAT MODEL — início")}>
           <BrandMark cycleWords={brandWords} />
         </a>
 
+        {languageSwitch && <LanguageSwitch />}
         <MotionToggle />
 
         <button
@@ -73,22 +79,21 @@ export function SiteHeader({
           onClick={() => setOpen((v) => !v)}
         >
           <span className={styles.menuIcon} aria-hidden="true" />
-          <span className="visually-hidden">{open ? "Fechar menu" : "Abrir menu"}</span>
+          <span className="visually-hidden">{t(open ? "Fechar menu" : "Abrir menu")}</span>
         </button>
 
-        <nav id={menuId} className={styles.nav} aria-label="Principal">
+        <nav id={menuId} className={styles.nav} aria-label={t("Principal")}>
           <ul className={styles.list}>
             {NAV_ITEMS.map((item) => (
               <li key={item.href}>
                 <a href={item.href} className={styles.link} onClick={() => onPick(item.href)}>
-                  {item.label}
+                  {t(item.label)}
                 </a>
               </li>
             ))}
           </ul>
           <a href="#jornada" className={`btn btn-gold ${styles.cta}`} onClick={() => onPick("#jornada")}>
-            Explorar a jornada
-          </a>
+            {t("Explorar a jornada")}</a>
           <MotionToggle inMenu />
         </nav>
       </div>
@@ -98,6 +103,7 @@ export function SiteHeader({
 
 /** Pausa global de animações; no celular fica dentro do menu (falta espaço na barra). */
 function MotionToggle({ inMenu = false }: { inMenu?: boolean }) {
+  const { t } = useTranslation();
   const paused = useMotionPaused();
   const reduced = usePrefersReducedMotion();
   const label = reduced ? "Movimento reduzido" : paused ? "Retomar animações" : "Pausar animações";
@@ -108,10 +114,10 @@ function MotionToggle({ inMenu = false }: { inMenu?: boolean }) {
       aria-pressed={paused}
       onClick={() => setMotionPaused(!paused)}
       disabled={reduced}
-      title={reduced ? "Movimento reduzido ativo no sistema" : label}
+      title={t(reduced ? "Movimento reduzido ativo no sistema" : label)}
     >
       <span className={styles.motionIcon} data-paused={paused || reduced} aria-hidden="true" />
-      <span className={styles.motionLabel}>{label}</span>
+      <span className={styles.motionLabel}>{t(label)}</span>
     </button>
   );
 }

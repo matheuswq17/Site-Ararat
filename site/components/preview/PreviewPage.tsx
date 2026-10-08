@@ -71,7 +71,7 @@ export function PreviewPage({ proposta }: { proposta?: Proposta }) {
       ))}
       {/* O módulo da escultura é descoberto cedo (draft, fora de public/motion). */}
       {config && <link rel="modulepreload" href={config.sculptureModule} />}
-      {refinada ? <SiteHeader brandWords={BRAND_WORDS_REFINADA} menuFocus solid /> : <SiteHeader />}
+      {refinada ? <SiteHeader brandWords={BRAND_WORDS_REFINADA} menuFocus solid languageSwitch /> : <SiteHeader />}
       <main id="conteudo" tabIndex={-1}>
         <HomeOpening
           motionPackage={motionPackage}

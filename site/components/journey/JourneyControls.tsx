@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslation } from "@/lib/i18n";
+
 import { useRef, type KeyboardEvent } from "react";
 import { JOURNEY_STEPS } from "@/lib/journey-content";
 import styles from "./Journey.module.css";
@@ -16,6 +18,7 @@ type Props = {
 };
 
 export function JourneyControls({ activeIndex, progress, onSelect, paused, onTogglePause, reducedMotion, waiting = false }: Props) {
+  const { t } = useTranslation();
   const buttons = useRef<Array<HTMLButtonElement | null>>([]);
 
   // Setas movem entre etapas (os botões continuam todos acessíveis por Tab).
@@ -33,7 +36,7 @@ export function JourneyControls({ activeIndex, progress, onSelect, paused, onTog
 
   return (
     <div className={styles.controls} data-journey-controls="" data-waiting={waiting || undefined}>
-      <div className={styles.rail} role="group" aria-label="Escolher etapa da jornada">
+      <div className={styles.rail} role="group" aria-label={t("Escolher etapa da jornada")}>
         <span className={styles.railTrack} aria-hidden="true">
           <span className={styles.railFill} style={{ transform: `scaleX(${progress})` }} />
         </span>
@@ -52,9 +55,9 @@ export function JourneyControls({ activeIndex, progress, onSelect, paused, onTog
             onKeyDown={(e) => onKeyDown(e, i)}
           >
             <span className={styles.stepNum} aria-hidden="true">
-              {step.number}
+              {t(step.number)}
             </span>
-            <span className={styles.stepLabel}>{step.title}</span>
+            <span className={styles.stepLabel}>{t(step.title)}</span>
           </button>
         ))}
       </div>
@@ -64,10 +67,10 @@ export function JourneyControls({ activeIndex, progress, onSelect, paused, onTog
         aria-pressed={paused}
         onClick={onTogglePause}
         disabled={reducedMotion}
-        title={reducedMotion ? "Movimento reduzido ativo no sistema" : undefined}
+        title={t(reducedMotion ? "Movimento reduzido ativo no sistema" : undefined)}
       >
         <span className={styles.pauseIcon} data-paused={paused || reducedMotion} aria-hidden="true" />
-        {reducedMotion ? "Movimento reduzido" : paused ? "Retomar animações" : "Pausar animações"}
+        {t(reducedMotion ? "Movimento reduzido" : paused ? "Retomar animações" : "Pausar animações")}
       </button>
     </div>
   );

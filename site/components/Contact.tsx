@@ -1,3 +1,7 @@
+"use client";
+
+import { useTranslation } from "@/lib/i18n";
+
 import Image from "next/image";
 import { RevealWords } from "./text/RevealWords";
 import { CONTACT_CHANNEL, channelHref } from "@/lib/contact";
@@ -39,6 +43,7 @@ export function Contact({
   arrowIcon = false,
   refinada = false,
 }: { arrowIcon?: boolean; refinada?: boolean } = {}) {
+  const { t } = useTranslation();
   return (
     <section
       id="contato"
@@ -48,7 +53,7 @@ export function Contact({
       <div className={styles.arc} aria-hidden="true">
         <Image
           src="/brand/ararat_icone_transparente.png"
-          alt=""
+          alt={t("")}
           width={768}
           height={464}
           className={styles.mountain}
@@ -56,9 +61,9 @@ export function Contact({
       </div>
 
       <div className={`wrap ${styles.inner}`}>
-        <p className="eyebrow">Contato</p>
+        <p className="eyebrow">{t("Contato")}</p>
         <h2 id="contato-title" className={styles.title} data-reveal="title">
-          <RevealWords text="Explore o ARARAT com sua equipe." />
+          <RevealWords text={t("Explore o ARARAT com sua equipe.")} />
         </h2>
 
         <div className={styles.paths}>
@@ -71,32 +76,32 @@ export function Contact({
                 aria-labelledby={`contato-${p.id}`}
               >
                 <h3 id={`contato-${p.id}`} className={styles.pathTitle}>
-                  {p.title}
+                  {t(p.title)}
                 </h3>
                 <dl className={styles.facts}>
                   <div>
-                    <dt>Para quem</dt>
-                    <dd>{p.who}</dd>
+                    <dt>{t("Para quem")}</dt>
+                    <dd>{t(p.who)}</dd>
                   </div>
                   <div>
-                    <dt>O que observar</dt>
-                    <dd>{refinada && p.id === "demonstracao"
+                    <dt>{t("O que observar")}</dt>
+                    <dd>{t(refinada && p.id === "demonstracao"
                       ? "Como o Hub organiza a fila e abre um caso no Viewer, e quais ferramentas de revisão estão disponíveis na versão demonstrada."
-                      : p.look}</dd>
+                      : p.look)}</dd>
                   </div>
                 </dl>
                 {refinada && !request && (
                   // Ação preparada, sem destino: texto (não link nem botão) até haver canal real.
                   <p className={styles.pending} data-acao={p.id}>
-                    <span className={styles.pendingLabel}>{p.request.label}</span>
-                    <span className={styles.pendingState}>canal em preparação</span>
+                    <span className={styles.pendingLabel}>{t(p.request.label)}</span>
+                    <span className={styles.pendingState}>{t("canal em preparação")}</span>
                   </p>
                 )}
                 {(!refinada || request) && (
                   <div className={styles.actions}>
                     {!refinada && (
                       <a href={p.now.href} className={styles.action}>
-                        {p.now.label}
+                        {t(p.now.label)}
                         {arrowIcon ? (
                           <span
                             aria-hidden="true"
@@ -106,8 +111,7 @@ export function Contact({
                           </span>
                         ) : (
                           <span aria-hidden="true" className={styles.arrow}>
-                            →
-                          </span>
+                            {t("→")}</span>
                         )}
                       </a>
                     )}
@@ -119,7 +123,7 @@ export function Contact({
                           ? { rel: "noopener", target: "_blank" }
                           : {})}
                       >
-                        {p.request.label}
+                        {t(p.request.label)}
                       </a>
                     )}
                   </div>
@@ -131,15 +135,13 @@ export function Contact({
 
         {CONTACT_CHANNEL ? (
           <p className={styles.channel}>
-            {CONTACT_CHANNEL.label}. O site apenas abre o canal; nenhuma
-            mensagem é enviada por ele.
-          </p>
+            {t(CONTACT_CHANNEL.label)}{t(". O site apenas abre o canal; nenhuma mensagem é enviada por ele.")}</p>
         ) : (
           <p className={styles.channel} role="note">
             <span className={styles.channelDot} aria-hidden="true" />
-            {refinada
+            {t(refinada
               ? "Canal de contato em preparação — os pedidos de demonstração e de colaboração serão abertos aqui. Esta versão não envia mensagens."
-              : "O canal institucional para solicitações será publicado nesta seção. Esta versão do site não envia mensagens."}
+              : "O canal institucional para solicitações será publicado nesta seção. Esta versão do site não envia mensagens.")}
           </p>
         )}
       </div>

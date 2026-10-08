@@ -102,6 +102,7 @@
 .portrait[data-motor="modulo"] {
   background: transparent; /* recorte sobre o off-white da seção */
 }
+.failure,
 .stage :global(.rp-falha:not([hidden])) {
   position: absolute;
   inset: 0;
@@ -114,6 +115,7 @@
   background: #e9edf2;
   border-radius: var(--radius-md);
 }
+.failure { margin: 0; }
 
 .portraitBar {
   display: flex;

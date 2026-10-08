@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslation } from "@/lib/i18n";
+
 import { useEffect, useRef, useState } from "react";
 import { useMotionPaused } from "@/lib/motion-prefs";
 import {
@@ -39,6 +41,7 @@ const MODULO = MODULO_FLUXO_PADRAO ? MODULOS_FLUXO[MODULO_FLUXO_PADRAO] : null;
 const SEM_JS = "[data-fluxo=root] [data-fluxo=trilho]{display:none!important}[data-fluxo=root] [data-fluxo=roteiro]{display:block!important}";
 
 export function PlataformaFluxo() {
+  const { t, locale } = useTranslation();
   const raiz = useRef<HTMLDivElement>(null);
   const trilho = useRef<HTMLDivElement>(null);
   const palco = useRef<HTMLDivElement>(null);
@@ -193,24 +196,25 @@ export function PlataformaFluxo() {
     <div ref={raiz} className={styles.fluxo} data-fluxo="root" data-com-modulo={MODULO ? "" : undefined} data-modulo={MODULO?.versao} data-motor={MODULO ? undefined : "ausente"} data-js={js ? "" : undefined}>
       <noscript dangerouslySetInnerHTML={{ __html: `<style>${SEM_JS}</style>` }} />
       <p className={styles.aviso} role="note">
-        <strong>{AVISO_FLUXO}</strong> {ORIGEM_FLUXO}
+        <strong>{t(AVISO_FLUXO)}</strong> {t(ORIGEM_FLUXO)}
+        {locale === "en" && " The captured product interface is in Portuguese."}
       </p>
 
       {/* Percurso animado: trilho + palco sticky limitado a esta seção. */}
       <div ref={trilho} className={styles.trilho} data-fluxo="trilho">
         <div className={styles.fixo}>
-          <ol className={styles.legendas} aria-label={`Percurso em ${total} etapas, do Hub ao Viewer e de volta`}>
+          <ol className={styles.legendas} aria-label={t(`Percurso em ${total} etapas, do Hub ao Viewer e de volta`)}>
             {ETAPAS_FLUXO.map((e, i) => (
               <li key={e.id} data-etapa={i + 1}>
                 <span className={styles.legendaNum} aria-hidden="true">
-                  {e.n}
+                  {t(e.n)}
                 </span>
                 <div>
-                  <b className={styles.legendaTitulo}>{e.titulo}</b>
-                  <small className={styles.legendaTexto}>{e.legenda}</small>
+                  <b className={styles.legendaTitulo}>{t(e.titulo)}</b>
+                  <small className={styles.legendaTexto}>{t(e.legenda)}</small>
                   <span className={styles.sr}>
-                    {" "}
-                    Capturas: {e.imagens.map((im) => im.alt).join(" ")}
+                    {t(" ")}
+                    {t("Capturas:")}{" "}{e.imagens.map((im) => t(im.alt)).join(" ")}
                   </span>
                 </div>
               </li>
@@ -221,16 +225,16 @@ export function PlataformaFluxo() {
       </div>
 
       {/* Roteiro estático (sem JS, reduzido, pausa, falha). */}
-      <ol ref={roteiro} className={styles.etapas} data-fluxo="roteiro" aria-label={`Percurso em ${total} etapas, do Hub ao Viewer e de volta`}>
+      <ol ref={roteiro} className={styles.etapas} data-fluxo="roteiro" aria-label={t(`Percurso em ${total} etapas, do Hub ao Viewer e de volta`)}>
         {ETAPAS_FLUXO.map((e, i) => (
           <li key={e.id} className={styles.etapa} data-i={i} data-etapa-id={e.id} data-ativa={js && i === etapaRoteiro ? "" : undefined}>
             <div className={styles.texto} data-parte="texto">
               <p className={styles.num}>
-                <span>{e.n}</span>
-                <span className={styles.produto}>{e.produto}</span>
+                <span>{t(e.n)}</span>
+                <span className={styles.produto}>{t(e.produto)}</span>
               </p>
-              <h3 className={styles.titulo}>{e.titulo}</h3>
-              <p className={styles.descricao}>{e.texto}</p>
+              <h3 className={styles.titulo}>{t(e.titulo)}</h3>
+              <p className={styles.descricao}>{t(e.texto)}</p>
             </div>
             <div className={styles.quadro} data-parte="quadro" data-n={e.imagens.length}>
               <div className={styles.imagens} data-celular={e.celular ? "" : undefined}>
@@ -251,21 +255,22 @@ export function PlataformaFluxo() {
       </ol>
 
       <p className={styles.atribuicao}>
-        Imagens de RM: {ATRIBUICAO_FLUXO.citacao}{" "}
+        {t("Imagens de RM:")}{" "}{ATRIBUICAO_FLUXO.citacao}{" "}
         <a href={ATRIBUICAO_FLUXO.doi} rel="noopener noreferrer">
-          {ATRIBUICAO_FLUXO.doi.replace("https://", "")}
-        </a>{" "}
-        — licença{" "}
+          {t(ATRIBUICAO_FLUXO.doi.replace("https://", ""))}
+        </a>{t(" ")}
+        {t("— licença")}{t(" ")}
         <a href={ATRIBUICAO_FLUXO.licenca.url} rel="license noopener noreferrer">
-          {ATRIBUICAO_FLUXO.licenca.nome}
+          {t(ATRIBUICAO_FLUXO.licenca.nome)}
         </a>
-        . {ATRIBUICAO_FLUXO.tratamentos} {ATRIBUICAO_FLUXO.endosso}
+        {". "}{t(ATRIBUICAO_FLUXO.tratamentos)} {t(ATRIBUICAO_FLUXO.endosso)}
       </p>
     </div>
   );
 }
 
 function Captura({ im }: { im: ImagemFluxo }) {
+  const { t } = useTranslation();
   const maior = im.fontes[im.fontes.length - 1];
   const [falhou, setFalhou] = useState(false);
   return (
@@ -276,7 +281,7 @@ function Captura({ im }: { im: ImagemFluxo }) {
       style={{ aspectRatio: `${maior.w} / ${maior.h}`, maxWidth: `calc(var(--fluxo-alt-max) * ${(maior.w / maior.h).toFixed(4)})` }}
     >
       {falhou ? (
-        <figcaption className={styles.falha}>Captura indisponível: {im.alt}</figcaption>
+        <figcaption className={styles.falha}>{t("Captura indisponível:")}{" "}{t(im.alt)}</figcaption>
       ) : (
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -285,7 +290,7 @@ function Captura({ im }: { im: ImagemFluxo }) {
           sizes={im.sizes}
           width={maior.w}
           height={maior.h}
-          alt={im.alt}
+          alt={t(im.alt)}
           loading="lazy"
           decoding="async"
           onError={() => setFalhou(true)}

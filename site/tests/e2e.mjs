@@ -33,7 +33,8 @@ const near = (a, b, eps = 0.002) => Math.abs(a - b) <= eps;
 
 const browser = await chromium.launch();
 
-async function open(path = "/", viewport = { width: 1440, height: 900 }, opts = {}) {
+// Original home kept as a comparison; the new English home is covered by locales.mjs.
+async function open(path = "/previa/original", viewport = { width: 1440, height: 900 }, opts = {}) {
   const context = await browser.newContext({ viewport, reducedMotion: opts.reducedMotion ?? "no-preference" });
   const page = await context.newPage();
   const errors = [];
@@ -163,7 +164,7 @@ if (MODE === "absent") {
   });
 
   await test("movimento reduzido: pose estática quantizada e pausa desabilitada", async () => {
-    const { page, context } = await open("/", undefined, { reducedMotion: "reduce" });
+    const { page, context } = await open("/previa/original", undefined, { reducedMotion: "reduce" });
     await page.evaluate(() => {
       const t = document.querySelector("#jornada [class*='track']");
       const r = t.getBoundingClientRect();
@@ -227,7 +228,7 @@ if (MODE === "absent") {
     { width: 1440, height: 900 },
   ]) {
     await test(`sem overflow horizontal em ${vp.width}px`, async () => {
-      const { page, context } = await open("/", vp);
+      const { page, context } = await open("/previa/original", vp);
       const H = await page.evaluate(() => document.documentElement.scrollHeight);
       let worst = 0;
       for (let y = 0; y < H; y += vp.height) {
@@ -263,7 +264,7 @@ if (MODE === "absent") {
   });
 
   await test("falha da imagem: página e texto continuam, sem erro de página", async () => {
-    const { page, context } = await open("/", undefined, {
+    const { page, context } = await open("/previa/original", undefined, {
       before: (p) => p.route(/\/(imaging\/|motion\/assets\/mri-base)/, (r) => r.fulfill({ status: 404, body: "" })),
     });
     const pageErrors = [];
@@ -314,7 +315,7 @@ if (MODE === "absent") {
     assert(!(await introOn(deep.page)), "tocou com hash profundo");
     await deep.context.close();
 
-    const red = await open("/", undefined, { reducedMotion: "reduce" });
+    const red = await open("/previa/original", undefined, { reducedMotion: "reduce" });
     assert(!(await introOn(red.page)), "tocou com movimento reduzido");
     await red.context.close();
   });
@@ -322,7 +323,7 @@ if (MODE === "absent") {
   await test("abertura: título, CTA e navegação disponíveis desde a chegada; interação conclui o movimento", async () => {
     const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
     const page = await context.newPage();
-    await page.goto(BASE + "/", { waitUntil: "commit" });
+    await page.goto(BASE + "/previa/original", { waitUntil: "commit" });
     await page.waitForSelector("#hero-title");
     const playing = await introOn(page);
     assert(playing, "abertura não tocou na 1ª visita");
@@ -396,7 +397,7 @@ if (MODE === "absent") {
   await test("sem JavaScript: título, textos e CTAs visíveis em estado final", async () => {
     const context = await browser.newContext({ viewport: { width: 390, height: 844 }, javaScriptEnabled: false });
     const page = await context.newPage();
-    await page.goto(BASE + "/", { waitUntil: "load" });
+    await page.goto(BASE + "/previa/original", { waitUntil: "load" });
     assert(await page.getByRole("heading", { name: "Entre na imagem." }).isVisible(), "título");
     assert(await page.getByRole("link", { name: "Explorar a jornada" }).first().isVisible(), "CTA");
     const op = await page.locator("#plataforma-title .rw").first().evaluate((el) => getComputedStyle(el).opacity);
@@ -405,12 +406,12 @@ if (MODE === "absent") {
   });
 
   await test("390×844: CTA principal visível na primeira tela; 768×900 sem texto sobre o exame", async () => {
-    const m = await open("/", { width: 390, height: 844 });
+    const m = await open("/previa/original", { width: 390, height: 844 });
     await m.page.waitForTimeout(1400);
     const box = await m.page.locator("#inicio a.btn-gold").boundingBox();
     assert(box && box.y + box.height <= 844, `CTA fora da tela (${box?.y})`);
     await m.context.close();
-    const t = await open("/", { width: 768, height: 900 });
+    const t = await open("/previa/original", { width: 768, height: 900 });
     await t.page.waitForTimeout(1400);
     const art = await t.page.locator("#inicio svg[data-mri-origin]").boundingBox();
     const title = await t.page.locator("#hero-title").boundingBox();
@@ -419,7 +420,7 @@ if (MODE === "absent") {
   });
 
   await test("celular: resumo da etapa ativa junto da cena e dos controles", async () => {
-    const { page, context } = await open("/", { width: 390, height: 844 });
+    const { page, context } = await open("/previa/original", { width: 390, height: 844 });
     await page.locator("#jornada [role=group] button").nth(3).click();
     await page.waitForTimeout(300);
     const summary = page.locator("#jornada [class*='summary']").first();
@@ -442,7 +443,7 @@ if (MODE === "absent") {
   await test("abertura r05: o arco permanente parte compacto e termina na geometria final (sem 2º arco)", async () => {
     const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
     const page = await context.newPage();
-    await page.goto(BASE + "/", { waitUntil: "commit" });
+    await page.goto(BASE + "/previa/original", { waitUntil: "commit" });
     await page.waitForSelector("#inicio svg[data-mri-state] path[pathLength]");
     const early = await arcState(page);
     assert(early.anim === "ararat-arc-draw", `animação ${early.anim}`);
@@ -460,7 +461,7 @@ if (MODE === "absent") {
   await test("abertura r05: resize durante a entrada conclui direto no estado final", async () => {
     const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
     const page = await context.newPage();
-    await page.goto(BASE + "/", { waitUntil: "commit" });
+    await page.goto(BASE + "/previa/original", { waitUntil: "commit" });
     await page.waitForSelector("#inicio svg[data-mri-state] path[pathLength]");
     assert(await introOn(page), "abertura não tocou");
     await page.setViewportSize({ width: 768, height: 900 });
@@ -485,7 +486,7 @@ if (MODE === "absent") {
       if (/mri-base\.webp|mri-axial-demo\.webp/.test(u)) hits[u] = (hits[u] ?? 0) + 1;
       if (/ararat_icone_transparente/.test(u)) hits.logo = u;
     });
-    await page.goto(BASE + "/", { waitUntil: "networkidle" });
+    await page.goto(BASE + "/previa/original", { waitUntil: "networkidle" });
     const pre = await page.$$eval('link[rel="preload"][as="image"]', (ls) => ls.map((l) => l.getAttribute("href") ?? l.getAttribute("imagesrcset")));
     const src = await page.locator("#inicio image").first().getAttribute("href");
     assert(pre.includes(src), `preload ≠ imagem do hero (${pre} / ${src})`);
@@ -504,7 +505,7 @@ if (MODE === "absent") {
       await gate;
       await route.continue();
     });
-    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    await page.goto(BASE + "/previa/original", { waitUntil: "domcontentloaded" });
     await page.waitForFunction(() => document.querySelector("#inicio [data-mri-state]")?.getAttribute("data-mri-state") === "loading");
     assert(await page.getByRole("link", { name: "Explorar a jornada" }).first().isVisible(), "CTA indisponível durante a espera");
     const label = await page.locator("#inicio svg text[data-mri-wait]").textContent();
@@ -524,7 +525,7 @@ if (MODE === "absent") {
   });
 
   await test("RM com erro: aviso local no quadro, página íntegra", async () => {
-    const { page, context } = await open("/", undefined, {
+    const { page, context } = await open("/previa/original", undefined, {
       before: (p) => p.route(/mri-(base|axial-demo)\.webp/, (r) => r.fulfill({ status: 404, body: "" })),
     });
     await page.waitForFunction(() => document.querySelector("#inicio [data-mri-state]")?.getAttribute("data-mri-state") === "error");
@@ -556,7 +557,7 @@ if (MODE === "absent") {
   });
 
   await test("atmosfera do hero não é baixada em ≤1080 px (sem pacote: nenhum pedido em nenhum caso)", async () => {
-    const { page, context, motionRequests } = await open("/", { width: 768, height: 900 });
+    const { page, context, motionRequests } = await open("/previa/original", { width: 768, height: 900 });
     void motionRequests;
     await page.waitForTimeout(1500);
     const n = await page.evaluate(() => performance.getEntriesByType("resource").filter((r) => /hero-atmosphere/.test(r.name)).length);
@@ -566,7 +567,7 @@ if (MODE === "absent") {
 
   for (const vp of [{ width: 360, height: 780 }]) {
     await test(`celular estreito ${vp.width}×${vp.height}: sem overflow, CTA na 1ª tela`, async () => {
-      const { page, context } = await open("/", vp);
+      const { page, context } = await open("/previa/original", vp);
       await page.waitForTimeout(1400);
       const box = await page.locator("#inicio a.btn-gold").boundingBox();
       assert(box && box.y + box.height <= vp.height, `CTA fora (${box?.y})`);
@@ -582,7 +583,7 @@ if (MODE === "absent") {
   }
 
   await test("mobile 390px: menu abre/fecha e controles por toque não sequestram a rolagem", async () => {
-    const { page, context } = await open("/", { width: 390, height: 844 });
+    const { page, context } = await open("/previa/original", { width: 390, height: 844 });
     const menu = page.getByRole("button", { name: "Abrir menu" });
     await menu.click();
     assert((await page.locator("header button[aria-expanded]").getAttribute("aria-expanded")) === "true", "menu não abriu");
@@ -642,7 +643,7 @@ if (MODE === "fixture") {
   });
 
   await test("falha de importação mantém a cena estática sem erro de página", async () => {
-    const { page, context } = await open("/", undefined, {
+    const { page, context } = await open("/previa/original", undefined, {
       before: (p) => p.route("**/motion/web/journey.js", (r) => r.fulfill({ status: 404, body: "" })),
     });
     const pageErrors = [];
@@ -679,7 +680,7 @@ if (MODE === "fixture-mri") {
     });
 
   await test("mapa do pacote: todas as cenas usam /motion/assets/mri-base.webp", async () => {
-    const { page, context } = await open("/", undefined, {
+    const { page, context } = await open("/previa/original", undefined, {
       before: (p) => p.route("**/motion/web/journey.js", (r) => r.fulfill({ status: 404, body: "" })),
     });
     await page.locator("#explicabilidade").scrollIntoViewIfNeeded();
@@ -690,7 +691,7 @@ if (MODE === "fixture-mri") {
   });
 
   await test("máscara e imagem compartilham a mesma transformação em 1440, 390 e após resize", async () => {
-    const { page, context } = await open("/", undefined, {
+    const { page, context } = await open("/previa/original", undefined, {
       before: (p) => p.route("**/motion/web/journey.js", (r) => r.fulfill({ status: 404, body: "" })),
     });
     await goToJourney(page);
@@ -765,7 +766,7 @@ if (MODE === "v11") {
   });
 
   await test("v1.1: data-loaded=error devolve a cena estática e a legenda", async () => {
-    const { page, context } = await open("/", undefined, { before: (p) => p.addInitScript(() => (window.__failMockImage = true)) });
+    const { page, context } = await open("/previa/original", undefined, { before: (p) => p.addInitScript(() => (window.__failMockImage = true)) });
     await goToJourney(page);
     await page.waitForFunction(() => document.querySelector("#jornada [data-motion-status]")?.dataset.motionStatus === "failed");
     assert((await page.locator("#jornada [data-label-id]").count()) === 0, "rótulos com módulo em erro");
@@ -797,7 +798,7 @@ if (MODE === "v11") {
 
 
   await test("atmosfera r05: não monta em 768 px; monta ao ampliar para 1440 px", async () => {
-    const { page, context } = await open("/", { width: 768, height: 900 });
+    const { page, context } = await open("/previa/original", { width: 768, height: 900 });
     await page.waitForTimeout(1800);
     const pre = await page.evaluate(() => performance.getEntriesByType("resource").filter((r) => /hero-atmosphere/.test(r.name)).map((r) => r.name));
     assert(pre.length === 0, `baixou em 768: ${pre}`);
@@ -823,7 +824,7 @@ if (MODE === "v11") {
   });
 
   await test("atmosfera do hero: falha de importação mantém fundo e conteúdo", async () => {
-    const { page, context } = await open("/", undefined, {
+    const { page, context } = await open("/previa/original", undefined, {
       before: (p) => p.route("**/motion/web/hero-atmosphere.js", (r) => r.fulfill({ status: 404, body: "" })),
     });
     const pageErrors = [];

@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslation } from "@/lib/i18n";
+
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { MriSource } from "@/lib/mri";
 import { JOURNEY_STEPS, type JourneyStep } from "@/lib/journey-content";
@@ -66,6 +68,7 @@ type JourneyProps = {
 };
 
 export function Journey({ motionPackage, mri, variant = "default", onPassage, covered = false, sceneCovered = false, controlsWaiting = false, frameNote = null, compactSteps = false, safeIntro = false, steps = JOURNEY_STEPS, introText }: JourneyProps) {
+  const { t } = useTranslation();
   const opening = variant === "opening";
   const isDesktop = useMediaQuery(DESKTOP_QUERY, true);
   const isNarrow = useMediaQuery("(max-width: 599px)", false);
@@ -247,12 +250,12 @@ export function Journey({ motionPackage, mri, variant = "default", onPassage, co
     >
       {!opening && (
         <header className={`wrap ${styles.intro}`}>
-          <p className="eyebrow">{introText ? "Percurso conceitual" : "Como funciona"}</p>
+          <p className="eyebrow">{t(introText ? "Percurso conceitual" : "Como funciona")}</p>
           <h2 id="jornada-title" className={styles.title} data-reveal="title">
-            <RevealWords text={"Uma imagem.\nNovas camadas."} />
+            <RevealWords text={t("Uma imagem.\nNovas camadas.")} />
           </h2>
           <p className={styles.lead} data-reveal="text">
-            {introText ?? "Veja a transformação: a mesma imagem passa por quatro estados, da leitura do exame à explicação. Role a página ou escolha uma etapa."}
+            {t(introText ?? "Veja a transformação: a mesma imagem passa por quatro estados, da leitura do exame à explicação. Role a página ou escolha uma etapa.")}
           </p>
         </header>
       )}
@@ -291,12 +294,12 @@ export function Journey({ motionPackage, mri, variant = "default", onPassage, co
             <div className={styles.openingCol} data-opening="steps-col" inert={inertGroup} data-covered={inertGroup ? "true" : undefined}>
               <div ref={runwayDesktopRef} className={styles.runwayDesktop} data-opening="runway-desktop" aria-hidden="true" />
               <header id="jornada-inicio" className={styles.openingIntro} data-safe={safeIntro || undefined}>
-                <p className="eyebrow">{introText ? "Percurso conceitual" : "Como funciona"}</p>
+                <p className="eyebrow">{t(introText ? "Percurso conceitual" : "Como funciona")}</p>
                 <h2 id="jornada-title" className={styles.openingTitle} data-reveal="title">
-                  <RevealWords text={"Uma imagem.\nNovas camadas."} />
+                  <RevealWords text={t("Uma imagem.\nNovas camadas.")} />
                 </h2>
                 <p className={styles.openingLead} data-reveal="text">
-                  {introText ?? "A mesma imagem passa por quatro estados, da leitura do exame à explicação. Role a página ou escolha uma etapa."}
+                  {t(introText ?? "A mesma imagem passa por quatro estados, da leitura do exame à explicação. Role a página ou escolha uma etapa.")}
                 </p>
               </header>
               <JourneySteps activeIndex={activeIndex} compact={compactSteps} steps={steps} />
@@ -332,7 +335,7 @@ export function Journey({ motionPackage, mri, variant = "default", onPassage, co
       </div>
 
       <p className="visually-hidden" aria-live="polite" aria-atomic="true">
-        {announcement}
+        {t(announcement)}
       </p>
     </section>
   );

@@ -1,3 +1,7 @@
+"use client";
+
+import { useTranslation } from "@/lib/i18n";
+
 import { JOURNEY_STEPS, type JourneyStep } from "@/lib/journey-content";
 import styles from "./Journey.module.css";
 
@@ -8,21 +12,22 @@ import styles from "./Journey.module.css";
  *  As duas formas nunca aparecem juntas (display: none tira a duplicada da leitura assistiva). */
 /** steps: textos da rota (padrão = JOURNEY_STEPS; a /previa/refinada passa a versão revisada, mesmos ids). */
 export function JourneySteps({ activeIndex, compact = false, steps = JOURNEY_STEPS }: { activeIndex: number; compact?: boolean; steps?: JourneyStep[] }) {
+  const { t } = useTranslation();
   return (
     <ol className={styles.steps}>
       {steps.map((step, i) => (
         <li key={step.id} id={step.id} className={styles.step} data-active={activeIndex === i || undefined}>
           <div className={styles.stepInner}>
             <p className={styles.stepKicker}>
-              <span>{step.number}</span> {step.title}
+              <span>{t(step.number)}</span> {t(step.title)}
             </p>
-            <h3 className={styles.stepTitle}>{step.verb}</h3>
-            <p className={`${styles.stepText} ${compact ? styles.stepTextWide : ""}`}>{step.text}</p>
-            <p className={styles.stepDetail}>{step.detail}</p>
+            <h3 className={styles.stepTitle}>{t(step.verb)}</h3>
+            <p className={`${styles.stepText} ${compact ? styles.stepTextWide : ""}`}>{t(step.text)}</p>
+            <p className={styles.stepDetail}>{t(step.detail)}</p>
             {compact && (
               <details className={styles.stepMore}>
-                <summary>Ler mais sobre {step.title.toLowerCase()}</summary>
-                <p className={styles.stepText}>{step.text}</p>
+                <summary>{t("Ler mais sobre")}{" "}{t(step.title.toLowerCase())}</summary>
+                <p className={styles.stepText}>{t(step.text)}</p>
               </details>
             )}
           </div>

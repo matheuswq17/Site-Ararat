@@ -1,3 +1,7 @@
+"use client";
+
+import { useTranslation } from "@/lib/i18n";
+
 import { BrandMark } from "../BrandMark";
 import { DISCLAIMER, NAV_ITEMS_REFINADA } from "@/lib/navigation";
 import base from "../SiteFooter.module.css";
@@ -11,28 +15,29 @@ import styles from "./FooterRefinada.module.css";
  * estágio científico na Ciência.
  */
 export function FooterRefinada() {
+  const { t } = useTranslation();
   return (
     <footer className={`${base.footer} ${styles.footer}`}>
       <div className={`wrap ${base.inner} ${styles.inner}`}>
         <div className={styles.brand}>
-          <a href="#inicio" className={styles.logo} aria-label="ARARAT MODEL — início">
+          <a href="#inicio" className={styles.logo} aria-label={t("ARARAT MODEL — início")}>
             <BrandMark size="lgFit" />
           </a>
-          <p className={styles.tagline}>Radiômica explicável para uma oncologia de precisão</p>
+          <p className={styles.tagline}>{t("Radiômica explicável para uma oncologia de precisão")}</p>
         </div>
 
-        <nav aria-label="Rodapé" className={base.nav}>
+        <nav aria-label={t("Rodapé")} className={base.nav}>
           <ul>
             {NAV_ITEMS_REFINADA.map((item) => (
               <li key={item.href}>
-                <a href={item.href}>{item.label}</a>
+                <a href={item.href}>{t(item.label)}</a>
               </li>
             ))}
           </ul>
         </nav>
 
         <div className={base.meta}>
-          <p>{DISCLAIMER}</p>
+          <p>{t(DISCLAIMER)}</p>
         </div>
       </div>
     </footer>

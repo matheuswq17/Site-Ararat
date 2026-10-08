@@ -62,7 +62,7 @@ try{
 var s=null;try{s=window.sessionStorage}catch(e){}
 function g(k){try{return s&&s.getItem(k)}catch(e){return null}}
 var rm=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-if(!rm&&g("ararat:paused")!=="1"&&/^\\/previa(\\/(a|b|refinada))?\\/?$/.test(location.pathname)){
+if(!rm&&g("ararat:paused")!=="1"&&(location.pathname==="/"||location.pathname==="/pt"||/^\\/previa(\\/(a|b|refinada))?\\/?$/.test(location.pathname))){
 var os=document.createElement("style");os.id="ararat-opening";os.textContent=OPENING_CSS;document.head.appendChild(os)}
 var h=location.hash;var deep=h&&h!=="#"&&h!=="#inicio";
 if(rm||deep||g("ararat:intro")==="1"||g("ararat:paused")==="1"){return}

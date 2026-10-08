@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslation } from "@/lib/i18n";
+
 import { memo, type CSSProperties } from "react";
 import { visibleRect, type MriSource, type Pt, type Rect } from "@/lib/mri";
 import { MriFigure } from "../art/MriFigure";
@@ -94,6 +96,7 @@ type Props = {
  * apenas a janela retangular de amostragem e recortes da mesma base.
  */
 export const JourneyMriScene = memo(function JourneyMriScene({ source, progress, layout }: Props) {
+  const { t } = useTranslation();
   const s1 = clamp01(progress * 3);
   const s2 = clamp01(progress * 3 - 1);
   const s3 = clamp01(progress * 3 - 2);
@@ -230,9 +233,9 @@ export const JourneyMriScene = memo(function JourneyMriScene({ source, progress,
     <div className={styles.scene} data-layout={layout}>
       <MriFigure id={id} source={source} fit="slice" cameraStyle={cameraStyle} inCamera={inCamera} overlay={overlay} edgeFade={0.06} />
       <div className={styles.labels} aria-hidden="true">
-        {g.tiles.map((t, i) => (
-          <span key={t.key} className={styles.label} style={{ ...pct({ x: t.x, y: t.y }), opacity: reveal(s2, i * 0.18) }}>
-            {t.label}
+        {g.tiles.map((tile, i) => (
+          <span key={tile.key} className={styles.label} style={{ ...pct({ x: tile.x, y: tile.y }), opacity: reveal(s2, i * 0.18) }}>
+            {t(tile.label)}
           </span>
         ))}
       </div>

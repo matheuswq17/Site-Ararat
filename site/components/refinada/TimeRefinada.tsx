@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslation } from "@/lib/i18n";
+
 import { useCallback, useEffect, useRef, useState, type MouseEvent, type SyntheticEvent } from "react";
 import { TIME, TIME_INTRO, TIME_NOTA, TIME_TITULO, type Integrante } from "@/lib/time-refinada";
 import { carregarRetrato, PESSOAS_RETRATO, type CreateStipplePortrait, type EstadoRetrato, type RetratoPontilhado } from "@/lib/time-retrato";
@@ -35,6 +37,7 @@ const iniciais = (nome: string) =>
 const DESKTOP = "(min-width: 960px)";
 
 function Retrato({ m, sizes, className, alt, onErro, erro }: { m: Integrante; sizes: string; className: string; alt: string; onErro: () => void; erro: boolean }) {
+  const { t } = useTranslation();
   const maior = m.fotos[m.fotos.length - 1];
   const ref = useRef<HTMLImageElement>(null);
   // Falha antes da hidratação (o evento error já passou): confere o estado ao montar.
@@ -44,8 +47,8 @@ function Retrato({ m, sizes, className, alt, onErro, erro }: { m: Integrante; si
   }, [onErro]);
   if (erro)
     return (
-      <span className={`${className} ${styles.semFoto}`} data-id={m.id} role={alt ? "img" : undefined} aria-label={alt || undefined} aria-hidden={alt ? undefined : true}>
-        {iniciais(m.nome)}
+      <span className={`${className} ${styles.semFoto}`} data-id={m.id} role={alt ? "img" : undefined} aria-label={t(alt || undefined)} aria-hidden={alt ? undefined : true}>
+        {t(iniciais(m.nome))}
       </span>
     );
   return (
@@ -58,7 +61,7 @@ function Retrato({ m, sizes, className, alt, onErro, erro }: { m: Integrante; si
       sizes={sizes}
       width={maior.w}
       height={Math.round((maior.w * 5) / 4)}
-      alt={alt}
+      alt={t(alt)}
       loading="lazy"
       decoding="async"
       data-id={m.id}
@@ -70,6 +73,7 @@ function Retrato({ m, sizes, className, alt, onErro, erro }: { m: Integrante; si
 type EstadoFabrica = "carregando" | "falhou" | CreateStipplePortrait;
 
 export function TimeRefinada() {
+  const { t, locale } = useTranslation();
   const [js, setJs] = useState(false);
   const [erros, setErros] = useState<Record<string, boolean>>({});
   const [sel, setSel] = useState<string>(TIME[0].id); // FONTE ÚNICA: integrante escolhido na lista
@@ -212,17 +216,18 @@ export function TimeRefinada() {
   const mostrado = TIME.find((m) => m.id === naTela);
   // Pessoa SOLICITADA (lista) × pessoa MOSTRADA (retrato): diferem durante carregamento/transformação.
   const emTroca = comModulo ? !!est && est.pedido !== est.ativo : sel !== shown;
-  const rotulo = mostrado ? `Retrato de ${mostrado.nome}` : "Retrato carregando";
+  const falhaTraduzida = locale === "en" && comModulo && est?.fase === "falha";
+  const rotulo = mostrado ? `Retrato de ${mostrado.nome}${falhaTraduzida ? " — foto indisponível" : ""}` : "Retrato carregando";
 
   return (
     <section id="time" ref={sectionRef} className={styles.section} aria-labelledby="time-title">
       <div className="wrap">
         <header className={styles.header}>
-          <p className={`eyebrow ${styles.eyebrow}`}>Time</p>
+          <p className={`eyebrow ${styles.eyebrow}`}>{t("Time")}</p>
           <h2 id="time-title" className={styles.title}>
-            {TIME_TITULO}
+            {t(TIME_TITULO)}
           </h2>
-          <p className={styles.intro}>{TIME_INTRO}</p>
+          <p className={styles.intro}>{t(TIME_INTRO)}</p>
         </header>
 
         <div className={styles.layout} data-js={js ? "" : undefined}>
@@ -232,7 +237,7 @@ export function TimeRefinada() {
               ref={portraitRef}
               className={styles.portrait}
               role={js ? "img" : undefined}
-              aria-label={js ? rotulo : undefined}
+              aria-label={t(js ? rotulo : undefined)}
               aria-hidden={js ? undefined : true}
               aria-busy={js && emTroca ? true : undefined}
               data-shown={shown}
@@ -244,16 +249,17 @@ export function TimeRefinada() {
               data-pendente={pendente ? "" : undefined}
             >
               {TIME.map((m) => (
-                <Retrato key={m.id} m={m} sizes="(min-width: 1280px) 440px, 38vw" className={styles.portraitImg} alt="" onErro={falhou(m.id)} erro={!!erros[m.id]} />
+                <Retrato key={m.id} m={m} sizes="(min-width: 1280px) 440px, 38vw" className={styles.portraitImg} alt={t("")} onErro={falhou(m.id)} erro={!!erros[m.id]} />
               ))}
               {/* Raiz do módulo do Motion: ele cria img.rp-foto, canvas.rp-pontos e div.rp-falha. */}
-              <div ref={stageRef} className={styles.stage} />
+              <div ref={stageRef} className={styles.stage} hidden={falhaTraduzida} />
+              {falhaTraduzida && <p className={styles.failure} data-portrait-failure="">{t(rotulo)}</p>}
             </div>
             {js && (
               <div className={styles.portraitBar}>
                 <span className={styles.portraitName} aria-hidden="true">
-                  {mostrado?.nome ?? "\u00a0"}
-                  {pendente && <span className={styles.loading}> · carregando foto</span>}
+                  {t(mostrado?.nome ?? "\u00a0")}
+                  {pendente && <span className={styles.loading}> {t("· carregando foto")}</span>}
                 </span>
               </div>
             )}
@@ -265,24 +271,24 @@ export function TimeRefinada() {
                 <details name="time" open={i === 0} data-id={m.id} className={styles.member} onToggle={onToggle(m.id)}>
                   <summary className={styles.summary} onClick={onSummaryClick} onPointerEnter={(e) => e.pointerType === "mouse" && inst?.preload(m.id).catch(() => undefined)}>
                     <span className={styles.num} aria-hidden="true">
-                      {String(i + 1).padStart(2, "0")}
+                      {t(String(i + 1).padStart(2, "0"))}
                     </span>
                     <span className={styles.who}>
-                      <span className={styles.name}>{m.nome}</span>
-                      <span className={styles.role}>{m.funcao}</span>
+                      <span className={styles.name}>{t(m.nome)}</span>
+                      <span className={styles.role}>{t(m.funcao)}</span>
                     </span>
                     <span className={styles.chev} aria-hidden="true" />
                   </summary>
                   <div className={styles.body}>
-                    <Retrato m={m} sizes="(max-width: 959px) 148px, 1px" className={styles.inlineImg} alt={m.alt} onErro={falhou(m.id)} erro={!!erros[m.id]} />
+                    <Retrato m={m} sizes="(max-width: 959px) 148px, 1px" className={styles.inlineImg} alt={t(m.alt)} onErro={falhou(m.id)} erro={!!erros[m.id]} />
                     <div className={styles.text}>
-                      <p className={styles.resumo}>{m.bio[0]}</p>
+                      <p className={styles.resumo}>{t(m.bio[0])}</p>
                       {m.bio.length > 1 && (
                         <details className={styles.more}>
                           <summary className={styles.moreSummary}>
-                            Ler biografia<span className={styles.sr}> de {m.nome}</span>
+                            {t("Ler biografia")}<span className={styles.sr}> {t("de")}{" "}{m.nome}</span>
                           </summary>
-                          <p className={styles.resto}>{m.bio.slice(1).join(" ")}</p>
+                          <p className={styles.resto}>{t(m.bio.slice(1).join(" "))}</p>
                         </details>
                       )}
                     </div>
@@ -293,7 +299,7 @@ export function TimeRefinada() {
           </ol>
         </div>
 
-        <p className={`ill-note ${styles.nota}`}>{TIME_NOTA}</p>
+        <p className={`ill-note ${styles.nota}`}>{t(TIME_NOTA)}</p>
       </div>
     </section>
   );

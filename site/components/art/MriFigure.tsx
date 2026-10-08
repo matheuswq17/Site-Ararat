@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslation } from "@/lib/i18n";
+
 import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import type { MriSource } from "@/lib/mri";
 import styles from "./MriFigure.module.css";
@@ -43,6 +45,7 @@ export function MriFigure({
   className,
   style,
 }: Props) {
+  const { t } = useTranslation();
   // "initial" = markup do servidor (imagem visível, sem JS nada é escondido).
   // Na hidratação: se a imagem já está no cache/decodificada → "loaded" sem esconder;
   // se ainda não chegou (nada foi pintado) → "loading" e, ao chegar, revelação de ~220 ms.
@@ -120,7 +123,7 @@ export function MriFigure({
           enquanto a imagem não chegou; depois, data-mri-state assume. Sem relógio novo. */}
       {statusLabel && (
         <text x={W / 2} y={H - 28} textAnchor="middle" className={styles.status} data-mri-wait="">
-          {state === "error" ? "Imagem de RM indisponível no momento" : "Carregando imagem de RM…"}
+          {t(state === "error" ? "Imagem de RM indisponível no momento" : "Carregando imagem de RM…")}
         </text>
       )}
     </svg>

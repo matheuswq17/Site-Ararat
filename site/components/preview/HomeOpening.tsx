@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslation } from "@/lib/i18n";
+
 import type { JourneyStep } from "@/lib/journey-content";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import type { MriSource } from "@/lib/mri";
@@ -95,6 +97,7 @@ export function HomeOpening({
   journeySteps?: JourneyStep[];
   journeyIntro?: string;
 }) {
+  const { t } = useTranslation();
   const rootRef = useRef<HTMLDivElement>(null);
   const hostRef = useRef<HTMLDivElement>(null);
   const slotRef = useRef<HTMLElement>(null);
@@ -547,35 +550,35 @@ export function HomeOpening({
 
         <div className={styles.front} data-opening="front">
           <div className={`wrap ${styles.content}`} data-opening="content">
-            <p className={`eyebrow ${styles.eyebrow}`}>{c.eyebrow}</p>
+            <p className={`eyebrow ${styles.eyebrow}`}>{t(c.eyebrow)}</p>
             <h1 id="hero-title" className={styles.title}>
               {c.titleLines.map((line, i) => (
                 <span key={line} className={styles.line} style={{ "--i": i } as CSSProperties}>
-                  {line}
+                  {t(line)}
                   {i < c.titleLines.length - 1 ? " " : ""}
                 </span>
               ))}
             </h1>
-            <p className={styles.description}>{c.description}</p>
+            <p className={styles.description}>{t(c.description)}</p>
             <div className={styles.actions}>
               <a href={c.primary.href} className="btn btn-gold" data-arrow="down">
-                {c.primary.label}
+                {t(c.primary.label)}
                 <ArrowDown />
               </a>
               <a href={c.secondary.href} className="btn btn-ghost">
-                {c.secondary.label}
+                {t(c.secondary.label)}
                 <ArrowRight />
               </a>
             </div>
             {/* Estado científico (documentos atuais): linha discreta sob as ações, fora da arte. */}
             <p className={`ill-note ${styles.note}`} data-opening="note">
-              {note}
+              {t(note)}
             </p>
           </div>
 
           {scrollInvite && (
             <p className={styles.invite} data-opening="invite" aria-hidden="true">
-              <span>Role para explorar</span>
+              <span>{t("Role para explorar")}</span>
               <span className={styles.inviteLine} />
             </p>
           )}
@@ -589,7 +592,7 @@ export function HomeOpening({
               {config && (
                 <img
                   src={config.posterDesktop.src}
-                  alt=""
+                  alt={t("")}
                   className={styles.poster}
                   data-opening="poster"
                   decoding="async"
@@ -620,7 +623,7 @@ export function HomeOpening({
           fixo sobre o espaço dos controles ocultos. Região de status sempre montada; o texto só
           existe enquanto a cena não foi revelada. */}
       <p ref={waitRef} className={styles.wait} role="status" aria-live="polite" data-opening="wait" data-active={cover.loading || undefined}>
-        {cover.loading ? "Carregando imagem de RM…" : ""}
+        {t(cover.loading ? "Carregando imagem de RM…" : "")}
       </p>
     </div>
   );

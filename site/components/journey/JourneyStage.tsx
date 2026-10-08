@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslation } from "@/lib/i18n";
+
 import type { CSSProperties, ReactNode, RefObject } from "react";
 import type { MriSource } from "@/lib/mri";
 import { LABEL_TEXT, type JourneyLayout } from "@/lib/motion-contract";
@@ -41,6 +43,7 @@ export function JourneyStage({
   children,
   frameNote = null,
 }: Props) {
+  const { t } = useTranslation();
   const moduleShown = motionStatus === "ready";
   const visibleLabels = moduleShown && motionLayout ? motionLayout.labels.filter((l) => l.visible) : [];
   // Módulo sem o evento (ex.: pacote 0.2.0): legenda estática nas etapas com dados.
@@ -63,7 +66,7 @@ export function JourneyStage({
                 data-emphasis={motionLayout.emphasis === l.id || undefined}
                 style={{ left: `${(l.x * 100).toFixed(3)}%`, top: `${(l.y * 100).toFixed(3)}%` } as CSSProperties}
               >
-                {LABEL_TEXT[l.id]}
+                {t(LABEL_TEXT[l.id])}
               </span>
             ))}
           </div>
@@ -71,23 +74,19 @@ export function JourneyStage({
         <span className={styles.corner} aria-hidden="true" />
         {frameNote && (
           <p className={styles.frameNote} role="status">
-            {frameNote}
+            {t(frameNote)}
           </p>
         )}
       </div>
       <p className="visually-hidden">
-        Na cena ilustrativa, os dados extraídos da região aparecem identificados como forma, textura e
-        intensidade.
-      </p>
+        {t("Na cena ilustrativa, os dados extraídos da região aparecem identificados como forma, textura e intensidade.")}</p>
       <p className={`ill-note ${styles.caption}`}>
         {staticLegend && (
           <span className={styles.legend} aria-hidden="true">
-            Na cena: forma · textura · intensidade.{" "}
+            {t("Na cena: forma · textura · intensidade.")}{t(" ")}
           </span>
         )}
-        RM demonstrativa · segmentação demonstrativa, região de exemplo, não lesão · contribuições
-        ilustrativas, sem valores — não são resultado do modelo.
-      </p>
+        {t("RM demonstrativa · segmentação demonstrativa, região de exemplo, não lesão · contribuições ilustrativas, sem valores — não são resultado do modelo.")}</p>
       {children}
     </div>
   );

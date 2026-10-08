@@ -1,3 +1,7 @@
+"use client";
+
+import { useTranslation } from "@/lib/i18n";
+
 import { JOURNEY_STEPS, type JourneyStep } from "@/lib/journey-content";
 import styles from "./Journey.module.css";
 
@@ -8,13 +12,14 @@ import styles from "./Journey.module.css";
  * No desktop fica oculto — a coluna de textos acompanha a arte sticky.
  */
 export function ActiveStepSummary({ index, steps = JOURNEY_STEPS }: { index: number; steps?: JourneyStep[] }) {
+  const { t } = useTranslation();
   const step = steps[index];
   return (
     <div className={styles.summary} aria-hidden="true" data-step={index}>
       <p className={styles.summaryKicker}>
-        <span>{step.number}</span> {step.title} · {step.verb}
+        <span>{t(step.number)}</span> {t(step.title)} {t("·")}{t(step.verb)}
       </p>
-      <p className={styles.summaryText}>{step.text}</p>
+      <p className={styles.summaryText}>{t(step.text)}</p>
     </div>
   );
 }

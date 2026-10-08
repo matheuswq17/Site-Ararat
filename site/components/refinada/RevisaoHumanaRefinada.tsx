@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslation } from "@/lib/i18n";
+
 import { useEffect, useRef, useState } from "react";
 import { paisagemDe, VERSAO_PADRAO } from "@/lib/topo-paisagens";
 import { useMotionPaused } from "@/lib/motion-prefs";
@@ -33,6 +35,7 @@ const atributos = (a: Record<string, string>) => Object.fromEntries(Object.entri
 const FRASES = ["O modelo sugere.", "O radiologista revisa.", "O médico contextualiza.", "A decisão permanece humana."] as const;
 
 export function RevisaoHumanaRefinada() {
+  const { t } = useTranslation();
   const compRef = useRef<HTMLDivElement>(null);
   const frasesRef = useRef<HTMLParagraphElement>(null);
   const paisagemRef = useRef<HTMLDivElement>(null);
@@ -145,7 +148,7 @@ export function RevisaoHumanaRefinada() {
       <p ref={frasesRef} id="ciencia-revisao" className={styles.frases}>
         {FRASES.map((f, i) => (
           <span key={f} ref={i === 3 ? ultimaRef : undefined} className={`${styles.frase} ${i === 3 ? styles.decisao : ""}`} data-i={i} data-ativa={i === marca ? "" : undefined}>
-            {f}
+            {t(f)}
           </span>
         ))}
       </p>
@@ -172,8 +175,7 @@ export function RevisaoHumanaRefinada() {
         )}
       </div>
       <span className={`ill-note ${styles.nota}`} aria-hidden="true">
-        Representação conceitual da revisão humana
-      </span>
+        {t("Representação conceitual da revisão humana")}</span>
     </div>
   );
 }

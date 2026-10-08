@@ -886,14 +886,14 @@ await test("Ciência fechamento: quatro frases exatas, visíveis e legíveis sem
   assert(n.ativa === "3" && n.frases === 4 && n.svg && n.marca === "1", "sem JS: " + JSON.stringify(n));
   await nj.ctx.close();
   const outras = [];
-  for (const r of ["/previa", "/previa/a", "/previa/b", "/"]) {
+  for (const r of ["/previa", "/previa/a", "/previa/b", "/previa/original"]) {
     const c2 = await browser.newContext({ viewport: { width: 1280, height: 800 } }); const pg = await c2.newPage();
     await pg.goto(BASE + r, { waitUntil: "domcontentloaded" });
     outras.push(await pg.evaluate(() => ({ nota: /Da imagem ao entendimento · Ilustração/.test(document.getElementById("ciencia")?.textContent ?? ""), novo: !!document.querySelector("[data-frase-ativa]") })));
     await c2.close();
   }
   assert(outras.every((o) => o.nota && !o.novo), "outras rotas: " + JSON.stringify(outras));
-  notes.push(`    · frases exatas e visíveis; SVG e nota aria-hidden; sem JS: estático com marca na 4ª; /previa, /a, /b e / com o TopoLandscape original`);
+  notes.push(`    · frases exatas e visíveis; SVG e nota aria-hidden; sem JS: estático com marca na 4ª; /previa, /a, /b e /previa/original com o TopoLandscape original`);
 });
 await test("Ciência fechamento: progresso pela posição real — rolagem para frente e para trás (reversível), teclado, resize no meio; sem scroll hijacking; sem deslocamento de layout", async () => {
   for (const vp of [[1440, 900], [1280, 720], [768, 1024], [390, 844], [320, 568]]) {

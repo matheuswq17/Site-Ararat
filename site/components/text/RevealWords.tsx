@@ -1,3 +1,7 @@
+"use client";
+
+import { useTranslation } from "@/lib/i18n";
+
 import { Fragment, type CSSProperties } from "react";
 
 /**
@@ -8,8 +12,9 @@ import { Fragment, type CSSProperties } from "react";
  * Markup determinístico (sem window/tempo): SSR e cliente iguais.
  */
 export function RevealWords({ text, className = "rw", start = 0 }: { text: string; className?: string; start?: number }) {
+  const { t } = useTranslation();
   let i = start;
-  const lines = text.split("\n");
+  const lines = t(text).split("\n");
   return (
     <>
       {lines.map((line, li) => (
