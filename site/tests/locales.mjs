@@ -17,8 +17,8 @@ try {
     assert.equal(await page.locator("html").getAttribute("lang"), lang);
     assert.equal((await page.locator("#hero-title").textContent()).replace(/\s+/g, " ").trim(), title);
     assert.equal(await page.locator("#time-lista > li").count(), 5);
-    assert.equal(await page.locator('[data-opening="root"]').getAttribute("data-preview-version"), "0.7.0-draft");
-    assert.equal(await page.locator('[data-fluxo="root"]').getAttribute("data-modulo"), "0.1.0-draft");
+    assert.equal(await page.locator('[data-opening="root"]').getAttribute("data-preview-version"), "0.9.0-sinal");
+    assert.equal(await page.locator('[data-fluxo="root"]').getAttribute("data-modulo"), "0.3.0-sinal");
     if (lang === "en") {
       const untranslated = await page.evaluate((dict) => {
         const keys = new Set(Object.keys(dict).filter((key) => key !== dict[key]));
@@ -54,7 +54,8 @@ try {
       assert.equal(await page.locator(".language-switch").isVisible(), true);
     }
     if (lang === "en") {
-      await page.route(/time-interativo-0\.2\.0\/retratos\/victor-.*\.webp/, (route) => route.abort());
+      // brand-sinal-v1: retratos do pacote 0.4.0-sinal (antes 0.2.0).
+      await page.route(/time-interativo-0\.4\.0-sinal\/retratos\/victor-.*\.webp/, (route) => route.abort());
       await page.locator('#time-lista > li').nth(4).locator('summary').first().click();
       await page.locator('#time [data-shown]').scrollIntoViewIfNeeded();
       await page.locator('#time [data-portrait-failure]').waitFor({ state: "visible" });

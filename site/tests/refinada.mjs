@@ -25,10 +25,11 @@ async function sharpDiff(a, b) {
   return n / (A.info.width * A.info.height);
 }
 const browser = await chromium.launch();
-// ARARAT Sinal (brand-sinal-v1): a frase da decisão "acende" por contraste — gray-40 (#5E5E5E) nas
-// etapas 0–3 → gray-5 (#111111) na etapa 4 em diante; antes navy #0D1B2A → ouro #856514.
+// ARARAT Sinal (brand-sinal-v1, combinado com o Motion 0.5.0-sinal): a decisão "acende" por contraste —
+// gray-30 (#474747, como as demais frases) nas etapas 0–3 → gray-5 (#111111) na etapa 4 em diante, sempre a
+// 600; antes navy #0D1B2A → ouro #856514.
 // Fundo claro: gray-97 #F6F6F6 (antes #F5F7FA). A coreografia testada é a mesma.
-const COR_TEXTO_CLARO = "rgb(94, 94, 94)";
+const COR_TEXTO_CLARO = "rgb(71, 71, 71)";
 const COR_DECISAO = "rgb(17, 17, 17)";
 const FUNDO_CLARO = "rgb(246, 246, 246)";
 
@@ -112,7 +113,7 @@ await test("cabeçalho: limites em 320–1440 px — lockup compacto < 40 px sem
 // ── 2. Correções funcionais ─────────────────────────────────────────────────────────────────
 await test("Explicabilidade: leitura, ordem e barras coerentes nas três seleções e alinhadas à Jornada (Textura > Intensidade > Forma)", async () => {
   // Referência: contribuições da cena da Jornada no pacote em uso (forma, textura, intensidade).
-  const pkg = (await (await fetch(BASE + ROUTE)).text()).match(/\/previa\/(home-montanha-[\d.]+)\//)[1];
+  const pkg = (await (await fetch(BASE + ROUTE)).text()).match(/\/previa\/(home-montanha-[\w.-]+)\//)[1];
   const js = await (await fetch(`${BASE}/previa/${pkg}/web/journey.js`)).text();
   const contrib = JSON.parse(js.match(/const CONTRIB = (\[[^\]]+\])/)[1]);
   const keys = ["forma", "textura", "intensidade"];
@@ -350,38 +351,45 @@ await test("convite 'Role para explorar': na 1ª tela, fora dos botões e do tex
   notes.push("    · " + rows.join(" · "));
 });
 
-await test("montanha (pacote da refinada): luz ambiente em repouso; pausa geral, aba oculta e passagem apagam; uma só fonte do arco", async () => {
+// brand-sinal-v1 — montanha 0.9.0-sinal (contrato do Motion, CONTRATO-SITE.md §2 e §7): a luz ambiente
+// passa a vir DESLIGADA por padrão ("repouso: nada se redesenha"; ambient: true só para comparação). Os
+// dois testes abaixo substituem os da luz ambiente da 0.7.x e conferem o novo contrato, com o mesmo rigor.
+await test("montanha 0.9.0-sinal: sem luz ambiente em repouso, pixels da arte parados; pausa, aba oculta e passagem seguem apagadas; uma só fonte do arco", async () => {
   const { ctx, page, errors } = await open([1280, 720]);
   await page.waitForFunction(() => document.querySelector("[data-opening=root]")?.dataset.sculpture === "canvas", null, { timeout: 9000 });
-  const amb = () => page.evaluate(() => document.querySelector("[data-opening=sticky] canvas")?.dataset.ambient);
+  const amb = () => page.evaluate(() => document.querySelector("[data-opening=sticky] canvas")?.dataset.ambient ?? "ausente");
+  await page.waitForTimeout(1600); // abertura assentada
   const seen = new Set();
-  for (let i = 0; i < 40; i++) { seen.add(await amb()); await page.waitForTimeout(150); }
-  assert(seen.has("light") || seen.has("on"), `luz ambiente não rodou: ${[...seen]}`);
-  // pausa geral (botão do cabeçalho)
+  for (let i = 0; i < 20; i++) { seen.add(await amb()); await page.waitForTimeout(150); }
+  assert([...seen].every((v) => v === "off" || v === "ausente"), `luz ambiente ligada em repouso: ${[...seen]}`);
+  // Repouso = nada se redesenha: dois quadros da arte, 1,5 s de intervalo, idênticos.
+  const box = await page.locator("[data-opening=slot]").boundingBox();
+  const clip = { x: Math.max(0, box.x), y: Math.max(0, box.y), width: Math.min(box.width, 1280 - Math.max(0, box.x)), height: Math.min(box.height, 720 - Math.max(0, box.y)) };
+  const q1 = await page.screenshot({ clip });
+  await page.waitForTimeout(1500);
+  const q2 = await page.screenshot({ clip });
+  assert(Buffer.compare(q1, q2) === 0, "a arte mudou em repouso");
   await page.locator("header button[aria-pressed]").first().click();
   await page.waitForTimeout(400);
   const paused = await amb();
   await page.locator("header button[aria-pressed]").first().click();
-  // aba oculta
   await page.evaluate(() => { Object.defineProperty(document, "hidden", { configurable: true, get: () => true }); document.dispatchEvent(new Event("visibilitychange")); });
   await page.waitForTimeout(400);
   const hidden = await amb();
   await page.evaluate(() => { Object.defineProperty(document, "hidden", { configurable: true, get: () => false }); document.dispatchEvent(new Event("visibilitychange")); });
-  // passagem: desde a 0.7.0 o ambiente atravessa a passagem e só some depois de pEnd = 0,56 (a rolagem
-  // é a única autoridade). Aqui, p além da entrega (≈ 0,65 em 1280×720) → apagado.
   await page.evaluate(() => scrollTo({ top: 350, behavior: "instant" }));
   await page.waitForTimeout(400);
-  const passing = await page.evaluate(() => ({ a: document.querySelector("[data-opening=sticky] canvas")?.dataset.ambient, p: parseFloat(document.querySelector("[data-opening=root]").style.getPropertyValue("--opening-p")) }));
+  const passing = await page.evaluate(() => ({ a: document.querySelector("[data-opening=sticky] canvas")?.dataset.ambient ?? "ausente", p: parseFloat(document.querySelector("[data-opening=root]").style.getPropertyValue("--opening-p")) }));
   const arcs = await page.evaluate(() => ({ canvases: document.querySelectorAll("[data-opening=sticky] canvas").length, siteArc: document.querySelectorAll("#inicio svg path[class*='arc'], [class*='orbit']").length }));
-  notes.push(`    · luz ambiente: ${[...seen].join("/")} em repouso · pausa → ${paused} · aba oculta → ${hidden} · passagem (p ${passing.p.toFixed(2)}) → ${passing.a}`);
-  assert(paused === "off" && hidden === "off" && passing.a === "off" && passing.p > 0.56, "ambiente não parou");
+  notes.push(`    · 0.9.0-sinal: ambiente ${[...seen].join("/")} em repouso, arte idêntica em 1,5 s · pausa → ${paused} · aba oculta → ${hidden} · passagem (p ${passing.p.toFixed(2)}) → ${passing.a}`);
+  for (const v of [paused, hidden, passing.a]) assert(v === "off" || v === "ausente", `ambiente ligado: ${v}`);
+  assert(passing.p > 0.56, "passagem não avançou");
   assert(arcs.canvases === 1 && arcs.siteArc === 0, `arco: ${JSON.stringify(arcs)}`);
   assert(!errors.length, errors[0]);
   await ctx.close();
 });
 
-await test("ambiente liga sozinho após a abertura (sem rolagem/mouse), dentro de 2 s do assentamento; resize mantém composição", async () => {
-  // 1ª visita (abertura toca). Assentamento = fim do estilo de abertura (#ararat-intro some, ≤ 1,4 s).
+await test("abertura 0.9.0-sinal assenta (data-intro=done) sem ligar luz ambiente; resize mantém composição", async () => {
   const { ctx, page, errors } = await open([1440, 900], { intro: true, init: () => {
     window.__t = {};
     const t0 = performance.now();
@@ -390,33 +398,28 @@ await test("ambiente liga sozinho após a abertura (sem rolagem/mouse), dentro d
       if (document.getElementById("ararat-intro")) mark("introVista");
       else if (window.__t.introVista != null) mark("assentou");
       const c = document.querySelector("[data-opening=sticky] canvas");
+      if (c?.dataset.intro === "done") mark("introDone");
       if (c?.dataset.ambient && c.dataset.ambient !== "off") mark("ambiente");
-      if (c?.dataset.ambient === "light") mark("luz");
       requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
   } });
-  await page.waitForTimeout(6000);
+  await page.waitForTimeout(5000);
   const t = await page.evaluate(() => window.__t);
-  const settle = t.assentou ?? 1400;
-  const dt = (t.luz ?? Infinity) - settle;
-  notes.push(`    · abertura assentou em ${settle} ms; ambiente "on" em ${t.ambiente} ms; luz visível (data-ambient=light) em ${t.luz} ms → ${dt} ms após o assentamento (critério do plano 004: ≤ 2000 ms)`);
-  assert(t.ambiente != null && t.luz != null, "ambiente não ligou sozinho");
-  // resize durante o ambiente: segue ligado, sem rolagem lateral, slot remedido
+  notes.push(`    · abertura: estilo visto em ${t.introVista} ms, assentou em ${t.assentou} ms, data-intro=done em ${t.introDone} ms; ambiente ${t.ambiente == null ? "nunca ligou" : "ligou em " + t.ambiente + " ms"}`);
+  assert(t.introDone != null, "abertura não marcou data-intro=done");
+  assert(t.ambiente == null, "luz ambiente ligou");
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.waitForTimeout(1500);
-  const r = await page.evaluate(() => ({ amb: document.querySelector("[data-opening=sticky] canvas")?.dataset.ambient, sw: document.documentElement.scrollWidth, vw: innerWidth, slotY: Math.round(document.querySelector("[data-opening=slot]").getBoundingClientRect().top) }));
-  // Composição após o resize = a de uma carga nova em 1280×720 (antes fixada em 518 px, medida com a
-  // tipografia anterior; a identidade Sinal muda o título do hero).
+  const r = await page.evaluate(() => ({ sw: document.documentElement.scrollWidth, vw: innerWidth, slotY: Math.round(document.querySelector("[data-opening=slot]").getBoundingClientRect().top) }));
   const fresh = await browser.newContext({ viewport: { width: 1280, height: 720 } });
   const fp = await fresh.newPage();
   await fp.goto(BASE + ROUTE, { waitUntil: "networkidle" });
   await fp.waitForTimeout(1500);
   const slotRef = await fp.evaluate(() => Math.round(document.querySelector("[data-opening=slot]").getBoundingClientRect().top));
   await fresh.close();
-  assert(r.sw <= r.vw && r.amb && r.slotY === slotRef, `após resize: ${JSON.stringify({ ...r, slotRef })}`);
+  assert(r.sw <= r.vw && r.slotY === slotRef, `após resize: ${JSON.stringify({ ...r, slotRef })}`);
   assert(!errors.length, errors[0]);
-  assert(dt <= 2000, `luz só ${dt} ms após o assentamento`);
   await ctx.close();
 });
 
@@ -495,7 +498,7 @@ async function openCom(vp, o = {}) {
   return { ctx, page, errors };
 }
 
-// ── MÓDULO REAL do Motion (public/refinada/time-interativo-0.2.0), direção de 07/10 ─────────
+// ── MÓDULO REAL do Motion (brand-sinal-v1: public/refinada/time-interativo-0.4.0-sinal; antes 0.2.0) ─────
 // foto natural por padrão; troca: foto → pontos → reorganização → foto do escolhido; cursor inerte.
 const fasesAte = async (page, id, ms = 6000) => { const vistas = new Set(); const rotulos = new Set(); const t0 = Date.now(); while (Date.now() - t0 < ms) { const r = await page.evaluate(() => { const p = document.querySelector("#time [data-shown]"); return { f: p.dataset.fase, a: p.dataset.ativo, v: p.dataset.visivel ?? p.dataset.ativo, l: p.getAttribute("aria-label"), c: p.nextElementSibling?.querySelector("span")?.textContent }; }); vistas.add(r.f); rotulos.add(`${r.v}=${r.l}=${r.c}`); if (r.f === "recompondo" && r.v !== id) rotulos.add(`ERRO-recompondo-${r.v}=x=x`); if (r.a === id && /^(foto|foto-estatica|falha)$/.test(r.f)) return { t: Date.now() - t0, fases: [...vistas], rotulos: [...rotulos] }; await page.waitForTimeout(20); } return { t: -1, fases: [...vistas], rotulos: [...rotulos] }; };
 const NOMES = { matheus: "Matheus Xavier Silva de Toledo", miguel: "Miguel", rodrigo: "Rodrigo Gobbo", hartmann: "Luiz G. Hartmann", victor: "Victor Arthur Ohannesian" };
@@ -576,7 +579,7 @@ await test("Time [módulo real] seleções rápidas terminam na última; enquadr
 await test("Time [módulo real] foto atrasada (retrato anterior e legenda dele ficam), recorte 404 → foto retangular da mesma pessoa, recorte+foto 404 → aviso coerente", async () => {
   const atraso = async (r) => { await new Promise((x) => setTimeout(x, 2500)); await r.continue(); };
   const nf = (r) => r.fulfill({ status: 404, body: "" });
-  const { ctx, page, errors } = await openCom([1440, 900], { routes: [[/time-interativo-0\.2\.0\/retratos\/hartmann-recorte/, atraso], [/time-interativo-0\.2\.0\/retratos\/miguel-recorte/, nf], [/time-interativo-0\.2\.0\/retratos\/victor-/, nf]] });
+  const { ctx, page, errors } = await openCom([1440, 900], { routes: [[/time-interativo-0\.4\.0-sinal\/retratos\/hartmann-recorte/, atraso], [/time-interativo-0\.4\.0-sinal\/retratos\/miguel-recorte/, nf], [/time-interativo-0\.4\.0-sinal\/retratos\/victor-/, nf]] });
   await irRetrato(page);
   await faseE(page, "foto");
   await page.locator("#time details[data-id=hartmann] > summary").click();
@@ -1139,7 +1142,7 @@ await test("Ciência continuação: evolução visível entre P2 e E, ida e volt
   const diffs = [];
   for (let i = 1; i <= N; i++) { const a = await sharpDiff(ida[i - 1].img, ida[i].img); diffs.push(a); }
   const mudam = diffs.filter((d) => d > 0.0005).length;
-  assert(mudam >= N - 2, `passos sem mudança visível entre P2 e E: ${diffs.map((d) => d.toFixed(4))}`);
+  assert(mudam >= N - 2, `passos sem mudança visível entre P2 e E: ${diffs.map((d) => d.toFixed(4))} · arco ${ida.map((x) => x.arco.toFixed(3)).join(" ")}`);
   // volta: mesmas posições → mesmo estado (assentado)
   for (let i = N; i >= 0; i -= 2) { await ir(pos.P2 + ((pos.E - pos.P2) * i) / N); const v = await estadoArco(page); assert(v.svg === ida[i].svg && Math.abs(v.arco - ida[i].arco) < 1e-3, `volta ≠ ida em i${i}`); }
   // parada intermediária: 0 mutações em repouso
