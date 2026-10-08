@@ -1,0 +1,922 @@
+{
+  "versao": "0.9.0-sinal",
+  "pose": "assentada (abertura concluída, passagem 0), sem luz ambiente (desligada por padrão na 0.9.0-sinal) — idêntica ao 1º quadro do canvas nessa área",
+  "regra": "cada variante foi desenhada pelo módulo na largura CSS em que é exibida; usar a família da composição do slot (< 600 px narrow 5:4; ≥ 600 px wide 5:3) e, nela, a variante mais próxima da largura do slot (1x/2x pela densidade)",
+  "familias": {
+    "movel": {
+      "proporcao": "5:4",
+      "composicao": "narrow",
+      "variantes": [
+        {
+          "areaCss": {
+            "w": 320,
+            "h": 256
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-movel-w320@1x.webp",
+            "2x": "assets/arte-escultura-movel-w320@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 160,
+              "y": 34.4
+            },
+            "secundario": {
+              "x": 64.1,
+              "y": 59.6
+            },
+            "arcoTopo": 6,
+            "arcoRaio": 118.4,
+            "simplificado": true
+          },
+          "bytes1x": 25176,
+          "sha2561x": "9a0fe8e05cb6b9e35343fc8f6320fdf96340202ad067c01f4222d5a5d3d5f4c5",
+          "bytes2x": 60778,
+          "sha2562x": "8051bee9886525e8701cfea6ee3b4b5fb977b907978e222142baa52a90386e96"
+        },
+        {
+          "areaCss": {
+            "w": 335,
+            "h": 268
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-movel-w335@1x.webp",
+            "2x": "assets/arte-escultura-movel-w335@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 167.5,
+              "y": 35.7
+            },
+            "secundario": {
+              "x": 67.1,
+              "y": 62.1
+            },
+            "arcoTopo": 6,
+            "arcoRaio": 124,
+            "simplificado": true
+          },
+          "bytes1x": 26960,
+          "sha2561x": "c11914739a0e9270afdd6f44c89b3c446a4e49e9ecb357b67efa4390d31d4604",
+          "bytes2x": 64440,
+          "sha2562x": "12c19ae9c397b6e39bae8b8b729b2eb68c9de8156a3f1c8811706b3a6459195c"
+        },
+        {
+          "areaCss": {
+            "w": 350,
+            "h": 280
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-movel-w350@1x.webp",
+            "2x": "assets/arte-escultura-movel-w350@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 175,
+              "y": 37.1
+            },
+            "secundario": {
+              "x": 70.1,
+              "y": 64.6
+            },
+            "arcoTopo": 6,
+            "arcoRaio": 129.5,
+            "simplificado": true
+          },
+          "bytes1x": 28674,
+          "sha2561x": "4d7359826d7feff679af66abd95ce7f882c0467ec214aeda25d961285c71e737",
+          "bytes2x": 67832,
+          "sha2562x": "e4f97805610ca6ec4be83d9c52572195923b27548a4eeb5cb1914950b85e34e8"
+        },
+        {
+          "areaCss": {
+            "w": 365,
+            "h": 292
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-movel-w365@1x.webp",
+            "2x": "assets/arte-escultura-movel-w365@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 182.5,
+              "y": 38.4
+            },
+            "secundario": {
+              "x": 73.1,
+              "y": 67.1
+            },
+            "arcoTopo": 6,
+            "arcoRaio": 135.1,
+            "simplificado": true
+          },
+          "bytes1x": 30368,
+          "sha2561x": "fb86ed1a0fcc7476c31526ad568e5ed5271c8d695c36ad9cbc30321b01ab606e",
+          "bytes2x": 71688,
+          "sha2562x": "9ad971a31f620cfc0362efd172c61d60fcb1291d1db3ba314dca9879de2ffb1c"
+        },
+        {
+          "areaCss": {
+            "w": 380,
+            "h": 304
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-movel-w380@1x.webp",
+            "2x": "assets/arte-escultura-movel-w380@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 190,
+              "y": 39.7
+            },
+            "secundario": {
+              "x": 76.1,
+              "y": 69.6
+            },
+            "arcoTopo": 6,
+            "arcoRaio": 140.6,
+            "simplificado": true
+          },
+          "bytes1x": 32156,
+          "sha2561x": "1631ffc3acfe6005d33f628cd6cf315ebe1e3a17f83026b641590a33165ee599",
+          "bytes2x": 74982,
+          "sha2562x": "30c237060ecf1be21647ca4a4c0e3a6899a680c0d2814cef30fc62db7da3ce05"
+        },
+        {
+          "areaCss": {
+            "w": 395,
+            "h": 316
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-movel-w395@1x.webp",
+            "2x": "assets/arte-escultura-movel-w395@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 197.5,
+              "y": 41.1
+            },
+            "secundario": {
+              "x": 79.2,
+              "y": 72.1
+            },
+            "arcoTopo": 6,
+            "arcoRaio": 146.2,
+            "simplificado": true
+          },
+          "bytes1x": 34018,
+          "sha2561x": "2026652a1e617532d0d8f6538ed60b556d88fed0506971e00599eb1743b5e96b",
+          "bytes2x": 78266,
+          "sha2562x": "3f4591cf1688c18c5e9385853d814ce537ce5e706841e77e8c016b9ea3c99ade"
+        },
+        {
+          "areaCss": {
+            "w": 410,
+            "h": 328
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-movel-w410@1x.webp",
+            "2x": "assets/arte-escultura-movel-w410@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 205,
+              "y": 42.4
+            },
+            "secundario": {
+              "x": 82.2,
+              "y": 74.6
+            },
+            "arcoTopo": 6,
+            "arcoRaio": 151.7,
+            "simplificado": true
+          },
+          "bytes1x": 35910,
+          "sha2561x": "b266001483e6a7c8c77123caf85933763f0c6d43a4708103cce3a2bdf0991e80",
+          "bytes2x": 81254,
+          "sha2562x": "96efefbf9f9a8fabd80e52870ed269d9a93aa89ad9b73d0824993ec48784eaac"
+        },
+        {
+          "areaCss": {
+            "w": 430,
+            "h": 344
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-movel-w430@1x.webp",
+            "2x": "assets/arte-escultura-movel-w430@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 215,
+              "y": 44.2
+            },
+            "secundario": {
+              "x": 86.2,
+              "y": 78
+            },
+            "arcoTopo": 6,
+            "arcoRaio": 159.1,
+            "simplificado": true
+          },
+          "bytes1x": 38418,
+          "sha2561x": "ea0b66728bddfda4125cba3860b2a63ca72711110dc45cce4b12082a922b0c86",
+          "bytes2x": 86056,
+          "sha2562x": "9f772ffe453150ffafd9a2386c0a85d2b4aa940d80bd35cfb275006ef99a688d"
+        },
+        {
+          "areaCss": {
+            "w": 450,
+            "h": 360
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-movel-w450@1x.webp",
+            "2x": "assets/arte-escultura-movel-w450@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 225,
+              "y": 46
+            },
+            "secundario": {
+              "x": 90.2,
+              "y": 81.3
+            },
+            "arcoTopo": 6,
+            "arcoRaio": 166.5,
+            "simplificado": true
+          },
+          "bytes1x": 40334,
+          "sha2561x": "764f2ad87973f055711c3bc4de9c2f608cdc4b2d3c016d2e441adb6578aafc97",
+          "bytes2x": 90646,
+          "sha2562x": "4a349c499565e0e0c053e02197490cdb99c9c2d7daf979b7738de0eb303128e4"
+        },
+        {
+          "areaCss": {
+            "w": 475,
+            "h": 380
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-movel-w475@1x.webp",
+            "2x": "assets/arte-escultura-movel-w475@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 237.5,
+              "y": 48.2
+            },
+            "secundario": {
+              "x": 95.2,
+              "y": 85.5
+            },
+            "arcoTopo": 6,
+            "arcoRaio": 175.8,
+            "simplificado": true
+          },
+          "bytes1x": 43872,
+          "sha2561x": "fbb365ba01105ac043fa62ce662ab7129b967c773f9c08f26296c381cf24d081",
+          "bytes2x": 98134,
+          "sha2562x": "2239e653d2a25c7a7900bac3f7a7bbe59279357068f259f4113681bcafb590fa"
+        },
+        {
+          "areaCss": {
+            "w": 500,
+            "h": 400
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-movel-w500@1x.webp",
+            "2x": "assets/arte-escultura-movel-w500@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 250,
+              "y": 50.4
+            },
+            "secundario": {
+              "x": 100.2,
+              "y": 89.7
+            },
+            "arcoTopo": 6,
+            "arcoRaio": 185,
+            "simplificado": true
+          },
+          "bytes1x": 46966,
+          "sha2561x": "5c167af8c8d5f41f557aab0ce8431e2e9cda1617674cfa6d8932dd019a0c847c",
+          "bytes2x": 103558,
+          "sha2562x": "e9b322a8158a63f4e7853d3c8e457e091756bbf918741e47edbfdaaaeec24101"
+        },
+        {
+          "areaCss": {
+            "w": 530,
+            "h": 424
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-movel-w530@1x.webp",
+            "2x": "assets/arte-escultura-movel-w530@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 265,
+              "y": 53.1
+            },
+            "secundario": {
+              "x": 106.2,
+              "y": 94.7
+            },
+            "arcoTopo": 6,
+            "arcoRaio": 196.1,
+            "simplificado": true
+          },
+          "bytes1x": 50442,
+          "sha2561x": "d18e54d4bccba1f0e902e494eb5753e15051f578c345e79978d66c991524eff6",
+          "bytes2x": 110648,
+          "sha2562x": "7719742e9a85b5399477b0e0c14f666ab2fd768d4f24c8e5c0699adcd5687db5"
+        },
+        {
+          "areaCss": {
+            "w": 560,
+            "h": 448
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-movel-w560@1x.webp",
+            "2x": "assets/arte-escultura-movel-w560@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 280,
+              "y": 55.9
+            },
+            "secundario": {
+              "x": 112.2,
+              "y": 100
+            },
+            "arcoTopo": 6.2,
+            "arcoRaio": 207.2,
+            "simplificado": true
+          },
+          "bytes1x": 54042,
+          "sha2561x": "e24e5b78817e630ab1a9e38267a2dce4c1008fe44a3988bbaff9e3bfee3944c5",
+          "bytes2x": 117546,
+          "sha2562x": "1e7f08713c313f1bb9583c06c5856f722286d354f4855b0099c575f585ec0537"
+        },
+        {
+          "areaCss": {
+            "w": 590,
+            "h": 472
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-movel-w590@1x.webp",
+            "2x": "assets/arte-escultura-movel-w590@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 295,
+              "y": 58.9
+            },
+            "secundario": {
+              "x": 118.2,
+              "y": 105.3
+            },
+            "arcoTopo": 6.5,
+            "arcoRaio": 218.3,
+            "simplificado": true
+          },
+          "bytes1x": 57598,
+          "sha2561x": "53449622237fad261999ee49c4b4daa0975bd5a1c6dfa5588a9de7033584f56f",
+          "bytes2x": 123114,
+          "sha2562x": "95b8ff12c5d5fd4028bcfa1e44ce89a26fcda62580063b50aea1f9de3e8f72ce"
+        }
+      ]
+    },
+    "desktop": {
+      "proporcao": "5:3",
+      "composicao": "wide",
+      "variantes": [
+        {
+          "areaCss": {
+            "w": 600,
+            "h": 360
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-desktop-w600@1x.webp",
+            "2x": "assets/arte-escultura-desktop-w600@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 300,
+              "y": 46.3
+            },
+            "secundario": {
+              "x": 158.9,
+              "y": 83.3
+            },
+            "arcoTopo": 6,
+            "arcoRaio": 168,
+            "simplificado": false
+          },
+          "bytes1x": 54552,
+          "sha2561x": "75b8ffc2e9080d8f0436965c30ca50dc0531b1fb317186548424e95edea2c41b",
+          "bytes2x": 136492,
+          "sha2562x": "aec37a7a760d59ee87571ac55d731449214c8723c31d71a9c6ce71d4182bf510"
+        },
+        {
+          "areaCss": {
+            "w": 630,
+            "h": 378
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-desktop-w630@1x.webp",
+            "2x": "assets/arte-escultura-desktop-w630@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 315,
+              "y": 48.3
+            },
+            "secundario": {
+              "x": 166.8,
+              "y": 87.2
+            },
+            "arcoTopo": 6,
+            "arcoRaio": 176.4,
+            "simplificado": false
+          },
+          "bytes1x": 58982,
+          "sha2561x": "a1a71103a3267e042e2f627d4bc1e63ec26641dfe0d7fad1bb3b7bf16843462b",
+          "bytes2x": 145518,
+          "sha2562x": "e519542623f08d694f08ce5574d3b9a08c6ec22c78d0f996470b6b7513bdbc16"
+        },
+        {
+          "areaCss": {
+            "w": 660,
+            "h": 396
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-desktop-w660@1x.webp",
+            "2x": "assets/arte-escultura-desktop-w660@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 330,
+              "y": 50.4
+            },
+            "secundario": {
+              "x": 174.8,
+              "y": 91.1
+            },
+            "arcoTopo": 6,
+            "arcoRaio": 184.8,
+            "simplificado": false
+          },
+          "bytes1x": 63000,
+          "sha2561x": "08e5d040db8fd4306e381dd7b6e2dfcdc1c2cb66fe0a5a61dd84eeb6d06bb934",
+          "bytes2x": 153870,
+          "sha2562x": "cce262ec60eff615c79ab60b3a2115c700d0dd06514f7e4ba9712ba73ef2528b"
+        },
+        {
+          "areaCss": {
+            "w": 690,
+            "h": 414
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-desktop-w690@1x.webp",
+            "2x": "assets/arte-escultura-desktop-w690@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 345,
+              "y": 52.4
+            },
+            "secundario": {
+              "x": 182.7,
+              "y": 94.9
+            },
+            "arcoTopo": 6,
+            "arcoRaio": 193.2,
+            "simplificado": false
+          },
+          "bytes1x": 67142,
+          "sha2561x": "8b7ee0bb777d8c61050624db763b8bb04ab1545c9c43d742c791eaaa41f2f4e9",
+          "bytes2x": 164524,
+          "sha2562x": "c6eab02a9116dd2bb0002be51b1ddfe4ba0f201793fe7ee9c118399c348b48d6"
+        },
+        {
+          "areaCss": {
+            "w": 720,
+            "h": 432
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-desktop-w720@1x.webp",
+            "2x": "assets/arte-escultura-desktop-w720@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 360,
+              "y": 54.4
+            },
+            "secundario": {
+              "x": 190.7,
+              "y": 98.9
+            },
+            "arcoTopo": 6,
+            "arcoRaio": 201.6,
+            "simplificado": false
+          },
+          "bytes1x": 71636,
+          "sha2561x": "3fe18d531045558ccdfdaca03e764b0dea8afbabe64e74a4851b02780255b1b8",
+          "bytes2x": 169290,
+          "sha2562x": "5ce015bfaad918289767c3b38d5511988bf057229d4785dd41c8351c0e8b2c70"
+        },
+        {
+          "areaCss": {
+            "w": 750,
+            "h": 450
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-desktop-w750@1x.webp",
+            "2x": "assets/arte-escultura-desktop-w750@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 375,
+              "y": 56.7
+            },
+            "secundario": {
+              "x": 198.6,
+              "y": 103
+            },
+            "arcoTopo": 6.3,
+            "arcoRaio": 210,
+            "simplificado": false
+          },
+          "bytes1x": 75728,
+          "sha2561x": "3cb356c5651d1b74f3d421889476f36aa5f53a0db28cc47004e0866fefe6c082",
+          "bytes2x": 177658,
+          "sha2562x": "ffd71e515229593853446c3f3b3dfeba9161b30c7942f0011f8acba0948ffb9e"
+        },
+        {
+          "areaCss": {
+            "w": 785,
+            "h": 471
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-desktop-w785@1x.webp",
+            "2x": "assets/arte-escultura-desktop-w785@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 392.5,
+              "y": 59.3
+            },
+            "secundario": {
+              "x": 207.9,
+              "y": 107.8
+            },
+            "arcoTopo": 6.6,
+            "arcoRaio": 219.8,
+            "simplificado": false
+          },
+          "bytes1x": 81096,
+          "sha2561x": "058e343708c7f7e8ea7a14b3cac7210d5cbb00261e411aac71daed6e25ab65e3",
+          "bytes2x": 186990,
+          "sha2562x": "16181638488c31faaa4e2e7a790d141c310ae1554ec55f64baa6fad61ddcc2c3"
+        },
+        {
+          "areaCss": {
+            "w": 820,
+            "h": 492
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-desktop-w820@1x.webp",
+            "2x": "assets/arte-escultura-desktop-w820@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 410,
+              "y": 62
+            },
+            "secundario": {
+              "x": 217.1,
+              "y": 112.6
+            },
+            "arcoTopo": 6.9,
+            "arcoRaio": 229.6,
+            "simplificado": false
+          },
+          "bytes1x": 85762,
+          "sha2561x": "a700764ab93823f63d04161d26e6144012fb72c9db526e270428039acbd2d497",
+          "bytes2x": 195820,
+          "sha2562x": "89b5bd793a8644c88c614f8d83122a6921ee67cf2006593618d66299f50a3658"
+        },
+        {
+          "areaCss": {
+            "w": 860,
+            "h": 516
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-desktop-w860@1x.webp",
+            "2x": "assets/arte-escultura-desktop-w860@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 430,
+              "y": 65
+            },
+            "secundario": {
+              "x": 227.7,
+              "y": 118.1
+            },
+            "arcoTopo": 7.2,
+            "arcoRaio": 240.8,
+            "simplificado": false
+          },
+          "bytes1x": 91842,
+          "sha2561x": "8621181c0f11500a60fa200b8ce07fcf191e2b7f783bf56a161fdbc9f2b553d5",
+          "bytes2x": 207180,
+          "sha2562x": "dfde6008b968e8b3c054db143970f411f79f99f698b705fcd118bac6aca7d723"
+        },
+        {
+          "areaCss": {
+            "w": 900,
+            "h": 540
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-desktop-w900@1x.webp",
+            "2x": "assets/arte-escultura-desktop-w900@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 450,
+              "y": 68
+            },
+            "secundario": {
+              "x": 238.3,
+              "y": 123.6
+            },
+            "arcoTopo": 7.6,
+            "arcoRaio": 252,
+            "simplificado": false
+          },
+          "bytes1x": 97624,
+          "sha2561x": "c93635c5fcfce909e618e9ddec9abc2dd8efffbd26e5fe7cc42b308b0bf7d236",
+          "bytes2x": 217960,
+          "sha2562x": "7c71597dabbc3cf85b2ed5bbbe018ccb9c00702dcbd3b3ec1503479267a9c605"
+        },
+        {
+          "areaCss": {
+            "w": 940,
+            "h": 564
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-desktop-w940@1x.webp",
+            "2x": "assets/arte-escultura-desktop-w940@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 470,
+              "y": 71.1
+            },
+            "secundario": {
+              "x": 248.9,
+              "y": 129.1
+            },
+            "arcoTopo": 7.9,
+            "arcoRaio": 263.2,
+            "simplificado": false
+          },
+          "bytes1x": 102694,
+          "sha2561x": "a6ca90093c5418979d8b4752fc26244daf49816ceafeaec48504e2c9ed2130b4",
+          "bytes2x": 228282,
+          "sha2562x": "52f214cde737a6b7965c18290d9e23a434a870236e81c9673a60c6b5fdb0d529"
+        },
+        {
+          "areaCss": {
+            "w": 980,
+            "h": 588
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-desktop-w980@1x.webp",
+            "2x": "assets/arte-escultura-desktop-w980@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 490,
+              "y": 74.1
+            },
+            "secundario": {
+              "x": 259.5,
+              "y": 134.6
+            },
+            "arcoTopo": 8.2,
+            "arcoRaio": 274.4,
+            "simplificado": false
+          },
+          "bytes1x": 108554,
+          "sha2561x": "027a9dd0003f9990090e288cccca9faf3427dde0d109f36e25562ed696f58f98",
+          "bytes2x": 239448,
+          "sha2562x": "375cc5eb86abdd9ef1474f2e51718d9b8636cd8e8d1e4538a080bae7f3580543"
+        },
+        {
+          "areaCss": {
+            "w": 1020,
+            "h": 612
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-desktop-w1020@1x.webp",
+            "2x": "assets/arte-escultura-desktop-w1020@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 510,
+              "y": 77.1
+            },
+            "secundario": {
+              "x": 270.1,
+              "y": 140.1
+            },
+            "arcoTopo": 8.6,
+            "arcoRaio": 285.6,
+            "simplificado": false
+          },
+          "bytes1x": 114842,
+          "sha2561x": "0dd515f94955f46ae18a5834ae934e1e27ea2d80d27d8aea75943c1542734010",
+          "bytes2x": 250696,
+          "sha2562x": "a1f87a01c0b22e914b805c34b632e5ad24118a0b89cf436daf80ac77cf7548da"
+        },
+        {
+          "areaCss": {
+            "w": 1060,
+            "h": 636
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-desktop-w1060@1x.webp",
+            "2x": "assets/arte-escultura-desktop-w1060@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 530,
+              "y": 80.1
+            },
+            "secundario": {
+              "x": 280.7,
+              "y": 145.5
+            },
+            "arcoTopo": 8.9,
+            "arcoRaio": 296.8,
+            "simplificado": false
+          },
+          "bytes1x": 121530,
+          "sha2561x": "2c1246ccc54051f1afd018b56ae28b0db7a5072731489bafc50dcbaf9a064b68",
+          "bytes2x": 264882,
+          "sha2562x": "32a76ac2585764665c1dea639d5f9e1b55563e669758ce18ca731a1dc1c85c20"
+        },
+        {
+          "areaCss": {
+            "w": 1100,
+            "h": 660
+          },
+          "arquivos": {
+            "1x": "assets/arte-escultura-desktop-w1100@1x.webp",
+            "2x": "assets/arte-escultura-desktop-w1100@2x.webp"
+          },
+          "objeto": {
+            "cume": {
+              "x": 550,
+              "y": 83.2
+            },
+            "secundario": {
+              "x": 291.3,
+              "y": 151
+            },
+            "arcoTopo": 9.2,
+            "arcoRaio": 308,
+            "simplificado": false
+          },
+          "bytes1x": 126914,
+          "sha2561x": "b2958a86e35b81c0e441c03c180c5e3395c1871a30a2ebc1e3261fd46ac2d355",
+          "bytes2x": 275170,
+          "sha2562x": "e20c900002d4ceb9b85618d8224d70df9d0ebd1c30cfceae3680a242a516556b"
+        }
+      ]
+    }
+  },
+  "pictureSlotSite": [
+    {
+      "media": "(min-width: 0px) and (max-width: 332.98px)",
+      "srcset": "assets/arte-escultura-movel-w320@1x.webp 1x, assets/arte-escultura-movel-w320@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 333px) and (max-width: 347.98px)",
+      "srcset": "assets/arte-escultura-movel-w335@1x.webp 1x, assets/arte-escultura-movel-w335@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 348px) and (max-width: 362.98px)",
+      "srcset": "assets/arte-escultura-movel-w350@1x.webp 1x, assets/arte-escultura-movel-w350@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 363px) and (max-width: 377.98px)",
+      "srcset": "assets/arte-escultura-movel-w365@1x.webp 1x, assets/arte-escultura-movel-w365@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 378px) and (max-width: 392.98px)",
+      "srcset": "assets/arte-escultura-movel-w380@1x.webp 1x, assets/arte-escultura-movel-w380@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 393px) and (max-width: 407.98px)",
+      "srcset": "assets/arte-escultura-movel-w395@1x.webp 1x, assets/arte-escultura-movel-w395@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 408px) and (max-width: 426.98px)",
+      "srcset": "assets/arte-escultura-movel-w410@1x.webp 1x, assets/arte-escultura-movel-w410@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 427px) and (max-width: 446.98px)",
+      "srcset": "assets/arte-escultura-movel-w430@1x.webp 1x, assets/arte-escultura-movel-w430@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 447px) and (max-width: 470.98px)",
+      "srcset": "assets/arte-escultura-movel-w450@1x.webp 1x, assets/arte-escultura-movel-w450@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 471px) and (max-width: 495.98px)",
+      "srcset": "assets/arte-escultura-movel-w475@1x.webp 1x, assets/arte-escultura-movel-w475@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 496px) and (max-width: 524.98px)",
+      "srcset": "assets/arte-escultura-movel-w500@1x.webp 1x, assets/arte-escultura-movel-w500@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 525px) and (max-width: 554.98px)",
+      "srcset": "assets/arte-escultura-movel-w530@1x.webp 1x, assets/arte-escultura-movel-w530@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 555px) and (max-width: 584.98px)",
+      "srcset": "assets/arte-escultura-movel-w560@1x.webp 1x, assets/arte-escultura-movel-w560@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 585px) and (max-width: 599.98px)",
+      "srcset": "assets/arte-escultura-movel-w590@1x.webp 1x, assets/arte-escultura-movel-w590@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 600px) and (max-width: 624.98px)",
+      "srcset": "assets/arte-escultura-desktop-w600@1x.webp 1x, assets/arte-escultura-desktop-w600@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 625px) and (max-width: 654.98px)",
+      "srcset": "assets/arte-escultura-desktop-w630@1x.webp 1x, assets/arte-escultura-desktop-w630@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 655px) and (max-width: 684.98px)",
+      "srcset": "assets/arte-escultura-desktop-w660@1x.webp 1x, assets/arte-escultura-desktop-w660@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 685px) and (max-width: 714.98px)",
+      "srcset": "assets/arte-escultura-desktop-w690@1x.webp 1x, assets/arte-escultura-desktop-w690@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 715px) and (max-width: 744.98px)",
+      "srcset": "assets/arte-escultura-desktop-w720@1x.webp 1x, assets/arte-escultura-desktop-w720@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 745px) and (max-width: 779.98px)",
+      "srcset": "assets/arte-escultura-desktop-w750@1x.webp 1x, assets/arte-escultura-desktop-w750@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 780px) and (max-width: 814.98px)",
+      "srcset": "assets/arte-escultura-desktop-w785@1x.webp 1x, assets/arte-escultura-desktop-w785@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 815px) and (max-width: 853.98px)",
+      "srcset": "assets/arte-escultura-desktop-w820@1x.webp 1x, assets/arte-escultura-desktop-w820@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 854px) and (max-width: 893.98px)",
+      "srcset": "assets/arte-escultura-desktop-w860@1x.webp 1x, assets/arte-escultura-desktop-w860@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 894px) and (max-width: 933.98px)",
+      "srcset": "assets/arte-escultura-desktop-w900@1x.webp 1x, assets/arte-escultura-desktop-w900@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 934px) and (max-width: 973.98px)",
+      "srcset": "assets/arte-escultura-desktop-w940@1x.webp 1x, assets/arte-escultura-desktop-w940@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 974px) and (max-width: 1013.98px)",
+      "srcset": "assets/arte-escultura-desktop-w980@1x.webp 1x, assets/arte-escultura-desktop-w980@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 1014px) and (max-width: 1053.98px)",
+      "srcset": "assets/arte-escultura-desktop-w1020@1x.webp 1x, assets/arte-escultura-desktop-w1020@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 1054px) and (max-width: 1093.98px)",
+      "srcset": "assets/arte-escultura-desktop-w1060@1x.webp 1x, assets/arte-escultura-desktop-w1060@2x.webp 2x"
+    },
+    {
+      "media": "(min-width: 1094px)",
+      "srcset": "assets/arte-escultura-desktop-w1100@1x.webp 1x, assets/arte-escultura-desktop-w1100@2x.webp 2x"
+    }
+  ],
+  "pictureExemplo": "<picture>\n  <source media=\"(min-width: 0px) and (max-width: 332.98px)\" srcset=\"assets/arte-escultura-movel-w320@1x.webp 1x, assets/arte-escultura-movel-w320@2x.webp 2x\">\n  <source media=\"(min-width: 333px) and (max-width: 347.98px)\" srcset=\"assets/arte-escultura-movel-w335@1x.webp 1x, assets/arte-escultura-movel-w335@2x.webp 2x\">\n  <source media=\"(min-width: 348px) and (max-width: 362.98px)\" srcset=\"assets/arte-escultura-movel-w350@1x.webp 1x, assets/arte-escultura-movel-w350@2x.webp 2x\">\n  <source media=\"(min-width: 363px) and (max-width: 377.98px)\" srcset=\"assets/arte-escultura-movel-w365@1x.webp 1x, assets/arte-escultura-movel-w365@2x.webp 2x\">\n  <source media=\"(min-width: 378px) and (max-width: 392.98px)\" srcset=\"assets/arte-escultura-movel-w380@1x.webp 1x, assets/arte-escultura-movel-w380@2x.webp 2x\">\n  <source media=\"(min-width: 393px) and (max-width: 407.98px)\" srcset=\"assets/arte-escultura-movel-w395@1x.webp 1x, assets/arte-escultura-movel-w395@2x.webp 2x\">\n  <source media=\"(min-width: 408px) and (max-width: 426.98px)\" srcset=\"assets/arte-escultura-movel-w410@1x.webp 1x, assets/arte-escultura-movel-w410@2x.webp 2x\">\n  <source media=\"(min-width: 427px) and (max-width: 446.98px)\" srcset=\"assets/arte-escultura-movel-w430@1x.webp 1x, assets/arte-escultura-movel-w430@2x.webp 2x\">\n  <source media=\"(min-width: 447px) and (max-width: 470.98px)\" srcset=\"assets/arte-escultura-movel-w450@1x.webp 1x, assets/arte-escultura-movel-w450@2x.webp 2x\">\n  <source media=\"(min-width: 471px) and (max-width: 495.98px)\" srcset=\"assets/arte-escultura-movel-w475@1x.webp 1x, assets/arte-escultura-movel-w475@2x.webp 2x\">\n  <source media=\"(min-width: 496px) and (max-width: 524.98px)\" srcset=\"assets/arte-escultura-movel-w500@1x.webp 1x, assets/arte-escultura-movel-w500@2x.webp 2x\">\n  <source media=\"(min-width: 525px) and (max-width: 554.98px)\" srcset=\"assets/arte-escultura-movel-w530@1x.webp 1x, assets/arte-escultura-movel-w530@2x.webp 2x\">\n  <source media=\"(min-width: 555px) and (max-width: 584.98px)\" srcset=\"assets/arte-escultura-movel-w560@1x.webp 1x, assets/arte-escultura-movel-w560@2x.webp 2x\">\n  <source media=\"(min-width: 585px) and (max-width: 599.98px)\" srcset=\"assets/arte-escultura-movel-w590@1x.webp 1x, assets/arte-escultura-movel-w590@2x.webp 2x\">\n  <source media=\"(min-width: 600px) and (max-width: 624.98px)\" srcset=\"assets/arte-escultura-desktop-w600@1x.webp 1x, assets/arte-escultura-desktop-w600@2x.webp 2x\">\n  <source media=\"(min-width: 625px) and (max-width: 654.98px)\" srcset=\"assets/arte-escultura-desktop-w630@1x.webp 1x, assets/arte-escultura-desktop-w630@2x.webp 2x\">\n  <source media=\"(min-width: 655px) and (max-width: 684.98px)\" srcset=\"assets/arte-escultura-desktop-w660@1x.webp 1x, assets/arte-escultura-desktop-w660@2x.webp 2x\">\n  <source media=\"(min-width: 685px) and (max-width: 714.98px)\" srcset=\"assets/arte-escultura-desktop-w690@1x.webp 1x, assets/arte-escultura-desktop-w690@2x.webp 2x\">\n  <source media=\"(min-width: 715px) and (max-width: 744.98px)\" srcset=\"assets/arte-escultura-desktop-w720@1x.webp 1x, assets/arte-escultura-desktop-w720@2x.webp 2x\">\n  <source media=\"(min-width: 745px) and (max-width: 779.98px)\" srcset=\"assets/arte-escultura-desktop-w750@1x.webp 1x, assets/arte-escultura-desktop-w750@2x.webp 2x\">\n  <source media=\"(min-width: 780px) and (max-width: 814.98px)\" srcset=\"assets/arte-escultura-desktop-w785@1x.webp 1x, assets/arte-escultura-desktop-w785@2x.webp 2x\">\n  <source media=\"(min-width: 815px) and (max-width: 853.98px)\" srcset=\"assets/arte-escultura-desktop-w820@1x.webp 1x, assets/arte-escultura-desktop-w820@2x.webp 2x\">\n  <source media=\"(min-width: 854px) and (max-width: 893.98px)\" srcset=\"assets/arte-escultura-desktop-w860@1x.webp 1x, assets/arte-escultura-desktop-w860@2x.webp 2x\">\n  <source media=\"(min-width: 894px) and (max-width: 933.98px)\" srcset=\"assets/arte-escultura-desktop-w900@1x.webp 1x, assets/arte-escultura-desktop-w900@2x.webp 2x\">\n  <source media=\"(min-width: 934px) and (max-width: 973.98px)\" srcset=\"assets/arte-escultura-desktop-w940@1x.webp 1x, assets/arte-escultura-desktop-w940@2x.webp 2x\">\n  <source media=\"(min-width: 974px) and (max-width: 1013.98px)\" srcset=\"assets/arte-escultura-desktop-w980@1x.webp 1x, assets/arte-escultura-desktop-w980@2x.webp 2x\">\n  <source media=\"(min-width: 1014px) and (max-width: 1053.98px)\" srcset=\"assets/arte-escultura-desktop-w1020@1x.webp 1x, assets/arte-escultura-desktop-w1020@2x.webp 2x\">\n  <source media=\"(min-width: 1054px) and (max-width: 1093.98px)\" srcset=\"assets/arte-escultura-desktop-w1060@1x.webp 1x, assets/arte-escultura-desktop-w1060@2x.webp 2x\">\n  <source media=\"(min-width: 1094px)\" srcset=\"assets/arte-escultura-desktop-w1100@1x.webp 1x, assets/arte-escultura-desktop-w1100@2x.webp 2x\">\n  <img src=\"assets/arte-escultura-desktop-transparente.webp\" alt=\"\" width=\"1100\" height=\"660\">\n</picture>",
+  "nota": "bytes/sha256 aqui são os do arquivo gerado (antes de qualquer transferência). Os valores que valem para o pacote são os do manifest.json, recalculados no destino (scripts/sync-manifest.mjs)."
+}

@@ -5,3 +5,9 @@
 *.jpeg binary
 *.webp binary
 *.woff2 binary
+# Cópias byte a byte conferidas por SHA-256 (experimento brand-sinal-v1) — sem conversão de fim de linha.
+site/public/marca-sinal/** -text
+site/public/previa/home-montanha-0.9.0-sinal/** -text
+site/public/refinada/topo-revisao-0.5.0-sinal/** -text
+site/public/refinada/time-interativo-0.4.0-sinal/** -text
+site/public/refinada/plataforma-fluxo-0.3.0-sinal/** -text

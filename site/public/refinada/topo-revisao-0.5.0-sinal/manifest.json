@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "name": "ararat-ciencia-fechamento-sinal",
+  "version": "0.5.0-sinal",
+  "status": "experimental-sinal",
+  "scope": "Alternativa de marca ARARAT Sinal para COMPARAÇÃO. Não substitui topo-revisao 0.1.0–0.3.0 nem a 0.4.0-marca; não publicar; sem aprovação estética.",
+  "base": {
+    "modulo": {
+      "arquivo": "proposta/topo-revisao/src/topo-revisao.js",
+      "versao": "0.3.0-draft",
+      "sha256": "2c4fc0dca3c1aad3f8f477a3284324eaa06bb51da2be0b2990918d954c929872"
+    },
+    "paisagem": {
+      "arquivo": "fechamento-montanha.json",
+      "versao": "0.3.0-draft",
+      "geometria": "fechamento-0.3.0-draft",
+      "sha256": "131fb7eabd9b4d22a49c329a04c86b042f415fde60b8e5ca8869465e5b184766"
+    }
+  },
+  "temas": {
+    "claro": {
+      "geometria": "fechamento-0.5.0-sinal",
+      "paisagem": "fechamento-montanha.json",
+      "estatico": "fechamento-estatico.svg",
+      "fundoPrevisto": "#F6F6F6",
+      "cores": {
+        "#415A77": "#5E5E5E",
+        "#1B263B": "#303030",
+        "#D4AF37": "#111111",
+        "#D9B23A": "#111111"
+      },
+      "sombraSuave": "#303030",
+      "destaque": "#111111",
+      "opacidadeLinhas": "× 1.0"
+    },
+    "escuro": {
+      "geometria": "fechamento-0.5.0-sinal-escuro",
+      "paisagem": "fechamento-montanha-escuro.json",
+      "estatico": "fechamento-estatico-escuro.svg",
+      "fundoPrevisto": "#111111",
+      "cores": {
+        "#415A77": "#919191",
+        "#1B263B": "#ABABAB",
+        "#D4AF37": "#E2E2E2",
+        "#D9B23A": "#E2E2E2"
+      },
+      "sombraSuave": "#111111",
+      "destaque": "#E2E2E2",
+      "opacidadeLinhas": "× 1.45"
+    }
+  },
+  "mudancas": {
+    "camadasDoTrecho": "uma camada (2,2 px, alfa 1), sem halo — 0.3.0: 10 px a 0,13 + 4,5 px a 0,36 + núcleo",
+    "naoMuda": [
+      "geometria (caminhos idênticos, relevo e cumes completos)",
+      "quatro frases e suas faixas de p",
+      "encerramento crista → arco (e) no mesmo intervalo de rolagem",
+      "enquadramento (viewBox 0 -72 1440 432, xMidYMax slice)",
+      "contrato createTopoRevisao / setProgresso(p, e)",
+      "estático = composição final"
+    ]
+  },
+  "contrato": "idêntico à 0.3.0: createTopoRevisao(svg, { alvo, frase, progresso: \"externo\", paused, reducedMotion: \"auto\", onEstado }) → setProgresso(p, e), setPaused, setReducedMotion, atualizar, state, destroy. O SVG declara data-topo-geometria do tema (vem em svgAtributos).",
+  "fallback": "fechamento-estatico[-escuro].svg = composição final do tema; é o que o Site mostra sem JS, em pausa, com movimento reduzido ou falha.",
+  "arco": "traço desta composição; não é o símbolo do Sinal. Nenhum ponto da marca é desenhado aqui.",
+  "files": [
+    {
+      "path": "fechamento-estatico-escuro.svg",
+      "sizeBytes": 40528,
+      "sha256": "4640b3ffd62587039d9f8d874209c07220a0d2411f58ceda6697ce7fe5942ccc"
+    },
+    {
+      "path": "fechamento-estatico.svg",
+      "sizeBytes": 40518,
+      "sha256": "115b090b9d333a35f77efc6c409eb5584341bdefc93f1a2a636db6c611e161ae"
+    },
+    {
+      "path": "fechamento-montanha-escuro.json",
+      "sizeBytes": 46357,
+      "sha256": "78ae5ba71451192f681228172025e2e10578c18b4ad5d4c07ffca805816026b7"
+    },
+    {
+      "path": "fechamento-montanha.json",
+      "sizeBytes": 46339,
+      "sha256": "4c927a7707eaa991fbfaa0a5aa2009fff039fb54627f75ce4b77a736b1ab785d"
+    },
+    {
+      "path": "topo-revisao.js",
+      "sizeBytes": 31694,
+      "sha256": "01e49c4e36b158d25285fa5e40fb2f762088d28fa7c14f1076c543522c838f74"
+    }
+  ]
+}
