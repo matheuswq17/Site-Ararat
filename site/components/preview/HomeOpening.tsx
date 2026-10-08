@@ -72,6 +72,9 @@ export function HomeOpening({
   revealOnChange = false,
   journeySteps,
   journeyIntro,
+  coverColor = COVER_COLOR,
+  titleLines,
+  titleSecondary,
 }: {
   motionPackage: MotionPackageInfo | null;
   mri: MriSource;
@@ -96,6 +99,13 @@ export function HomeOpening({
   /** Textos das etapas da Jornada (padrão do componente se ausente). */
   journeySteps?: JourneyStep[];
   journeyIntro?: string;
+  /** Cor com que o módulo da escultura cobre o quadro da jornada (= fundo da seção sob o quadro).
+   *  Experimento brand-sinal-v1: gray-5 #111111. */
+  coverColor?: string;
+  /** Título do hero (linhas). Padrão: PREVIEW_COPY.titleLines. brand-sinal-v1: a mensagem do Sinal. */
+  titleLines?: readonly string[];
+  /** Índice da linha em tom secundário (data-tom="secundario"). */
+  titleSecondary?: number;
 }) {
   const { t } = useTranslation();
   const rootRef = useRef<HTMLDivElement>(null);
@@ -454,7 +464,7 @@ export function HomeOpening({
           reducedMotion: latest.current.reduced,
           paused: latest.current.paused,
           intro: introOn,
-          coverColor: COVER_COLOR,
+          coverColor,
           // 1ª pintura já com a geometria real (sem quadro a descoberto nem pose provisória)
           art: ar ? { x: ar.left - hr.left, y: ar.top - hr.top, w: ar.width, h: ar.height } : null,
           target: fr ? { x: fr.left - hr.left, y: fr.top - hr.top, w: fr.width, h: fr.height, r: 12 } : null,
@@ -552,10 +562,10 @@ export function HomeOpening({
           <div className={`wrap ${styles.content}`} data-opening="content">
             <p className={`eyebrow ${styles.eyebrow}`}>{t(c.eyebrow)}</p>
             <h1 id="hero-title" className={styles.title}>
-              {c.titleLines.map((line, i) => (
-                <span key={line} className={styles.line} style={{ "--i": i } as CSSProperties}>
+              {(titleLines ?? c.titleLines).map((line, i, all) => (
+                <span key={line} className={styles.line} style={{ "--i": i } as CSSProperties} data-tom={i === titleSecondary ? "secundario" : undefined}>
                   {t(line)}
-                  {i < c.titleLines.length - 1 ? " " : ""}
+                  {i < all.length - 1 ? " " : ""}
                 </span>
               ))}
             </h1>

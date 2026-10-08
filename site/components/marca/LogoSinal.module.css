@@ -1,0 +1,27 @@
+/* Só a altura é definida; width: auto mantém a proporção do arquivo oficial. */
+.logo {
+  display: block;
+  width: auto;
+  max-width: none;
+  flex: none;
+}
+/* Cabeçalho: lockup COMPACTO (< 40 px). 28 px = 185 px de largura; ≤ 400 px de tela, 24 px = 159 px.
+   Proteção = 2× o diâmetro do ponto (≈ 5,7 px a 28 px → 12 px), garantida pelo padding. */
+.cabecalho {
+  height: 28px;
+  margin-block: 12px;
+}
+@media (max-width: 400px) {
+  .cabecalho {
+    height: 24px;
+  }
+}
+/* Rodapé: lockup FULL (≥ 40 px). 48 px = 279 px; ≤ 380 px de tela, 40 px = 233 px. */
+.rodape {
+  height: 48px;
+}
+@media (max-width: 380px) {
+  .rodape {
+    height: 40px;
+  }
+}

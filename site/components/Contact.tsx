@@ -42,7 +42,8 @@ const PATHS = [
 export function Contact({
   arrowIcon = false,
   refinada = false,
-}: { arrowIcon?: boolean; refinada?: boolean } = {}) {
+  marcaSinal = false,
+}: { arrowIcon?: boolean; refinada?: boolean; marcaSinal?: boolean } = {}) {
   const { t } = useTranslation();
   return (
     <section
@@ -50,15 +51,21 @@ export function Contact({
       className={styles.section}
       aria-labelledby="contato-title"
     >
-      <div className={styles.arc} aria-hidden="true">
-        <Image
-          src="/brand/ararat_icone_transparente.png"
-          alt={t("")}
-          width={768}
-          height={464}
-          className={styles.mountain}
-        />
-      </div>
+      {marcaSinal ? (
+        // ARARAT Sinal: campo de voxels oficial (04_grafismos, sem alteração) como fundo decorativo —
+        // relevo quantizado em cinza, não é imagem médica nem dado. A montanha antiga ampliada sai.
+        <div className="sinal-voxels" aria-hidden="true" />
+      ) : (
+        <div className={styles.arc} aria-hidden="true">
+          <Image
+            src="/brand/ararat_icone_transparente.png"
+            alt={t("")}
+            width={768}
+            height={464}
+            className={styles.mountain}
+          />
+        </div>
+      )}
 
       <div className={`wrap ${styles.inner}`}>
         <p className="eyebrow">{t("Contato")}</p>

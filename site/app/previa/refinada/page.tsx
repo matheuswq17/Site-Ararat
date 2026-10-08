@@ -3,11 +3,16 @@ import { PreviewPage } from "@/components/preview/PreviewPage";
 // Barra de rolagem da marca (comum às propostas) + tipografia A com pesos reais e reserva métrica.
 import "@/components/preview/proposta/proposta.css";
 import "@/components/preview/proposta/refinada.css";
+// Experimento brand-sinal-v1: identidade ARARAT Sinal v1.0 sobre a refinada.
+import "@/components/preview/proposta/marca-sinal.css";
+import { ICONES_SINAL, VIEWPORT_SINAL } from "@/lib/marca-sinal";
 
 export const metadata: Metadata = {
   title: "Prévia refinada — tipografia A + montanha B | ARARAT MODEL",
   robots: { index: false, follow: false },
+  icons: ICONES_SINAL,
 };
+export const viewport = VIEWPORT_SINAL;
 
 /**
  * VERSÃO CONJUNTA EXPERIMENTAL — escolha do usuário: tipografia A (Space Grotesk 500/600 +

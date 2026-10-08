@@ -17,7 +17,7 @@ import { FaqRefinada } from "@/components/refinada/FaqRefinada";
 import { TextReveal } from "@/components/motion/TextReveal";
 import { readPreviewConfig, readPreviewJourney, readPreviewMri } from "@/lib/home-preview.server";
 import { PREVIEW_PACKAGE, REFINADA_PACKAGE } from "@/lib/home-preview";
-import { BRAND_WORDS_REFINADA } from "@/lib/navigation";
+import { COR_COBERTURA_SINAL, TITULO_SINAL, TITULO_SINAL_SECUNDARIA } from "@/lib/marca-sinal";
 
 const FONTS = "/previa/tipografia/fontes/";
 type Proposta = "a" | "b" | "refinada";
@@ -37,10 +37,12 @@ const FONT_FILES: Record<Proposta, string[]> = {
   // Versão conjunta: tipografia A. Preload só dos arquivos da 1ª tela (títulos 500/600 e corpo
   // 400); o corpo 600 (poucos trechos, abaixo da dobra) chega sob demanda. Com font-display: swap
   // e reserva métrica (refinada.css), o preload só antecipa — o texto nunca espera por ele.
+  // Experimento brand-sinal-v1: a refinada ("/", "/pt", /previa/refinada) usa as fontes oficiais do
+  // ARARAT Sinal v1.0 — Geist (variável) e Geist Mono 500 (rótulos da 1ª tela). WOFF2 do pacote, sem
+  // alteração; ver components/preview/proposta/marca-sinal.css.
   refinada: [
-    `${FONTS}space-grotesk/space-grotesk-latin-500-normal.woff2`,
-    `${FONTS}space-grotesk/space-grotesk-latin-600-normal.woff2`,
-    `${FONTS}source-sans-3/source-sans-3-latin-400-normal.woff2`,
+    "/marca-sinal/v1.0/fontes/Geist-Variable.woff2",
+    "/marca-sinal/v1.0/fontes/GeistMono-Medium.woff2",
   ],
 };
 
@@ -71,14 +73,14 @@ export function PreviewPage({ proposta }: { proposta?: Proposta }) {
       ))}
       {/* O módulo da escultura é descoberto cedo (draft, fora de public/motion). */}
       {config && <link rel="modulepreload" href={config.sculptureModule} />}
-      {refinada ? <SiteHeader brandWords={BRAND_WORDS_REFINADA} menuFocus solid languageSwitch /> : <SiteHeader />}
+      {refinada ? <SiteHeader marcaSinal menuFocus solid languageSwitch /> : <SiteHeader />}
       <main id="conteudo" tabIndex={-1}>
         <HomeOpening
           motionPackage={motionPackage}
           mri={mri}
           config={config}
           navMode={proposta ? "eased" : "native"}
-          {...(refinada ? { note: NOTE_REFINADA, scrollInvite: true, journeyCompact: true, journeySafeIntro: true, revealOnChange: true, journeySteps: JOURNEY_STEPS_REFINADA,
+          {...(refinada ? { coverColor: COR_COBERTURA_SINAL, titleLines: TITULO_SINAL, titleSecondary: TITULO_SINAL_SECUNDARIA, note: NOTE_REFINADA, scrollInvite: true, journeyCompact: true, journeySafeIntro: true, revealOnChange: true, journeySteps: JOURNEY_STEPS_REFINADA,
             journeyIntro: "Um percurso conceitual para explorar região, dados e explicação — não um pipeline automático validado. Role a página ou escolha uma etapa." } : {})}
         />
         <Passage refinada={refinada} />
@@ -87,7 +89,7 @@ export function PreviewPage({ proposta }: { proposta?: Proposta }) {
         {refinada ? <ScienceRefinada /> : <Science />}
         {refinada && <TimeRefinada />}
         {refinada && <FaqRefinada />}
-        <Contact arrowIcon={refinada} refinada={refinada} />
+        <Contact arrowIcon={refinada} refinada={refinada} marcaSinal={refinada} />
       </main>
       {refinada ? <FooterRefinada /> : <SiteFooter />}
       <TextReveal />
@@ -96,7 +98,7 @@ export function PreviewPage({ proposta }: { proposta?: Proposta }) {
   if (!proposta) return content;
   // display: contents — o wrapper não cria caixa (layout idêntico ao da /previa).
   return (
-    <div data-tipografia={proposta} data-proposta="" style={{ display: "contents" }}>
+    <div data-tipografia={proposta} data-proposta="" data-marca={refinada ? "sinal" : undefined} style={{ display: "contents" }}>
       {content}
     </div>
   );
