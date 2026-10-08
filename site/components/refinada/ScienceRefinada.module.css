@@ -11,6 +11,20 @@
   padding-top: 18px;
 }
 
+/* Ícone da Fase 2B (32 px, tamanho autorizado 24/32/48) acima do título. Em colunas, os blocos sem
+   ícone reservam a mesma altura: os títulos ficam na mesma linha. */
+.cardIcone {
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin-bottom: 12px;
+}
+@media (min-width: 641px) {
+  .card:not(:has(.cardIcone)) {
+    padding-top: calc(18px + 32px + 12px);
+  }
+}
+
 .cardTitle {
   font-family: var(--font-title);
   font-size: 1.15rem;

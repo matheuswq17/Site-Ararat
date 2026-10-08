@@ -42,7 +42,8 @@ const PATHS = [
 export function Contact({
   arrowIcon = false,
   refinada = false,
-}: { arrowIcon?: boolean; refinada?: boolean } = {}) {
+  marcaCanonica = false,
+}: { arrowIcon?: boolean; refinada?: boolean; marcaCanonica?: boolean } = {}) {
   const { t } = useTranslation();
   return (
     <section
@@ -50,15 +51,19 @@ export function Contact({
       className={styles.section}
       aria-labelledby="contato-title"
     >
-      <div className={styles.arc} aria-hidden="true">
-        <Image
-          src="/brand/ararat_icone_transparente.png"
-          alt={t("")}
-          width={768}
-          height={464}
-          className={styles.mountain}
-        />
-      </div>
+      {/* Identidade canônica: a montanha antiga ampliada como marca-d'água sai (não há versão
+          canônica de marca-d'água; o símbolo não é usado como textura). */}
+      {!marcaCanonica && (
+        <div className={styles.arc} aria-hidden="true">
+          <Image
+            src="/brand/ararat_icone_transparente.png"
+            alt={t("")}
+            width={768}
+            height={464}
+            className={styles.mountain}
+          />
+        </div>
+      )}
 
       <div className={`wrap ${styles.inner}`}>
         <p className="eyebrow">{t("Contato")}</p>

@@ -1,0 +1,26 @@
+/* Lockup horizontal 1800 × 620: só a altura é definida; width: auto preserva a proporção. */
+.logo {
+  display: block;
+  width: auto;
+  max-width: none;
+  flex: none;
+}
+/* Cabeçalho: 46 px de altura = 134 px de largura (≥ 120 px mínimos do lockup). Em celulares
+   estreitos, 42 px = 122 px. */
+.cabecalho {
+  height: 46px;
+}
+@media (max-width: 380px) {
+  .cabecalho {
+    height: 42px;
+  }
+}
+/* Rodapé: 64 px = 186 px; em telas muito estreitas não passa de 56 px (163 px). */
+.rodape {
+  height: 64px;
+}
+@media (max-width: 380px) {
+  .rodape {
+    height: 56px;
+  }
+}

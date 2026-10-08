@@ -1,0 +1,754 @@
+/* EXPERIMENTO brand-canonical-v1 — identidade canônica ARARAT sobre a refinada ("/", "/pt",
+   /previa/refinada). Escopo: o wrapper [data-marca="canonica"] (display: contents) ou
+   html:has([data-marca="canonica"]). As rotas de comparação (/previa, /a, /b, /original) não o têm.
+
+   Fontes de marca (cópias sem alteração; hashes em public/marca/MANIFESTO.json):
+     · Fase 1 v1.0.1 — lockup horizontal negativo da masterbrand e favicon de 16 px;
+     · Fase 2A v1.1.1 — 7 cores institucionais, tokens viewer-dark/hub-light, Lora + Inter (OFL);
+     · Fase 2B v1.2.1 — três ícones institucionais na Ciência (aguardando aprovação humana).
+
+   NÃO é uma troca global de cores. Camadas:
+     1. Fontes (binários oficiais) e reserva métrica.
+     2. Paleta por FUNÇÃO. As variáveis antigas (--navy-*, --gold-*, …) passam a apontar para papéis
+        canônicos e, em seguida, cada função é conferida no uso real (texto, bordas essenciais, foco,
+        seleção, hover, desativado, avisos) — ver as seções 3 a 9.
+     3. Seções escuras = tema viewer-dark da Fase 2A (canvas #081316 · superfície #10282E · elevada
+        #17343A deep slate-pine). Seções claras = soft stone white #F6F4EF.
+
+   Contraste medido (WCAG, luminância sRGB) — referências usadas abaixo:
+     sobre #10282E: stone 14,0 · mist 10,9 · precision copper 4,63 · sage 3,63 · #31525A 1,82
+     sobre #17343A: stone 12,0 · mist 9,39 · precision copper 3,98 (só texto grande/gráfico) · sage 3,12
+     sobre #F6F4EF: deep slate 12,0 · graphite 11,9 · functional copper 4,62 · precision copper 3,02
+                    (só gráfico) · sage 3,86 (só gráfico/texto grande) · mist 1,28 (só decorativo)
+   Conferência automática no uso real: tests/marca-contraste.mjs. */
+
+/* ── 1. Fontes ─────────────────────────────────────────────────────────────────────────────
+   Binários variáveis oficiais da Fase 2A (Google Fonts, commit ec626514…), servidos como estão:
+   sem conversão para WOFF2 nem subconjunto — Lora tem Reserved Font Name ("Lora") na OFL, e uma
+   versão modificada exigiria outro nome. Pesos usados: Lora 600; Inter 400/500/600 (eixo real,
+   nada sintético: font-synthesis: none). Inter tem eixo opsz (14–32): font-optical-sizing auto. */
+@font-face {
+  font-family: "ARARAT Lora";
+  src: url("/marca/fase2a-v1.1.1/fontes/Lora%5Bwght%5D.ttf") format("truetype");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "ARARAT Inter";
+  src: url("/marca/fase2a-v1.1.1/fontes/Inter%5Bopsz%2Cwght%5D.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+/* Reserva métrica (fontes do sistema, nenhum arquivo novo): largura média medida nos textos do
+   site com fontTools (Lora 600 × Liberation Serif Bold ≈ Times; Inter × Liberation Sans ≈ Arial);
+   ascent/descent das métricas typo de cada fonte divididos pelo size-adjust. */
+@font-face {
+  font-family: "ARARAT Lora Reserva";
+  src: local("Times New Roman Bold"), local("TimesNewRomanPS-BoldMT"), local("Liberation Serif Bold"), local("LiberationSerif-Bold"), local("Tinos Bold"), local("Times-Bold");
+  font-weight: 600;
+  size-adjust: 109.4%;
+  ascent-override: 91.96%;
+  descent-override: 25.05%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "ARARAT Inter Reserva";
+  src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("LiberationSans"), local("Arimo"), local("Helvetica");
+  font-weight: 400;
+  size-adjust: 105.9%;
+  ascent-override: 91.48%;
+  descent-override: 22.78%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "ARARAT Inter Reserva";
+  src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("LiberationSans"), local("Arimo"), local("Helvetica");
+  font-weight: 500;
+  size-adjust: 107.1%;
+  ascent-override: 90.45%;
+  descent-override: 22.52%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "ARARAT Inter Reserva";
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Liberation Sans Bold"), local("LiberationSans-Bold"), local("Arimo Bold"), local("Helvetica Bold"), local("Helvetica-Bold");
+  font-weight: 600;
+  size-adjust: 100.9%;
+  ascent-override: 96.01%;
+  descent-override: 23.91%;
+  line-gap-override: 0%;
+}
+
+/* ── 2. Tokens ─────────────────────────────────────────────────────────────────────────────
+   Canônicos (Fase 2A, sem alteração de valor) + papéis do site. As variáveis antigas do site são
+   redirecionadas para o PAPEL equivalente; o uso de cada uma é refeito nas seções seguintes. */
+[data-marca="canonica"],
+html:has([data-marca="canonica"]) {
+  /* Institucionais (Fase 2A, congelados) */
+  --ararat-deep-slate-pine: #17343a;
+  --ararat-mineral-sage: #6e7f74;
+  --ararat-clinical-graphite: #2c3136;
+  --ararat-cool-mist-gray: #d8dad6;
+  --ararat-soft-stone-white: #f6f4ef;
+  --ararat-precision-copper: #c77a4e;
+  --ararat-functional-copper: #a95835;
+  /* Tema viewer-dark (Fase 2A): canvas / superfície / elevada / borda decorativa / borda essencial */
+  --ararat-escuro-canvas: #081316;
+  --ararat-escuro-superficie: #10282e;
+  --ararat-escuro-elevada: #17343a;
+  --ararat-escuro-borda: #31525a;
+  --ararat-escuro-borda-essencial: #6e7f74;
+  /* Texto terciário no escuro: cool mist a 75 % sobre a superfície (#A8B0AF ≈ 6,8:1 em #10282E,
+     6,0:1 em #17343A). Derivado de token, não é cor nova da marca. */
+  --ararat-escuro-texto-3: rgba(216, 218, 214, 0.75);
+  /* Claro (hub-light): texto terciário = graphite a 82 % sobre stone (≈ 7,4:1); borda essencial
+     #6C757D (border.strong do hub-light, 4,3:1 sobre stone). */
+  --ararat-claro-texto-3: rgba(44, 49, 54, 0.82);
+  --ararat-claro-borda: rgba(23, 52, 58, 0.16);
+  --ararat-claro-borda-essencial: #6c757d;
+
+  /* Fontes: Lora só em títulos institucionais/editoriais (aplicada por seletor, seção 4);
+     --font-title passa a Inter porque, no site, ela também serve rótulos, números e controles. */
+  --font-lora: "ARARAT Lora", "ARARAT Lora Reserva", Georgia, "Times New Roman", serif;
+  --font-inter: "ARARAT Inter", "ARARAT Inter Reserva", Arial, Helvetica, sans-serif;
+  --font-title: var(--font-inter);
+  --font-body: var(--font-inter);
+  --font-brand: var(--font-inter);
+
+  /* Redirecionamento por papel (escuro). */
+  --navy-950: var(--ararat-escuro-canvas);
+  --navy-900: var(--ararat-escuro-superficie);
+  --navy-800: var(--ararat-escuro-elevada);
+  --navy-700: #1d3f46; /* elevada + 25 % de #31525A — hover de superfícies elevadas */
+  --navy-600: var(--ararat-escuro-borda);
+  --white-100: var(--ararat-soft-stone-white);
+  --white-000: #ffffff;
+  --gray-200: var(--ararat-cool-mist-gray);
+  --gray-300: var(--ararat-escuro-texto-3);
+  /* Ouro → cobre. 500/400: precision copper (acento; texto só sobre #10282E ou mais escuro, onde
+     passa 4,63:1 — os usos sobre superfícies elevadas são trocados na seção 6). 300: era "ouro claro"
+     de texto; vira cool mist (neutro) para não multiplicar o cobre além de 5–10 %. 600: functional. */
+  --gold-600: var(--ararat-functional-copper);
+  --gold-500: var(--ararat-precision-copper);
+  --gold-400: var(--ararat-precision-copper);
+  --gold-300: var(--ararat-cool-mist-gray);
+  --blue-500: var(--ararat-mineral-sage);
+  --blue-400: var(--ararat-mineral-sage);
+  --blue-300: var(--ararat-mineral-sage);
+
+  --surface-app: var(--ararat-escuro-superficie);
+  --surface-raised: var(--ararat-escuro-elevada);
+  --surface-sunken: var(--ararat-escuro-canvas);
+  --surface-card: var(--ararat-escuro-elevada);
+  --surface-selected: rgba(199, 122, 78, 0.12);
+  /* Bordas: subtle = decorativa (#31525A); default/strong = essenciais (≥ 3:1: sage 3,63 sobre
+     #10282E; mist a 55 % ≈ 5,2:1). */
+  --border-subtle: var(--ararat-escuro-borda);
+  --border-default: var(--ararat-escuro-borda-essencial);
+  --border-strong: rgba(216, 218, 214, 0.55);
+  --border-focus: var(--ararat-soft-stone-white);
+  --text-primary: var(--ararat-soft-stone-white);
+  --text-secondary: var(--ararat-cool-mist-gray);
+  --text-tertiary: var(--ararat-escuro-texto-3);
+  --text-link: var(--ararat-precision-copper);
+  --accent-focus: var(--ararat-soft-stone-white);
+  --accent-selected: var(--ararat-precision-copper);
+  --contour-line: rgba(216, 218, 214, 0.06);
+  --rule-gold: linear-gradient(90deg, var(--ararat-precision-copper), rgba(199, 122, 78, 0));
+  --shadow-focus-ring: 0 0 0 3px rgba(246, 244, 239, 0.32);
+  --amber-500: var(--ararat-precision-copper);
+
+  font-synthesis: none;
+}
+
+/* Fundo do documento (fora do wrapper) e barra do navegador. */
+html:has([data-marca="canonica"]) {
+  background: var(--ararat-escuro-canvas);
+}
+html:has([data-marca="canonica"]) body {
+  background: var(--ararat-escuro-superficie);
+  color: var(--ararat-soft-stone-white);
+  font-family: var(--font-inter);
+}
+
+/* ── 3. Foco, seleção, link de salto ─────────────────────────────────────────────────────── */
+/* Foco no escuro: soft stone 2 px (14:1 sobre #10282E). Nas seções claras: deep slate (12:1). */
+[data-marca="canonica"] :focus-visible {
+  outline-color: var(--ararat-soft-stone-white);
+}
+[data-marca="canonica"] :is(#ciencia, #time) :focus-visible {
+  outline-color: var(--ararat-deep-slate-pine) !important;
+}
+/* Seleção: cobre + canvas no escuro (5,7:1); deep slate + stone no claro (12:1). */
+[data-marca="canonica"] ::selection {
+  background: var(--ararat-precision-copper);
+  color: var(--ararat-escuro-canvas);
+}
+[data-marca="canonica"] :is(#ciencia, #time) ::selection {
+  background: var(--ararat-deep-slate-pine);
+  color: var(--ararat-soft-stone-white);
+}
+html:has([data-marca="canonica"]) .skip-link {
+  background: var(--ararat-soft-stone-white);
+  color: var(--ararat-deep-slate-pine);
+  font-family: var(--font-inter);
+}
+html:has([data-marca="canonica"]) .skip-link:focus-visible {
+  outline-color: var(--ararat-precision-copper);
+}
+
+/* Barra de rolagem (proposta.css): trilho canvas, indicador mineral sage → cobre ao interagir. */
+@media not (forced-colors: active) {
+  @supports not selector(::-webkit-scrollbar) {
+    html:has([data-marca="canonica"]) {
+      scrollbar-color: #6e7f74 #081316;
+    }
+  }
+  html:has([data-marca="canonica"])::-webkit-scrollbar,
+  html:has([data-marca="canonica"])::-webkit-scrollbar-track,
+  html:has([data-marca="canonica"])::-webkit-scrollbar-corner {
+    background: #081316;
+  }
+  html:has([data-marca="canonica"])::-webkit-scrollbar-thumb {
+    background: #6e7f74;
+    border-color: #081316;
+  }
+  html:has([data-marca="canonica"])::-webkit-scrollbar-thumb:hover,
+  html:has([data-marca="canonica"])::-webkit-scrollbar-thumb:active {
+    background: #c77a4e;
+  }
+}
+
+/* ── 4. Tipografia por papel ─────────────────────────────────────────────────────────────────
+   Lora 600: hero, títulos de seção (h2), enunciados e títulos editoriais (publicação, blocos da
+   Ciência, nomes do Time). Inter: corpo 400, navegação/rótulos/controles 500, títulos de UI 600,
+   números e dados tabulares. Composição (tamanho, entrelinha, tracking) da escala da Fase 2A,
+   adaptada às medidas fluidas já existentes. */
+[data-tipografia="refinada"][data-marca="canonica"] {
+  --fs-body: 1.0625rem; /* 17 px: Inter tem altura-x maior que Source Sans 3 (18 px antes) */
+  --fs-eyebrow: 0.75rem;
+  font-family: var(--font-inter);
+  font-optical-sizing: auto;
+}
+[data-marca="canonica"] :is(h1, h2),
+[data-marca="canonica"] #hero-title,
+[data-marca="canonica"] #ciencia [class*="__statement"],
+[data-marca="canonica"] #ciencia [class*="__cardTitle"],
+[data-marca="canonica"] #ciencia [class*="__pubTitle"],
+[data-marca="canonica"] #ciencia [class*="__detTitle"],
+[data-marca="canonica"] #time [class*="__name"],
+[data-marca="canonica"] #time [class*="__portraitName"] {
+  font-family: var(--font-lora);
+  font-weight: 600 !important;
+  font-optical-sizing: none;
+}
+/* Hero: display institucional (Lora 600, tracking −0,014 em ≈ −0,8 px a 56 px). Lora é mais larga
+   que Space Grotesk: tamanho um pouco menor para manter 2 linhas no desktop. */
+[data-tipografia="refinada"][data-marca="canonica"] #hero-title {
+  font-size: clamp(2.4rem, 5.9vw, 5.1rem);
+  letter-spacing: -0.014em;
+  line-height: 1.06;
+  max-width: 10.5em;
+}
+[data-tipografia="refinada"][data-marca="canonica"] main section h2 {
+  letter-spacing: -0.01em;
+  line-height: 1.12;
+}
+[data-tipografia="refinada"][data-marca="canonica"] #plataforma > div > header h2,
+[data-tipografia="refinada"][data-marca="canonica"] #explicabilidade h2 {
+  font-size: clamp(2.05rem, 4vw, 3.4rem);
+  max-width: 13em;
+}
+/* h3 de UI (etapas, públicos, títulos de painel, perguntas do FAQ): Inter 600. */
+[data-tipografia="refinada"][data-marca="canonica"] main h3:not([class*="__cardTitle"]):not([class*="__pubTitle"]):not([class*="__detTitle"]) {
+  font-family: var(--font-inter);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 1.3;
+}
+[data-tipografia="refinada"][data-marca="canonica"] main section p {
+  line-height: 1.6;
+}
+[data-tipografia="refinada"][data-marca="canonica"] #plataforma header p,
+[data-tipografia="refinada"][data-marca="canonica"] #explicabilidade header p {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  max-width: 34em;
+}
+[data-tipografia="refinada"][data-marca="canonica"] [data-opening="content"] p:not(.eyebrow):not(.ill-note) {
+  font-size: clamp(1.05rem, 1.35vw, 1.2rem);
+  max-width: 30em;
+}
+/* Rótulos em caixa-alta (sobretítulos): Inter 500, tracking amplo e curto (Fase 2A: label). */
+[data-tipografia="refinada"][data-marca="canonica"] :is(
+    .eyebrow,
+    [class*="JourneyMriScene"][class*="__label"],
+    #jornada [class*="__stepKicker"],
+    #plataforma [class*="__stopLabel"],
+    #explicabilidade [class*="__stepLabel"],
+    #contato dt,
+    footer [class*="__tagline"],
+    [data-opening="invite"],
+    #plataforma [class*="__pendingLabel"]
+  ) {
+  font-family: var(--font-inter);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+}
+/* Botões e navegação: Inter 600 / 500, sem tracking. */
+[data-tipografia="refinada"][data-marca="canonica"] .btn {
+  font-family: var(--font-inter);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.005em;
+}
+[data-tipografia="refinada"][data-marca="canonica"] header nav a:not(.btn) {
+  font-family: var(--font-inter);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+/* Pesos explícitos: os pedidos 500 de títulos (refinada.css) seriam Lora 500; a regra acima já os
+   leva a 600. Corpo forte = Inter 600. */
+[data-tipografia="refinada"][data-marca="canonica"] :is(strong, b) {
+  font-weight: 600;
+}
+/* Números e dados: numerais tabulares e alinhados (Inter). */
+[data-marca="canonica"] :is(
+    #jornada [class*="__stepNum"],
+    #plataforma [class*="__stepNum"],
+    #plataforma [class*="__routeNum"],
+    #plataforma [class*="__pointNum"],
+    #plataforma [class*="__marker"],
+    #plataforma [class*="__num"],
+    #plataforma [class*="__legendaNum"],
+    #ciencia [class*="__partNum"],
+    #time [class*="__num"],
+    #explicabilidade [class*="__reading"] > li,
+    [class*="__dlgTitle"]
+  ) {
+  font-family: var(--font-inter);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+[data-marca="canonica"] #explicabilidade [class*="__reading"] > li::before {
+  font-family: var(--font-inter);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+/* Larguras fixadas em em na refinada.css (calculadas para Space Grotesk/Source Sans): recalculadas
+   para Lora 600 (0 = 0,61 em) e Inter 400 (0 = 0,59 em, opsz 14). */
+[data-tipografia="refinada"][data-marca="canonica"] #contato [class*="Contact-module"][class*="__title"] {
+  max-width: 13em;
+}
+[data-tipografia="refinada"][data-marca="canonica"] #ciencia [class*="__statement"] {
+  max-width: 19em;
+}
+[data-tipografia="refinada"][data-marca="canonica"] #ciencia [class*="Science-module"][class*="__lead"] {
+  max-width: 31em;
+}
+[data-tipografia="refinada"][data-marca="canonica"] #ciencia [class*="Science-module"][class*="__disclaimer"] {
+  max-width: 41em;
+}
+[data-tipografia="refinada"][data-marca="canonica"] #plataforma [class*="__routeText"] {
+  max-width: 17.7em;
+}
+[data-tipografia="refinada"][data-marca="canonica"] #jornada [class*="__openingLead"] {
+  max-width: 23.6em;
+}
+[data-tipografia="refinada"][data-marca="canonica"] #passagem [class*="Passage-module"][class*="__text"] {
+  max-width: 34em;
+}
+
+@media (max-width: 600px) {
+  [data-tipografia="refinada"][data-marca="canonica"] {
+    --fs-body: 1rem;
+  }
+  [data-tipografia="refinada"][data-marca="canonica"] #hero-title {
+    font-size: clamp(2.2rem, 10.4vw, 3rem);
+    letter-spacing: -0.01em;
+  }
+  [data-tipografia="refinada"][data-marca="canonica"] #plataforma > div > header h2,
+  [data-tipografia="refinada"][data-marca="canonica"] #explicabilidade h2 {
+    font-size: clamp(1.85rem, 8.2vw, 2.3rem);
+  }
+  [data-tipografia="refinada"][data-marca="canonica"] #plataforma header p,
+  [data-tipografia="refinada"][data-marca="canonica"] #explicabilidade header p {
+    font-size: 1.0625rem;
+  }
+}
+@media (max-height: 760px) and (min-width: 601px) {
+  [data-tipografia="refinada"][data-marca="canonica"] #hero-title {
+    font-size: clamp(2.3rem, 5.2vw, 4.3rem);
+  }
+}
+@media (max-width: 600px) and (max-height: 700px) {
+  [data-tipografia="refinada"][data-marca="canonica"] #hero-title {
+    font-size: clamp(2rem, 9.6vw, 2.6rem);
+  }
+}
+
+/* ── 5. Botões e controles ───────────────────────────────────────────────────────────────────
+   Primário no escuro: soft stone com texto deep slate (12:1) — a regra "branco sobre deep slate"
+   da especificação, invertida para fundo escuro; cobre NÃO é botão padrão. Hover: cool mist (9,4:1).
+   Secundário: contorno mist a 55 % (≥ 3:1), texto stone; hover com contorno cobre. */
+[data-marca="canonica"] .btn-gold {
+  background: var(--ararat-soft-stone-white);
+  color: var(--ararat-deep-slate-pine);
+}
+[data-marca="canonica"] .btn-gold:hover {
+  background: var(--ararat-cool-mist-gray);
+}
+[data-marca="canonica"] .btn-ghost {
+  border-color: rgba(216, 218, 214, 0.55);
+  color: var(--ararat-soft-stone-white);
+}
+[data-marca="canonica"] .btn-ghost:hover {
+  border-color: var(--ararat-precision-copper);
+  color: var(--ararat-soft-stone-white);
+}
+[data-marca="canonica"] .btn:focus-visible {
+  outline: 2px solid var(--ararat-soft-stone-white);
+  outline-offset: 3px;
+}
+[data-marca="canonica"] .language-switch {
+  border-color: var(--border-default);
+  color: var(--ararat-cool-mist-gray);
+  font-family: var(--font-inter);
+  font-weight: 500;
+}
+[data-marca="canonica"] .language-switch:hover {
+  color: var(--ararat-soft-stone-white);
+  border-color: var(--ararat-precision-copper);
+}
+/* Desativado (pausa com movimento reduzido do sistema): mantém texto legível; sinaliza por cursor e
+   borda tracejada, não só por opacidade. */
+[data-marca="canonica"] header button:disabled {
+  border-style: dashed;
+  cursor: not-allowed;
+}
+
+/* ── 6. Cabeçalho ────────────────────────────────────────────────────────────────────────── */
+[data-marca="canonica"] header[data-marca="canonica"][data-scrolled="true"] {
+  background: rgba(8, 19, 22, 0.86);
+}
+[data-marca="canonica"] header[data-marca="canonica"][data-scrolled="true"][data-solid] {
+  background: rgba(8, 19, 22, 0.97);
+}
+[data-marca="canonica"] header[data-marca="canonica"] [class*="__menuButton"] {
+  background: rgba(8, 19, 22, 0.5);
+}
+[data-marca="canonica"] header[data-marca="canonica"] [class*="__nav"] {
+  background-color: rgba(8, 19, 22, 0.97);
+}
+@media (min-width: 1081px) {
+  [data-marca="canonica"] header[data-marca="canonica"] [class*="__nav"] {
+    background-color: transparent;
+  }
+}
+/* Área de proteção do lockup: 1X (altura da maiúscula do wordmark ≈ 11 px a 46 px) já garantida pelo
+   espaçamento da barra; o link não ganha fundo nem borda. */
+[data-marca="canonica"] header[data-marca="canonica"] [class*="__brand"] {
+  padding-block: 4px;
+}
+
+/* ── 7. Seções escuras — superfícies e acentos ───────────────────────────────────────────────
+   Gradientes antigos navy trocados por superfícies do tema; cobre só em fios, marcadores e texto
+   sobre #10282E/#081316. Textos sobre superfícies ELEVADAS (#17343A) não usam cobre (3,98:1). */
+[data-marca="canonica"] #passagem {
+  background: var(--ararat-escuro-superficie);
+}
+[data-marca="canonica"] #passagem [class*="__line"] {
+  background: linear-gradient(180deg, rgba(199, 122, 78, 0) 0%, rgba(199, 122, 78, 0.55) 45%, var(--ararat-precision-copper) 100%);
+}
+[data-marca="canonica"] #jornada,
+[data-marca="canonica"] [data-opening="root"] #jornada {
+  /* Superfície contínua (o CSS da abertura em app/intro-script.ts terminava em #0b1724). */
+  background: var(--ararat-escuro-superficie);
+}
+/* Contêiner do módulo da Jornada (pacote do Motion 0.7.0-draft, journey.css: fundo #0D1B2A fixo):
+   na base ele coincidia com o fundo da página e ficava invisível no hero; aqui recebe a superfície
+   do tema para continuar invisível. Só o FUNDO do contêiner (enquadramento do Site) — o desenho do
+   módulo (cores internas em journey.js) não é alterado e segue pendente do pacote adaptado do Motion. */
+[data-marca="canonica"] .ararat-journey {
+  background: var(--ararat-escuro-superficie);
+}
+[data-marca="canonica"] #jornada [class*="__railTrack"] {
+  background: rgba(216, 218, 214, 0.28);
+}
+[data-marca="canonica"] #jornada [class*="__stepButton"][aria-pressed="true"]::before {
+  box-shadow: 0 0 0 5px rgba(199, 122, 78, 0.2);
+}
+[data-marca="canonica"] #jornada [class*="__stepButton"][aria-pressed="true"] {
+  border-color: rgba(199, 122, 78, 0.6);
+  background: rgba(199, 122, 78, 0.08);
+}
+[data-marca="canonica"] #jornada :is([class*="__sceneLabel"], [class*="__summary"]) {
+  background: rgba(8, 19, 22, 0.82);
+}
+/* Rótulo enfatizado da cena (era texto navy sobre ouro): canvas sobre cobre = 5,7:1. */
+[data-marca="canonica"] #jornada [class*="__sceneLabel"][data-emphasis] {
+  color: var(--ararat-escuro-canvas);
+  background: var(--ararat-precision-copper);
+}
+/* Números das etapas: cool mist (o botão ativo tem fundo tingido de cobre, onde texto cobre cairia
+   abaixo de 4,5:1); o cobre fica no marcador circular. */
+[data-marca="canonica"] #jornada [class*="__stepNum"] {
+  color: var(--ararat-cool-mist-gray);
+}
+[data-marca="canonica"] #jornada [class*="__stepMore"] > summary {
+  text-decoration-color: rgba(199, 122, 78, 0.6);
+}
+[data-marca="canonica"] [class*="JourneyMriScene"] :is([class*="__lattice"] line) {
+  stroke: rgba(246, 244, 239, 0.22);
+}
+[data-marca="canonica"] [class*="JourneyMriScene"] [class*="__panel"] {
+  fill: rgba(8, 19, 22, 0.9);
+  stroke: rgba(216, 218, 214, 0.16);
+}
+[data-marca="canonica"] [class*="JourneyMriScene"] [class*="__tileFrame"] {
+  stroke: rgba(199, 122, 78, 0.7);
+}
+[data-marca="canonica"] [class*="JourneyMriScene"] [class*="__barTrack"] {
+  fill: rgba(216, 218, 214, 0.16);
+}
+
+/* Plataforma */
+[data-marca="canonica"] #plataforma {
+  background: linear-gradient(180deg, var(--ararat-escuro-superficie) 0%, var(--ararat-escuro-superficie) 100%);
+}
+[data-marca="canonica"] #plataforma [class*="__documented"] {
+  background: rgba(246, 244, 239, 0.03);
+}
+/* "Para quem é" (rótulo pequeno) sobre a superfície: cobre 4,63:1. */
+[data-marca="canonica"] #plataforma [class*="__audienceTitle"] {
+  color: var(--ararat-precision-copper);
+}
+/* Resumo "Sobre os módulos…" dentro do bloco tingido: texto stone, sublinhado cobre. */
+[data-marca="canonica"] #plataforma [class*="__docMoreSummary"] {
+  color: var(--ararat-soft-stone-white);
+  text-decoration-color: var(--ararat-precision-copper);
+}
+/* Palavra em destaque do título (grande): cobre sobre #10282E — título ≥ 24 px, 4,63:1. */
+[data-marca="canonica"] #plataforma [class*="__gold"] {
+  color: var(--ararat-precision-copper);
+}
+
+/* Molduras das capturas reais (o conteúdo das imagens NÃO muda): moldura, legenda e marcadores. */
+[data-marca="canonica"] [class*="CapturaProdutoFigura"][class*="__window"] {
+  background: var(--ararat-escuro-canvas);
+  box-shadow: 0 0 0 1px var(--ararat-escuro-borda), 0 30px 70px rgba(0, 0, 0, 0.45);
+}
+[data-marca="canonica"] [class*="CapturaProdutoFigura"][class*="__figure"][data-destaque] [class*="__window"] {
+  box-shadow: 0 0 0 1px rgba(199, 122, 78, 0.5), 0 36px 90px rgba(0, 0, 0, 0.5);
+}
+[data-marca="canonica"] [class*="CapturaProdutoFigura"][class*="__marker"] {
+  color: var(--ararat-escuro-canvas);
+  background: var(--ararat-precision-copper);
+  box-shadow: 0 0 0 4px rgba(199, 122, 78, 0.22), 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+[data-marca="canonica"] [class*="CapturaProdutoFigura"][class*="__figure"]:not([data-destaque]) [class*="__marker"] {
+  box-shadow: 0 0 0 3px rgba(199, 122, 78, 0.22), 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+[data-marca="canonica"] [class*="CapturaProdutoFigura"][class*="__falha"] {
+  border-color: rgba(216, 218, 214, 0.35);
+}
+[data-marca="canonica"] [class*="CapturaProdutoFigura"][class*="__dialog"]::backdrop {
+  background: rgba(8, 19, 22, 0.86);
+}
+
+/* Demonstração Hub → Viewer (PlataformaFluxo): só moldura, legendas e controles. As capturas
+   seguem com o fundo do próprio produto (Hub claro, Viewer escuro) — não recolorir. */
+[data-marca="canonica"] [class*="PlataformaFluxo"][class*="__aviso"] {
+  border-left-color: var(--ararat-precision-copper);
+  background: rgba(246, 244, 239, 0.04);
+}
+[data-marca="canonica"] [class*="PlataformaFluxo"][class*="__produto"],
+[data-marca="canonica"] [class*="PlataformaFluxo"][class*="__atribuicao"] {
+  color: var(--ararat-escuro-texto-3);
+}
+[data-marca="canonica"] [class*="PlataformaFluxo"][class*="__legendaNum"] {
+  opacity: 1;
+  color: var(--ararat-escuro-texto-3);
+}
+[data-marca="canonica"] [class*="PlataformaFluxo"][class*="__legendaTitulo"] {
+  font-family: var(--font-inter);
+}
+[data-marca="canonica"] [class*="PlataformaFluxo"][class*="__titulo"] {
+  font-family: var(--font-inter);
+  font-weight: 600;
+}
+[data-marca="canonica"] [class*="PlataformaFluxo"][class*="__num"] {
+  font-family: var(--font-inter);
+  font-weight: 500;
+}
+/* Legenda ativa: número em cobre (sobre #10282E, 4,63:1), texto stone, fio cobre. */
+[data-marca="canonica"] [class*="PlataformaFluxo"][class*="__fluxo"][data-fluxo-etapa] [class*="__legendas"] li[data-etapa] [class*="__legendaNum"] {
+  color: inherit;
+}
+[data-marca="canonica"] [class*="PlataformaFluxo"][class*="__captura"][data-produto="hub"] {
+  border-color: rgba(246, 244, 239, 0.5);
+}
+[data-marca="canonica"] [class*="PlataformaFluxo"][class*="__captura"][data-produto="viewer"] {
+  border-color: var(--ararat-escuro-borda);
+}
+
+/* Explicabilidade */
+[data-marca="canonica"] #explicabilidade {
+  background: var(--ararat-escuro-superficie);
+}
+[data-marca="canonica"] #explicabilidade [class*="__artWrap"] {
+  background: rgba(8, 19, 22, 0.6);
+}
+[data-marca="canonica"] #explicabilidade [class*="__badge"] {
+  color: var(--ararat-cool-mist-gray);
+  border-color: rgba(199, 122, 78, 0.6);
+}
+/* Escolha ativa (era navy sobre ouro): canvas sobre cobre (5,7:1). */
+[data-marca="canonica"] #explicabilidade [class*="__choice"][aria-pressed="true"] {
+  color: var(--ararat-escuro-canvas);
+}
+[data-marca="canonica"] #explicabilidade [class*="__barTrack"] {
+  background: rgba(216, 218, 214, 0.14);
+}
+[data-marca="canonica"] [class*="ExplainMri"] [class*="__glandLine"] {
+  stroke: rgba(246, 244, 239, 0.75);
+}
+[data-marca="canonica"] [class*="ExplainMri"] [class*="__roiLine"] {
+  fill: rgba(199, 122, 78, 0.12);
+}
+
+/* FAQ e Contato */
+[data-marca="canonica"] #faq {
+  background: var(--ararat-escuro-canvas);
+}
+/* Link no FAQ: cobre sobre canvas 5,67:1. */
+[data-marca="canonica"] #contato {
+  background: var(--ararat-escuro-superficie);
+}
+[data-marca="canonica"] #contato [class*="__path"] + [class*="__path"] {
+  border-top-color: rgba(199, 122, 78, 0.45);
+}
+[data-marca="canonica"] #contato [class*="__action"] {
+  text-decoration-color: rgba(199, 122, 78, 0.6);
+}
+[data-marca="canonica"] #contato [class*="__primary"] {
+  background: var(--ararat-soft-stone-white);
+  color: var(--ararat-deep-slate-pine);
+}
+[data-marca="canonica"] #contato [class*="__pending"] {
+  border-top-color: rgba(216, 218, 214, 0.3);
+}
+
+/* Rodapé */
+[data-marca="canonica"] footer {
+  background: var(--ararat-escuro-canvas);
+}
+[data-marca="canonica"] footer nav a:hover {
+  color: var(--ararat-soft-stone-white);
+  text-decoration-color: var(--ararat-precision-copper);
+}
+[data-marca="canonica"] footer [class*="__small"] {
+  color: var(--ararat-escuro-texto-3);
+}
+
+/* ── 8. Seções claras (Ciência, Time) — soft stone white ────────────────────────────────────
+   Texto deep slate (12:1) e graphite (11,9:1); terciário graphite 82 %; cobre funcional para texto
+   de acento (4,62:1); precision copper só em fios (≥ 3:1 como gráfico); bordas decorativas deep
+   slate 16 %, essenciais #6C757D. */
+[data-marca="canonica"] #ciencia,
+[data-marca="canonica"] #time {
+  --navy-900: var(--ararat-deep-slate-pine);
+  --white-100: var(--ararat-soft-stone-white);
+  --gold-ink: var(--ararat-functional-copper);
+  background: var(--ararat-soft-stone-white);
+  color: var(--ararat-deep-slate-pine);
+}
+[data-marca="canonica"] #ciencia :is(
+    [class*="__lead"],
+    [class*="__partNote"],
+    [class*="__cardText"],
+    [class*="__facts"],
+    [class*="__principles"],
+    [class*="__limit"],
+    [class*="__note"],
+    [class*="__stageLine"],
+    [class*="__disclaimer"],
+    [class*="__evMeta"],
+    [class*="__item"] dd,
+    [class*="__evidence"] ul,
+    [class*="__pubQuestion"]
+  ) {
+  color: var(--ararat-clinical-graphite);
+}
+[data-marca="canonica"] #ciencia :is([class*="__pubRef"], [class*="__pubNote"], [class*="__landNote"], [class*="__nota"]) {
+  color: var(--ararat-claro-texto-3);
+}
+[data-marca="canonica"] #ciencia [class*="__pubKicker"] {
+  color: var(--ararat-functional-copper);
+}
+[data-marca="canonica"] #ciencia :is([class*="__parts"], [class*="__more"]) {
+  border-color: var(--ararat-claro-borda);
+}
+[data-marca="canonica"] #ciencia [class*="__part"] {
+  border-bottom-color: rgba(23, 52, 58, 0.1);
+}
+/* Publicação: superfície elevada branca (hub-light surface.base) — cobre funcional no rótulo
+   passa 5,08:1 (sobre stone tingido de slate cairia para 4,31:1). */
+[data-marca="canonica"] #ciencia [class*="__pub"]:is(article) {
+  background: #ffffff;
+}
+[data-marca="canonica"] #ciencia [class*="__pubLink"] {
+  background: var(--ararat-deep-slate-pine);
+  color: var(--ararat-soft-stone-white);
+  font-family: var(--font-inter);
+  font-weight: 600;
+}
+[data-marca="canonica"] #ciencia [class*="__pubLink"]:is(:hover, :focus-visible) {
+  background: var(--ararat-clinical-graphite);
+  outline-color: var(--ararat-precision-copper);
+}
+[data-marca="canonica"] #ciencia [class*="__moreSummary"]:focus-visible {
+  outline-color: var(--ararat-deep-slate-pine);
+}
+
+[data-marca="canonica"] #time {
+  --t-ink: var(--ararat-deep-slate-pine);
+  --t-text: var(--ararat-clinical-graphite);
+  --t-muted: var(--ararat-claro-texto-3);
+  --t-line: var(--ararat-claro-borda);
+  --t-line-strong: rgba(23, 52, 58, 0.26);
+  --t-gold: var(--ararat-precision-copper);
+  --t-gold-text: var(--ararat-functional-copper);
+}
+[data-marca="canonica"] #time :is([class*="__portrait"], [class*="__failure"], [class*="__inlineImg"]) {
+  background: #e9e9e4; /* cool mist a 40 % sobre stone: fundo neutro dos retratos */
+}
+[data-marca="canonica"] #time [class*="__semFoto"] {
+  background: #e2e3df; /* cool mist a 60 % sobre stone */
+}
+/* Chevron (gráfico essencial do controle): #6C757D, 4,3:1. */
+[data-marca="canonica"] #time [class*="__chev"] {
+  border-color: var(--ararat-claro-borda-essencial);
+}
+
+/* Fechamento da Ciência (montanha + revisão humana): texto sobre fundo claro. */
+[data-marca="canonica"] [class*="RevisaoHumanaRefinada"][class*="__comp"] {
+  --gold-ink: var(--ararat-functional-copper);
+}
+[data-marca="canonica"] [class*="RevisaoHumanaRefinada"][class*="__nota"] {
+  color: var(--ararat-claro-texto-3);
+}
+
+/* ── 9. Avisos e estados ─────────────────────────────────────────────────────────────────────
+   Os avisos do site são de demonstração/validação (não estados clínicos): fio cobre + texto
+   neutro. Nenhuma cor semântica clínica (risco, erro) é usada como decoração. O ponto do "canal em
+   preparação" vira cobre (era âmbar); o estado continua dito por texto. */
+[data-marca="canonica"] #contato [class*="__channelDot"] {
+  background: var(--ararat-precision-copper);
+}
+
+@media (forced-colors: active) {
+  [data-marca="canonica"] .btn-gold {
+    border-color: ButtonText;
+  }
+}

@@ -13,6 +13,20 @@ import styles from "./ScienceRefinada.module.css";
  *  · Fundo claro e quatro blocos; detalhes dos protocolos, escopo, princípios e limites.
  *  · Link DOI público; nenhum link a rascunhos ou documentos privados do Drive.
  */
+/**
+ * Experimento brand-canonical-v1 — ícones da Fase 2B SOMENTE onde o conceito corresponde ao bloco
+ * (mapa de uso da Fase 3): classificação radiômica → extração radiômica; segmentação → segmentação;
+ * limites e revisão humana → revisão clínica. "Alcance" fica sem ícone. Nenhum ícone de SHAP/XAI
+ * ou modelo (não há funcionalidade correspondente demonstrada). Fase 2B ainda aguarda aprovação humana.
+ */
+const ICONE = "/marca/fase2b-v1.2.1/icones/ararat-icon-";
+const ICONES_PESQUISA: readonly (string | undefined)[] = [
+  `${ICONE}radiomic-extraction-primary-24-v1.2.svg`,
+  `${ICONE}segmentation-primary-24-v1.2.svg`,
+  `${ICONE}clinical-review-primary-24-v1.2.svg`,
+  undefined,
+];
+
 const scope = (term: string) => SCOPE.find((s) => s.term === term)?.text ?? "";
 
 export function ScienceRefinada() {
@@ -30,6 +44,12 @@ export function ScienceRefinada() {
         <div className={styles.summary} data-pesquisa="classificacao-e-segmentacao">
           {PESQUISA.map((it, i) => (
             <section key={it.term} className={styles.card} aria-labelledby={`ciencia-p${i}`}>
+              {ICONES_PESQUISA[i] && (
+                // Ícone institucional da Fase 2B (variante principal, 24 px, sem alteração), decorativo:
+                // o título do bloco já nomeia o conceito.
+                // eslint-disable-next-line @next/next/no-img-element
+                <img className={styles.cardIcone} src={ICONES_PESQUISA[i]} alt="" width={32} height={32} />
+              )}
               <h3 id={`ciencia-p${i}`} className={styles.cardTitle}>
                 {t(it.term)}
               </h3>

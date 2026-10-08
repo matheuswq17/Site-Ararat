@@ -72,6 +72,7 @@ export function HomeOpening({
   revealOnChange = false,
   journeySteps,
   journeyIntro,
+  coverColor = COVER_COLOR,
 }: {
   motionPackage: MotionPackageInfo | null;
   mri: MriSource;
@@ -96,6 +97,9 @@ export function HomeOpening({
   /** Textos das etapas da Jornada (padrão do componente se ausente). */
   journeySteps?: JourneyStep[];
   journeyIntro?: string;
+  /** Cor com que o módulo da escultura cobre o quadro da jornada (deve ser a do fundo da seção sob o
+   *  quadro). Experimento brand-canonical-v1: superfície #10282E do tema escuro canônico. */
+  coverColor?: string;
 }) {
   const { t } = useTranslation();
   const rootRef = useRef<HTMLDivElement>(null);
@@ -454,7 +458,7 @@ export function HomeOpening({
           reducedMotion: latest.current.reduced,
           paused: latest.current.paused,
           intro: introOn,
-          coverColor: COVER_COLOR,
+          coverColor,
           // 1ª pintura já com a geometria real (sem quadro a descoberto nem pose provisória)
           art: ar ? { x: ar.left - hr.left, y: ar.top - hr.top, w: ar.width, h: ar.height } : null,
           target: fr ? { x: fr.left - hr.left, y: fr.top - hr.top, w: fr.width, h: fr.height, r: 12 } : null,

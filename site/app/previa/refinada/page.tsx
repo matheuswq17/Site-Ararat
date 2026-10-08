@@ -3,11 +3,16 @@ import { PreviewPage } from "@/components/preview/PreviewPage";
 // Barra de rolagem da marca (comum às propostas) + tipografia A com pesos reais e reserva métrica.
 import "@/components/preview/proposta/proposta.css";
 import "@/components/preview/proposta/refinada.css";
+// Experimento brand-canonical-v1: identidade canônica (Fases 1/2A) sobre a refinada.
+import "@/components/preview/proposta/marca-canonica.css";
+import { ICONES_MARCA, VIEWPORT_MARCA } from "@/lib/marca-canonica";
 
 export const metadata: Metadata = {
   title: "Prévia refinada — tipografia A + montanha B | ARARAT MODEL",
   robots: { index: false, follow: false },
+  icons: ICONES_MARCA,
 };
+export const viewport = VIEWPORT_MARCA;
 
 /**
  * VERSÃO CONJUNTA EXPERIMENTAL — escolha do usuário: tipografia A (Space Grotesk 500/600 +

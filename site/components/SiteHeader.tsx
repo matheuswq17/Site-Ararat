@@ -7,6 +7,7 @@ import { NAV_ITEMS } from "@/lib/navigation";
 import { setMotionPaused, useMotionPaused } from "@/lib/motion-prefs";
 import { usePrefersReducedMotion } from "./motion/usePrefersReducedMotion";
 import { BrandMark } from "./BrandMark";
+import { LogoCanonico } from "./marca/LogoCanonico";
 import { LanguageSwitch } from "./LanguageSwitch";
 import styles from "./SiteHeader.module.css";
 
@@ -14,14 +15,17 @@ import styles from "./SiteHeader.module.css";
  * Opções explícitas (todas desligadas por padrão: "/" e /previa, /a, /b não mudam):
  *  · brandWords — 2ª palavra da marca alterna (ex.: MODEL ↔ PROSTATE na /previa/refinada);
  *  · menuFocus — Escape devolve o foco ao botão do menu; escolher uma seção leva o foco a ela;
- *  · solid — fundo mais opaco quando rolado (o texto do conteúdo não atravessa os links).
+ *  · solid — fundo mais opaco quando rolado (o texto do conteúdo não atravessa os links);
+ *  · marcaCanonica — lockup horizontal da masterbrand (Fase 1) no lugar do ícone antigo + nome
+ *    tipografado; sem o ciclo MODEL/PROSTATE (experimento experiment/brand-canonical-v1).
  */
 export function SiteHeader({
   brandWords,
   menuFocus = false,
   solid = false,
   languageSwitch = false,
-}: { brandWords?: readonly string[]; menuFocus?: boolean; solid?: boolean; languageSwitch?: boolean } = {}) {
+  marcaCanonica = false,
+}: { brandWords?: readonly string[]; menuFocus?: boolean; solid?: boolean; languageSwitch?: boolean; marcaCanonica?: boolean } = {}) {
   const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -61,10 +65,10 @@ export function SiteHeader({
   };
 
   return (
-    <header className={styles.header} data-scrolled={scrolled || open} data-open={open} data-solid={solid || undefined} data-localized={languageSwitch || undefined}>
+    <header className={styles.header} data-scrolled={scrolled || open} data-open={open} data-solid={solid || undefined} data-localized={languageSwitch || undefined} data-marca={marcaCanonica ? "canonica" : undefined}>
       <div className={styles.bar}>
         <a href="#inicio" className={styles.brand} aria-label={t("ARARAT MODEL — início")}>
-          <BrandMark cycleWords={brandWords} />
+          {marcaCanonica ? <LogoCanonico /> : <BrandMark cycleWords={brandWords} />}
         </a>
 
         {languageSwitch && <LanguageSwitch />}
