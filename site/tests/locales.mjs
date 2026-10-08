@@ -7,7 +7,8 @@ const dictionary = JSON.parse(await readFile(new URL("../lib/locales/en.json", i
 const browser = await chromium.launch();
 let count = 0;
 try {
-  for (const [route, lang, title] of [["/", "en", "From image to understanding."], ["/pt", "pt-BR", "Da imagem ao conhecimento."], ["/previa/refinada", "pt-BR", "Da imagem ao conhecimento."]]) {
+  // brand-sinal-v1: 1ª dobra com a mensagem do ARARAT Sinal (EN = adaptação editorial registrada).
+  for (const [route, lang, title] of [["/", "en", "Contrast is information. We measure. You decide."], ["/pt", "pt-BR", "Contraste é informação. Nós medimos. Você decide."], ["/previa/refinada", "pt-BR", "Contraste é informação. Nós medimos. Você decide."]]) {
     const context = await browser.newContext();
     const page = await context.newPage();
     const errors = [];
