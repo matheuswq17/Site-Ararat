@@ -78,3 +78,14 @@ We measure. / You decide."). O arco e os cumes não podem ficar sob as linhas de
 ## Observação herdada (rodada canônica)
 O teste "Time · enquadramento final" é sensível à posição subpixel do retrato (na main ele reprova se a
 seção estiver deslocada 0,2 px). Vale alinhar o quadro final ao pixel no módulo.
+
+## Retorno da integração (`99c91c8`, 08/10/2026)
+Pacotes integrados sem alteração: montanha 0.9.0-sinal, topo-revisao 0.5.0-sinal, time-interativo 0.4.0-sinal,
+plataforma-fluxo 0.3.0-sinal. Os manifestos conferem, e os verificadores de Ciência (54/54), Time (20/20) e
+Fluxo (28/28) aprovam contra a página integrada. Dois testes do Site seguem reprovando, com os limites mantidos:
+1. **Time · enquadramento final** (0,1 %): a posição y fracionária do retrato difere entre o modo normal e o
+   reduzido (0,266 × 0,938 px), e a reamostragem subpixel gera ≈ 7,6 % de canais diferentes. O conteúdo é igual.
+   Pedido: alinhar ao pixel inteiro o quadro final do módulo (ou expor uma opção para isso).
+2. **Ciência · continuação** (> 0,05 % por passo em ≥ 6 de 8): na 0.5.0-sinal a crista está completa desde
+   e = 0, e os três primeiros passos mudam só 0,02–0,05 %. Pedido: avaliar se a abertura de contraste pode
+   progredir ao longo das etapas (por exemplo, o nível/janela da crista) para que a continuação seja perceptível.
