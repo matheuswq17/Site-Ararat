@@ -1,0 +1,451 @@
+{
+ "fonte": "/home/claude/demo-src",
+ "gerado": "2026-10-07T22:29:59.600Z",
+ "arquivos": {
+  "hub-fila-pronto": {
+   "fonte": "recortes_sugeridos/01d_hub_caso_pronto_para_revisao__hub_fila_sem_score.png",
+   "origem": "capturas/01d_hub_caso_pronto_para_revisao.png",
+   "sha256Origem": "3a86a1e1ffbdaa7e629ea06f693756086293ec83443b980e397ed89470b0e2ed",
+   "recorteNaOrigem": {
+    "left": 96,
+    "top": 344,
+    "width": 1184,
+    "height": 564
+   },
+   "recorte": {
+    "left": 0,
+    "top": 0,
+    "width": 1184,
+    "height": 564
+   },
+   "arquivos": [
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/hub-fila-pronto-592.webp",
+     "w": 592,
+     "h": 282,
+     "bytes": 11254
+    },
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/hub-fila-pronto-1184.webp",
+     "w": 1184,
+     "h": 564,
+     "bytes": 30712
+    }
+   ]
+  },
+  "hub-cartoes-pronto": {
+   "fonte": "recortes_sugeridos/01d_hub_caso_pronto_para_revisao__hub_cartoes.png",
+   "origem": "capturas/01d_hub_caso_pronto_para_revisao.png",
+   "sha256Origem": "3a86a1e1ffbdaa7e629ea06f693756086293ec83443b980e397ed89470b0e2ed",
+   "recorteNaOrigem": {
+    "left": 112,
+    "top": 104,
+    "width": 2188,
+    "height": 232
+   },
+   "recorte": {
+    "left": 0,
+    "top": 0,
+    "width": 2188,
+    "height": 232
+   },
+   "arquivos": [
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/hub-cartoes-pronto-1094.webp",
+     "w": 1094,
+     "h": 116,
+     "bytes": 7710
+    },
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/hub-cartoes-pronto-2188.webp",
+     "w": 2188,
+     "h": 232,
+     "bytes": 18890
+    }
+   ]
+  },
+  "hub-linha-pronto": {
+   "fonte": "recortes_sugeridos/01d_hub_caso_pronto_para_revisao__hub_mobile_linha.png",
+   "origem": "capturas/01d_hub_caso_pronto_para_revisao.png",
+   "sha256Origem": "3a86a1e1ffbdaa7e629ea06f693756086293ec83443b980e397ed89470b0e2ed",
+   "recorteNaOrigem": {
+    "left": 96,
+    "top": 524,
+    "width": 1184,
+    "height": 184
+   },
+   "recorte": {
+    "left": 0,
+    "top": 0,
+    "width": 1184,
+    "height": 184
+   },
+   "arquivos": [
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/hub-linha-pronto-592.webp",
+     "w": 592,
+     "h": 92,
+     "bytes": 3602
+    },
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/hub-linha-pronto-1184.webp",
+     "w": 1184,
+     "h": 184,
+     "bytes": 9746
+    }
+   ]
+  },
+  "hub-painel-abrir": {
+   "fonte": "recortes_sugeridos/02a_hub_abrir_revisao_antes__hub_painel_caso_sem_score.png",
+   "origem": "capturas/02a_hub_abrir_revisao_antes.png",
+   "sha256Origem": "a98c888a4527700e3fc76bdb664f8b5db6324a8b6844eeef7a3537fa7046381d",
+   "recorteNaOrigem": {
+    "left": 2324,
+    "top": 504,
+    "width": 556,
+    "height": 720
+   },
+   "recorte": {
+    "left": 0,
+    "top": 0,
+    "width": 556,
+    "height": 720
+   },
+   "arquivos": [
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/hub-painel-abrir-278.webp",
+     "w": 278,
+     "h": 360,
+     "bytes": 9184
+    },
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/hub-painel-abrir-556.webp",
+     "w": 556,
+     "h": 720,
+     "bytes": 23054
+    }
+   ]
+  },
+  "viewer-series": {
+   "fonte": "capturas/02d_viewer_arvore_de_series.png",
+   "origem": "capturas/02d_viewer_arvore_de_series.png",
+   "sha256Origem": "44ee3d811fc6395031d70f8ac280c24e826ef7f135ba4bdbf62c09ae5e42c311",
+   "recorteNaOrigem": null,
+   "recorte": {
+    "left": 0,
+    "top": 0,
+    "width": 460,
+    "height": 1085
+   },
+   "arquivos": [
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/viewer-series-230.webp",
+     "w": 230,
+     "h": 543,
+     "bytes": 15956
+    },
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/viewer-series-460.webp",
+     "w": 460,
+     "h": 1085,
+     "bytes": 35952
+    }
+   ]
+  },
+  "viewer-planos-mira": {
+   "fonte": "recortes_sugeridos/03b_viewer_mira_planos_sincronizados__viewer_area_central.png",
+   "origem": "capturas/03b_viewer_mira_planos_sincronizados.png",
+   "sha256Origem": "b5002cfde9936600dca46f4c046f0432874e1e0b248a8ef41f0f1029a9a5405b",
+   "recorteNaOrigem": {
+    "left": 470,
+    "top": 168,
+    "width": 1510,
+    "height": 1528
+   },
+   "recorte": {
+    "left": 0,
+    "top": 46,
+    "width": 1510,
+    "height": 720
+   },
+   "arquivos": [
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/viewer-planos-mira-755.webp",
+     "w": 755,
+     "h": 360,
+     "bytes": 28904
+    },
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/viewer-planos-mira-1510.webp",
+     "w": 1510,
+     "h": 720,
+     "bytes": 86080
+    }
+   ]
+  },
+  "viewer-comparar-t2": {
+   "fonte": "recortes_sugeridos/04b_area_comparacao__painel_esquerdo.png",
+   "origem": "capturas/04b_area_comparacao.png",
+   "sha256Origem": "13ed7309ba17f61a3c5488263d363680515421691863a0776156302c11545d20",
+   "recorteNaOrigem": {
+    "left": 0,
+    "top": 0,
+    "width": 752,
+    "height": 1526
+   },
+   "recorte": {
+    "left": 0,
+    "top": 186,
+    "width": 752,
+    "height": 1340
+   },
+   "arquivos": [
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/viewer-comparar-t2-376.webp",
+     "w": 376,
+     "h": 670,
+     "bytes": 23044
+    },
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/viewer-comparar-t2-752.webp",
+     "w": 752,
+     "h": 1340,
+     "bytes": 71304
+    }
+   ]
+  },
+  "viewer-comparar-adc": {
+   "fonte": "recortes_sugeridos/04b_area_comparacao__painel_direito.png",
+   "origem": "capturas/04b_area_comparacao.png",
+   "sha256Origem": "13ed7309ba17f61a3c5488263d363680515421691863a0776156302c11545d20",
+   "recorteNaOrigem": {
+    "left": 752,
+    "top": 0,
+    "width": 750,
+    "height": 1526
+   },
+   "recorte": {
+    "left": 0,
+    "top": 186,
+    "width": 750,
+    "height": 1340
+   },
+   "arquivos": [
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/viewer-comparar-adc-375.webp",
+     "w": 375,
+     "h": 670,
+     "bytes": 18250
+    },
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/viewer-comparar-adc-750.webp",
+     "w": 750,
+     "h": 1340,
+     "bytes": 31816
+    }
+   ]
+  },
+  "viewer-regua": {
+   "fonte": "capturas/05e_axial_com_regua.png",
+   "origem": "capturas/05e_axial_com_regua.png",
+   "sha256Origem": "e52aec3133eb76fa1b505f18ddb1e36333b7a302877dfbfe473d1310344d695c",
+   "recorteNaOrigem": null,
+   "recorte": {
+    "left": 0,
+    "top": 46,
+    "width": 748,
+    "height": 714
+   },
+   "arquivos": [
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/viewer-regua-374.webp",
+     "w": 374,
+     "h": 357,
+     "bytes": 21228
+    },
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/viewer-regua-748.webp",
+     "w": 748,
+     "h": 714,
+     "bytes": 63918
+    }
+   ]
+  },
+  "viewer-medicoes": {
+   "fonte": "recortes_sugeridos/05f_viewer_regua_e_aba_medicoes__viewer_painel_direito.png",
+   "origem": "capturas/05f_viewer_regua_e_aba_medicoes.png",
+   "sha256Origem": "5761472e6b0764e7aedc7ffb7caa6762ec6cd0f89c1a8c36eeb9374ed511a45f",
+   "recorteNaOrigem": {
+    "left": 1986,
+    "top": 336,
+    "width": 814,
+    "height": 1280
+   },
+   "recorte": {
+    "left": 0,
+    "top": 0,
+    "width": 814,
+    "height": 400
+   },
+   "arquivos": [
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/viewer-medicoes-407.webp",
+     "w": 407,
+     "h": 200,
+     "bytes": 7224
+    },
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/viewer-medicoes-814.webp",
+     "w": 814,
+     "h": 400,
+     "bytes": 18114
+    }
+   ]
+  },
+  "viewer-imagens-relatorio": {
+   "fonte": "capturas/06e_painel_imagens_do_relatorio.png",
+   "origem": "capturas/06e_painel_imagens_do_relatorio.png",
+   "sha256Origem": "1207b1bb0d89673df8253ee6d33765f1063b53e1e16c36cc444a0d0e901127b0",
+   "recorteNaOrigem": null,
+   "recorte": {
+    "left": 0,
+    "top": 0,
+    "width": 778,
+    "height": 520
+   },
+   "arquivos": [
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/viewer-imagens-relatorio-389.webp",
+     "w": 389,
+     "h": 260,
+     "bytes": 11826
+    },
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/viewer-imagens-relatorio-778.webp",
+     "w": 778,
+     "h": 520,
+     "bytes": 29034
+    }
+   ]
+  },
+  "viewer-previa-relatorio": {
+   "fonte": "capturas/06f_previa_do_relatorio.png",
+   "origem": "capturas/06f_previa_do_relatorio.png",
+   "sha256Origem": "6496836728b76abd268c9fa38ed6587dde5f465c1e2ad746429d4b3640e5c02b",
+   "recorteNaOrigem": null,
+   "recorte": {
+    "left": 0,
+    "top": 0,
+    "width": 1280,
+    "height": 1062
+   },
+   "arquivos": [
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/viewer-previa-relatorio-640.webp",
+     "w": 640,
+     "h": 531,
+     "bytes": 21796
+    },
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/viewer-previa-relatorio-1280.webp",
+     "w": 1280,
+     "h": 1062,
+     "bytes": 50760
+    }
+   ]
+  },
+  "hub-fila-pendente": {
+   "fonte": "recortes_sugeridos/07a_hub_estado_real_da_revisao__hub_fila_sem_score.png",
+   "origem": "capturas/07a_hub_estado_real_da_revisao.png",
+   "sha256Origem": "a98c888a4527700e3fc76bdb664f8b5db6324a8b6844eeef7a3537fa7046381d",
+   "recorteNaOrigem": {
+    "left": 96,
+    "top": 344,
+    "width": 1184,
+    "height": 564
+   },
+   "recorte": {
+    "left": 0,
+    "top": 0,
+    "width": 1184,
+    "height": 564
+   },
+   "arquivos": [
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/hub-fila-pendente-592.webp",
+     "w": 592,
+     "h": 282,
+     "bytes": 11254
+    },
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/hub-fila-pendente-1184.webp",
+     "w": 1184,
+     "h": 564,
+     "bytes": 30712
+    }
+   ]
+  },
+  "viewer-voltar-hub": {
+   "fonte": "recortes_sugeridos/07c_viewer_voltar_ao_hub__viewer_status_direita.png",
+   "origem": "capturas/07c_viewer_voltar_ao_hub.png",
+   "sha256Origem": "f06dc9d1ba2f176b1f16116b859d6eee97000b3d78c87572504df6543ef16728",
+   "recorteNaOrigem": {
+    "left": 1800,
+    "top": 1694,
+    "width": 1000,
+    "height": 66
+   },
+   "recorte": {
+    "left": 0,
+    "top": 0,
+    "width": 1000,
+    "height": 66
+   },
+   "arquivos": [
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/viewer-voltar-hub-500.webp",
+     "w": 500,
+     "h": 33,
+     "bytes": 1986
+    },
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/viewer-voltar-hub-1000.webp",
+     "w": 1000,
+     "h": 66,
+     "bytes": 4488
+    }
+   ]
+  },
+  "hub-linha-pendente": {
+   "fonte": "recortes_sugeridos/07a_hub_estado_real_da_revisao__hub_mobile_linha.png",
+   "origem": "capturas/07a_hub_estado_real_da_revisao.png",
+   "sha256Origem": "a98c888a4527700e3fc76bdb664f8b5db6324a8b6844eeef7a3537fa7046381d",
+   "recorteNaOrigem": {
+    "left": 96,
+    "top": 524,
+    "width": 1184,
+    "height": 184
+   },
+   "recorte": {
+    "left": 0,
+    "top": 0,
+    "width": 1184,
+    "height": 184
+   },
+   "arquivos": [
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/hub-linha-pendente-592.webp",
+     "w": 592,
+     "h": 92,
+     "bytes": 3602
+    },
+    {
+     "src": "/refinada/plataforma-fluxo-estatico-v1/hub-linha-pendente-1184.webp",
+     "w": 1184,
+     "h": 184,
+     "bytes": 9746
+    }
+   ]
+  }
+ }
+}

@@ -273,86 +273,25 @@ await test("Jornada no celular: sem repetir o resumo ativo (texto longo em 'Ler 
   await nj.ctx.close();
 });
 
-await test("Plataforma: 4 passos curtos; Hub (início) e Viewer (destaque) das capturas de 06/10; legendas com limites; documentado ≠ demonstrado", async () => {
+// Plataforma (desde 07/10/2026): demonstração "do Hub ao Viewer" com capturas reais (ProstateX-0067). Os testes
+// detalhados (enquadramento nas 6 larguras, progresso, estático, falhas, CLS) estão em tests/plataforma-fluxo.mjs.
+await test("Plataforma: demonstração do Hub ao Viewer em 7 etapas com capturas reais; aviso e atribuição visíveis; capturas sintéticas da rodada 5 fora da refinada", async () => {
   const { ctx, page } = await open([1440, 900], { reduced: true });
-  const m = await page.evaluate(async () => {
+  const m = await page.evaluate(() => {
     const s = document.getElementById("plataforma");
-    s.scrollIntoView(); await new Promise((r) => setTimeout(r, 600));
-    const figs = [...s.querySelectorAll("figure[data-captura]")];
-    const box = (e) => { const r = e.getBoundingClientRect(); return Math.round(r.width); };
+    const f = s.querySelector("[data-fluxo]");
     return {
-      steps: [...s.querySelectorAll("ol li h3")].map((h) => h.textContent),
-      figs: figs.map((f) => ({ id: f.dataset.captura, destaque: !!f.dataset.destaque, w: box(f.querySelector("img")), src: f.querySelector("img").currentSrc.split("/").pop(), alt: f.querySelector("img").alt.length, cap: f.querySelector("figcaption").textContent, loading: f.querySelector("img").loading, wh: [f.querySelector("img").getAttribute("width"), f.querySelector("img").getAttribute("height")] })),
-      old: s.querySelectorAll("img[src*='ararat_hub']").length + (s.textContent.includes("em preparação") ? 1 : 0),
+      etapas: f ? f.querySelectorAll("[data-fluxo=roteiro] > li").length : 0, legendas: f ? f.querySelectorAll("[data-fluxo=trilho] li[data-etapa]").length : 0,
+      aviso: f?.querySelector("[role=note]")?.checkVisibility() ?? false,
+      doi: !!s.querySelector("a[href='https://doi.org/10.7937/K9TCIA.2017.MURS5CL']"),
+      sinteticas: s.querySelectorAll("figure[data-captura]").length + (s.textContent.includes("dados sintéticos") ? 1 : 0),
       doc: s.querySelector("aside")?.textContent ?? "",
       revisado: s.textContent.includes("marcador operacional"),
     };
   });
-  assert(JSON.stringify(m.steps) === JSON.stringify(["Organizar a fila", "Abrir o caso", "Explorar imagem e região", "Documentar a revisão"]), m.steps.join(","));
-  const [hub, viewer] = m.figs;
-  assert(hub?.id === "hub" && viewer?.id === "viewer" && viewer.destaque && viewer.w > hub.w * 1.4, `figuras: ${JSON.stringify(m.figs.map((f) => [f.id, f.w]))}`);
-  assert(m.figs.every((f) => /\.webp$/.test(f.src) && f.loading === "lazy" && f.alt > 120 && f.wh[0] && f.wh[1]), "derivados/lazy/alt/dimensões");
-  assert(/1\.0\.0/.test(hub.cap) && /não é demonstrada/.test(hub.cap) && /dados sintéticos/.test(hub.cap), "legenda do Hub: " + hub.cap);
-  assert(/ROI ilustrativa/.test(viewer.cap) && /não é máscara de lesão/.test(viewer.cap) && /não identificada/.test(viewer.cap) && /T2/.test(viewer.cap) && !/ADC|DWI/.test(viewer.cap), "legenda do Viewer: " + viewer.cap);
-  assert(/não demonstrado/.test(m.doc) && /ADC/.test(m.doc) && /PDF/.test(m.doc), "documentado: " + m.doc);
-  assert(m.old === 0 && m.revisado, `captura antiga/placeholder: ${m.old}; marcador operacional: ${m.revisado}`);
-  notes.push(`    · Hub ${hub.w} px (${hub.src}) · Viewer ${viewer.w} px (${viewer.src}) em 1440`);
-  await ctx.close();
-});
-for (const [nome, rot] of [["Hub", "Hub"], ["Viewer", "Viewer"]]) {
-  await test(`Captura completa do ${nome}: abre por teclado (modal), Escape e Fechar fecham, foco volta ao acionador; legenda; sem JS, link para a imagem inteira`, async () => {
-    const { ctx, page } = await open([390, 844], { reduced: true });
-    const trig = page.locator("#plataforma a", { hasText: `Ver captura completa do ${rot}` });
-    await trig.scrollIntoViewIfNeeded();
-    await trig.focus();
-    await page.keyboard.press("Enter");
-    await page.waitForTimeout(250);
-    const o = await page.evaluate(() => { const d = [...document.querySelectorAll("#plataforma dialog")].find((x) => x.open); if (!d) return { open: false }; const img = d.querySelector("img"); const r = img.getBoundingClientRect(); return { open: true, modal: d.matches(":modal"), inside: d.contains(document.activeElement), ratio: r.width / r.height, w: Math.round(r.width), title: d.querySelector("h2").textContent, cap: d.querySelector("p").textContent.length, label: d.getAttribute("aria-labelledby") && !!document.getElementById(d.getAttribute("aria-labelledby")) }; });
-    assert(o.open && o.modal && o.inside && o.label && o.cap > 80, `diálogo: ${JSON.stringify(o)}`);
-    assert(o.w >= 1000 && Math.abs(o.ratio - 16 / 9) < 0.02, `ampliação: ${JSON.stringify(o)}`);
-    await page.keyboard.press("Escape");
-    await page.waitForTimeout(120);
-    assert(await page.evaluate((r) => ![...document.querySelectorAll("#plataforma dialog")].some((x) => x.open) && document.activeElement.textContent.includes(`Ver captura completa do ${r}`), rot), "Escape: foco não voltou");
-    await trig.click();
-    await page.locator("#plataforma dialog[open] button", { hasText: "Fechar" }).click();
-    assert(await page.evaluate((r) => document.activeElement.textContent.includes(`Ver captura completa do ${r}`), rot), "Fechar: foco não voltou");
-    notes.push(`    · ${o.title}: ${o.w} px de largura em 390 (rolagem no diálogo)`);
-    await ctx.close();
-    const nj = await open([390, 844], { noJs: true });
-    const href = await nj.page.locator("#plataforma a", { hasText: `Ver captura completa do ${rot}` }).getAttribute("href");
-    assert(new RegExp(`/product/refinada/${rot.toLowerCase()}-1[0-9]{3}\\.webp$`).test(href), "sem JS: link " + href);
-    await nj.ctx.close();
-  });
-}
-await test("Plataforma no celular (390 e 320): recorte útil legível, sem marcadores, captura inteira acessível; mídia 404 → quadro identificado", async () => {
-  const rows = [];
-  for (const vp of [[390, 844], [320, 568]]) {
-    const { ctx, page } = await open(vp, { reduced: true });
-    const r = await page.evaluate(async () => {
-      const s = document.getElementById("plataforma"); s.scrollIntoView(); await new Promise((res) => setTimeout(res, 800));
-      return [...s.querySelectorAll("figure[data-captura]")].map((f) => { const i = f.querySelector("img"); const b = i.getBoundingClientRect(); return { id: f.dataset.captura, src: i.currentSrc.split("/").pop(), w: Math.round(b.width), h: Math.round(b.height), marks: [...f.querySelectorAll("[class*='marker']")].filter((m) => m.getBoundingClientRect().width > 0).length, nota: f.querySelector("figcaption").textContent.includes("captura inteira abre") }; });
-    });
-    const sw = await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth);
-    rows.push({ vp: vp.join("×"), r, sw });
-    await ctx.close();
-  }
-  notes.push("    · " + rows.map((x) => `${x.vp}: ${x.r.map((f) => `${f.id} ${f.src} ${f.w}×${f.h}`).join(", ")}`).join(" · "));
-  for (const x of rows) {
-    assert(x.sw, `${x.vp}: rolagem lateral`);
-    for (const f of x.r) assert(/-(fila|axial)-/.test(f.src) && f.marks === 0 && f.nota && f.h > 120, `${x.vp} ${f.id}: ${JSON.stringify(f)}`);
-  }
-  // mídia 404: quadro identificado com a legenda, sem acionador de ampliação, sem erro de página
-  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" });
-  const page = await ctx.newPage();
-  const errors = []; page.on("pageerror", (e) => errors.push(e.message));
-  await page.addInitScript(() => sessionStorage.setItem("ararat:intro", "1"));
-  await page.route(/\/product\/refinada\/.*\.webp$/, (rt) => rt.fulfill({ status: 404, body: "" }));
-  await page.goto(BASE + ROUTE, { waitUntil: "networkidle" });
-  await page.evaluate(() => document.getElementById("plataforma").scrollIntoView());
-  await page.waitForTimeout(1200);
-  const f = await page.evaluate(() => [...document.querySelectorAll("#plataforma figure[data-captura]")].map((x) => ({ falha: !!x.querySelector("[role=note]"), img: !!x.querySelector("img"), trig: [...x.querySelectorAll("a")].length, cap: !!x.querySelector("figcaption") })));
-  notes.push(`    · mídia 404: ${JSON.stringify(f)}`);
-  assert(f.length === 2 && f.every((x) => x.falha && !x.img && x.trig === 0 && x.cap) && !errors.length, "404: " + JSON.stringify(f) + errors.join(";"));
+  assert(m.etapas === 7 && m.legendas === 7 && m.aviso && m.doi, JSON.stringify(m));
+  assert(m.sinteticas === 0, "capturas sintéticas ainda na refinada");
+  assert(/não demonstrado/.test(m.doc) && /PDF/.test(m.doc), "documentado: " + m.doc);
   await ctx.close();
 });
 await test("Ciência: classificação publicada e segmentação em andamento separadas; DOI público, sem métricas/links privados; detalhes acessíveis", async () => {
@@ -888,7 +827,7 @@ await test("Plataforma: 'Para quem' (radiologia e pesquisa, tarefas documentadas
     const vis = (root, t) => [...root.querySelectorAll("p, li, dd, figcaption")].some((e) => e.checkVisibility() && e.textContent.includes(t));
     return {
       pq: pq?.textContent ?? "", promessa: /reduz|acelera|aument|acurácia|eficácia|melhora|mais rápido/i.test(pq?.textContent ?? ""),
-      platVis: vis(p, "demonstração com dados sintéticos"), platDet: !!p.querySelector("aside details") && !p.querySelector("aside details").open,
+      platVis: vis(p, "Demonstração do fluxo da interface"), platDet: !!p.querySelector("aside details") && !p.querySelector("aside details").open,
       platScoreOculto: !vis(p, "probabilidade clínica calibrada") && p.textContent.includes("probabilidade clínica calibrada"),
       xaiVis: vis(x, "não representam uma saída do modelo, valores SHAP nem uma estimativa de risco"),
       xaiDet: !!x.querySelector("details") && !x.querySelector("details").open && x.textContent.includes("SHAP foi usado no estudo publicado"),

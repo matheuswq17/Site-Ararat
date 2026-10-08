@@ -1,0 +1,324 @@
+/* Demonstração "do Hub ao Viewer" (/previa/refinada). Seção escura (Plataforma); o Hub aparece em
+   painéis CLAROS e o Viewer em painéis ESCUROS, como nos produtos. */
+.fluxo {
+  --fluxo-gap: clamp(20px, 3vw, 48px);
+  /* Altura máxima de uma captura no quadro (a largura máxima de cada uma deriva da proporção). */
+  --fluxo-alt-max: min(62vh, 540px);
+  margin-top: clamp(32px, 5vh, 56px);
+}
+
+.aviso {
+  max-width: 78ch;
+  padding: 12px 16px;
+  border-left: 2px solid var(--gold-500);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--gray-200);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.aviso strong {
+  color: var(--white-100);
+  font-weight: 600;
+}
+
+.etapas {
+  list-style: none;
+  margin: clamp(24px, 4vh, 40px) 0 0;
+  padding: 0;
+  counter-reset: none;
+}
+
+.etapa {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  padding: clamp(20px, 3vh, 32px) 0;
+  border-top: 1px solid var(--border-default);
+}
+
+.num {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-family: var(--font-title);
+  font-weight: 500;
+  color: var(--gold-500);
+  font-size: 1rem;
+}
+.produto {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--gray-300, #9aa6b2);
+}
+
+.titulo {
+  margin-top: 8px;
+  font-family: var(--font-title);
+  font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  line-height: 1.25;
+  color: var(--white-100);
+}
+
+.descricao {
+  margin-top: 8px;
+  max-width: 46ch;
+  color: var(--gray-200);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+/* Quadro estático de cada etapa. */
+.quadro {
+  min-width: 0;
+}
+.imagens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-start;
+}
+.imagensCelular {
+  display: none;
+}
+
+.captura {
+  margin: 0;
+  flex: 1 1 260px;
+  min-width: 0;
+  max-width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.captura img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+/* Hub: produto claro, sobre um painel claro. Viewer: produto escuro, borda discreta. */
+.captura[data-produto="hub"] {
+  background: #f4f3ef;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+.captura[data-produto="viewer"] {
+  background: #0b0f14;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+.falha {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  min-height: 120px;
+  padding: 16px;
+  font-size: 0.9rem;
+  color: var(--gray-200);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.atribuicao {
+  margin-top: clamp(20px, 3vh, 32px);
+  max-width: 96ch;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--gray-300, #9aa6b2);
+}
+.atribuicao a {
+  color: var(--gray-200);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  overflow-wrap: anywhere;
+}
+
+/* Etapa em leitura (com JS): marca discreta no número; o texto continua todo legível. */
+/* Posicionada fora do fluxo (na margem): marcar a etapa não desloca nenhum texto. */
+.num {
+  position: relative;
+}
+.fluxo[data-js] .etapa[data-ativa] .num::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 50%;
+  width: 8px;
+  height: 2px;
+  background: var(--gold-500);
+}
+
+/* ≥ 901 px: [texto | quadro], uma linha por etapa. */
+@media (min-width: 901px) {
+  .etapa {
+    grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+    gap: var(--fluxo-gap);
+    align-items: start;
+    padding-block: clamp(28px, 5vh, 56px);
+    /* Faixa de rolagem uniforme: cada etapa tem pelo menos a altura do quadro (= palco do módulo). */
+    min-height: calc(var(--fluxo-alt-max) + 2 * clamp(28px, 5vh, 56px));
+  }
+  .quadro {
+    min-height: var(--fluxo-alt-max);
+  }
+}
+
+/* ≤ 600 px: variante para celular quando a captura inteira ficaria ilegível. */
+@media (max-width: 900px) {
+  .fluxo {
+    --fluxo-alt-max: 560px;
+  }
+}
+@media (max-width: 600px) {
+  .imagens[data-celular] {
+    display: none;
+  }
+  .imagensCelular {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .captura {
+    flex-basis: 100%;
+  }
+}
+
+/* ── Percurso animado (módulo do Motion 0.1.0): trilho alto + palco sticky LIMITADO à seção. ──────────────
+   Visível por padrão quando há módulo registrado; o roteiro estático assume com movimento reduzido (desde a
+   1ª pintura), sem JS (<noscript>), com a pausa (html[data-motion=paused]) e no modo "estatico" do módulo. */
+.trilho {
+  display: none;
+  position: relative;
+  margin-top: clamp(16px, 3vh, 28px);
+  height: 560svh; /* curso de ~4,6 telas para as 7 etapas (proposta do Motion) */
+}
+.fluxo[data-com-modulo] .trilho {
+  display: block;
+}
+.fluxo[data-com-modulo] .etapas {
+  display: none;
+}
+.fluxo[data-fluxo-modo="estatico"] .trilho,
+:global(html[data-motion="paused"]) .fluxo .trilho {
+  display: none;
+}
+.fluxo[data-fluxo-modo="estatico"] .etapas,
+:global(html[data-motion="paused"]) .fluxo .etapas {
+  display: block;
+}
+@media (prefers-reduced-motion: reduce) {
+  .fluxo .trilho {
+    display: none !important;
+  }
+  .fluxo .etapas {
+    display: block !important;
+  }
+}
+
+.fixo {
+  position: sticky;
+  top: var(--header-h, 72px);
+  height: calc(100svh - var(--header-h, 72px));
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+  gap: clamp(20px, 3vw, 40px);
+  padding-block: 20px 24px;
+}
+
+.legendas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-self: center;
+  display: grid;
+  gap: 2px;
+}
+.legendas li {
+  display: grid;
+  grid-template-columns: 2.1rem 1fr;
+  gap: 8px;
+  padding: 8px 0 8px 12px;
+  border-left: 2px solid transparent;
+  color: var(--gray-300, #9aa6b2);
+}
+.legendaNum {
+  font-family: var(--font-title);
+  color: var(--gold-500);
+  opacity: 0.6;
+}
+.legendaTitulo {
+  display: block;
+  font-family: var(--font-title);
+  font-weight: 600;
+  font-size: 0.98rem;
+  line-height: 1.3;
+  color: inherit;
+}
+.legendaTexto {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+/* Etapa ativa (data-fluxo-etapa, do módulo): texto claro e fio dourado — muda cor, não posição. */
+.fluxo[data-fluxo-etapa="1"] .legendas li[data-etapa="1"],
+.fluxo[data-fluxo-etapa="2"] .legendas li[data-etapa="2"],
+.fluxo[data-fluxo-etapa="3"] .legendas li[data-etapa="3"],
+.fluxo[data-fluxo-etapa="4"] .legendas li[data-etapa="4"],
+.fluxo[data-fluxo-etapa="5"] .legendas li[data-etapa="5"],
+.fluxo[data-fluxo-etapa="6"] .legendas li[data-etapa="6"],
+.fluxo[data-fluxo-etapa="7"] .legendas li[data-etapa="7"] {
+  color: var(--white-100);
+  border-left-color: var(--gold-500);
+}
+
+.palco {
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ≤ 900 px: só a legenda ativa, acima do palco; trilho um pouco mais longo. */
+@media (max-width: 900px) {
+  .trilho {
+    height: 600svh;
+  }
+  .fixo {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 10px;
+    padding-block: 12px 14px;
+  }
+  /* Todas as legendas no mesmo lugar (mesma célula da grade): a altura é a da MAIS LONGA, então trocar de etapa
+     não desloca o palco. Só a ativa fica visível. */
+  .legendas {
+    grid-template-areas: "l";
+    align-self: start;
+  }
+  .legendas li {
+    grid-area: l;
+    visibility: hidden;
+    padding: 0 0 0 10px;
+  }
+  .fluxo[data-fluxo-etapa="1"] .legendas li[data-etapa="1"],
+  .fluxo[data-fluxo-etapa="2"] .legendas li[data-etapa="2"],
+  .fluxo[data-fluxo-etapa="3"] .legendas li[data-etapa="3"],
+  .fluxo[data-fluxo-etapa="4"] .legendas li[data-etapa="4"],
+  .fluxo[data-fluxo-etapa="5"] .legendas li[data-etapa="5"],
+  .fluxo[data-fluxo-etapa="6"] .legendas li[data-etapa="6"],
+  .fluxo[data-fluxo-etapa="7"] .legendas li[data-etapa="7"] {
+    visibility: visible;
+  }
+  /* Antes de o módulo anunciar a etapa (ou na etapa 0), mostra a 1ª. */
+  .fluxo:not([data-fluxo-etapa]) .legendas li[data-etapa="1"],
+  .fluxo[data-fluxo-etapa="0"] .legendas li[data-etapa="1"] {
+    visibility: visible;
+  }
+}
