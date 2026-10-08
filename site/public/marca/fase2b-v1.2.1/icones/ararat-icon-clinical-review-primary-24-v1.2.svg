@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" role="img" aria-labelledby="ararat-phase2b-clinical-review-primary-titulo ararat-phase2b-clinical-review-primary-descricao" data-icon="clinical-review" data-variant="primary" data-token-stroke="color.text.primary" data-distribution="true">
+  <title id="ararat-phase2b-clinical-review-primary-titulo">Revisão clínica — Institucional principal</title>
+  <desc id="ararat-phase2b-clinical-review-primary-descricao">Profissional e confirmação de revisão humana; a autoridade clínica permanece com o radiologista. Grade 24 × 24, área de segurança de 2 px e traço de 1,75 px.</desc>
+  <g fill="none" stroke="#17343A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="9.45" cy="7.35" r="3.1"/>
+    <path d="M3.9 19.75V17.6C3.9 14.65 6.35 12.55 9.4 12.55C10.65 12.55 11.7 12.85 12.6 13.35"/>
+    <path d="M15.6 11.65L20.1 13.15V16.75C20.1 18.65 18.75 20.1 15.6 20.7C12.45 20.1 11.1 18.65 11.1 16.75V13.15L15.6 11.65Z"/>
+    <path d="M13.65 16.15L15.05 17.45L17.65 14.9" stroke="#C77A4E" data-accent="non-essential"/>
+  </g>
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" role="img" aria-labelledby="ararat-phase2b-radiomic-extraction-primary-titulo ararat-phase2b-radiomic-extraction-primary-descricao" data-icon="radiomic-extraction" data-variant="primary" data-token-stroke="color.text.primary" data-distribution="true">
+  <title id="ararat-phase2b-radiomic-extraction-primary-titulo">Extração radiômica — Institucional principal</title>
+  <desc id="ararat-phase2b-radiomic-extraction-primary-descricao">Matriz de atributos com enquadramento aberto; distinta de uma tabela e de contribuições SHAP. Grade 24 × 24, área de segurança de 2 px e traço de 1,75 px.</desc>
+  <g fill="none" stroke="#17343A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4.25 9V4.25H9M15 4.25H19.75V9M19.75 15V19.75H15M9 19.75H4.25V15"/>
+    <circle cx="8" cy="8" r="0.85" fill="#17343A" stroke="none"/>
+    <circle cx="12" cy="8" r="0.85" fill="#17343A" stroke="none"/>
+    <circle cx="16" cy="8" r="0.85" fill="#17343A" stroke="none"/>
+    <circle cx="8" cy="12" r="0.85" fill="#17343A" stroke="none"/>
+    <circle cx="12" cy="12" r="1" fill="#C77A4E" stroke="none" data-accent="non-essential"/>
+    <circle cx="16" cy="12" r="0.85" fill="#17343A" stroke="none"/>
+    <circle cx="8" cy="16" r="0.85" fill="#17343A" stroke="none"/>
+    <circle cx="12" cy="16" r="0.85" fill="#17343A" stroke="none"/>
+    <circle cx="16" cy="16" r="0.85" fill="#17343A" stroke="none"/>
+  </g>
+</svg>

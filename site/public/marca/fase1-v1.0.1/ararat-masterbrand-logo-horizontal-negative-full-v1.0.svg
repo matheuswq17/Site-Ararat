@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1800 620" role="img" aria-label="ARARAT masterbrand horizontal lockup">
+  <title>ARARAT masterbrand horizontal lockup</title>
+  <metadata>ARARAT Phase 1 vector identity, version 1.0. Manual controlled reconstruction; no autotrace.</metadata>
+<g transform="translate(0 56) scale(0.80)"><g id="symbol">
+<path id="plane-greater-lesser" d="M40 505 C178 432 320 270 470 91 C500 120 522 177 561 224 C599 287 650 325 699 346 C741 364 773 341 806 326 C850 343 894 414 960 500 C889 468 844 428 801 397 C766 381 739 411 699 398 C631 377 575 313 529 262 C495 224 462 212 421 242 C320 327 242 426 40 505 Z" fill="#F6F4EF"/>
+<path id="plane-radiomic-middle" d="M42 528 C191 477 329 362 443 250 C480 214 515 222 552 273 C606 347 664 394 720 414 C758 428 786 407 817 420 C857 438 900 480 950 520 C851 498 792 474 735 452 C675 430 620 390 561 340 C523 308 491 302 455 331 C351 419 245 500 42 528 Z" fill="#D8DAD6"/>
+<path id="plane-image-base" d="M82 552 C232 532 357 470 462 376 C497 344 531 347 574 388 C639 450 720 492 819 521 C874 537 920 546 960 550 C841 551 750 537 681 511 C612 486 557 432 516 412 C489 399 470 407 440 432 C340 512 231 549 82 552 Z" fill="#FFFFFF"/>
+<g id="roi-brackets" fill="none" stroke="#F6F4EF" stroke-width="15" stroke-linecap="square" stroke-linejoin="miter">
+<path d="M620 120 H660 M620 120 V160"/>
+<path d="M755 120 H715 M755 120 V160"/>
+<path d="M620 250 H660 M620 250 V210"/>
+<path d="M755 250 H715 M755 250 V210"/>
+</g>
+<circle id="roi-point" cx="687.5" cy="185" r="13" fill="#C77A4E"/>
+</g></g>
+<g transform="translate(855 194) scale(1.02)"><g id="wordmark"><path id="wordmark-a-1" d="M4 156 L4 146 L16 146 L53 10 L69 10 L107 146 L120 146 L120 156 L72 156 L72 146 L86 146 L77 111 L40 111 L30 146 L47 146 L47 156 Z M45 96 L72 96 L59 49 Z" transform="translate(0 0)" fill="#F6F4EF" fill-rule="evenodd"/><path id="wordmark-r-2" d="M4 156 V146 H17 V20 H4 V10 H64 C92 10 109 27 109 59 C109 86 92 100 70 104 L101 146 H116 V156 H82 L47 105 H40 V146 H55 V156 Z M40 23 V91 H58 C78 91 86 79 86 59 C86 37 77 23 58 23 Z" transform="translate(148 0)" fill="#F6F4EF" fill-rule="evenodd"/><path id="wordmark-a-3" d="M4 156 L4 146 L16 146 L53 10 L69 10 L107 146 L120 146 L120 156 L72 156 L72 146 L86 146 L77 111 L40 111 L30 146 L47 146 L47 156 Z M45 96 L72 96 L59 49 Z" transform="translate(290 0)" fill="#F6F4EF" fill-rule="evenodd"/><path id="wordmark-r-4" d="M4 156 V146 H17 V20 H4 V10 H64 C92 10 109 27 109 59 C109 86 92 100 70 104 L101 146 H116 V156 H82 L47 105 H40 V146 H55 V156 Z M40 23 V91 H58 C78 91 86 79 86 59 C86 37 77 23 58 23 Z" transform="translate(438 0)" fill="#F6F4EF" fill-rule="evenodd"/><path id="wordmark-a-5" d="M4 156 L4 146 L16 146 L53 10 L69 10 L107 146 L120 146 L120 156 L72 156 L72 146 L86 146 L77 111 L40 111 L30 146 L47 146 L47 156 Z M45 96 L72 96 L59 49 Z" transform="translate(580 0)" fill="#F6F4EF" fill-rule="evenodd"/><path id="wordmark-t-6" d="M2 10 H118 V50 H107 L98 23 H72 V146 H89 V156 H31 V146 H48 V23 H22 L13 50 H2 Z" transform="translate(722 0)" fill="#F6F4EF" fill-rule="evenodd"/></g></g>
+
+</svg>

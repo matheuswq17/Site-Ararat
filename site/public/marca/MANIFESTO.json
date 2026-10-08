@@ -1,0 +1,99 @@
+{
+  "experimento": "experiment/brand-canonical-v1",
+  "regra": "Cópias byte a byte dos pacotes canônicos; nenhum arquivo editado, convertido ou subconjuntado. Conferir com: node tests/marca-integridade.mjs",
+  "pacotes": [
+    {
+      "arquivo": "ARARAT_Brand_System_Phase1_v1.0.1.zip",
+      "sha256": "e82d4a1d5adfe498ffedebd6102ac6c98663036ccf7b311ec67abf596ed63918"
+    },
+    {
+      "arquivo": "ARARAT_Brand_System_Phase2A_v1.1.1.zip",
+      "sha256": "fcd2b488c12dafc986a50dd59452718f4dcb61bfc0027d70daacbaa3dcc5396b"
+    },
+    {
+      "arquivo": "ARARAT_Brand_System_Phase2B_v1.2.1.zip",
+      "sha256": "0d23dc16a1010f43b8f7fd711ef1fd60f18a052b8131ccf0e486c1ba62a6a813"
+    },
+    {
+      "arquivo": "ARARAT_Brand_Production_Specification.md",
+      "sha256": "7a8874c8aa2efaa97dae11149654215fd11cd5b6c69fc2477896f4610b17011e"
+    }
+  ],
+  "status_aprovacao": {
+    "fase1-v1.0.1": "aprovada (registro de 21/08/2026)",
+    "fase2a-v1.1.1": "aprovada (registro de 22/08/2026, contido no pacote da Fase 2B)",
+    "fase2b-v1.2.1": "AGUARDANDO aprovação humana — uso experimental"
+  },
+  "arquivos": [
+    {
+      "caminho": "fase1-v1.0.1/ararat-favicon-reversed-16px-v1.0.png",
+      "bytes": 484,
+      "sha256": "1cbecc8ebb2f06c539dc0969a758508cdbdf8e3b0a86149e06e3a673735413a5",
+      "pacote": "ARARAT_Brand_System_Phase1_v1.0.1.zip",
+      "origem": "ARARAT_Brand_System/01_Masterbrand/png/ararat-favicon-reversed-16px-v1.0.png"
+    },
+    {
+      "caminho": "fase1-v1.0.1/ararat-favicon-reversed-16px-v1.0.svg",
+      "bytes": 685,
+      "sha256": "e924b0bc3456536596688ced0e2fda99ffa20446ce213a1bc756fbb727c59723",
+      "pacote": "ARARAT_Brand_System_Phase1_v1.0.1.zip",
+      "origem": "ARARAT_Brand_System/01_Masterbrand/responsive/ararat-favicon-reversed-16px-v1.0.svg"
+    },
+    {
+      "caminho": "fase1-v1.0.1/ararat-masterbrand-logo-horizontal-negative-full-v1.0.svg",
+      "bytes": 3181,
+      "sha256": "5255027da923ddfb69eca43609d258aa7ba1ca4e8e73b897baefc7bb8d06c367",
+      "pacote": "ARARAT_Brand_System_Phase1_v1.0.1.zip",
+      "origem": "ARARAT_Brand_System/01_Masterbrand/svg/ararat-masterbrand-logo-horizontal-negative-full-v1.0.svg"
+    },
+    {
+      "caminho": "fase2a-v1.1.1/fontes/Inter-OFL.txt",
+      "bytes": 4377,
+      "sha256": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57",
+      "pacote": "ARARAT_Brand_System_Phase2A_v1.1.1.zip",
+      "origem": "ARARAT_Brand_System_Phase2A/04_Typography/licenses/Inter-OFL.txt"
+    },
+    {
+      "caminho": "fase2a-v1.1.1/fontes/Inter[opsz,wght].ttf",
+      "bytes": 876576,
+      "sha256": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+      "pacote": "ARARAT_Brand_System_Phase2A_v1.1.1.zip",
+      "origem": "ARARAT_Brand_System_Phase2A/04_Typography/fonts/Inter[opsz,wght].ttf"
+    },
+    {
+      "caminho": "fase2a-v1.1.1/fontes/Lora-OFL.txt",
+      "bytes": 4423,
+      "sha256": "1d9a970809ac804b582a6ce7f0ebc4e7fefcbfd7ff6299cad35ee656a21be716",
+      "pacote": "ARARAT_Brand_System_Phase2A_v1.1.1.zip",
+      "origem": "ARARAT_Brand_System_Phase2A/04_Typography/licenses/Lora-OFL.txt"
+    },
+    {
+      "caminho": "fase2a-v1.1.1/fontes/Lora[wght].ttf",
+      "bytes": 212196,
+      "sha256": "822a6621ccbe8d97d20ac88c1c41f5615c9c2c202eaa75f272cd452aac6475a7",
+      "pacote": "ARARAT_Brand_System_Phase2A_v1.1.1.zip",
+      "origem": "ARARAT_Brand_System_Phase2A/04_Typography/fonts/Lora[wght].ttf"
+    },
+    {
+      "caminho": "fase2b-v1.2.1/icones/ararat-icon-clinical-review-primary-24-v1.2.svg",
+      "bytes": 1152,
+      "sha256": "1a8651b74a22151d69d0bc9502eb7c65b93022dca5d36e0ebfb904155bdcf8b7",
+      "pacote": "ARARAT_Brand_System_Phase2B_v1.2.1.zip",
+      "origem": "ARARAT_Brand_System_Phase2B/05_Icons/svg/primary/ararat-icon-clinical-review-primary-24-v1.2.svg"
+    },
+    {
+      "caminho": "fase2b-v1.2.1/icones/ararat-icon-radiomic-extraction-primary-24-v1.2.svg",
+      "bytes": 1519,
+      "sha256": "e34c525540067ac23cadcdb8ee94ac24b629afa627a59ac9e3e918d869645fc0",
+      "pacote": "ARARAT_Brand_System_Phase2B_v1.2.1.zip",
+      "origem": "ARARAT_Brand_System_Phase2B/05_Icons/svg/primary/ararat-icon-radiomic-extraction-primary-24-v1.2.svg"
+    },
+    {
+      "caminho": "fase2b-v1.2.1/icones/ararat-icon-segmentation-primary-24-v1.2.svg",
+      "bytes": 1129,
+      "sha256": "1c5b34dcff469c879814efa30fb79051e31c83a811bbdab6f52f04441974decc",
+      "pacote": "ARARAT_Brand_System_Phase2B_v1.2.1.zip",
+      "origem": "ARARAT_Brand_System_Phase2B/05_Icons/svg/primary/ararat-icon-segmentation-primary-24-v1.2.svg"
+    }
+  ]
+}
