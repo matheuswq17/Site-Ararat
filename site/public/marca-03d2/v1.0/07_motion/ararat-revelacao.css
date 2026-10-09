@@ -1,0 +1,15 @@
+/* ARARAT 03D2 · revelação da marca em CSS puro (alternativa ao JS).
+   A classe .is-revealing é adicionada quando a página quer animar; sem ela, a logo aparece completa. */
+.ar-reveal { display: block; overflow: visible; }
+.ar-reveal__layer, .ar-reveal__word { transform-box: fill-box; }
+.ar-reveal.is-revealing .ar-reveal__layer { animation: ar-layer-rise 560ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.ar-reveal.is-revealing [data-layer="meio"] { animation-delay: 110ms; }
+.ar-reveal.is-revealing [data-layer="topo"] { animation-delay: 220ms; }
+.ar-reveal.is-revealing .ar-reveal__word { animation: ar-word-in 480ms cubic-bezier(0.16, 1, 0.3, 1) 420ms both; }
+@keyframes ar-layer-rise { 0% { transform: translateY(90%); opacity: 0; } 35% { opacity: 1; } 100% { transform: translateY(0); opacity: 1; } }
+@keyframes ar-word-in { from { transform: translateX(-14px); opacity: 0; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .ar-reveal.is-revealing .ar-reveal__layer, .ar-reveal.is-revealing .ar-reveal__word { animation: none; }
+  .ar-reveal.is-revealing { animation: ar-fade 140ms linear both; }
+}
+@keyframes ar-fade { from { opacity: 0; } to { opacity: 1; } }
