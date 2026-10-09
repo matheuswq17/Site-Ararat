@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "name": "ararat-time-retrato-03d2",
+  "version": "0.5.0-03d2",
+  "status": "experimental-03d2",
+  "scope": "Adaptação ao brand system 03D2 v1.0 (experimental). Não substitui time-interativo 0.1.0/0.2.0, 0.3.0-marca nem 0.4.0-sinal; não publicar; sem aprovação estética.",
+  "base": {
+    "modulo": {
+      "versao": "0.2.0-draft",
+      "sha256": "19cc7f8cb6ad4205805f013bca552b7df0fceeedcd497e9aefb31e44fdb7d727"
+    },
+    "retratos": {
+      "hartmann-foto.webp": "23ad2bf7576590da4bb4c8834ddd5e96041d09b1499884ad6e81c8d7fdc5a501",
+      "hartmann-recorte.webp": "46a1871d8368a07fd87b4d6e439996a5a5c47e15d4b4bb1e87c3c8122cb37c0d",
+      "matheus-foto.webp": "2ce5c4ad216713f39228f6bb0e60c8b873096488de38e3cbe26951d212a02ac2",
+      "matheus-recorte.webp": "05067542e1f254c6c28a33f7c1f87eab99fff9357c1a5b2892589fa0b095b55f",
+      "miguel-foto.webp": "eb8affdc2e56a9ec40576cff0859b0b9dc7288c8d170ed251732536b7492a200",
+      "miguel-recorte.webp": "568cb97b07dc368eb9adf520285b3f36cc141ee8e2029e85d70de67163433eae",
+      "retratos.json": "c5ac12cc873abade482b716c7fff04512c3186507713f11c2e6b59d37c0e46ea",
+      "rodrigo-foto.webp": "ef69c03574208cbf32e8c101961af78bcf8cbae71392f71be31114fd08a86a27",
+      "rodrigo-recorte.webp": "afd35e810bd03012e28140136d574ec8c8866a3f0483646f4d112909c5c3bdf3",
+      "victor-foto.webp": "0d0ff7d874a0c73cabf73157b5a0472b5c2c277174f5d0393f790e7ff58e54c5",
+      "victor-recorte.webp": "d8279110e33537cf78b0c193c764e7f38175ea922c0d79e4dac327b31cee7ee9"
+    },
+    "nota": "retratos/ copiados byte a byte do pacote 0.2.0 (mesmos sha256): nenhum rosto gerado, nenhuma edição"
+  },
+  "mudancas": {
+    "pontos": "#0D1B2A → #303030 (gray/800 do 03D2, tema claro). Seção escura: o Site passa pontos: { cor: \"#C6C6C6\" } (gray/200).",
+    "enquadramento": "alinhar(): foto (e fundo opcional) do topo na 1ª linha inteira de pixel do aparelho abaixo do quadro até uma linha antes da base; chamado antes de cada troca de foto e no resize. Corrige a diferença de subpixel normal × reduzido (Site, \"enquadramento final\", < 0,1 %).",
+    "fundo": "opção nova fundo: \"<cor>\" (padrão null). O módulo pinta a cor do quadro no mesmo alinhamento. Com o módulo ativo, o Site deixa .portrait/.portraitCol transparentes e, se quiser plano tonal, passa fundo: \"#EDEDED\" (graphic/plane claro) ou \"#242424\" (escuro).",
+    "foto": "padrão cor: 'natural' (como na 0.2.0 aprovada). O 03D2 não tem regra de P&B para fotografia; 'mono' (filtro de EXIBIÇÃO grayscale(1) contrast(1.04)) continua disponível — decisão do Site, registrada como pendência visual.",
+    "naoMuda": [
+      "foto íntegra em repouso (sem pontos, sem retrato pontilhado)",
+      "sequência foto → pontos → reorganização → foto só na troca",
+      "tempos (TEMPOS) e fases",
+      "vale o último clique; interrupções",
+      "hover não muda estado",
+      "contrato createStipplePortrait",
+      "arquivos de foto e recortes"
+    ]
+  },
+  "contrato": "idêntico à 0.2.0 (ver lib/time-retrato.ts do Site) + opção fundo: createStipplePortrait(raiz, { pessoas, inicial, interativo, paused, reducedMotion, cor, pontos: { cor }, fundo, onEstado }) → select, preload, setPaused, setReducedMotion, setCor, state, pronto, destroy.",
+  "fallback": "sem JS, pausa, reduzido ou falha: a foto (retratos/<id>-foto.webp) — troca direta, sem pontos. Se o Site escolher P&B, aplica o mesmo filtro CSS às <img> que o módulo não controla.",
+  "files": [
+    {
+      "path": "src/retrato-pontilhado.js",
+      "sizeBytes": 25392,
+      "sha256": "aef1b94dd4d216d0f81c3c7d477371ce1886e50129349a76d3c97635399fb912"
+    },
+    {
+      "path": "retratos/hartmann-foto.webp",
+      "sizeBytes": 68454,
+      "sha256": "23ad2bf7576590da4bb4c8834ddd5e96041d09b1499884ad6e81c8d7fdc5a501"
+    },
+    {
+      "path": "retratos/hartmann-recorte.webp",
+      "sizeBytes": 81226,
+      "sha256": "46a1871d8368a07fd87b4d6e439996a5a5c47e15d4b4bb1e87c3c8122cb37c0d"
+    },
+    {
+      "path": "retratos/matheus-foto.webp",
+      "sizeBytes": 69114,
+      "sha256": "2ce5c4ad216713f39228f6bb0e60c8b873096488de38e3cbe26951d212a02ac2"
+    },
+    {
+      "path": "retratos/matheus-recorte.webp",
+      "sizeBytes": 94044,
+      "sha256": "05067542e1f254c6c28a33f7c1f87eab99fff9357c1a5b2892589fa0b095b55f"
+    },
+    {
+      "path": "retratos/miguel-foto.webp",
+      "sizeBytes": 91444,
+      "sha256": "eb8affdc2e56a9ec40576cff0859b0b9dc7288c8d170ed251732536b7492a200"
+    },
+    {
+      "path": "retratos/miguel-recorte.webp",
+      "sizeBytes": 101870,
+      "sha256": "568cb97b07dc368eb9adf520285b3f36cc141ee8e2029e85d70de67163433eae"
+    },
+    {
+      "path": "retratos/retratos.json",
+      "sizeBytes": 5475,
+      "sha256": "c5ac12cc873abade482b716c7fff04512c3186507713f11c2e6b59d37c0e46ea"
+    },
+    {
+      "path": "retratos/rodrigo-foto.webp",
+      "sizeBytes": 32102,
+      "sha256": "ef69c03574208cbf32e8c101961af78bcf8cbae71392f71be31114fd08a86a27"
+    },
+    {
+      "path": "retratos/rodrigo-recorte.webp",
+      "sizeBytes": 36442,
+      "sha256": "afd35e810bd03012e28140136d574ec8c8866a3f0483646f4d112909c5c3bdf3"
+    },
+    {
+      "path": "retratos/victor-foto.webp",
+      "sizeBytes": 13036,
+      "sha256": "0d0ff7d874a0c73cabf73157b5a0472b5c2c277174f5d0393f790e7ff58e54c5"
+    },
+    {
+      "path": "retratos/victor-recorte.webp",
+      "sizeBytes": 16888,
+      "sha256": "d8279110e33537cf78b0c193c764e7f38175ea922c0d79e4dac327b31cee7ee9"
+    }
+  ]
+}

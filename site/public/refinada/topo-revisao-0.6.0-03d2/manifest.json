@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "name": "ararat-ciencia-fechamento-03d2",
+  "version": "0.6.0-03d2",
+  "status": "experimental-03d2",
+  "scope": "Adaptação ao brand system 03D2 v1.0 (experimental). Não substitui topo-revisao 0.1.0–0.3.0, 0.4.0-marca nem 0.5.0-sinal; não publicar; sem aprovação estética.",
+  "base": {
+    "modulo": {
+      "arquivo": "proposta/topo-revisao/src/topo-revisao.js",
+      "versao": "0.3.0-draft",
+      "sha256": "2c4fc0dca3c1aad3f8f477a3284324eaa06bb51da2be0b2990918d954c929872"
+    },
+    "paisagem": {
+      "arquivo": "fechamento-montanha.json",
+      "versao": "0.3.0-draft",
+      "geometria": "fechamento-0.3.0-draft",
+      "sha256": "131fb7eabd9b4d22a49c329a04c86b042f415fde60b8e5ca8869465e5b184766"
+    }
+  },
+  "temas": {
+    "claro": {
+      "geometria": "fechamento-0.6.0-03d2",
+      "paisagem": "fechamento-montanha.json",
+      "estatico": "fechamento-estatico.svg",
+      "fundoPrevisto": "#F6F6F6",
+      "cores": {
+        "#415A77": "#5E5E5E",
+        "#1B263B": "#303030"
+      },
+      "crista": "#777777",
+      "arco": "#111111",
+      "filete": "#F6F6F6",
+      "sombraSuave": "#303030",
+      "destaque": "#111111",
+      "opacidadeLinhas": "× 1.0"
+    },
+    "escuro": {
+      "geometria": "fechamento-0.6.0-03d2-escuro",
+      "paisagem": "fechamento-montanha-escuro.json",
+      "estatico": "fechamento-estatico-escuro.svg",
+      "fundoPrevisto": "#111111",
+      "cores": {
+        "#415A77": "#919191",
+        "#1B263B": "#ABABAB"
+      },
+      "crista": "#777777",
+      "arco": "#EDEDED",
+      "filete": "#111111",
+      "sombraSuave": "#111111",
+      "destaque": "#EDEDED",
+      "opacidadeLinhas": "× 1.45"
+    }
+  },
+  "mudancas": {
+    "camadasDoTrecho": "filete 8 px na cor do fundo (alfa 1, 1,1× o trecho: separa o núcleo da crista e das curvas, com folga curta nas pontas) + núcleo 2,8 px no destaque; sem brilho difuso — 0.3.0: 10 px a 0,13 + 4,5 px a 0,36 + núcleo; 0.5.0-sinal: só núcleo 2,2 px, na mesma cor da crista (regressão de perceptibilidade)",
+    "crista": "cinza médio #777777 (≠ destaque), para o brilho ser visível sobre ela",
+    "naoMuda": [
+      "geometria (caminhos idênticos, relevo e cumes completos)",
+      "quatro frases e suas faixas de p",
+      "encerramento crista → arco (e) no mesmo intervalo de rolagem",
+      "enquadramento (viewBox 0 -72 1440 432, xMidYMax slice)",
+      "contrato createTopoRevisao / setProgresso(p, e)",
+      "estático = composição final"
+    ]
+  },
+  "contrato": "idêntico à 0.3.0: createTopoRevisao(svg, { alvo, frase, progresso: \"externo\", paused, reducedMotion: \"auto\", onEstado }) → setProgresso(p, e), setPaused, setReducedMotion, atualizar, state, destroy. O SVG declara data-topo-geometria do tema (vem em svgAtributos).",
+  "fallback": "fechamento-estatico[-escuro].svg = composição final do tema; é o que o Site mostra sem JS, em pausa, com movimento reduzido ou falha.",
+  "arco": "traço desta composição; não é o símbolo do 03D2. Nenhuma parte da logo é desenhada aqui.",
+  "files": [
+    {
+      "path": "fechamento-estatico-escuro.svg",
+      "sizeBytes": 40527,
+      "sha256": "14fd6a5ad754f0803fc6ad8e216eac04936cd6bc29ce74d93ee2fb4ed64ff3dc"
+    },
+    {
+      "path": "fechamento-estatico.svg",
+      "sizeBytes": 40517,
+      "sha256": "cd3932f8fc4202bc5d48a8058dbbc3cadfa290ea416c946a072c93dadd48b341"
+    },
+    {
+      "path": "fechamento-montanha-escuro.json",
+      "sizeBytes": 46354,
+      "sha256": "9ce1f889d6a75577704da9362a7f80f7de670cd69607674dd41991fe4e589b15"
+    },
+    {
+      "path": "fechamento-montanha.json",
+      "sizeBytes": 46336,
+      "sha256": "faca7e351b261eed06e7bbc29c9a04b9cf0fb37259a67d66e8291e028d640cf6"
+    },
+    {
+      "path": "topo-revisao.js",
+      "sizeBytes": 31918,
+      "sha256": "28ff00c2516320bc729d9e4e7f8c489e111dc41e64559c9134906d4494a88905"
+    }
+  ]
+}

@@ -13,3 +13,8 @@ site/public/refinada/time-interativo-0.4.0-sinal/** -text
 site/public/refinada/plataforma-fluxo-0.3.0-sinal/** -text
 # Cópias byte a byte do kit ARARAT 03D2 v1.0 conferidas por SHA-256 (codex/brand-03d2-v1).
 site/public/marca-03d2/** -text
+# Pacotes 03D2 do Motion (codex/brand-03d2-motion-v1 @ 8568d8f), cópias byte a byte conferidas por SHA-256.
+site/public/previa/home-montanha-1.0.0-03d2/** -text
+site/public/refinada/topo-revisao-0.6.0-03d2/** -text
+site/public/refinada/time-interativo-0.5.0-03d2/** -text
+site/public/refinada/plataforma-fluxo-0.4.0-03d2/** -text
