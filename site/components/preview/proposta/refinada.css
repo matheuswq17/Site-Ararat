@@ -331,3 +331,21 @@
 [data-opening="root"] [data-opening="invite"] {
   opacity: calc(1 - var(--opening-p, 0) * 6);
 }
+
+/* ── Entradas editoriais (codex/titulos-movimento-original-v1) ───────────────────────────────────────────────
+   Comportamento em components/motion/entrada-editorial.css (comum às quatro identidades). Aqui, só os valores da
+   identidade Original: a curva de saída do próprio site (--ease-out, sem overshoot) e tempos curtos. O fio da
+   pergunta é o filete dourado de 3 px que o cartão da publicação já tem (lido do estilo calculado). Esta identidade
+   não tem "You decide." nem link textual com seta na 1ª dobra (as ações são botões); os links principais são os
+   links textuais do FAQ. Escopo :not([data-marca]) — as outras identidades declaram os próprios valores. */
+[data-tipografia="refinada"]:not([data-marca]) {
+  --entrada-desloc: 12px;
+  --entrada-dur: 450ms;
+  --entrada-ease: var(--ease-out);
+  --entrada-atraso-titulo: 70ms;
+  --fio-dur: 520ms;
+  --link-dur: 180ms;
+  --link-ease: var(--ease-out);
+  --link-fio: 1px;
+  --link-fio-ativo: 2px;
+}
