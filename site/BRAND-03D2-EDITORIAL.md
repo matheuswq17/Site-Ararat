@@ -124,11 +124,9 @@ Pausa e movimento reduzido: o contrato não muda, e eles são cobertos por `refi
 
 ## 8. Pendências (registradas, sem afrouxar testes)
 
-1. **Poster no slot menor.** No modo estático (movimento reduzido, pausa, sem JS), o poster de 1100×660 aparece reduzido
-   para cerca de 736×442, e o traço fica mais fino. Pedido ao Motion: uma variante do poster para esse slot.
-2. **Aproximações do fluxo por etapa:** pedidas ao Motion. Até chegarem, os controles pequenos continuam pequenos.
-3. **Plataforma em 1280×600:** a lista de 7 legendas é mais alta que o quadro fixo (601 vs 484 px). Já acontecia na
-   base.
+1. ~~Poster no slot menor~~ → resolvido na rodada 2 (§10: família editorial da montanha 1.1.0-03d2).
+2. ~~Aproximações do fluxo por etapa~~ → entregues pelo Motion no fluxo 0.5.0-03d2 (§10), com uma ressalva de escala.
+3. ~~Plataforma em 1280×600~~ → corrigido na rodada 2 (§10.4).
 4. **`previa`, home `/`:** 2 falhas que já existiam (o teste espera a home aprovada antiga).
 
 ## 9. Capturas e gravações
@@ -139,3 +137,137 @@ Ficam fora do repositório:
 - publicação;
 - Time P&B × natural;
 - gravações em 1440 e 390.
+
+## 10. Rodada 2: pacotes editoriais do Motion integrados
+
+**Motion:** `codex/brand-03d2-editorial-motion-v1` @ `e340de16650bd912e80a6906f96bd5b57b006d28`, contrato
+`motion/brand-03d2-editorial-v1/EDITORIAL-03D2-MOTION.md`.
+**Base desta rodada:** `6cf4634`, que segue disponível para comparação.
+**Resposta ao Motion:** `docs/coordination/BRAND-03D2-EDITORIAL-SITE-INTEGRACAO.md` (fora do Git).
+
+### 10.1 Pacotes e integridade
+
+| Pacote | Pasta servida | Conferência | Anterior preservado |
+|---|---|---|---|
+| Montanha 1.1.0-03d2 (Jornada 0.4.3) | `public/previa/home-montanha-1.1.0-03d2/` | `sync-manifest --check` 93/93 | 1.0.0-03d2 |
+| Ciência 0.7.0-03d2 | `public/refinada/topo-revisao-0.7.0-03d2/` | 5/5 sha256 | 0.6.0-03d2 |
+| Time 0.6.0-03d2 | `public/refinada/time-interativo-0.6.0-03d2/` | 12/12 sha256 | 0.5.0-03d2 |
+| Fluxo 0.5.0-03d2 | `public/refinada/plataforma-fluxo-0.5.0-03d2/` (capturas do 0.1.0) | 1/1 sha256 | 0.4.0-03d2 |
+
+- Os sha256 dos quatro manifestos batem com o `MANIFESTO.json` da rodada.
+- Nenhum arquivo de pacote foi editado.
+- **Pontes:** foram escritas no Site. Os trechos `TESTE`/`ESTUDO` do script de exemplo do Motion não foram usados.
+- **Testes:** só as strings de versão e de caminho dos pacotes mudaram (`locales`, `refinada`, `plataforma-fluxo`).
+  Nenhuma asserção foi afrouxada.
+
+### 10.2 Contrato aplicado na primeira dobra
+
+- **Composição central ≥ 1200 px:**
+  - O CSS das duas colunas declara `--opening-composicao: centro` no slot, e a ponte (`HomeOpening.tsx`) passa
+    `composicao: { alinhar: "centro" }` na criação e em cada `setLayout`.
+  - Sem esse layout, o valor é `topo`, igual à 1.0.0.
+  - O módulo confirma em `canvas[data-composicao]`.
+- **Posters do slot editorial:**
+  - A família `editorial` (w600–w760) é escolhida pela **função real do slot** de duas colunas, implementada em
+    `editorialSlotWidth()`; as faixas `faixasPorLarguraDoSlot` do índice são aplicadas viewport a viewport.
+  - Medido: 1200 → w600, 1280 → w640, 1440 → w720, 1920 → w736, 2560 → w720. O slot estreita um pouco acima de
+    2086 px, porque o gap cresce até 64.
+  - Abaixo de 1200 px continuam as famílias móvel e desktop. A última faixa desktop vai até 1199 px.
+- **Celular baixo:**
+  - `alturaUtil = innerHeight − topo do slot no documento`, só quando a dobra corta o desenho: visível < 75 % do
+    slot, pela medida do Motion (sopé a ≈ 72 % em `topo`), e ao menos metade do slot visível.
+  - 390×640 → `alturaUtil` 187: montanha e arco inteiros na 1ª tela.
+  - 390×844 e 320×700 → `topo`, sem mudança.
+- **Ações visíveis desde o 1º quadro:**
+  - A entrada de opacidade das ações e da nota de estado foi retirada; o título e o subtítulo mantêm a entrada.
+  - Medido: opacidade 1 já na primeira amostra (antes: 0 até ≈ 800 ms).
+
+### 10.3 Ciência, Time e Fluxo
+
+- **Ciência 0.7.0-03d2:** destaque em traço único, sem halo, e crista mais clara. A geometria e o contrato não mudam.
+- **Time 0.6.0-03d2:**
+  - P&B continua o padrão; `?retrato=natural` segue para revisão;
+  - o filtro estático do Site é o mesmo `FILTRO_MONO` do módulo;
+  - os pontos ficam `#303030` nos dois modos.
+- **Fluxo 0.5.0-03d2:** aproximações nos controles por etapa, hierarquia de movimento e enquadramentos de celular. As 7
+  etapas, a atribuição, os avisos, a régua demonstrativa e "Revisão pendente" não mudam.
+
+### 10.4 Lista das etapas em telas baixas (correção do Site)
+
+- **Problema:** em 1280×600 a lista com os 7 textos tinha 601 px para 484 px úteis.
+- **Correção**, para largura ≥ 901 px e altura ≤ 820 px:
+  - número e título das 7 etapas;
+  - o texto da etapa ativa numa área reservada logo abaixo da lista;
+  - trocar de etapa não desloca nada (CLS 0);
+  - os textos inativos ficam transparentes, mas continuam no DOM.
+- Cabe em todo o percurso em 1024×600, 1200×600, 1280×600, 1280×720, 1366×768, 1440×900 e 1920×1080, em EN e PT.
+- Uma primeira versão, que expandia o texto dentro da lista, deu CLS 0,0076 em 1280 no `plataforma-fluxo.mjs`. Foi
+  refeita: o teste não foi afrouxado.
+
+### 10.5 Limitações que exigem novas capturas (registradas à parte; nada reconstruído)
+
+O Site não simula nem redesenha nenhum desses estados.
+
+1. **Etapa 4 (T2/ADC) no celular:**
+   - Lado a lado, as duas séries ocupam a largura inteira do Viewer (755 px lógicos em ≈ 356 px de palco). Os rótulos
+     ficam em ≈ 5 px enquanto as séries passam, e só depois são aproximados (≈ 16 px).
+   - **Precisa de captura do Viewer em largura de celular** com "Comparar séries", se o produto tiver esse layout.
+2. **Clique em "Comparar séries":** falta o estado antes e depois do botão. Hoje a etapa 4 entra direto na comparação.
+3. **Prévia do relatório inteira,** com o carimbo de prévia e os avisos no mesmo quadro. A captura 06f mostra só a
+   parte de cima.
+4. **Cartões do Hub no retorno (etapa 7):** sem essa captura, a etapa 7 mostra só a fila.
+
+### 10.6 Outras ressalvas (sem nova captura)
+
+1. **Escala das capturas no fluxo 0.5.0.** Medida em pixels do dispositivo por pixel da fonte, no pior quadro de 101
+   posições:
+   - régua 05e: 2,66× em 1440@2x e 2,97× em 390@3x;
+   - imagens médicas (comp-8, axial): 1,8–2,2×;
+   - na 0.4.0, o máximo era 1,73×.
+   - A interface continua legível, com o texto mole nos picos.
+   - **Pedido ao Motion:** um teto de escala no módulo e o mesmo cálculo no verificador. Até lá, a 0.5.0 fica como
+     padrão para revisão, **com essa ressalva**.
+2. **Poster do celular baixo:** com movimento reduzido, pausa ou sem JS, 390×640 mostra o poster `topo`, com o sopé
+   cortado, porque não há poster para `alturaUtil`. Pedido ao Motion.
+3. **Verificador da montanha (`verify.mjs`):** depende de pastas de trabalho do Motion fora do Git
+   (`motion/deliverables`) e não roda fora do ambiente deles. A integridade do pacote servido foi conferida por
+   `sync-manifest --check` (93/93); o Motion reporta 83/83.
+
+### 10.7 Verificação da página integrada (build de produção, porta 3030; antes = `6cf4634` na porta 3031)
+
+| Suíte | Resultado |
+|---|---|
+| marca-03d2: integridade / layout / contraste / cores / tokens | 23/23 · ✔ · ✔ · ✔ · ✔ |
+| e2e | 29/29 |
+| navegacao | 17/17 |
+| locales (EN/PT, sem JS, 6 larguras, falha de retrato com 0.6.0) | 6/6 |
+| plataforma-fluxo (CLS 0 nas 6 larguras) | 10/10 (3 execuções após a correção) |
+| refinada | 40/40 |
+| previa | 46/48: as mesmas 2 falhas da home `/` que já existiam |
+| Motion: Fluxo 0.5.0 / Ciência 0.7.0 / Time 0.6.0 P&B / Time 0.6.0 natural (`verificar.mjs` contra 3030) | 34/34 · 55/55 · 23/23 · 23/23 |
+| Checagens editoriais, ver abaixo | 63/63 + legendas PT 7/7 |
+
+**Checagens editoriais:**
+- sem rolagem lateral em `/` e `/pt`, em 14 tamanhos de 320×568 a 2560×1440;
+- 1ª dobra com a arte inteira e sem sobreposição em telas baixas, com e sem movimento reduzido;
+- foco visível nas ações;
+- resize igual a página nova;
+- sem JS em EN e PT;
+- Time P&B e natural;
+- composição e poster corretos em 8 tamanhos;
+- ações com opacidade 1 no 1º quadro;
+- as 7 legendas do fluxo dentro do quadro fixo em todo o percurso, em 7 tamanhos.
+
+### 10.8 Capturas e gravações (fora do repositório)
+
+- Antes/depois nas mesmas posições:
+  - 390 e 1440 em EN/PT por seção;
+  - 320, 768, 1280, 1920 e 2560 no topo e no rodapé;
+  - telas baixas e movimento reduzido;
+  - o fluxo em 7 posições em 1440, 1280×600 e 390.
+- Time P&B × natural.
+- Gravações da página integrada em 1440×900, 1280×600 e 390×844.
+- Em quadros parados no meio de uma troca de cena do fluxo aparece o véu da transição, como na base.
+
+**Estado:** pronto para revisão visual em navegador visível. Não é aprovação estética dos enquadramentos do Motion nem
+da composição do Site.
