@@ -752,3 +752,20 @@ html:has([data-marca="canonica"]) .skip-link:focus-visible {
     border-color: ButtonText;
   }
 }
+
+/* ══ Entradas editoriais (codex/titulos-movimento-canonica-v1) ═══════════════════════════════════════════════
+   Comportamento em components/motion/entrada-editorial.css (comum às quatro identidades). Aqui, só os valores da
+   Canônica: curva de saída do site (--ease-out, sem overshoot). O fio da pergunta é o filete de 3 px em cobre de
+   precisão que o cartão da publicação já tem (lido do estilo calculado; estado final idêntico). Sem "You decide."
+   nesta identidade; ações da 1ª dobra são botões; links principais = links textuais do FAQ. */
+[data-tipografia="refinada"][data-marca="canonica"] {
+  --entrada-desloc: 12px;
+  --entrada-dur: 450ms;
+  --entrada-ease: var(--ease-out);
+  --entrada-atraso-titulo: 70ms;
+  --fio-dur: 520ms;
+  --link-dur: 180ms;
+  --link-ease: var(--ease-out);
+  --link-fio: 1px;
+  --link-fio-ativo: 2px;
+}
