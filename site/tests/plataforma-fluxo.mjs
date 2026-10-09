@@ -187,8 +187,8 @@ await test("percurso animado: 1→7 em ordem nas 6 larguras, legenda ativa, enqu
     const leg = await page.evaluate(() => { const ativa = [...document.querySelectorAll("[data-fluxo=trilho] li[data-etapa]")].filter((l) => l.getBoundingClientRect().height > 0 && getComputedStyle(l).borderLeftColor !== "rgba(0, 0, 0, 0)"); return ativa.map((l) => l.dataset.etapa); });
     assert(leg.includes("7"), `${w}: legenda ativa ${leg}`);
     const assets = pedidos.filter((u) => /plataforma-fluxo/.test(u));
-    // brand-sinal-v1: módulo 0.3.0-sinal; as capturas continuam vindo do 0.1.0 (mesmos sha256).
-    assert(assets.every((u) => /\/refinada\/(plataforma-fluxo-0\.3\.0-sinal\/plataforma-fluxo\.js|plataforma-fluxo-0\.1\.0\/assets\/[a-z0-9-]+@[12]x\.webp)$/.test(new URL(u).pathname)), `${w}: pedido fora do pacote: ${assets.find((u) => !/plataforma-fluxo-0\.(1\.0\/assets|3\.0-sinal\/plataforma-fluxo\.js)/.test(u))}`);
+    // codex/brand-03d2-v1: módulo 0.4.0-03d2; as capturas continuam vindo do 0.1.0 (mesmos sha256).
+    assert(assets.every((u) => /\/refinada\/(plataforma-fluxo-0\.4\.0-03d2\/plataforma-fluxo\.js|plataforma-fluxo-0\.1\.0\/assets\/[a-z0-9-]+@[12]x\.webp)$/.test(new URL(u).pathname)), `${w}: pedido fora do pacote: ${assets.find((u) => !/plataforma-fluxo-0\.(1\.0\/assets|4\.0-03d2\/plataforma-fluxo\.js)/.test(u))}`);
     assert(!pedidos.some((u) => /dwi|segment|gravacao|\.mp4|dicom|\.dcm/i.test(u)), `${w}: pedido proibido`);
     const sw = await page.evaluate(() => document.documentElement.scrollWidth);
     assert(sw <= w, `${w}: scrollWidth ${sw}`);
