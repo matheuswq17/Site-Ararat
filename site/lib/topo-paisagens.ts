@@ -20,6 +20,8 @@ import MONTANHA_020 from "@/public/refinada/topo-revisao-0.2.0/fechamento-montan
 import MONTANHA_030 from "@/public/refinada/topo-revisao-0.3.0/fechamento-montanha.json";
 import MONTANHA_050S from "@/public/refinada/topo-revisao-0.5.0-sinal/fechamento-montanha.json";
 import MONTANHA_050SE from "@/public/refinada/topo-revisao-0.5.0-sinal/fechamento-montanha-escuro.json";
+import MONTANHA_060D from "@/public/refinada/topo-revisao-0.6.0-03d2/fechamento-montanha.json";
+import MONTANHA_060DE from "@/public/refinada/topo-revisao-0.6.0-03d2/fechamento-montanha-escuro.json";
 
 export type LinhaPaisagem = { d: string; stroke: string; opacity?: number; width: number; ouro?: boolean };
 
@@ -99,7 +101,7 @@ function paisagem030(): Paisagem {
 
 // brand-sinal-v1: fechamento 0.5.0-sinal do Motion (@ 99c91c8; 5/5) — mesma geometria 0.3.0 em cinzas, sem halo.
 // "0.5.0-sinal" = tema claro (fundo #F6F6F6); "0.5.0-sinal-escuro" = seção escura (#111111).
-function paisagem050sinal(dadosJson: unknown, versao: string): Paisagem {
+function paisagem050sinal(dadosJson: unknown, versao: string, url = "/refinada/topo-revisao-0.5.0-sinal/topo-revisao.js"): Paisagem {
   const dados = dadosJson as DadosSvg;
   const vb = dados.svgAtributos.viewBox.split(/[\s,]+/).map(Number) as Paisagem["viewBox"];
   return {
@@ -110,7 +112,7 @@ function paisagem050sinal(dadosJson: unknown, versao: string): Paisagem {
     encerramento: true,
     linhas: [],
     dados,
-    modulo: { url: "/refinada/topo-revisao-0.5.0-sinal/topo-revisao.js", exportName: "createTopoRevisao", version: dados.versao },
+    modulo: { url, exportName: "createTopoRevisao", version: dados.versao },
   };
 }
 
@@ -120,10 +122,14 @@ export const PAISAGENS: Record<string, Paisagem> = {
   "0.3.0": paisagem030(),
   "0.5.0-sinal": paisagem050sinal(MONTANHA_050S, "0.5.0-sinal"),
   "0.5.0-sinal-escuro": paisagem050sinal(MONTANHA_050SE, "0.5.0-sinal-escuro"),
+  // codex/brand-03d2-v1: fechamento 0.6.0-03d2 do Motion (@ 8568d8f; 5/5) — mesma geometria e contrato da 0.5.0-sinal;
+  // crista #777777 e trecho luminoso com núcleo + filete (a continuação volta a ser visível passo a passo).
+  "0.6.0-03d2": paisagem050sinal(MONTANHA_060D, "0.6.0-03d2", "/refinada/topo-revisao-0.6.0-03d2/topo-revisao.js"),
+  "0.6.0-03d2-escuro": paisagem050sinal(MONTANHA_060DE, "0.6.0-03d2-escuro", "/refinada/topo-revisao-0.6.0-03d2/topo-revisao.js"),
 };
 
 /** Versão mostrada por padrão (a mais nova registrada). */
-export const VERSAO_PADRAO = "0.5.0-sinal";
+export const VERSAO_PADRAO = "0.6.0-03d2";
 
 export function paisagemDe(versao: string | null | undefined): Paisagem {
   return (versao && PAISAGENS[versao]) || PAISAGENS[VERSAO_PADRAO];

@@ -40,6 +40,8 @@ export type RetratoOpts = {
   paused?: boolean;
   reducedMotion?: "auto" | boolean;
   cor?: "natural" | "mono";
+  /** 0.5.0-03d2: plano tonal pintado PELO MÓDULO, alinhado à grade de pixel junto com a foto (null = sem plano). */
+  fundo?: string | null;
   onEstado?: (e: EstadoRetrato) => void;
 };
 
@@ -58,10 +60,11 @@ export type RetratoPontilhado = {
 export type CreateStipplePortrait = (raiz: HTMLElement, opts: RetratoOpts) => RetratoPontilhado;
 
 export const TIME_RETRATO_PACKAGE = {
-  // brand-sinal-v1: retrato 0.4.0-sinal do Motion (@ 99c91c8; 12/12): pontos gray-20; fotos iguais à 0.2.0
-  baseUrl: "/refinada/time-interativo-0.4.0-sinal/",
-  modulo: "/refinada/time-interativo-0.4.0-sinal/src/retrato-pontilhado.js",
-  version: "0.4.0-sinal",
+  // codex/brand-03d2-v1: retrato 0.5.0-03d2 do Motion (@ 8568d8f; 12/12): foto (e fundo) alinhados ao pixel
+  // inteiro (alinhar()), opção fundo, pontos #303030; fotos e recortes byte a byte iguais à 0.2.0.
+  baseUrl: "/refinada/time-interativo-0.5.0-03d2/",
+  modulo: "/refinada/time-interativo-0.5.0-03d2/src/retrato-pontilhado.js",
+  version: "0.5.0-03d2",
   exportName: "createStipplePortrait",
 } as const;
 

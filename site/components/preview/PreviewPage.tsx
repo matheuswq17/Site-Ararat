@@ -84,7 +84,7 @@ export function PreviewPage({ proposta }: { proposta?: Proposta }) {
           mri={mri}
           config={config}
           navMode={proposta ? "eased" : "native"}
-          {...(refinada ? { coverColor: COR_COBERTURA_03D2, titleLines: TITULO_SINAL, titleSecondary: TITULO_SINAL_SECUNDARIA, note: NOTE_REFINADA, scrollInvite: true, journeyCompact: true, journeySafeIntro: true, revealOnChange: true, journeySteps: JOURNEY_STEPS_REFINADA,
+          {...(refinada ? { coverColor: COR_COBERTURA_03D2, titleLines: TITULO_SINAL, titleSecondary: TITULO_SINAL_SECUNDARIA, note: NOTE_REFINADA, scrollInvite: true, journeyCompact: true, journeySafeIntro: true, revealOnChange: true, journeySteps: JOURNEY_STEPS_REFINADA, introModuloMs: 900,
             journeyIntro: "Um percurso conceitual para explorar região, dados e explicação — não um pipeline automático validado. Role a página ou escolha uma etapa." } : {})}
         />
         <Passage refinada={refinada} />

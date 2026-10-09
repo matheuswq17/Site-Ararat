@@ -46,10 +46,14 @@ export const PREVIEW_PACKAGE = {
  */
 // brand-sinal-v1: montanha 0.9.0-sinal do Motion (experiment/brand-sinal-motion-v1 @ 99c91c8), copiada sem alteração
 // para public/previa/home-montanha-0.9.0-sinal/ e conferida (sync-manifest --check 71/71). A 0.7.0 segue em public/previa/.
+// codex/brand-03d2-v1: montanha 1.0.0-03d2 + jornada 0.4.3-03d2 do Motion (codex/brand-03d2-motion-v1 @ 8568d8f),
+// extraída com git archive para public/previa/home-montanha-1.0.0-03d2/ (sync-manifest --check 71/71; sha256 do
+// manifest = MANIFESTO.json da rodada). Abertura = gesto 03D2 de 900 ms (o relevo sobe da linha de base); arco #919191.
+// A 0.9.0-sinal e as anteriores ficam em public/previa/ sem alteração.
 export const REFINADA_PACKAGE = {
-  dir: "home-montanha-0.9.0-sinal",
-  baseUrl: "/previa/home-montanha-0.9.0-sinal/",
-  version: "0.9.0-sinal",
+  dir: "home-montanha-1.0.0-03d2",
+  baseUrl: "/previa/home-montanha-1.0.0-03d2/",
+  version: "1.0.0-03d2",
 } as const satisfies PreviewPackage;
 
 /** Largura máxima do slot da arte (CSS: width min(1100px, 100cqw)) e limite celular/desktop

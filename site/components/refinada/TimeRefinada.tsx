@@ -129,6 +129,10 @@ export function TimeRefinada() {
         // contrast(1.04)); o CSS do Site aplica o MESMO tratamento só às <img> que o módulo não controla
         // (estático, celular, sem JS, módulo ausente) — nunca filtro duplo. Arquivos de foto intactos.
         cor: "mono",
+        // codex/brand-03d2-v1 (contrato 0.5.0-03d2): o plano tonal do retrato é pintado PELO MÓDULO (`fundo`),
+        // alinhado à grade de pixel junto com a foto; o quadro e a coluna do Site ficam transparentes com o módulo
+        // ativo (marca-03d2.css). A cor vem do token bg/sunken da seção (claro: #EDEDED), não de um valor fixo.
+        fundo: getComputedStyle(host).getPropertyValue("--ararat-bg-sunken").trim() || null,
         onEstado: (e) => setEst({ ...e }),
       });
     } catch {

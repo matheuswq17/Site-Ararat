@@ -75,6 +75,7 @@ export function HomeOpening({
   coverColor = COVER_COLOR,
   titleLines,
   titleSecondary,
+  introModuloMs,
 }: {
   motionPackage: MotionPackageInfo | null;
   mri: MriSource;
@@ -96,6 +97,11 @@ export function HomeOpening({
    *  setLayout + setPassage de novo, fazendo o módulo redesenhar ~30 vezes por segundo parado, sem
    *  rolagem (medido na 0.6.0 e na 0.2.1). Com esta opção o observador compara o valor antigo. */
   revealOnChange?: boolean;
+  /** Duração da abertura do PRÓPRIO módulo (ms), contada de quando ele começa. Com ela, o fim da abertura do
+   *  Site por TEMPO (1400 ms após a navegação) não corta a abertura do módulo: ela termina sozinha nesse prazo
+   *  (rede de segurança: setIntroTime(null) ao fim dele). Interação, pausa, resize ou movimento reduzido continuam
+   *  concluindo na hora. Sem a opção (rotas de comparação), o comportamento anterior. 03D2: 900 ms. */
+  introModuloMs?: number;
   /** Textos das etapas da Jornada (padrão do componente se ausente). */
   journeySteps?: JourneyStep[];
   journeyIntro?: string;
@@ -446,6 +452,7 @@ export function HomeOpening({
     let ro: ResizeObserver | null = null;
     let canvasMo: MutationObserver | null = null;
     let headMo: MutationObserver | null = null;
+    let introTimer: ReturnType<typeof setTimeout> | undefined;
 
     (async () => {
       try {
@@ -455,6 +462,7 @@ export function HomeOpening({
         if (cancelled) return;
         if (typeof mod.createHomeSculpture !== "function") throw new Error("createHomeSculpture ausente");
         const introOn = !!document.getElementById("ararat-intro") && performance.now() < INTRO_DEADLINE_MS;
+        const introInicio = performance.now();
         const hr = host.getBoundingClientRect();
         const frame = document.querySelector<HTMLElement>("#jornada [data-layout]");
         const fr = frame?.getBoundingClientRect();
@@ -491,8 +499,12 @@ export function HomeOpening({
         if (introOn) {
           headMo = new MutationObserver(() => {
             if (!document.getElementById("ararat-intro")) {
-              sculpture.current?.setIntroTime(null);
               headMo?.disconnect();
+              // Fim por tempo (intro-script marca o motivo): deixa o módulo completar o próprio gesto.
+              const porTempo = (window as Window & { __araratIntroFim?: string }).__araratIntroFim === "tempo";
+              const resta = introModuloMs && porTempo ? introInicio + introModuloMs - performance.now() : 0;
+              if (resta > 0) introTimer = setTimeout(() => sculpture.current?.setIntroTime(null), resta);
+              else sculpture.current?.setIntroTime(null);
             }
           });
           headMo.observe(document.head, { childList: true });
@@ -519,12 +531,13 @@ export function HomeOpening({
       ro?.disconnect();
       canvasMo?.disconnect();
       headMo?.disconnect();
+      clearTimeout(introTimer);
       try {
         sculpture.current?.destroy();
       } catch {}
       sculpture.current = null;
     };
-  }, [config, readScene, schedule, update]);
+  }, [config, readScene, schedule, update, introModuloMs]);
 
   // Estado público de cobertura só depois que o React aplicou inert/controles/aviso no DOM:
   // quem observa data-cover (testes, CSS) nunca vê "revealed" com os controles ainda presos.

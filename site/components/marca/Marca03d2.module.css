@@ -28,6 +28,13 @@
 .cabecalho {
   width: 192px;
 }
+/* Proporção exata do arquivo também ANTES de a imagem carregar (o rodapé é lazy): os atributos width/height
+   são inteiros (232 × 27) e dariam 8,59 : 1 em vez de 8,658 : 1 até o carregamento — era a instabilidade do
+   teste "assinatura do rodapé" em telas grandes. */
+img.cabecalho,
+.rodape {
+  aspect-ratio: 1021.65 / 118;
+}
 .rodape {
   width: 232px;
 }

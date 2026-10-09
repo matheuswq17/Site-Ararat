@@ -992,6 +992,13 @@ html:has([data-marca="03d2"]) .skip-link {
   background: var(--ararat-bg-sunken);
   border-radius: 0;
 }
+/* Com o módulo do Motion ativo (0.5.0-03d2), quadro e coluna ficam transparentes: o plano tonal (bg/sunken) é
+   pintado pelo módulo (opção `fundo`), alinhado ao pixel inteiro junto com a foto. Um fundo pintado pelo Site
+   na fração de pixel deixaria uma linha diferente entre os modos normal e reduzido (contrato do Motion §3). */
+[data-marca="03d2"] #time [class*="__portraitCol"]:has([data-motor="modulo"]),
+[data-marca="03d2"] #time [class*="__portrait"][data-motor="modulo"] {
+  background: transparent;
+}
 [data-marca="03d2"] #time [class*="__semFoto"] {
   background: var(--ararat-bg-selected);
   border-radius: 0;
