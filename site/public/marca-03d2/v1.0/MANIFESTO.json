@@ -130,6 +130,18 @@
    "bytes": 1204,
    "sha256": "ff98fa1143801afb92d2af95a13eb3319d9674abf42638a52892b855b812e9b5",
    "uso": "revelação de 900 ms (uma vez por sessão; reduzido = 140 ms; pausa = quadro final)"
+  },
+  {
+   "caminho": "06_grafismos/ararat-planos-tonais-claro.svg",
+   "bytes": 1299,
+   "sha256": "82e49d0e53a18b54cef92d554a0cf1fdb53030c6c0bcce8ef2f9928b2e722198",
+   "uso": "Contato (claro, editorial-v1) · faixa própria na base da seção, uma vez na página, sem texto por cima"
+  },
+  {
+   "caminho": "06_grafismos/ararat-planos-tonais-claro-retrato.svg",
+   "bytes": 1322,
+   "sha256": "a4868202c94c567d6a7f89cc5e9cf62ac07a19b90d6a9298e1b7f9ebbfa8af7d",
+   "uso": "Contato (claro, editorial-v1) · mesma faixa no celular (retrato 4:5, mantém o cume)"
   }
  ]
 }

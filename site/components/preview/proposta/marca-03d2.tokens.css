@@ -1,7 +1,7 @@
 /* GERADO por tests/marca-03d2-tokens.mjs a partir de public/marca-03d2/v1.0/02_tokens/ararat-03d2.tokens.css
    (cópia byte a byte do kit ARARAT 03D2 v1.0). Não editar à mão: rode "node tests/marca-03d2-tokens.mjs --gerar".
    Só os seletores mudam: escala e tema ESCURO no escopo da marca (o site é escuro por padrão); tema CLARO nas
-   seções editoriais claras (#ciencia, #time). O bloco prefers-color-scheme do kit é omitido. */
+   seções claras (#plataforma, #ciencia, #time, #contato). O bloco prefers-color-scheme do kit é omitido. */
 
 /* :root do kit — escalas, tipografia, espaço, raio, bordas, tempos, layout */
 [data-marca="03d2"],
@@ -172,7 +172,7 @@ html:has([data-marca="03d2"]) {
 }
 
 /* :root, [data-theme="claro"] do kit — seções claras */
-[data-marca="03d2"] :is(#ciencia, #time) {
+[data-marca="03d2"] :is(#plataforma, #ciencia, #time, #contato) {
   --ararat-bg-canvas: #F6F6F6;
   --ararat-bg-surface: #FFFFFF;
   --ararat-bg-raised: #FFFFFF;

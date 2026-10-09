@@ -55,7 +55,8 @@
    Os tokens (escala, tema escuro padrão, tema claro em #ciencia/#time) vêm de marca-03d2.tokens.css.
    Aqui só o redirecionamento das variáveis antigas do site, por função. */
 [data-marca="03d2"],
-html:has([data-marca="03d2"]) {
+html:has([data-marca="03d2"]),
+[data-marca="03d2"] :is(#plataforma, #contato) {
   /* Dados (barras da Explicabilidade): sem tokens próprios no kit → texto secundário / borda forte. */
   --marca-dado-positivo: var(--ararat-text-secondary);
   --marca-dado-negativo: var(--ararat-border-strong);
@@ -807,7 +808,7 @@ html:has([data-marca="03d2"]) .skip-link {
   bottom: 0;
   height: var(--faixa-recorte);
   z-index: -1;
-  background: url("/marca-03d2/v1.0/06_grafismos/ararat-planos-tonais-escuro.svg") 50% 22% / cover no-repeat;
+  background: url("/marca-03d2/v1.0/06_grafismos/ararat-planos-tonais-claro.svg") 50% 22% / cover no-repeat;
   pointer-events: none;
 }
 @media (max-width: 720px) {
@@ -815,7 +816,7 @@ html:has([data-marca="03d2"]) .skip-link {
     --faixa-recorte: clamp(200px, 62vw, 320px);
   }
   [data-marca="03d2"] #contato .marca-recorte {
-    background-image: url("/marca-03d2/v1.0/06_grafismos/ararat-planos-tonais-escuro-retrato.svg");
+    background-image: url("/marca-03d2/v1.0/06_grafismos/ararat-planos-tonais-claro-retrato.svg");
     background-position: 50% 30%;
   }
 }
@@ -1056,5 +1057,234 @@ html:has([data-marca="03d2"]) .skip-link {
 @media (forced-colors: active) {
   [data-marca="03d2"] .btn-gold {
     border-color: ButtonText;
+  }
+}
+
+/* ══ 11. Composição editorial (codex/brand-03d2-editorial-v1) ═══════════════════════════════════════════════
+   Presença editorial com precisão de instrumento: hierarquia forte, ritmo claro/escuro por capítulo e as
+   imagens reais com mais espaço. Só layout, tipografia e temas — os módulos do Motion não mudam aqui. */
+
+/* ── 11.1 Primeira dobra: texto e montanha numa composição só ─────────────────────────────────────────────
+   Hierarquia: "Contrast is information. / We measure." em h1 (44/48 → 32/36 no celular) e "You decide."
+   em display (64/68 → 40/44) a 600 — a frase da decisão humana é a mais forte da tela. Uma ação principal
+   (botão primário, entrar na imagem) e uma secundária como link com seta (Plataforma), sem dois botões
+   competindo. Nota de estado científico mantida. */
+[data-tipografia="refinada"][data-marca="03d2"] #hero-title {
+  font-size: var(--ararat-type-h1-size);
+  line-height: 1.09;
+  letter-spacing: var(--ararat-type-h1-tracking);
+  max-width: none;
+}
+[data-tipografia="refinada"][data-marca="03d2"] #hero-title > span:last-child {
+  display: block;
+  margin-top: 0.12em;
+  font-size: var(--ararat-type-display-size);
+  line-height: 1.0625;
+  font-weight: 600;
+  letter-spacing: var(--ararat-type-display-tracking);
+  color: var(--ararat-text-primary);
+}
+@media (max-width: 600px) {
+  [data-tipografia="refinada"][data-marca="03d2"] #hero-title {
+    font-size: min(var(--ararat-type-h1-size), 8.4vw);
+  }
+  [data-tipografia="refinada"][data-marca="03d2"] #hero-title > span:last-child {
+    font-size: min(var(--ararat-type-display-size), 11.2vw);
+  }
+}
+/* Ação secundária = link com seta (ar-link--arrow do kit): mesmo alvo de toque, sem moldura de botão. */
+[data-marca="03d2"] [data-opening="content"] .btn-ghost {
+  border-color: transparent;
+  background: transparent;
+  padding-inline: 4px;
+  color: var(--ararat-text-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+  text-decoration-color: var(--ararat-border-strong);
+}
+[data-marca="03d2"] [data-opening="content"] .btn-ghost:hover {
+  background: transparent;
+  border-color: transparent;
+  text-decoration-color: var(--ararat-text-primary);
+}
+@media (max-width: 600px) {
+  /* Celular: o primário ocupa a largura; o link fica alinhado à esquerda, abaixo. */
+  [data-marca="03d2"] [data-opening="content"] [class*="__actions"] {
+    align-items: flex-start;
+  }
+  [data-marca="03d2"] [data-opening="content"] [class*="__actions"] .btn-gold {
+    align-self: stretch;
+  }
+}
+
+/* Desktop (≥ 1200 px): duas colunas — texto à esquerda, arte à direita, na mesma altura. A montanha vem para
+   junto do texto e cabe inteira na 1ª tela também em telas baixas (1280 × 600). O slot continua sendo o
+   retângulo que o Site passa ao módulo (art), na proporção do poster (5:3); a geometria não muda. */
+@media (min-width: 1200px) {
+  [data-marca="03d2"] [data-opening="front"] {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: center;
+    column-gap: clamp(24px, 3vw, 64px);
+    width: 100%;
+    max-width: calc(var(--content-max) + var(--gutter) * 2);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+    padding-bottom: clamp(48px, 9vh, 104px);
+  }
+  [data-marca="03d2"] [data-opening="content"] {
+    grid-column: 1;
+    grid-row: 1;
+    margin: 0;
+    padding-inline: 0;
+    max-width: none;
+    width: 100%;
+  }
+  [data-marca="03d2"] [data-opening="front"] > [class*="__art"] {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+    padding-top: 0;
+    align-self: center;
+  }
+  [data-marca="03d2"] [data-opening="slot"] {
+    width: 100%;
+  }
+  /* O convite à rolagem é absoluto dentro da frente (agora uma grade centrada): alinha à margem do texto. */
+  [data-marca="03d2"] [data-opening="front"] > [data-opening="invite"] {
+    left: var(--gutter);
+  }
+}
+
+/* ── 11.2 Time: comparação natural × P&B (só para revisão: ?retrato=natural) ──────────────────────────────
+   Padrão = P&B de exibição. Com ?retrato=natural, as fotos que o Site controla também ficam sem filtro; o
+   módulo recebe cor "natural". Os pontos da troca seguem monocromáticos nas duas. */
+[data-marca="03d2"] #time[data-retrato="natural"] img:not(.rp-foto) {
+  filter: none;
+}
+
+/* ── 11.3 Ritmo por capítulo (tema claro/escuro) ───────────────────────────────────────────────────────────
+   escuro  · Primeira dobra + Jornada + Passagem — a imagem (RM legível sobre escuro)
+   CLARO   · Plataforma — o produto: capturas reais do Hub (claro) e do Viewer (escuro) em moldura preta
+   escuro  · Explicabilidade — de novo a RM
+   CLARO   · Ciência + Time — publicação e pessoas (leitura longa)
+   escuro  · FAQ
+   CLARO   · Contato — o convite, com o recorte das camadas (claro) como fecho
+   escuro  · Rodapé
+   Os tokens claros entram por marca-03d2.tokens.css (seções #plataforma, #ciencia, #time, #contato). Na troca de
+   tema não há fio nem degradê: a própria mudança de superfície separa os capítulos. */
+[data-marca="03d2"] :is(#plataforma, #contato) {
+  background: var(--ararat-bg-canvas);
+  color: var(--ararat-text-secondary);
+}
+[data-marca="03d2"] #contato {
+  border-top: 0;
+}
+[data-marca="03d2"] #contato :is(h2, h3, [class*="__title"]) {
+  color: var(--ararat-text-primary);
+}
+[data-marca="03d2"] #plataforma :is(h2, h3) {
+  color: var(--ararat-text-primary);
+}
+[data-marca="03d2"] #faq {
+  border-top: 0;
+}
+
+/* ── 11.4 Plataforma: capturas reais ─────────────────────────────────────────────────────────────────────
+   O tema claro dá às capturas o contraste de uma página de produto (Hub claro e Viewer escuro, cada um na própria
+   placa). A legenda das etapas mantém a coluna de 280 px: estreitá-la alonga a lista e, em telas baixas, a grade
+   passaria da altura do palco (medido: 1280 × 600). O enquadramento dentro do palco (aproximações por etapa,
+   para os controles ficarem legíveis) é do módulo do Motion — pedido com as medidas reais em
+   docs/coordination/BRAND-03D2-EDITORIAL-SITE.md. Nada é ampliado pelo Site. */
+
+/* ── 11.5 Ciência: publicação em composição editorial ─────────────────────────────────────────────────────
+   Fio superior forte (text/primary, 2 px), sem cartão. Esquerda: título bibliográfico curto (h2) e a pergunta
+   estudada em destaque (body-lg maior, text/primary). Direita: referência completa (autoria, título, periódico,
+   DOI em mono) e a ação de ler a publicação (botão primário). Nota de separação da segmentação abaixo. */
+[data-marca="03d2"] #ciencia [class*="__pub"]:is(article) {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  grid-template-areas:
+    "kicker kicker"
+    "titulo ref"
+    "pergunta ref"
+    "pergunta acao"
+    "nota nota";
+  column-gap: clamp(32px, 5vw, 88px);
+  row-gap: 20px;
+  max-width: none;
+  margin-top: clamp(48px, 7vh, 80px);
+  padding: clamp(28px, 3vw, 40px) 0 clamp(28px, 3vw, 40px);
+  background: transparent;
+  border: 0;
+  border-top: 2px solid var(--ararat-text-primary);
+  border-bottom: 1px solid var(--ararat-border-default);
+  border-radius: 0;
+}
+[data-marca="03d2"] #ciencia [class*="__pubKicker"] { grid-area: kicker; }
+[data-marca="03d2"] #ciencia [class*="__pubTitle"] {
+  grid-area: titulo;
+  margin: 0;
+  font-size: var(--ararat-type-h2-size);
+  line-height: 1.19;
+  font-weight: 500;
+  letter-spacing: var(--ararat-type-h2-tracking);
+  color: var(--ararat-text-primary);
+  max-width: 22em;
+}
+[data-marca="03d2"] #ciencia :is([class*="__pubQuestion"], #_) {
+  grid-area: pergunta;
+  margin: 0;
+  padding-left: 20px;
+  border-left: 2px solid var(--ararat-text-primary);
+  font-size: 1.25rem;
+  line-height: 1.5;
+  color: var(--ararat-text-primary);
+  max-width: 34em;
+  align-self: start;
+}
+[data-marca="03d2"] #ciencia [class*="__pubLabel"] {
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--ararat-font-mono);
+  font-size: var(--ararat-type-label-size);
+  line-height: var(--ararat-type-label-line);
+  font-weight: 500;
+  letter-spacing: var(--ararat-type-label-tracking);
+  text-transform: uppercase;
+  color: var(--ararat-text-tertiary);
+}
+[data-marca="03d2"] #ciencia [class*="__pubRef"] {
+  grid-area: ref;
+  margin: 0;
+  align-self: start;
+  font-size: var(--ararat-type-body-sm-size);
+  line-height: var(--ararat-type-body-sm-line);
+  color: var(--ararat-text-secondary);
+}
+[data-marca="03d2"] #ciencia [class*="__pubLink"] {
+  grid-area: acao;
+  align-self: end;
+  justify-self: start;
+  min-height: 44px;
+  padding-inline: 20px;
+}
+[data-marca="03d2"] #ciencia [class*="__pubNote"] {
+  grid-area: nota;
+  margin: 0;
+  font-size: var(--ararat-type-caption-size);
+  line-height: var(--ararat-type-caption-line);
+}
+@media (max-width: 900px) {
+  [data-marca="03d2"] #ciencia [class*="__pub"]:is(article) {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "kicker" "titulo" "pergunta" "acao" "ref" "nota";
+  }
+  [data-marca="03d2"] #ciencia [class*="__pubTitle"] {
+    font-size: var(--ararat-type-h3-size);
+  }
+  [data-marca="03d2"] #ciencia [class*="__pubQuestion"] {
+    font-size: 1.125rem;
   }
 }

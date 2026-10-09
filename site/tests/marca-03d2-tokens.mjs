@@ -8,7 +8,7 @@
 //   :root { escalas, tipo, espaço, raio, bordas, tempos, layout }  → escopo da marca (wrapper e <html>)
 //   [data-theme="escuro"] { … }   → escopo da marca: o site é escuro por padrão (brand book: "o site e o
 //                                   Viewer usam o escuro como padrão")
-//   :root, [data-theme="claro"] { … } → seções editoriais claras do Site (#ciencia, #time)
+//   :root, [data-theme="claro"] { … } → seções claras do Site (Plataforma, Ciência, Time, Contato — editorial-v1)
 //   @media (prefers-color-scheme: dark) → omitido (o tema do site não segue o sistema)
 //   @media (max-width: 720px) e (prefers-reduced-motion) → mesmos valores, mesmo escopo
 import { readFileSync, writeFileSync } from "node:fs";
@@ -19,7 +19,7 @@ const SITE = join(dirname(fileURLToPath(import.meta.url)), "..");
 const OFICIAL = join(SITE, "public/marca-03d2/v1.0/02_tokens/ararat-03d2.tokens.css");
 const DESTINO = join(SITE, "components/preview/proposta/marca-03d2.tokens.css");
 const ESCOPO = '[data-marca="03d2"],\nhtml:has([data-marca="03d2"])';
-const CLARO = '[data-marca="03d2"] :is(#ciencia, #time)';
+const CLARO = '[data-marca="03d2"] :is(#plataforma, #ciencia, #time, #contato)';
 
 /** Blocos de nível superior (seletor/at-rule + corpo), sem interpretar valores. */
 function blocos(css) {
@@ -52,7 +52,7 @@ export function gerar() {
   return `/* GERADO por tests/marca-03d2-tokens.mjs a partir de public/marca-03d2/v1.0/02_tokens/ararat-03d2.tokens.css
    (cópia byte a byte do kit ARARAT 03D2 v1.0). Não editar à mão: rode "node tests/marca-03d2-tokens.mjs --gerar".
    Só os seletores mudam: escala e tema ESCURO no escopo da marca (o site é escuro por padrão); tema CLARO nas
-   seções editoriais claras (#ciencia, #time). O bloco prefers-color-scheme do kit é omitido. */
+   seções claras (#plataforma, #ciencia, #time, #contato). O bloco prefers-color-scheme do kit é omitido. */
 
 /* :root do kit — escalas, tipografia, espaço, raio, bordas, tempos, layout */
 ${ESCOPO} {
