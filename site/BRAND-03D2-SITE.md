@@ -1,8 +1,8 @@
 # ARARAT 03D2 no site — quarta alternativa visual (`codex/brand-03d2-v1`)
 
 **Data:** 09/10/2026 · **Base:** Sinal integrada `0063ba3437722c0348b775e3b77f632f8bb75196`
-**Situação:** implementação concluída e verificada tecnicamente. A apresentação é **INTERMEDIÁRIA** porque os
-módulos do Motion servidos ainda são os pacotes **Sinal** (§7). **Não houve aprovação estética, clínica ou de marca.**
+**Situação:** implementação concluída e verificada tecnicamente, **com os pacotes 03D2 do Motion integrados**
+(`codex/brand-03d2-motion-v1` @ `8568d8f`, §7). **Não houve aprovação estética, clínica ou de marca.**
 
 ## 1. Alternativas preservadas (mesmo conteúdo, só a identidade muda)
 
@@ -166,48 +166,89 @@ contato pendente: estado por forma (círculo vazio).
 3. O backdrop do diálogo de captura é `#111111` a 92 %.
 4. Barras da Explicabilidade: o kit não tem tokens de dados; usa texto secundário e borda forte.
 5. Nas larguras < 380 px o gutter do cabeçalho é 16 px, e o conteúdo segue com 20 px.
-6. Nos módulos Sinal ainda servidos, o desenho do Motion usa `#E2E2E2` (onde o 03D2 usaria `#EDEDED`) e `#777777`
-   no arco. Ver `docs/coordination/BRAND-03D2-SITE.md` §6.
+6. Montanha 1.0.0-03d2: o material do relevo continua com teto `#E2E2E2` (sombreado, não traço — decisão do
+   Motion); o destaque da Jornada e as anotações do Site usam `#EDEDED`; arco `#919191`.
 
-## 7. Motion — apresentação intermediária
+## 7. Motion — pacotes 03D2 integrados
 
-- `codex/brand-03d2-motion-v1` existe, mas está em `0063ba3`, sem pacotes 03D2. **Nenhum pacote 03D2 foi integrado.**
-- Servidos (os mesmos da base Sinal): montanha `0.9.0-sinal`, topo-revisao `0.5.0-sinal`, time-interativo
-  `0.4.0-sinal` e plataforma-fluxo `0.3.0-sinal`, com manifestos íntegros.
-- O briefing com medidas, fundos, zonas, contratos, caminhos e diferenças de token está em
-  `docs/coordination/BRAND-03D2-SITE.md`, na pasta de coordenação do repositório principal
-  (`C:\mvp_ararat_site`). Como os demais documentos de coordenação, ela fica fora do Git pelo `.gitignore`.
-- A entrega final deve ser conferida de novo com os módulos 03D2 integrados.
+**Origem.** `codex/brand-03d2-motion-v1` @ `8568d8f`, pasta `motion/brand-03d2-v1/`, contrato
+`BRAND-03D2-MOTION.md`. Extraídos com `git archive 8568d8f` (bytes dos blobs).
 
-## 8. Verificação (build de produção, porta 3030)
+| Composição | Pacote | Pasta no Site | `sync-manifest --check` | SHA-256 do `manifest.json` = `MANIFESTO.json` da rodada |
+|---|---|---|---|---|
+| Montanha + Jornada 0.4.3-03d2 | 1.0.0-03d2 | `public/previa/home-montanha-1.0.0-03d2/` | 71/71 | sim |
+| Fechamento da Ciência | 0.6.0-03d2 (claro e `-escuro`) | `public/refinada/topo-revisao-0.6.0-03d2/` | 5/5 | sim |
+| Time | 0.5.0-03d2 | `public/refinada/time-interativo-0.5.0-03d2/` | 12/12 | sim |
+| Fluxo Hub → Viewer | 0.4.0-03d2 (assets do 0.1.0) | `public/refinada/plataforma-fluxo-0.4.0-03d2/` | 1/1 | sim |
 
-| Conferência | Resultado |
-|---|---|
-| `typecheck` / `build` | sem erros |
-| `marca-03d2-integridade` (arquivos, bytes servidos, tokens = kit, assinatura no HTML idêntica ao arquivo) | 21/21 + tokens + assinatura em `/`, `/pt`, `/previa/refinada` |
-| `marca-03d2-layout` (EN+PT × 320, 390, 768, 1280, 1440, 1920, 2560 + 1280×600, 390×640, 360×780, 375×667) | 22/22 combinações. Verificados: rolagem lateral, Geist/Mono baixadas e carregadas, só 400/500/600 · Mono 400/500, assinatura ≥ 160 px na proporção do arquivo com 1 a de proteção, rodapé, favicon e manifesto, mensagem e CLS ≤ 0,002 |
-| `marca-03d2-contraste` (todo texto visível, EN+PT × 7 larguras) | 0 reprovados; menor razão 5,89:1 |
-| `marca-03d2-cores` | 0 cores com matiz na camada do Site e 0 no desenho do Motion |
-| `e2e` · `navegacao` · `locales` · `plataforma-fluxo` | 29/29 · 17/17 · 6/6 · 10/10 |
-| `previa` | 46/48 — as mesmas 2 falhas da base e da main |
-| `refinada` | **39/40** |
-| Verificadores do Motion (pacotes Sinal) na página 03D2 | Time 20/20 · Ciência 54/54 · Fluxo 22/28 (ver abaixo) |
+- As pastas novas entram no `.gitattributes` com `-text`.
+- Todos os pacotes anteriores ficam no lugar, sem alteração: `0.9.0-sinal`, `0.5.0-sinal`, `0.4.0-sinal`,
+  `0.3.0-sinal` e mais antigos. As rotas de comparação seguem com os delas.
+- O pacote opcional de revelação da marca (`marca/1.0.0-03d2`) **não** foi integrado. O Site mantém a revelação
+  oficial do kit (CSS) já em uso, sem duplicar a animação.
+- Pontes em `lib/`:
+  - `REFINADA_PACKAGE` → 1.0.0-03d2;
+  - `PAISAGENS["0.6.0-03d2"]` e `["0.6.0-03d2-escuro"]`, com `VERSAO_PADRAO` = 0.6.0-03d2;
+  - `TIME_RETRATO_PACKAGE` → 0.5.0-03d2, com a opção `fundo` tipada;
+  - `MODULOS_FLUXO["0.4.0-03d2"]` como padrão.
 
-Os testes de cabeçalho e rodapé de `refinada.mjs` foram reescritos para o 03D2 com a mesma força, e passaram a
-exigir também 1 a de proteção. Nenhum limite foi relaxado.
+**Time (contrato do Motion §3).**
+- Com o módulo ativo, o quadro (`.portrait[data-motor="modulo"]`) e a coluna (`.portraitCol`) ficam transparentes.
+- O plano tonal passa a ser pintado **pelo módulo** (`fundo`), alinhado ao pixel inteiro junto com a foto.
+- A cor vem do token `--ararat-bg-sunken` da seção (#EDEDED no claro), não de um valor fixo.
+- Sem módulo (estático, celular, sem JS), o quadro mantém o `bg/sunken` do Site.
+- `cor: "mono"` continua: um único filtro por imagem.
 
-**Falhas: preexistentes × regressões (comparadas com a base `0063ba3`, não classificadas automaticamente).**
-- `previa.mjs` (2): falham igual na base `0063ba3` e na main. Preexistentes; não foram tocadas.
-- **Ciência · continuação** (limite > 0,05 % em ≥ 6 de 8 passos, mantido). Falha igual na base `0063ba3`: os
-  três primeiros passos mudam 0,02 %, 0,03 % e 0,05 % (base: 0,02, 0,02, 0,05). É **preexistente em relação ao
-  Sinal** e **regressão em relação à main**. A causa é a coreografia `0.5.0-sinal` (crista completa desde e = 0).
-  Pedido ao Motion no §7 do briefing.
-- **Time · enquadramento final** passa aqui, mas **por coincidência, não por correção**. A fração subpixel do
-  retrato é 0,141 no modo normal e 0,016 no reduzido (base: 0,266 × 0,938). Com as duas abaixo de 0,5 a
-  reamostragem coincide, como na main. A causa continua; o pedido de alinhar ao pixel segue no briefing.
-- **Verificador do Fluxo do Motion, 6 falhas:** a etapa animada espera a legenda ativa em `#E2E2E2` (tema do
-  Sinal); no 03D2 ela é `#EDEDED` (text/primary). Sequência, assets e erros estão corretos. É diferença de tema
-  esperada, não regressão do Site. O verificador precisa do tema 03D2.
+**Abertura (900 ms do módulo).**
+- O script de abertura do Site encerra o estilo da abertura em 1400 ms após a navegação e agora registra o motivo
+  (`window.__araratIntroFim` = `tempo` ou `interacao`).
+- Na refinada (`introModuloMs: 900`), o fim **por tempo** não corta mais a montanha: ela completa os próprios
+  900 ms, contados de quando o módulo começa.
+- O Site chama `setIntroTime(null)` no fim desse prazo, só como rede de segurança.
+- Rolagem, roda, toque, tecla, pausa, resize e movimento reduzido continuam concluindo na hora.
+- As rotas de comparação seguem como antes.
+- Medido com o módulo atrasado de 0, 500 e 800 ms: `data-intro=done` cerca de 900 ms depois do início do módulo, em
+  todos os casos (antes, o fim fixo de 1400 ms cortava a subida quando o módulo chegava depois de ~500 ms).
+
+**Revelação da logo.** A mesma de antes: a do kit, no cabeçalho, uma vez por aba. Ela é independente da montanha e
+nenhuma das duas espera a outra.
+
+## 8. Verificação (build de produção, porta 3030, página integrada)
+
+| Conferência | Intermediária (`7409bf3`, pacotes Sinal) | **Integrada (pacotes 03D2)** |
+|---|---|---|
+| `typecheck` / `build` | ok | ok |
+| `marca-03d2-integridade` | 21/21 + tokens + assinatura | 21/21 + tokens + assinatura |
+| `marca-03d2-layout` (22 combinações EN/PT × 11 telas) | 22/22 | **22/22 em 3 execuções seguidas** (§8.1) |
+| `marca-03d2-contraste` / `-cores` | 0 reprovados / 0 matiz | 0 reprovados / 0 matiz (inclusive no desenho do Motion) |
+| `e2e` · `navegacao` · `locales` · `plataforma-fluxo` | 29/29 · 17/17 · 6/6 · 10/10 | 29/29 · 17/17 · 6/6 · 10/10 |
+| `previa` | 46/48 | 46/48 — as mesmas 2 da base e da `main` |
+| `refinada` | 39/40 | **40/40** |
+| Verificadores do Motion (Ciência · Time · Fluxo) | 54/54 · 20/20 · 22/28 | **55/55 · 21/21 · 28/28** |
+
+Os testes do Site só tiveram trocadas as **strings de versão e os caminhos dos pacotes** (`locales.mjs`,
+`refinada.mjs`, `plataforma-fluxo.mjs`). Nenhum limite foi relaxado.
+
+**As duas regressões herdadas do Sinal, agora:**
+- **Ciência · continuação** (> 0,05 % em ≥ 6 de 8 passos): **0,05 · 0,10 · 0,08 · 0,18 · 0,30 · 0,27 · 0,14 ·
+  0,09 %** (8/8). Ida e volta iguais, 0 mutações parado. Antes: 0,02 · 0,03 · 0,05 … ✘.
+- **Time · enquadramento final** (normal × reduzido, limite 0,1 %): **0,000 %** dos canais diferem, com retratos de
+  440×551 nos dois modos. Agora isso vale por construção (`alinhar()` do módulo + quadro e coluna transparentes),
+  e não pela coincidência de frações registrada na versão intermediária.
+
+### 8.1 Assinatura do rodapé
+
+- O Motion registrou falhas instáveis de "assinatura do rodapé" no `marca-03d2-layout`, em telas diferentes a cada
+  execução.
+- **Causa encontrada:** o `<img>` do rodapé é lazy. Antes de carregar, a caixa usava os atributos inteiros
+  232 × 27, ou seja 8,59 : 1 em vez de 8,658 : 1 do arquivo, e o teste (tolerância 0,05) às vezes media antes do
+  carregamento.
+- **Correção no produto, não no teste:** `aspect-ratio: 1021.65 / 118` na assinatura do rodapé e no `<img>` de
+  reserva do cabeçalho. A caixa tem a proporção exata desde o início, sem deslocamento quando a imagem chega.
+- Resultado: 22/22 em três execuções seguidas.
+
+**Falhas restantes:** só `previa.mjs` (2): "home aprovada em / intacta" e "versão e origem…". Falham igual na base
+Sinal, na versão intermediária e na `main`; são **preexistentes**.
 
 ## 9. Navegador visível × headless
 
@@ -221,14 +262,20 @@ exigir também 1 a de proteção. Nenhum limite foi relaxado.
 
 - "Antes" (base Sinal) e "depois" nas mesmas posições: EN/PT × 390/1440 por seção, e 320/768/1280/1920/2560
   no topo e no rodapé.
+- Página **integrada** (pacotes 03D2) nas mesmas posições, com montagens intermediária × integrada.
 - Prancha das reduções em 16/24/32 px e da assinatura do celular.
 - Gravações em desktop e celular (rolagem completa + Time).
 
 ## 11. Pendências
 
-1. Pacotes 03D2 do Motion (cores do §6 e gesto do kit) → integração e reconferência. Até lá, apresentação intermediária.
-2. Ciência · continuação e Time · enquadramento: pedidos ao Motion (limites mantidos).
-3. Verificadores do Motion precisam do tema 03D2.
+1. Pendências visuais do Motion (`BRAND-03D2-MOTION.md` §6):
+   - peso da crista da Ciência (`#777777`, mais leve que no Sinal);
+   - filete do brilho;
+   - borda reta do recorte na subida da montanha (~200 ms);
+   - arco `#919191`.
+2. Time: P&B de exibição (`mono`) é escolha do Site, para revisão. A captura por elemento em DPR 1,5/2 ainda difere
+   ≤ 1 px CSS entre normal e reduzido (medido pelo Motion, fora do teste do Site, que é em DPR 1).
+3. Revelação da marca: o pacote JS do Motion fica disponível, mas não foi integrado; vale o CSS do kit.
 4. Pontos em aberto do próprio kit: favicon de 16 px, texto EN, pesquisa de marca e registro, imagens clínicas reais
    nas peças.
 5. Revisão visual humana na página integrada e escolha entre as quatro identidades.
