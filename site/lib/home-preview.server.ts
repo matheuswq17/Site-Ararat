@@ -156,6 +156,7 @@ export function readPreviewConfig(pkg: PreviewPackage = PREVIEW_PACKAGE): Previe
     posterDesktop: desktop,
     posterMobile: mobile,
     posterSources: sources,
+    ambient: pkg.ambient === true,
   };
 }
 

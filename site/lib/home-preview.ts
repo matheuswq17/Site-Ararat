@@ -23,6 +23,9 @@ export type PreviewPackage = {
   readonly baseUrl: string;
   /** Versão esperada no manifesto; outra versão desativa a prévia animada (fica o layout estático). */
   readonly version: string;
+  /** Liga a luz ambiente do módulo (opção `ambient` de createHomeSculpture). Só pacotes que a definem para a 1ª
+   *  dobra (montanha ≥ 1.2.0-03d2): luz só em p = 0 depois da abertura. Ausente = desligada. */
+  readonly ambient?: boolean;
 };
 
 export const PREVIEW_PACKAGE = {
@@ -51,12 +54,15 @@ export const PREVIEW_PACKAGE = {
 // manifest = MANIFESTO.json da rodada). Abertura = gesto 03D2 de 900 ms (o relevo sobe da linha de base); arco #919191.
 // A 0.9.0-sinal e as anteriores ficam em public/previa/ sem alteração.
 export const REFINADA_PACKAGE = {
-  // codex/brand-03d2-editorial-v1: montanha 1.1.0-03d2 do Motion (codex/brand-03d2-editorial-motion-v1 @ e340de1;
-  // sync-manifest --check 93/93) = 1.0.0-03d2 + composicao { alinhar, alturaUtil } + posters da 1ª dobra editorial.
-  // A 1.0.0-03d2 continua em public/previa/home-montanha-1.0.0-03d2/ para comparação.
-  dir: "home-montanha-1.1.0-03d2",
-  baseUrl: "/previa/home-montanha-1.1.0-03d2/",
-  version: "1.1.0-03d2",
+  // codex/brand-03d2-editorial-v1: montanha 1.2.0-03d2 do Motion (codex/brand-03d2-editorial-motion-v1 @ e4bed14,
+  // pacote em fe31932; sync-manifest --check 93/93; sha256 do manifest = MANIFESTO.json) = 1.1.0-03d2 + luz ambiente
+  // da 1ª dobra (onda nas curvas de nível, só em p = 0, depois da abertura; contrato AMBIENTE-1A-DOBRA-MOTION.md).
+  // Só web/home-sculpture.js muda; os outros 92 arquivos são os da 1.1.0. A 1.1.0-03d2 (composicao + posters
+  // editoriais) e a 1.0.0-03d2 continuam em public/previa/ para comparação.
+  dir: "home-montanha-1.2.0-03d2",
+  baseUrl: "/previa/home-montanha-1.2.0-03d2/",
+  version: "1.2.0-03d2",
+  ambient: true,
 } as const satisfies PreviewPackage;
 
 /** Largura máxima do slot da arte (CSS: width min(1100px, 100cqw)) e limite celular/desktop
@@ -99,6 +105,8 @@ export type PreviewConfig = {
   posterMobile: ArtPoster;
   /** Variantes por largura do slot (0.2.1-draft), em ordem; a última cobre até o fim. */
   posterSources: PosterSource[];
+  /** Luz ambiente da 1ª dobra (do pacote; ver PreviewPackage.ambient). */
+  ambient: boolean;
 };
 
 /** Textos da proposta. */

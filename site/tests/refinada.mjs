@@ -355,45 +355,97 @@ await test("convite 'Role para explorar': na 1ª tela, fora dos botões e do tex
   notes.push("    · " + rows.join(" · "));
 });
 
-// montanha 1.1.0-03d2 (= 1.0.0-03d2 + composicao) (mesmo contrato da 0.9.0-sinal) (contrato do Motion, CONTRATO-SITE.md §2 e §7): a luz ambiente
-// passa a vir DESLIGADA por padrão ("repouso: nada se redesenha"; ambient: true só para comparação). Os
-// dois testes abaixo substituem os da luz ambiente da 0.7.x e conferem o novo contrato, com o mesmo rigor.
-await test("montanha 1.1.0-03d2: sem luz ambiente em repouso, pixels da arte parados; pausa, aba oculta e passagem seguem apagadas; uma só fonte do arco", async () => {
-  const { ctx, page, errors } = await open([1280, 720]);
+// montanha 1.2.0-03d2 (contrato AMBIENTE-1A-DOBRA-MOTION.md §4–5; pedido do proprietário em 09/10/2026): a luz
+// ambiente VOLTA, só na 1ª dobra (p = 0), depois da revelação, e o módulo para o laço fora disso. Os dois testes abaixo
+// substituem os do contrato 1.1.0 ("sem luz ambiente em repouso" / "abertura sem ligar luz ambiente"), com o mesmo
+// rigor: além do atributo do módulo, contam os quadros pedidos PELO MÓDULO (rAF por origem na pilha da chamada) e
+// comparam pixels da arte.
+const RAF_POR_ORIGEM = () => {
+  const o = window.requestAnimationFrame.bind(window);
+  window.__rafMontanha = 0;
+  window.requestAnimationFrame = (f) => { if (/home-sculpture\.js/.test(new Error().stack || "")) window.__rafMontanha++; return o(f); };
+};
+async function estadoMontanha(page, ms = 1000) {
+  const a = await page.evaluate(() => window.__rafMontanha);
+  await page.waitForTimeout(ms);
+  return page.evaluate((a) => {
+    const c = document.querySelector("[data-opening=sticky] canvas");
+    return { amb: c?.dataset.ambient ?? "ausente", frame: c?.dataset.ambientFrame ?? "ausente", config: c?.dataset.ambientConfig ?? "ausente", intro: c?.dataset.intro ?? "ausente",
+      raf: window.__rafMontanha - a, p: parseFloat(document.querySelector("[data-opening=root]").style.getPropertyValue("--opening-p")) || 0 };
+  }, a);
+}
+await test("montanha 1.2.0-03d2: luz ambiente só na 1ª dobra parada; sem redesenho na pausa, aba oculta, rolagem, demais etapas e fora da tela; retomada e retorno ao topo sem repetir a abertura; uma só fonte do arco", async () => {
+  const { ctx, page, errors } = await open([1280, 720], { init: RAF_POR_ORIGEM });
   await page.waitForFunction(() => document.querySelector("[data-opening=root]")?.dataset.sculpture === "canvas", null, { timeout: 9000 });
-  const amb = () => page.evaluate(() => document.querySelector("[data-opening=sticky] canvas")?.dataset.ambient ?? "ausente");
-  await page.waitForTimeout(1600); // abertura assentada
-  const seen = new Set();
-  for (let i = 0; i < 20; i++) { seen.add(await amb()); await page.waitForTimeout(150); }
-  assert([...seen].every((v) => v === "off" || v === "ausente"), `luz ambiente ligada em repouso: ${[...seen]}`);
-  // Repouso = nada se redesenha: dois quadros da arte, 1,5 s de intervalo, idênticos.
+  await page.waitForFunction(() => document.querySelector("[data-opening=sticky] canvas")?.dataset.ambient === "light", null, { timeout: 6000 });
+  const linhas = [];
+  const parado = await estadoMontanha(page);
+  linhas.push(`1ª dobra ${parado.amb}/${parado.frame} ${parado.raf} rAF/s`);
+  assert(parado.config === "enabled" && parado.amb === "light" && parado.frame === "light" && parado.p === 0, `1ª dobra: ${JSON.stringify(parado)}`);
+  assert(parado.raf >= 15, `1ª dobra sem laço do módulo: ${parado.raf} rAF/s`);
+  // A luz anda: dois quadros da arte com 1,5 s de intervalo diferem.
   const box = await page.locator("[data-opening=slot]").boundingBox();
   const clip = { x: Math.max(0, box.x), y: Math.max(0, box.y), width: Math.min(box.width, 1280 - Math.max(0, box.x)), height: Math.min(box.height, 720 - Math.max(0, box.y)) };
   const q1 = await page.screenshot({ clip });
   await page.waitForTimeout(1500);
-  const q2 = await page.screenshot({ clip });
-  assert(Buffer.compare(q1, q2) === 0, "a arte mudou em repouso");
+  assert(Buffer.compare(q1, await page.screenshot({ clip })) !== 0, "a luz ambiente não se move na 1ª dobra");
+  // Pausa geral: sem luz, sem laço, quadro parado; retomada: a luz volta.
   await page.locator("header button[aria-pressed]").first().click();
   await page.waitForTimeout(400);
-  const paused = await amb();
+  const pausa = await estadoMontanha(page);
+  const p1 = await page.screenshot({ clip });
+  await page.waitForTimeout(1200);
+  const pausaParada = Buffer.compare(p1, await page.screenshot({ clip })) === 0;
+  linhas.push(`pausa ${pausa.amb}/${pausa.frame} ${pausa.raf} rAF/s`);
+  assert(pausa.amb === "off" && pausa.frame === "none" && pausa.raf === 0 && pausaParada, `pausa: ${JSON.stringify({ ...pausa, pausaParada })}`);
   await page.locator("header button[aria-pressed]").first().click();
+  await page.waitForFunction(() => document.querySelector("[data-opening=sticky] canvas")?.dataset.ambient === "light", null, { timeout: 3000 });
+  linhas.push("retomada light");
+  // Aba oculta: sem laço.
   await page.evaluate(() => { Object.defineProperty(document, "hidden", { configurable: true, get: () => true }); document.dispatchEvent(new Event("visibilitychange")); });
-  await page.waitForTimeout(400);
-  const hidden = await amb();
+  await page.waitForTimeout(300);
+  const oculta = await estadoMontanha(page);
+  linhas.push(`aba oculta ${oculta.amb} ${oculta.raf} rAF/s`);
+  assert(oculta.amb !== "light" && oculta.raf === 0, `aba oculta: ${JSON.stringify(oculta)}`);
   await page.evaluate(() => { Object.defineProperty(document, "hidden", { configurable: true, get: () => false }); document.dispatchEvent(new Event("visibilitychange")); });
-  await page.evaluate(() => scrollTo({ top: 350, behavior: "instant" }));
-  await page.waitForTimeout(400);
-  const passing = await page.evaluate(() => ({ a: document.querySelector("[data-opening=sticky] canvas")?.dataset.ambient ?? "ausente", p: parseFloat(document.querySelector("[data-opening=root]").style.getPropertyValue("--opening-p")) }));
+  await page.waitForFunction(() => document.querySelector("[data-opening=sticky] canvas")?.dataset.ambient === "light", null, { timeout: 3000 });
+  // Entrada da rolagem (faixa de saída, p < 0,04), passagem, Jornada e Plataforma (arte fora da tela): sem laço do módulo.
+  const etapas = [];
+  for (const [nome, alvo] of [["p≈0,02", "small"], ["passagem", 350], ["Jornada", "jornada"], ["Plataforma", "plataforma"]]) {
+    await page.evaluate((alvo) => {
+      if (alvo === "small") scrollTo({ top: Math.round(innerHeight * 0.02 * 0.74), behavior: "instant" });
+      else if (typeof alvo === "number") scrollTo({ top: alvo, behavior: "instant" });
+      else document.getElementById(alvo).scrollIntoView({ behavior: "instant" });
+    }, alvo);
+    await page.waitForTimeout(1200); // a passagem e a ponte assentam
+    const e = await estadoMontanha(page);
+    etapas.push({ nome, ...e });
+    linhas.push(`${nome} (p ${e.p.toFixed(3)}) ${e.amb}/${e.frame} ${e.raf} rAF/s`);
+    assert(e.p > 0 && e.amb !== "light" && e.raf === 0, `${nome}: ${JSON.stringify(e)}`);
+  }
+  assert(etapas[0].p < 0.04 && etapas[1].p > 0.04, `posições de rolagem: ${etapas.map((e) => e.p).join(",")}`);
+  // Retorno ao topo: a luz volta sem repetir a abertura.
+  await page.evaluate(() => scrollTo({ top: 0, behavior: "instant" }));
+  await page.waitForFunction(() => document.querySelector("[data-opening=sticky] canvas")?.dataset.ambient === "light", null, { timeout: 3000 });
+  const volta = await estadoMontanha(page);
+  const abertura = await page.evaluate(() => !!document.getElementById("ararat-intro"));
+  linhas.push(`retorno ${volta.amb} ${volta.raf} rAF/s, intro ${volta.intro}`);
+  assert(volta.amb === "light" && volta.raf >= 15 && volta.intro === "done" && !abertura, `retorno: ${JSON.stringify({ ...volta, abertura })}`);
   const arcs = await page.evaluate(() => ({ canvases: document.querySelectorAll("[data-opening=sticky] canvas").length, siteArc: document.querySelectorAll("#inicio svg path[class*='arc'], [class*='orbit']").length }));
-  notes.push(`    · 1.1.0-03d2: ambiente ${[...seen].join("/")} em repouso, arte idêntica em 1,5 s · pausa → ${paused} · aba oculta → ${hidden} · passagem (p ${passing.p.toFixed(2)}) → ${passing.a}`);
-  for (const v of [paused, hidden, passing.a]) assert(v === "off" || v === "ausente", `ambiente ligado: ${v}`);
-  assert(passing.p > 0.56, "passagem não avançou");
   assert(arcs.canvases === 1 && arcs.siteArc === 0, `arco: ${JSON.stringify(arcs)}`);
   assert(!errors.length, errors[0]);
   await ctx.close();
+  // Movimento reduzido: nenhum laço do módulo e nenhuma luz.
+  const r = await open([1280, 720], { reduced: true, init: RAF_POR_ORIGEM });
+  await r.page.waitForTimeout(1500);
+  const red = await estadoMontanha(r.page);
+  linhas.push(`reduzido ${red.amb} ${red.raf} rAF/s`);
+  assert(red.amb !== "light" && red.raf === 0, `reduzido: ${JSON.stringify(red)}`);
+  await r.ctx.close();
+  notes.push("    · 1.2.0-03d2: " + linhas.join(" · "));
 });
 
-await test("abertura 1.1.0-03d2 assenta (data-intro=done) sem ligar luz ambiente; resize mantém composição", async () => {
+await test("abertura 1.2.0-03d2: revelação uma vez (data-intro=done) e a luz ambiente só depois dela; resize mantém composição", async () => {
   const { ctx, page, errors } = await open([1440, 900], { intro: true, init: () => {
     window.__t = {};
     const t0 = performance.now();
@@ -403,16 +455,22 @@ await test("abertura 1.1.0-03d2 assenta (data-intro=done) sem ligar luz ambiente
       else if (window.__t.introVista != null) mark("assentou");
       const c = document.querySelector("[data-opening=sticky] canvas");
       if (c?.dataset.intro === "done") mark("introDone");
-      if (c?.dataset.ambient && c.dataset.ambient !== "off") mark("ambiente");
+      if (c?.dataset.ambient === "light" && window.__t.introDone == null) mark("luzAntes");
+      if (c?.dataset.ambient === "light") mark("ambiente");
       requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
   } });
   await page.waitForTimeout(5000);
   const t = await page.evaluate(() => window.__t);
-  notes.push(`    · abertura: estilo visto em ${t.introVista} ms, assentou em ${t.assentou} ms, data-intro=done em ${t.introDone} ms; ambiente ${t.ambiente == null ? "nunca ligou" : "ligou em " + t.ambiente + " ms"}`);
+  notes.push(`    · abertura: estilo visto em ${t.introVista} ms, assentou em ${t.assentou} ms, data-intro=done em ${t.introDone} ms; luz ambiente ${t.ambiente == null ? "nunca ligou" : "ligou em " + t.ambiente + " ms"}`);
   assert(t.introDone != null, "abertura não marcou data-intro=done");
-  assert(t.ambiente == null, "luz ambiente ligou");
+  assert(t.luzAntes == null, `luz ambiente antes do fim da abertura (${t.luzAntes} ms)`);
+  assert(t.ambiente != null && t.ambiente >= t.introDone, `luz ambiente não ligou depois da abertura: ${JSON.stringify(t)}`);
+  // Uma vez por sessão: recarregar na mesma aba não repete a revelação.
+  await page.reload({ waitUntil: "networkidle" });
+  const repetiu = await page.evaluate(() => !!document.getElementById("ararat-intro") || window.__araratIntroFim != null);
+  assert(!repetiu, "a revelação se repetiu na mesma sessão");
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.waitForTimeout(1500);
   const r = await page.evaluate(() => ({ sw: document.documentElement.scrollWidth, vw: innerWidth, slotY: Math.round(document.querySelector("[data-opening=slot]").getBoundingClientRect().top) }));
@@ -426,7 +484,6 @@ await test("abertura 1.1.0-03d2 assenta (data-intro=done) sem ligar luz ambiente
   assert(!errors.length, errors[0]);
   await ctx.close();
 });
-
 
 // ---------------- rodada 6: time, FAQ, publicação, Para quem, avisos, contato, rodapé ----------------
 const ORDEM_TIME = ["Matheus Xavier Silva de Toledo", "Miguel", "Rodrigo Gobbo", "Luiz G. Hartmann", "Victor Arthur Ohannesian"];

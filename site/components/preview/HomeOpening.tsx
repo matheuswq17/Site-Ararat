@@ -491,6 +491,10 @@ export function HomeOpening({
         const scene = readScene();
         sculpture.current = mod.createHomeSculpture(host, {
           reducedMotion: latest.current.reduced,
+          // Luz ambiente da 1ª dobra (montanha 1.2.0-03d2): o módulo decide quando corre (p = 0, depois da abertura,
+          // visível, sem pausa, sem movimento reduzido) e para o laço fora disso. O Site só liga a opção do pacote;
+          // sem ela, a opção NÃO é passada (pacotes de outras rotas mantêm o próprio padrão).
+          ...(config.ambient ? { ambient: true } : {}),
           paused: latest.current.paused,
           intro: introOn,
           coverColor,

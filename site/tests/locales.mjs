@@ -17,7 +17,7 @@ try {
     assert.equal(await page.locator("html").getAttribute("lang"), lang);
     assert.equal((await page.locator("#hero-title").textContent()).replace(/\s+/g, " ").trim(), title);
     assert.equal(await page.locator("#time-lista > li").count(), 5);
-    assert.equal(await page.locator('[data-opening="root"]').getAttribute("data-preview-version"), "1.1.0-03d2");
+    assert.equal(await page.locator('[data-opening="root"]').getAttribute("data-preview-version"), "1.2.0-03d2");
     assert.equal(await page.locator('[data-fluxo="root"]').getAttribute("data-modulo"), "0.5.0-03d2");
     if (lang === "en") {
       const untranslated = await page.evaluate((dict) => {
