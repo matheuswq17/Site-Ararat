@@ -271,3 +271,106 @@ O Site não simula nem redesenha nenhum desses estados.
 
 **Estado:** pronto para revisão visual em navegador visível. Não é aprovação estética dos enquadramentos do Motion nem
 da composição do Site.
+
+## 11. Rodada 3: luz ambiente da montanha na 1ª dobra (montanha 1.2.0-03d2)
+
+**Pedido do proprietário:** uma única melhoria. Recuperar o movimento ambiente da montanha enquanto a pessoa não rola,
+com iluminação suave e só monocromática. Layout, textos e enquadramentos aprovados ficam como estão.
+
+**Motion:** `codex/brand-03d2-editorial-motion-v1` @ `e4bed14e57a4e097c7c499120bb8f8fe9d695a85` (pacote em
+`fe31932`), contrato `docs/coordination/AMBIENTE-1A-DOBRA-MOTION.md`, em resposta a `BRAND-03D2-AMBIENTE-SITE.md`.
+
+### 11.1 Pacote e integridade
+
+- **Cópia:** `public/previa/home-montanha-1.2.0-03d2/`, copiada sem alteração.
+- **Conferência:**
+  - `sync-manifest --check` dá **93/93** (tamanho e sha256);
+  - o sha256 do `manifest.json` é igual ao do `MANIFESTO.json` da rodada.
+- **Diferença para a 1.1.0-03d2:** só `web/home-sculpture.js` (e o próprio manifesto). Os outros 92 arquivos (posters,
+  Jornada, RM, mapa, índices) são byte a byte iguais.
+- **Preservadas:** a 1.1.0-03d2, a 1.0.0-03d2 e as anteriores continuam em `public/previa/`.
+
+### 11.2 Integração (só a ponte)
+
+- `REFINADA_PACKAGE` aponta para a 1.2.0-03d2 com `ambient: true`.
+- **Uma propriedade nova:** `ambient` do pacote, que chega à configuração da página. Com ela, `HomeOpening.tsx`
+  passa `ambient: true` a `createHomeSculpture`.
+- **Sem ela, a opção não é passada:** as outras rotas (`/previa`, `/previa/a`, `/previa/b`) e os pacotes de
+  comparação mantêm o próprio padrão.
+- **O que não mudou:** progresso (`setPassage`), pausa (`setPaused`), movimento reduzido (`setReducedMotion`) e a
+  abertura de 900 ms. Aba oculta e saída da tela ficam no próprio módulo.
+- **Nada novo no Site:** nenhuma animação em CSS, nenhum contêiner animado e nenhuma mudança de layout, texto,
+  enquadramento, poster ou outra animação.
+
+### 11.3 Comportamento (medido na página integrada)
+
+Build de produção. `rAF/s` = quadros pedidos **pelo módulo da montanha** (pilha da chamada).
+
+| Estado | `data-ambient` / quadro | rAF/s do módulo |
+|---|---|---|
+| Revelação (uma vez por sessão) | sem luz até `data-intro=done`; recarregar na mesma aba não repete a revelação | — |
+| 1ª dobra parada (p = 0) | light / light; a luz anda | 60–61 |
+| Pausa geral (cabeçalho; menu no celular) | off / none, quadro parado | **0** |
+| Retomada | light, com a entrada própria | 60 |
+| Aba oculta | off | **0** |
+| Entrada da rolagem (p ≈ 0,02) | luz congelada, saindo pelo progresso; ida = volta no mesmo quadro | **0** |
+| Passagem (p ≈ 0,66), Jornada, Plataforma (arte fora da tela) | off / none | **0** |
+| Retorno ao topo | light de novo, `intro` continua `done`, sem estilo de abertura | 60 |
+| Movimento reduzido | poster, sem canvas | **0** |
+
+- **Fora da 1ª dobra:** os rAF que sobram são de outras animações (Jornada), não da montanha.
+- **Celular** (390×844 e 390×640) e **1280×600:** mesma regra.
+
+### 11.4 Testes
+
+| Suíte | Resultado |
+|---|---|
+| refinada, com os 2 testes do contrato antigo substituídos | **40/40** |
+| e2e · navegacao · locales · plataforma-fluxo | 29/29 · 17/17 · 6/6 · 10/10 |
+| marca-03d2: integridade / layout / contraste / cores | 23/23 · ✔ · ✔ · ✔ |
+| previa | 46/48: as mesmas 2 falhas da home `/`, que já existiam |
+| Motion `verify-ambiente.mjs` (módulo) | 25/25 |
+| Motion `site-ambiente.mjs` na página integrada | **15/15** em `/pt` |
+
+**Nota sobre o `site-ambiente.mjs` em `/`:** lá ele dá 14/15. O script procura o botão pelo rótulo em português
+("Pausar animações"), que não existe na página em inglês, e por isso a pausa não é acionada. Conferi em `/` à parte:
+a pausa leva a off/none e 0 rAF, e a retomada volta a light com 60 rAF.
+
+**Os 2 testes substituídos em `refinada.mjs`:**
+1. **Antes:** "sem luz ambiente em repouso". **Agora:** "luz ambiente só na 1ª dobra parada".
+   - Exige `light` e laço do módulo (≥ 15 rAF/s) em p = 0, e a arte mudando.
+   - Exige **0 rAF do módulo** e nenhuma luz em:
+     - pausa, com o quadro parado;
+     - aba oculta;
+     - entrada da rolagem (p < 0,04);
+     - passagem, Jornada e Plataforma;
+     - movimento reduzido.
+   - Exige a retomada e o retorno ao topo com luz e sem repetir a abertura.
+2. **Antes:** "abertura sem ligar luz ambiente". **Agora:** "revelação uma vez e a luz só depois dela".
+   - Nenhuma luz antes de `data-intro=done`.
+   - A luz liga depois.
+   - Recarregar na mesma sessão não repete a revelação.
+   - O resize mantém a composição.
+
+### 11.5 Gravações (fora do repositório)
+
+- **Página integrada em 1440×900 e 390×844:**
+  - revelação;
+  - 1ª dobra parada com a luz;
+  - entrada da rolagem;
+  - passagem;
+  - volta ao topo;
+  - pausa e retomada.
+- **Recorte 2× da montanha em 1440:** a luz é discreta de propósito.
+- **Antes × depois da 1ª dobra:** 1.1.0 em `a87ed3d` × 1.2.0.
+- A presença da luz (discreta o bastante? perceptível?) ainda precisa de **revisão humana em navegador visível e
+  monitor real**. O custo em aparelho físico também não foi medido. O Motion mediu em headless sem GPU: ≈ 0,3 ms
+  por quadro, 30 q/s de desenho.
+
+### 11.6 Pendências que continuam abertas (separadas, não resolvidas por esta rodada)
+
+1. **Poster da montanha no celular baixo:** é a mesma do §10.6.2. Com movimento reduzido, pausa ou sem JS, 390×640
+   mostra o poster `topo` com o sopé cortado, porque não há poster para `alturaUtil`. Pedido ao Motion para uma rodada
+   própria.
+2. **Ampliação das capturas do fluxo 0.5.0:** é a mesma do §10.6.1. O pico medido foi 2,66× em 1440@2x e 2,97× em
+   390@3x. Pedido ao Motion um teto de escala (≤ 2,0 na interface, ≤ 1,75 na imagem médica).
