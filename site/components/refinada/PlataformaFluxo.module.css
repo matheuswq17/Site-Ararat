@@ -285,6 +285,42 @@
   white-space: nowrap;
 }
 
+/* Telas baixas com as legendas ao lado (≥ 901 px, até 820 px de altura): a lista das 7 etapas com todos os textos
+   passava da altura do quadro fixo (1280 × 600: 601 px de lista para 484 px úteis). Aqui a lista mostra número e
+   título das 7 etapas, e o texto da etapa ativa aparece numa área reservada logo abaixo da lista (altura fixa de
+   até 4 linhas; o texto começa 12 px abaixo do último título): trocar de etapa não desloca nada (CLS 0). Os textos inativos ficam transparentes, não removidos — seguem
+   no DOM e na leitura por tecnologia assistiva, como no roteiro estático. */
+@media (min-width: 901px) and (max-height: 820px) {
+  .legendas {
+    --reserva-texto: calc(4 * 0.86rem * 1.45 + 12px);
+    position: relative;
+    padding-bottom: var(--reserva-texto);
+  }
+  .legendas li {
+    padding-block: 5px;
+  }
+  .legendas li .legendaTexto {
+    position: absolute;
+    left: calc(12px + 2.1rem + 8px);
+    right: 0;
+    top: calc(100% - var(--reserva-texto) + 12px);
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .fluxo[data-fluxo-etapa="1"] .legendas li[data-etapa="1"] .legendaTexto,
+  .fluxo[data-fluxo-etapa="2"] .legendas li[data-etapa="2"] .legendaTexto,
+  .fluxo[data-fluxo-etapa="3"] .legendas li[data-etapa="3"] .legendaTexto,
+  .fluxo[data-fluxo-etapa="4"] .legendas li[data-etapa="4"] .legendaTexto,
+  .fluxo[data-fluxo-etapa="5"] .legendas li[data-etapa="5"] .legendaTexto,
+  .fluxo[data-fluxo-etapa="6"] .legendas li[data-etapa="6"] .legendaTexto,
+  .fluxo[data-fluxo-etapa="7"] .legendas li[data-etapa="7"] .legendaTexto,
+  .fluxo:not([data-fluxo-etapa]) .legendas li[data-etapa="1"] .legendaTexto,
+  .fluxo[data-fluxo-etapa="0"] .legendas li[data-etapa="1"] .legendaTexto {
+    opacity: 1;
+  }
+}
+
 /* ≤ 900 px: só a legenda ativa, acima do palco; trilho um pouco mais longo. */
 @media (max-width: 900px) {
   .trilho {
