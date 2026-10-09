@@ -75,6 +75,15 @@ type EstadoFabrica = "carregando" | "falhou" | CreateStipplePortrait;
 export function TimeRefinada() {
   const { t, locale } = useTranslation();
   const [js, setJs] = useState(false);
+  // codex/brand-03d2-editorial-v1 — COMPARAÇÃO PARA REVISÃO (não é decisão): ?retrato=natural mostra as fotos em cor
+  // natural em repouso; o padrão continua P&B de exibição ("mono"). Nas duas, os pontos da troca são monocromáticos
+  // (#303030 do módulo). Lido só no cliente; sem JS vale o padrão.
+  const [retratoNatural, setRetratoNatural] = useState(false);
+  useEffect(() => {
+    try {
+      setRetratoNatural(new URLSearchParams(window.location.search).get("retrato") === "natural");
+    } catch {}
+  }, []);
   const [erros, setErros] = useState<Record<string, boolean>>({});
   const [sel, setSel] = useState<string>(TIME[0].id); // FONTE ÚNICA: integrante escolhido na lista
   const [shown, setShown] = useState<string>(TIME[0].id); // só no fallback (fotos empilhadas)
@@ -128,7 +137,7 @@ export function TimeRefinada() {
         // brand-sinal-v1: P&B de EXIBIÇÃO feito pelo próprio módulo 0.4.0-sinal (img.rp-foto: grayscale(1)
         // contrast(1.04)); o CSS do Site aplica o MESMO tratamento só às <img> que o módulo não controla
         // (estático, celular, sem JS, módulo ausente) — nunca filtro duplo. Arquivos de foto intactos.
-        cor: "mono",
+        cor: retratoNatural ? "natural" : "mono",
         // codex/brand-03d2-v1 (contrato 0.5.0-03d2): o plano tonal do retrato é pintado PELO MÓDULO (`fundo`),
         // alinhado à grade de pixel junto com a foto; o quadro e a coluna do Site ficam transparentes com o módulo
         // ativo (marca-03d2.css). A cor vem do token bg/sunken da seção (claro: #EDEDED), não de um valor fixo.
@@ -151,6 +160,10 @@ export function TimeRefinada() {
       setEst(null);
     };
   }, [fabrica, desktop]);
+  // Comparação natural × P&B: troca a apresentação do módulo já montado (setCor), sem remontar.
+  useEffect(() => {
+    inst?.setCor(retratoNatural ? "natural" : "mono");
+  }, [inst, retratoNatural]);
 
   // Seleção → módulo (a última prevalece dentro do módulo; sem fila).
   // O módulo só emite onEstado quando a FASE muda: em foto-estatica (pausa/reduzido/fallback) a troca
@@ -227,7 +240,7 @@ export function TimeRefinada() {
   const rotulo = mostrado ? `Retrato de ${mostrado.nome}${falhaTraduzida ? " — foto indisponível" : ""}` : "Retrato carregando";
 
   return (
-    <section id="time" ref={sectionRef} className={styles.section} aria-labelledby="time-title">
+    <section id="time" ref={sectionRef} className={styles.section} aria-labelledby="time-title" data-retrato={retratoNatural ? "natural" : undefined}>
       <div className="wrap">
         <header className={styles.header}>
           <p className={`eyebrow ${styles.eyebrow}`}>{t("Time")}</p>
@@ -259,7 +272,10 @@ export function TimeRefinada() {
                 <Retrato key={m.id} m={m} sizes="(min-width: 1280px) 440px, 38vw" className={styles.portraitImg} alt={t("")} onErro={falhou(m.id)} erro={!!erros[m.id]} />
               ))}
               {/* Raiz do módulo do Motion: ele cria img.rp-foto, canvas.rp-pontos e div.rp-falha. */}
-              <div ref={stageRef} className={styles.stage} hidden={falhaTraduzida} />
+              {/* Em inglês, o aviso de falha é o texto traduzido do Site; a raiz do módulo fica INVISÍVEL, mas no layout
+                  (visibility, não `hidden`): com display none o IntersectionObserver do módulo o dava como fora da tela,
+                  e a escolha seguinte depois de uma foto 404 nunca terminava (preso em "falha"). */}
+              <div ref={stageRef} className={styles.stage} data-oculto={falhaTraduzida || undefined} />
               {falhaTraduzida && <p className={styles.failure} data-portrait-failure="">{t(rotulo)}</p>}
             </div>
             {js && (
