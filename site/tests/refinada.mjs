@@ -1,7 +1,7 @@
 /**
  * /previa/refinada — rodada integral (cabeçalho, correções funcionais, ritmo editorial, convite à
- * rolagem). Branch experiment/brand-sinal-v1: cabeçalho e rodapé conferem os lockups oficiais do ARARAT
- * Sinal (o ciclo MODEL ↔ PROSTATE segue testado na main) e as cores esperadas são as do Sinal. Complementa tests/previa.mjs, navegacao.mjs e
+ * rolagem). Branch codex/brand-03d2-v1: cabeçalho e rodapé conferem as assinaturas oficiais do ARARAT
+ * 03D2 (o ciclo MODEL ↔ PROSTATE segue testado na main) e as cores esperadas são as do 03D2. Complementa tests/previa.mjs, navegacao.mjs e
  * fontes-carregamento.mjs (que continuam valendo para a rota).
  *   node tests/refinada.mjs          (servidor em :3000; ONLY=regex filtra)
  */
@@ -44,41 +44,44 @@ async function open(vp = [1440, 900], o = {}) {
   return { ctx, page, errors };
 }
 
-// ── 1. Cabeçalho — experimento brand-sinal-v1: lockup COMPACTO oficial do ARARAT Sinal ─────────
-// O ciclo MODEL ↔ PROSTATE não existe nesta identidade; os testes do ciclo ficam na main. Aqui: lockup
-// SVG oficial, sem palavra animada, nome acessível estável e limites de 320–1440 px.
-const LOCKUP = "/marca-sinal/v1.0/logo/ararat-lockup-horizontal-compacto-escuro.svg";
-const LOCKUP_RODAPE = "/marca-sinal/v1.0/logo/ararat-lockup-horizontal-escuro.svg";
-await test("cabeçalho: lockup compacto oficial do Sinal (SVG) no HTML; sem ciclo MODEL/PROSTATE nem wordmark digitado, também após 12 s, com pausa, reduzido e sem JS", async () => {
+// ── 1. Cabeçalho — alternativa codex/brand-03d2-v1: assinatura HORIZONTAL oficial do ARARAT 03D2 ─────
+// O ciclo MODEL ↔ PROSTATE não existe nesta identidade; os testes do ciclo ficam na main. Aqui: o SVG
+// oficial (animável = mesmos caminhos da horizontal) no HTML, sem palavra animada, nome acessível estável,
+// largura ≥ 160 px e área de proteção (1 a) até o próximo controle em 320–1440 px.
+const ASSINATURA = "/marca-03d2/v1.0/07_motion/ararat-assinatura-animavel.svg";
+const ASSINATURA_RODAPE = "/marca-03d2/v1.0/01_logo/assinatura-horizontal/ararat-horizontal-negativo.svg";
+await test("cabeçalho: assinatura oficial do 03D2 (SVG no HTML, idêntico ao arquivo); sem ciclo MODEL/PROSTATE nem wordmark digitado, também após 12 s, com pausa, reduzido e sem JS", async () => {
+  const svg = (await (await fetch(BASE + ASSINATURA)).text()).trim();
   const html = await (await fetch(BASE + ROUTE)).text();
-  assert(html.includes(LOCKUP), "HTML sem o lockup oficial do Sinal");
+  assert(html.match(/<header[\s\S]*?<\/header>/)[0].includes(svg), "HTML sem o SVG oficial idêntico no cabeçalho");
   assert(!/data-word=/.test(html), "ciclo no HTML");
   const { ctx, page, errors } = await open([1440, 900], { intro: true });
-  const sem = () => page.evaluate(() => ({ ciclo: !!document.querySelector("header [data-word]"), texto: document.querySelector("header a[aria-label]").innerText.trim(), img: document.querySelector("header a[aria-label] img")?.getAttribute("src") }));
+  const sem = () => page.evaluate(() => ({ ciclo: !!document.querySelector("header [data-word]"), texto: document.querySelector("header a[aria-label]").innerText.trim(), tipo: document.querySelector("header a[aria-label] [data-assinatura]")?.dataset.assinatura, caminhos: [...document.querySelectorAll("header a[aria-label] svg path")].flatMap((e) => e.getAttribute("d").split(/(?=M)/).filter((x) => x.trim())).length }));
   const r0 = await sem();
   await page.waitForTimeout(12000);
   const r1 = await sem();
-  assert(!r0.ciclo && !r1.ciclo && r0.texto === "" && r1.texto === "" && r1.img === LOCKUP, "cabeçalho: " + JSON.stringify({ r0, r1 }));
+  assert(!r0.ciclo && !r1.ciclo && r0.texto === "" && r1.texto === "" && r1.tipo === "animavel" && r1.caminhos === 14, "cabeçalho: " + JSON.stringify({ r0, r1 }));
   assert(!errors.length, errors[0]);
   await ctx.close();
   for (const o of [{ reduced: true }, { noJs: true }]) {
     const x = await open([1280, 720], o);
-    const img = await x.page.locator("header a[aria-label] img").getAttribute("src");
-    assert(img === LOCKUP && !(await x.page.locator("header [data-word]").count()), `${JSON.stringify(o)}: ${img}`);
+    const r = await x.page.evaluate(() => ({ tipo: document.querySelector("header a[aria-label] [data-assinatura]")?.dataset.assinatura, caminhos: [...document.querySelectorAll("header a[aria-label] svg path")].flatMap((e) => e.getAttribute("d").split(/(?=M)/).filter((x) => x.trim())).length, ciclo: !!document.querySelector("header [data-word]") }));
+    assert(r.tipo === "animavel" && r.caminhos === 14 && !r.ciclo, `${JSON.stringify(o)}: ${JSON.stringify(r)}`);
     await x.ctx.close();
   }
-  const svg = await (await fetch(BASE + LOCKUP)).text();
   const { createHash } = await import("node:crypto");
-  const h = createHash("sha256").update(svg).digest("hex");
-  const oficial = JSON.parse(await (await fetch(BASE + "/marca-sinal/v1.0/MANIFESTO.json")).text()).arquivos.find((a) => LOCKUP.endsWith(a.caminho)).sha256;
-  assert(h === oficial, "SVG servido difere do oficial: " + h);
+  const manif = JSON.parse(await (await fetch(BASE + "/marca-03d2/v1.0/MANIFESTO.json")).text()).arquivos;
+  for (const arq of [ASSINATURA, ASSINATURA_RODAPE]) {
+    const h = createHash("sha256").update(Buffer.from(await (await fetch(BASE + arq)).arrayBuffer())).digest("hex");
+    assert(h === manif.find((a) => arq.endsWith(a.caminho)).sha256, "SVG servido difere do oficial: " + arq);
+  }
 });
 
-await test("cabeçalho: nome acessível estável ('ARARAT MODEL — início'), logo decorativo (alt vazio), sem aria-live; nome oficial, título e rodapé sem PROSTATE", async () => {
+await test("cabeçalho: nome acessível estável ('ARARAT MODEL — início'), logo decorativo (aria-hidden), sem aria-live; nome oficial, título e rodapé sem PROSTATE", async () => {
   const { ctx, page } = await open();
   const a = await page.locator("header a[aria-label]").first().getAttribute("aria-label");
   assert(a === "ARARAT MODEL — início", a);
-  assert((await page.locator("header a[aria-label] img").getAttribute("alt")) === "", "logo com alt não vazio");
+  assert((await page.locator("header a[aria-label] [data-assinatura]").getAttribute("aria-hidden")) === "true", "logo sem aria-hidden");
   assert(!(await page.locator("header [aria-live]").count()), "aria-live no cabeçalho");
   assert(!/PROSTATE/i.test(await page.title()), "título com PROSTATE");
   const foot = await page.locator("footer").innerText();
@@ -88,22 +91,23 @@ await test("cabeçalho: nome acessível estável ('ARARAT MODEL — início'), l
   await ctx.close();
 });
 
-await test("cabeçalho: limites em 320–1440 px — lockup compacto < 40 px sem deformar, sem invadir menu/links nem cortar, sem rolagem lateral", async () => {
+await test("cabeçalho: limites em 320–1440 px — assinatura horizontal ≥ 160 px sem deformar, com 1 a de proteção até menu/links/idioma, sem cortar, sem rolagem lateral", async () => {
   const rows = [];
   for (const w of [320, 340, 360, 390, 768, 1081, 1100, 1180, 1280, 1440]) {
     const { ctx, page } = await open([w, 800]);
     const m = await page.evaluate(() => {
       const vis = (s) => [...document.querySelectorAll(s)].find((e) => e.getBoundingClientRect().width > 0);
       const r = (e) => e && e.getBoundingClientRect();
-      const logo = document.querySelector("header a[aria-label] img").getBoundingClientRect();
+      const logo = document.querySelector("header a[aria-label] [data-assinatura] svg").getBoundingClientRect();
       const next = r(vis("header nav ul")) ?? r(vis("header button[aria-expanded]")) ?? r(vis("header .language-switch"));
       const lang = r(vis("header .language-switch"));
       const prox = Math.min(next.left, lang ? lang.left : Infinity);
-      return { left: Math.round(logo.left), right: Math.round(logo.right), w: logo.width, ratio: logo.width / logo.height, next: Math.round(prox), sw: document.documentElement.scrollWidth, vw: innerWidth };
+      return { left: Math.round(logo.left), right: Math.round(logo.right), w: logo.width, h: logo.height, ratio: logo.width / logo.height, next: Math.round(prox), sw: document.documentElement.scrollWidth, vw: innerWidth };
     });
-    rows.push(`${w}: lockup ${m.left}–${m.right} (${Math.round(m.w)} px), próximo ${m.next}`);
-    assert(m.left >= 0 && m.right < m.next, `${w}px: lockup (até ${m.right}) encosta em ${m.next}`);
-    assert(m.w / m.ratio < 40 && Math.abs(m.ratio - 704.1 / 106.5) < 0.03, `${w}px: lockup ${m.w}px, proporção ${m.ratio}`);
+    const a = m.h * (118 / 122) * (100 / 118); // altura das maiúsculas
+    rows.push(`${w}: assinatura ${m.left}–${m.right} (${Math.round(m.w)} px), próximo ${m.next}`);
+    assert(m.left >= 0 && m.right + a <= m.next + 0.5, `${w}px: assinatura (até ${m.right}) a menos de 1 a (${a.toFixed(1)} px) de ${m.next}`);
+    assert(m.w >= 160 && Math.abs(m.ratio - 1025.6 / 122) < 0.05, `${w}px: assinatura ${m.w}px, proporção ${m.ratio}`);
     assert(m.sw <= m.vw, `${w}px: rolagem lateral`);
     await ctx.close();
   }
@@ -291,7 +295,7 @@ await test("Contato: dois públicos, nenhum link de volta a seções nem formul�
   await ctx.close();
 });
 
-await test("Rodapé: lockup full oficial do Sinal + tagline em texto legível; um só aviso permanente", async () => {
+await test("Rodapé: assinatura horizontal oficial do 03D2 + tagline em texto legível; um só aviso permanente", async () => {
   const { ctx, page } = await open([1440, 900], { reduced: true });
   const m = await page.evaluate(() => {
     const f = document.querySelector("footer");
@@ -299,8 +303,8 @@ await test("Rodapé: lockup full oficial do Sinal + tagline em texto legível; u
     return { tagFs: tag && parseFloat(getComputedStyle(tag).fontSize), imgs: [...f.querySelectorAll("img")].map((i) => i.getAttribute("src")), ps: [...f.querySelectorAll("p")].length };
   });
   assert(m.tagFs >= 12, "tagline ilegível");
-  // brand-sinal-v1: lockup horizontal FULL oficial do Sinal (antes: ícone PNG + nome tipografado)
-  assert(m.imgs.length === 1 && m.imgs[0] === LOCKUP_RODAPE, "logo: " + m.imgs.join(","));
+  // codex/brand-03d2-v1: assinatura horizontal negativa oficial (antes: lockup do Sinal / ícone PNG + nome tipografado)
+  assert(m.imgs.length === 1 && m.imgs[0] === ASSINATURA_RODAPE, "logo: " + m.imgs.join(","));
   assert(m.ps === 2, `parágrafos no rodapé: ${m.ps}`);
   await ctx.close();
 });
