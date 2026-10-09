@@ -1016,3 +1016,42 @@ html:has([data-marca="sinal"]) .skip-link {
     border-color: ButtonText;
   }
 }
+
+/* ══ Entradas editoriais (codex/titulos-movimento-sinal-v1) ══════════════════════════════════════════════════
+   Comportamento em components/motion/entrada-editorial.css (comum às quatro identidades). Aqui, só os valores do
+   Sinal (tokens oficiais de tempo e curva) e os pontos que existem nesta identidade. O fio da pergunta é o filete de
+   1 px que o cartão da publicação já tem (lido do estilo calculado; estado final idêntico). */
+[data-tipografia="refinada"][data-marca="sinal"] {
+  --entrada-desloc: 12px;
+  --entrada-dur: 450ms;
+  --entrada-ease: var(--ararat-ease-out); /* cubic-bezier(0.2, 0, 0, 1): desacelera, sem overshoot */
+  --entrada-atraso-titulo: 70ms;
+  --fio-dur: 520ms;
+  --link-dur: var(--ararat-dur-product); /* 160 ms */
+  --link-ease: var(--ararat-ease-out);
+  --link-fio: var(--ararat-stroke-hair); /* 1 px */
+  --link-fio-ativo: var(--ararat-stroke-focus); /* 2 px */
+}
+
+/* "You decide." — revelação única de baixo para cima, só na abertura (uma vez por aba, quando o estilo
+   #ararat-intro existe). SUBSTITUI a entrada desta linha (ararat-word-in), não se soma a ela. clip-path não ocupa
+   espaço (sem deslocamento) e o recorte final tem folga para ascendentes e descendentes. Sem a abertura (2ª visita,
+   pausa, reduzido, sem JS) a frase aparece pronta. */
+html:has(#ararat-intro) [data-tipografia="refinada"][data-marca="sinal"] #hero-title > span:last-child {
+  animation-name: ararat-decidir-revela;
+  animation-duration: 700ms;
+  animation-timing-function: cubic-bezier(0.33, 0, 0.2, 1);
+}
+@keyframes ararat-decidir-revela {
+  from {
+    clip-path: inset(100% -0.15em -0.3em -0.15em);
+  }
+  to {
+    clip-path: inset(-0.3em -0.15em -0.3em -0.15em);
+  }
+}
+/* Ações e nota de estado visíveis desde o 1º quadro (como na 03D2): a revelação acima não pode deixar botões
+   esperando; só as linhas do título mantêm a entrada da abertura. */
+[data-marca="sinal"] [data-opening="content"] :is([class*="__actions"], [data-opening="note"]) {
+  animation: none;
+}
