@@ -1092,6 +1092,11 @@ html:has([data-marca="03d2"]) .skip-link {
     font-size: min(var(--ararat-type-display-size), 11.2vw);
   }
 }
+/* Ações e nota de estado visíveis desde o 1º quadro (contrato EDITORIAL-03D2-MOTION.md §6.3): só o título e o
+   subtítulo mantêm a entrada da abertura; nada que se pode clicar ou ler como aviso começa com opacidade 0. */
+[data-marca="03d2"] [data-opening="content"] :is([class*="__actions"], [data-opening="note"]) {
+  animation: none;
+}
 /* Ação secundária = link com seta (ar-link--arrow do kit): mesmo alvo de toque, sem moldura de botão. */
 [data-marca="03d2"] [data-opening="content"] .btn-ghost {
   border-color: transparent;
@@ -1150,6 +1155,8 @@ html:has([data-marca="03d2"]) .skip-link {
   }
   [data-marca="03d2"] [data-opening="slot"] {
     width: 100%;
+    /* Montanha ≥ 1.1.0-03d2: desenho centrado na altura do slot (lido pela ponte, HomeOpening.tsx). */
+    --opening-composicao: centro;
   }
   /* O convite à rolagem é absoluto dentro da frente (agora uma grade centrada): alinha à margem do texto. */
   [data-marca="03d2"] [data-opening="front"] > [data-opening="invite"] {

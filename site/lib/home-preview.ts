@@ -51,14 +51,30 @@ export const PREVIEW_PACKAGE = {
 // manifest = MANIFESTO.json da rodada). Abertura = gesto 03D2 de 900 ms (o relevo sobe da linha de base); arco #919191.
 // A 0.9.0-sinal e as anteriores ficam em public/previa/ sem alteração.
 export const REFINADA_PACKAGE = {
-  dir: "home-montanha-1.0.0-03d2",
-  baseUrl: "/previa/home-montanha-1.0.0-03d2/",
-  version: "1.0.0-03d2",
+  // codex/brand-03d2-editorial-v1: montanha 1.1.0-03d2 do Motion (codex/brand-03d2-editorial-motion-v1 @ e340de1;
+  // sync-manifest --check 93/93) = 1.0.0-03d2 + composicao { alinhar, alturaUtil } + posters da 1ª dobra editorial.
+  // A 1.0.0-03d2 continua em public/previa/home-montanha-1.0.0-03d2/ para comparação.
+  dir: "home-montanha-1.1.0-03d2",
+  baseUrl: "/previa/home-montanha-1.1.0-03d2/",
+  version: "1.1.0-03d2",
 } as const satisfies PreviewPackage;
 
 /** Largura máxima do slot da arte (CSS: width min(1100px, 100cqw)) e limite celular/desktop
  *  (o módulo usa a composição "narrow" abaixo de 600 px de área). */
 export const ART_SLOT = { maxWidth: 1100, narrowBelow: 600 } as const;
+
+/** Largura REAL do slot da arte na composição editorial (duas colunas, ≥ 1200 px; marca-03d2.css §11.1):
+ *  frente = min(viewport, content-max + 2·gutter) com padding gutter; colunas 5fr/7fr com gap clamp(24, 3vw, 64);
+ *  slot = 7/12 de (largura interna − gap). gutter = clamp(20px, 5vw, 72px) e content-max = 1320 (styles/site.css).
+ *  Medido na página: 1200 → 609, 1280 → 650, 1440 → 731, 1920 → 736, 2560 → 733 (headless, sem barra lateral). */
+export const EDITORIAL_SLOT = { minViewport: 1200, contentMax: 1320 } as const;
+export function editorialSlotWidth(vw: number): number {
+  const clamp = (lo: number, v: number, hi: number) => Math.min(hi, Math.max(lo, v));
+  const gutter = clamp(20, 0.05 * vw, 72);
+  const inner = Math.min(vw - 2 * gutter, EDITORIAL_SLOT.contentMax);
+  const gap = clamp(24, 0.03 * vw, 64);
+  return ((inner - gap) * 7) / 12;
+}
 
 /** Uma faixa do <picture>: media em largura de viewport + variantes 1x/2x desenhadas na largura
  *  CSS `areaW` (o traço do poster coincide com o do canvas quando o slot tem ~areaW px). */

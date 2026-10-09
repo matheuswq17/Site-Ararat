@@ -35,7 +35,7 @@ type Rect = { x: number; y: number; w: number; h: number; r?: number };
 type Arc = { cx: number; cy: number; r: number; [k: string]: unknown };
 type Sculpture = {
   setPassage(p: number): void;
-  setLayout(l: { art?: Rect | null; target?: Rect | null; ready?: boolean; arc?: Arc | null }): void;
+  setLayout(l: { art?: Rect | null; target?: Rect | null; ready?: boolean; arc?: Arc | null; composicao?: Composicao }): void;
   setPaused(v: boolean): void;
   setReducedMotion(v: boolean): void;
   setIntroTime(ms: number | null): void;
@@ -59,6 +59,26 @@ const COVER_COLOR = "#0d1b2a";
 /** groups: grupos da jornada inert · scene: quadro inteiramente coberto · loading: passagem
  *  concluída mas a cena ainda não foi revelada (RM em carregamento) — controles ocultos + aviso. */
 type Cover = { groups: boolean; scene: boolean; loading: boolean };
+
+
+/** Composição do desenho no slot (montanha ≥ 1.1.0-03d2; contrato EDITORIAL-03D2-MOTION.md §3.1 e §6).
+ *  · duas colunas (≥ 1200 px, declarado pelo CSS): "centro" — a massa da montanha fica na altura do bloco de texto.
+ *  · abaixo: "topo" (= 1.0.0-03d2, pixel a pixel).
+ *  · celular baixo (o slot passa da dobra): alturaUtil = altura da 1ª tela abaixo do topo do slot NO DOCUMENTO.
+ *    O .front não é fixo, então ar.top + scrollY não muda com a rolagem: o valor depende só da tela. Só quando a
+ *    dobra corta o desenho e ao menos metade do slot está na 1ª tela (num celular deitado a arte já fica abaixo).
+ *  Módulos anteriores ignoram a opção. */
+type Composicao = { alinhar: "topo" | "centro"; alturaUtil?: number };
+function composicaoDoSlot(slot: HTMLElement | null | undefined, ar: DOMRect | null | undefined): Composicao {
+  // Quem decide é o layout: o CSS da composição editorial (duas colunas, ≥ 1200 px) declara
+  // --opening-composicao: centro no slot. Rotas sem esse layout seguem em "topo".
+  if (slot && getComputedStyle(slot).getPropertyValue("--opening-composicao").trim() === "centro") return { alinhar: "centro" };
+  if (!ar || ar.height <= 0) return { alinhar: "topo" };
+  const visivel = Math.floor(window.innerHeight - (ar.top + window.scrollY));
+  // Em "topo" o desenho termina a ≈ 72 % da altura do slot (Motion: 390 × 844, slot 534 + 312, sopé em ≈ 759); só
+  // quando a dobra corta antes disso (folga: 75 %) a montanha é recomposta na altura visível.
+  return visivel < ar.height * 0.75 && visivel >= ar.height / 2 ? { alinhar: "topo", alturaUtil: visivel } : { alinhar: "topo" };
+}
 
 export function HomeOpening({
   motionPackage,
@@ -229,6 +249,7 @@ export function HomeOpening({
           target,
           ready: scene.ready,
           arc: scene.arc,
+          composicao: composicaoDoSlot(slot, ar),
         });
         s.setPassage(p);
         reveal = host.querySelector("canvas")?.dataset.reveal ?? "covered";
@@ -478,6 +499,7 @@ export function HomeOpening({
           target: fr ? { x: fr.left - hr.left, y: fr.top - hr.top, w: fr.width, h: fr.height, r: 12 } : null,
           ready: scene.ready,
           arc: scene.arc,
+          composicao: composicaoDoSlot(slotRef.current, ar),
         });
         const canvas = host.querySelector("canvas");
         if (!canvas || canvas.dataset.renderer === "none") throw new Error("canvas indisponível");
