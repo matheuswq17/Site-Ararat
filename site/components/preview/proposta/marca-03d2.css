@@ -1295,3 +1295,63 @@ html:has([data-marca="03d2"]) .skip-link {
     font-size: 1.125rem;
   }
 }
+
+/* ══ 12. Entradas editoriais (codex/titulos-movimento-03d2-v1) ════════════════════════════════════════════════
+   Comportamento em components/motion/entrada-editorial.css (comum às quatro identidades). Aqui, só os valores do
+   03D2 e os pontos que existem nesta identidade. Nada é animado sobre a RM, as capturas ou os módulos do Motion. */
+[data-tipografia="refinada"][data-marca="03d2"] {
+  --entrada-desloc: 12px;
+  --entrada-dur: 450ms; /* entre ararat-duration-slow (320) e -reveal (900): entrada de bloco de texto */
+  --entrada-ease: var(--ararat-easing-enter); /* desacelera, sem overshoot */
+  --entrada-atraso-titulo: 70ms;
+  --fio-dur: 520ms;
+  --link-dur: var(--ararat-duration-base); /* 200 ms */
+  --link-ease: var(--ararat-easing-standard);
+  --link-fio: 1px;
+  --link-fio-ativo: 2px;
+}
+
+/* 12.1 Pergunta estudada: o filete de 2 px text/primary que o 03D2 já põe à esquerda da pergunta é o fio desenhado
+   (TextReveal lê largura e cor calculadas; estado final idêntico). Nada a declarar aqui. */
+
+/* 12.2 Link principal da 1ª dobra ("Explore the platform" →): sublinhado engrossa e a seta avança com cursor OU
+   foco de teclado. O anel de foco do kit continua (não depende da animação). */
+[data-marca="03d2"] [data-opening="content"] .btn-ghost {
+  transition: text-decoration-thickness var(--link-dur) var(--link-ease), text-decoration-color var(--link-dur) var(--link-ease);
+}
+[data-marca="03d2"] [data-opening="content"] .btn-ghost:is(:hover, :focus-visible) {
+  text-decoration-thickness: var(--link-fio-ativo);
+  text-decoration-color: var(--ararat-text-primary);
+}
+[data-marca="03d2"] [data-opening="content"] .btn-ghost:focus-visible svg {
+  transform: translateX(3px);
+}
+html[data-motion="paused"] [data-marca="03d2"] [data-opening="content"] .btn-ghost {
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-marca="03d2"] [data-opening="content"] .btn-ghost {
+    transition: none;
+  }
+}
+
+/* 12.3 "You decide." — revelação única de baixo para cima, só na abertura (uma vez por aba, quando o estilo
+   #ararat-intro existe). SUBSTITUI a entrada desta linha (ararat-word-in), não se soma a ela: mesmo elemento,
+   mesmos tempos. clip-path não ocupa espaço (sem deslocamento) e o recorte final tem folga para ascendentes e
+   descendentes (nenhuma letra cortada). Sem a abertura (2ª visita, pausa, reduzido, sem JS) a frase aparece
+   pronta. As ações seguem visíveis desde o 1º quadro (§ acima). */
+html:has(#ararat-intro) [data-tipografia="refinada"][data-marca="03d2"] #hero-title > span:last-child {
+  animation-name: ararat-decidir-revela;
+  /* a curva de saída das outras linhas faz ~80 % do recorte nos primeiros 100 ms (lido como "aparecer");
+     aqui o recorte começa macio e desacelera, sem overshoot, para a revelação ser lida de baixo para cima */
+  animation-duration: 700ms;
+  animation-timing-function: cubic-bezier(0.33, 0, 0.2, 1);
+}
+@keyframes ararat-decidir-revela {
+  from {
+    clip-path: inset(100% -0.15em -0.3em -0.15em);
+  }
+  to {
+    clip-path: inset(-0.3em -0.15em -0.3em -0.15em);
+  }
+}

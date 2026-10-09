@@ -96,7 +96,7 @@ export function PreviewPage({ proposta }: { proposta?: Proposta }) {
         <Contact arrowIcon={refinada} refinada={refinada} marca={refinada ? "03d2" : undefined} />
       </main>
       {refinada ? <FooterRefinada /> : <SiteFooter />}
-      <TextReveal />
+      <TextReveal editorial={refinada} />
     </>
   );
   if (!proposta) return content;
