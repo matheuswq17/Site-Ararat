@@ -42,8 +42,8 @@ const PATHS = [
 export function Contact({
   arrowIcon = false,
   refinada = false,
-  marcaSinal = false,
-}: { arrowIcon?: boolean; refinada?: boolean; marcaSinal?: boolean } = {}) {
+  marca,
+}: { arrowIcon?: boolean; refinada?: boolean; marca?: "sinal" | "03d2" } = {}) {
   const { t } = useTranslation();
   return (
     <section
@@ -51,7 +51,11 @@ export function Contact({
       className={styles.section}
       aria-labelledby="contato-title"
     >
-      {marcaSinal ? (
+      {marca === "03d2" ? (
+        // ARARAT 03D2: recorte das camadas oficial (06_grafismos, sem alteração) numa faixa própria na base
+        // da seção, uma vez na página — decorativo, não é imagem médica nem dado.
+        <div className="marca-recorte" aria-hidden="true" />
+      ) : marca === "sinal" ? (
         // ARARAT Sinal: campo de voxels oficial (04_grafismos, sem alteração) como fundo decorativo —
         // relevo quantizado em cinza, não é imagem médica nem dado. A montanha antiga ampliada sai.
         <div className="sinal-voxels" aria-hidden="true" />

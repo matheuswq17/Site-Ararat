@@ -23,7 +23,10 @@ export function ExplainMri({
   /** /previa/refinada: Forma com realce de bordas suave e contorno mais marcado (silhueta legível). */
   formaSoft?: boolean;
 }) {
-  const sinal = useMarcaTema() === "sinal";
+  // Identidades monocromáticas (Sinal, 03D2): contorno em cinza e curvas de iso-intensidade; "base" mantém o dourado.
+  const tema = useMarcaTema();
+  const sinal = tema !== "base";
+  const filtros = tema === "base" ? FILTROS_XAI.sinal : FILTROS_XAI[tema];
   const [failed, setFailed] = useState(false);
   // Detecta falha de carregamento da base (o evento error de <image> SVG não é confiável no React).
   useEffect(() => {
@@ -69,14 +72,14 @@ export function ExplainMri({
           <feColorMatrix type="saturate" values="0" />
           <feGaussianBlur stdDeviation="1.6" />
           <feConvolveMatrix order="3" kernelMatrix="-1 -1 -1 -1 8 -1 -1 -1 -1" preserveAlpha="true" />
-          <feColorMatrix type="matrix" values={sinal ? FILTROS_XAI.sinal.bordas : FILTROS_XAI.base.bordas} />
+          <feColorMatrix type="matrix" values={sinal ? filtros.bordas : FILTROS_XAI.base.bordas} />
         </filter>
         {/* Variante suave (formaSoft): mais desfoque e menos ganho — menos "textura" nas bordas internas. */}
         <filter id="xai-edges-soft" colorInterpolationFilters="sRGB">
           <feColorMatrix type="saturate" values="0" />
           <feGaussianBlur stdDeviation="3" />
           <feConvolveMatrix order="3" kernelMatrix="-1 -1 -1 -1 8 -1 -1 -1 -1" preserveAlpha="true" />
-          <feColorMatrix type="matrix" values={sinal ? FILTROS_XAI.sinal.bordasSuave : FILTROS_XAI.base.bordasSuave} />
+          <feColorMatrix type="matrix" values={sinal ? filtros.bordasSuave : FILTROS_XAI.base.bordasSuave} />
         </filter>
         {sinal ? (
           /* ARARAT Sinal: curvas de iso-intensidade em gray-90 sobre a RM intacta (ver lib/marca-tema.tsx). */
@@ -89,7 +92,7 @@ export function ExplainMri({
               <feFuncB type="discrete" tableValues="0 0.2 0.4 0.6 0.8 1" />
             </feComponentTransfer>
             <feConvolveMatrix order="3" kernelMatrix="-1 -1 -1 -1 8 -1 -1 -1 -1" preserveAlpha="true" />
-            <feColorMatrix type="matrix" values={FILTROS_XAI.sinal.isoCurvas} />
+            <feColorMatrix type="matrix" values={filtros.isoCurvas} />
           </filter>
         ) : (
         <filter id="xai-ramp" colorInterpolationFilters="sRGB">

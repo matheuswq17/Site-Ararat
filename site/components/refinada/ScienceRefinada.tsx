@@ -5,6 +5,7 @@ import { useTranslation } from "@/lib/i18n";
 import { RevisaoHumanaRefinada } from "./RevisaoHumanaRefinada";
 import { SCOPE } from "@/lib/science";
 import { EVIDENCIAS_ROTULO, LIMITES_REFINADA, METODO_REFINADA, PESQUISA, PESQUISA_LEAD, PRINCIPIOS_REFINADA, PUBLICACAO } from "@/lib/science-refinada";
+import { useMarcaTema } from "@/lib/marca-tema";
 import base from "../Science.module.css";
 import styles from "./ScienceRefinada.module.css";
 
@@ -19,11 +20,16 @@ import styles from "./ScienceRefinada.module.css";
  * humana → revisão clínica. "Alcance" fica sem ícone. Nenhum ícone de SHAP/XAI ou modelo.
  */
 const ICONES_PESQUISA: readonly (string | undefined)[] = ["extracao-radiomica", "segmentacao", "revisao-clinica", undefined];
+/** ARARAT 03D2 (05_icones): estudo publicado → documento; segmentação → cortes; limites e revisão humana →
+ *  revisão. "Alcance" sem ícone. Nenhum ícone de modelo, escore ou XAI. */
+const ICONES_PESQUISA_03D2: readonly (string | undefined)[] = ["documento", "cortes", "revisao", undefined];
 
 const scope = (term: string) => SCOPE.find((s) => s.term === term)?.text ?? "";
 
 export function ScienceRefinada() {
   const { t } = useTranslation();
+  const marca = useMarcaTema();
+  const icones = marca === "03d2" ? ICONES_PESQUISA_03D2 : ICONES_PESQUISA;
   return (
     <section id="ciencia" className={base.section} aria-labelledby="ciencia-title">
       <div className="wrap">
@@ -33,12 +39,13 @@ export function ScienceRefinada() {
             {t("Pesquisa com os limites à vista.")}</h2>
           <p className={base.lead}>{t(PESQUISA_LEAD)}</p>
           {/* ARARAT Sinal: histograma de intensidade oficial (04_grafismos, sem alteração) — grafismo
-              conceitual, identificado como tal; não é resultado de nenhum estudo nem do caso mostrado. */}
-          <figure className="sinal-histograma">
+              conceitual, identificado como tal; não é resultado de nenhum estudo nem do caso mostrado.
+              Na 03D2 não entra (grafismos com moderação; o kit não tem histograma). */}
+          {marca === "sinal" && <figure className="sinal-histograma">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/marca-sinal/v1.0/grafismos/histograma-claro.svg" alt="" width={1200} height={420} loading="lazy" decoding="async" />
             <figcaption>{t("Grafismo conceitual · não representa dados de pacientes")}</figcaption>
-          </figure>
+          </figure>}
         </header>
 
         <div className={styles.summary} data-pesquisa="classificacao-e-segmentacao">
@@ -46,7 +53,7 @@ export function ScienceRefinada() {
             <section key={it.term} className={styles.card} aria-labelledby={`ciencia-p${i}`}>
               {/* Ícone oficial do Sinal em currentColor (máscara do SVG sem alteração), decorativo: o
                   título do bloco já nomeia o conceito. "Alcance" sem ícone. */}
-              <span className={styles.cardIcone} data-icone={ICONES_PESQUISA[i] ?? "nenhum"} aria-hidden="true" />
+              <span className={styles.cardIcone} data-icone={icones[i] ?? "nenhum"} aria-hidden="true" />
               <h3 id={`ciencia-p${i}`} className={styles.cardTitle}>
                 {t(it.term)}
               </h3>

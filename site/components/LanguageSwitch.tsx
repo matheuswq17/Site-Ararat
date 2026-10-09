@@ -2,7 +2,13 @@
 
 import { useTranslation } from "@/lib/i18n";
 
-export function LanguageSwitch() {
+/**
+ * Troca de idioma (link para a outra versão, mantendo busca e âncora).
+ *  · padrão: mostra só o idioma de destino ("PT" / "EN");
+ *  · par (identidade 03D2, seletor ar-lang do kit): mostra "EN / PT" com o idioma atual marcado; o elemento
+ *    inteiro continua sendo UM link para o outro idioma (mesmo destino, mesmo nome acessível).
+ */
+export function LanguageSwitch({ par = false }: { par?: boolean } = {}) {
   const { locale, t } = useTranslation();
   return (
     <a className="language-switch" href={locale === "en" ? "/pt" : "/"}
@@ -14,7 +20,13 @@ export function LanguageSwitch() {
         event.preventDefault();
         window.location.assign((locale === "en" ? "/pt" : "/") + window.location.search + window.location.hash);
       }}>
-      {locale === "en" ? "PT" : "EN"}
+      {par ? (
+        <>
+          <span data-lang="en" data-atual={locale === "en" || undefined}>EN</span>
+          <span data-lang-sep="" aria-hidden="true">/</span>
+          <span data-lang="pt" data-atual={locale !== "en" || undefined}>PT</span>
+        </>
+      ) : locale === "en" ? "PT" : "EN"}
       <span className="visually-hidden"> — {t("Idioma")}</span>
     </a>
   );

@@ -3,11 +3,11 @@
 import { createContext, useContext, type ReactNode } from "react";
 
 /**
- * Identidade visual ativa na árvore (experimento brand-sinal-v1). A refinada fornece "sinal"; as rotas de
- * comparação não têm provedor e ficam em "base" (aparência anterior). Usado por componentes compartilhados
+ * Identidade visual ativa na árvore. A refinada fornece a identidade da branch (codex/brand-03d2-v1: "03d2";
+ * a camada "sinal" continua disponível); as rotas de comparação não têm provedor e ficam em "base". Usado por componentes compartilhados
  * que desenham em SVG/filtros (ExplainMri, JourneyMriScene), onde CSS não alcança os valores.
  */
-export type MarcaTema = "base" | "sinal";
+export type MarcaTema = "base" | "sinal" | "03d2";
 const Contexto = createContext<MarcaTema>("base");
 
 export function MarcaTemaProvider({ tema, children }: { tema: MarcaTema; children: ReactNode }) {
@@ -32,5 +32,11 @@ export const FILTROS_XAI = {
     bordas: "0 0 0 0 0.886  0 0 0 0 0.886  0 0 0 0 0.886  5 5 5 0 -0.35",
     bordasSuave: "0 0 0 0 0.886  0 0 0 0 0.886  0 0 0 0 0.886  2.2 2.2 2.2 0 -0.3",
     isoCurvas: "0 0 0 0 0.886  0 0 0 0 0.886  0 0 0 0 0.886  4 4 4 0 0",
+  },
+  /** 03D2: mesmo desenho do Sinal, na cor de text/primary do tema escuro (#EDEDED = 237/255 = 0,929). */
+  "03d2": {
+    bordas: "0 0 0 0 0.929  0 0 0 0 0.929  0 0 0 0 0.929  5 5 5 0 -0.35",
+    bordasSuave: "0 0 0 0 0.929  0 0 0 0 0.929  0 0 0 0 0.929  2.2 2.2 2.2 0 -0.3",
+    isoCurvas: "0 0 0 0 0.929  0 0 0 0 0.929  0 0 0 0 0.929  4 4 4 0 0",
   },
 } as const;

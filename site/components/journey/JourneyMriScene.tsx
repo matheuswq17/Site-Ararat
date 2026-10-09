@@ -98,7 +98,10 @@ type Props = {
  */
 export const JourneyMriScene = memo(function JourneyMriScene({ source, progress, layout }: Props) {
   const { t } = useTranslation();
-  const sinal = useMarcaTema() === "sinal";
+  // Identidades monocromáticas (Sinal, 03D2): contorno em cinza e curvas de iso-intensidade; "base" mantém o dourado.
+  const tema = useMarcaTema();
+  const sinal = tema !== "base";
+  const filtros = tema === "base" ? FILTROS_XAI.sinal : FILTROS_XAI[tema];
   const s1 = clamp01(progress * 3);
   const s2 = clamp01(progress * 3 - 1);
   const s3 = clamp01(progress * 3 - 2);
@@ -169,7 +172,7 @@ export const JourneyMriScene = memo(function JourneyMriScene({ source, progress,
           <feColorMatrix type="saturate" values="0" />
           <feGaussianBlur stdDeviation="1.6" />
           <feConvolveMatrix order="3" kernelMatrix="-1 -1 -1 -1 8 -1 -1 -1 -1" preserveAlpha="true" />
-          <feColorMatrix type="matrix" values={sinal ? FILTROS_XAI.sinal.bordas : FILTROS_XAI.base.bordas} />
+          <feColorMatrix type="matrix" values={sinal ? filtros.bordas : FILTROS_XAI.base.bordas} />
         </filter>
         {sinal ? (
           /* ARARAT Sinal: curvas de iso-intensidade em gray-90 sobre a RM intacta (ver lib/marca-tema.tsx). */
@@ -182,7 +185,7 @@ export const JourneyMriScene = memo(function JourneyMriScene({ source, progress,
               <feFuncB type="discrete" tableValues="0 0.2 0.4 0.6 0.8 1" />
             </feComponentTransfer>
             <feConvolveMatrix order="3" kernelMatrix="-1 -1 -1 -1 8 -1 -1 -1 -1" preserveAlpha="true" />
-            <feColorMatrix type="matrix" values={FILTROS_XAI.sinal.isoCurvas} />
+            <feColorMatrix type="matrix" values={filtros.isoCurvas} />
           </filter>
         ) : (
         <filter id={`${id}-ramp`} colorInterpolationFilters="sRGB">

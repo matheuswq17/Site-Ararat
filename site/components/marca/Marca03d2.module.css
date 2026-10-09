@@ -1,0 +1,46 @@
+/* Assinaturas ARARAT 03D2. Só a largura é definida; height: auto mantém a proporção do arquivo oficial.
+   Medidas do kit traduzidas para o site:
+   · cabeçalho do kit: horizontal com 22 px de altura (≈ 190 px) no desktop. Aqui: 192 px de largura
+     (tinta ≈ 22 px de altura; símbolo mestre ≈ 65 px de largura, acima do mínimo de 48 px do mestre);
+     no celular 168 px e, abaixo de 360 px de tela, 160 px — o piso pedido (a horizontal do kit vale a
+     partir de 140 px; a 160 px as passagens continuam abertas). A compacta (redução) NÃO é usada.
+   · rodapé do kit: ≈ 225 px. Aqui 232 px; 200 px no celular.
+   · área de proteção: 1 a (altura das maiúsculas ≈ 0,85 × a altura da tinta) — garantida pelo espaço
+     do cabeçalho (72 px de altura, 24 px até o menu) e pela margem do rodapé. */
+.assinatura {
+  display: block;
+  flex: none;
+  max-width: none;
+  height: auto;
+  color: var(--ararat-logo-ink, #f6f6f6);
+}
+.assinatura :global(svg) {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+/* A tinta do arquivo animável é #111111 (positivo); no fundo escuro do site vale logo/ink (#F6F6F6). Só a
+   cor muda — os caminhos ficam como no arquivo. */
+.assinatura :global(svg > g) {
+  fill: currentColor;
+}
+.cabecalho {
+  width: 192px;
+}
+.rodape {
+  width: 232px;
+}
+@media (max-width: 600px) {
+  .cabecalho {
+    width: 168px;
+  }
+  .rodape {
+    width: 200px;
+  }
+}
+@media (max-width: 359px) {
+  .cabecalho {
+    width: 160px;
+  }
+}

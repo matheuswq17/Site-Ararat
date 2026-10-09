@@ -8,6 +8,7 @@ import { setMotionPaused, useMotionPaused } from "@/lib/motion-prefs";
 import { usePrefersReducedMotion } from "./motion/usePrefersReducedMotion";
 import { BrandMark } from "./BrandMark";
 import { LogoSinal } from "./marca/LogoSinal";
+import { AssinaturaCabecalho03d2 } from "./marca/Marca03d2";
 import { LanguageSwitch } from "./LanguageSwitch";
 import styles from "./SiteHeader.module.css";
 
@@ -16,16 +17,25 @@ import styles from "./SiteHeader.module.css";
  *  · brandWords — 2ª palavra da marca alterna (ex.: MODEL ↔ PROSTATE na /previa/refinada);
  *  · menuFocus — Escape devolve o foco ao botão do menu; escolher uma seção leva o foco a ela;
  *  · solid — fundo mais opaco quando rolado (o texto do conteúdo não atravessa os links);
- *  · marcaSinal — lockup compacto oficial do ARARAT Sinal no lugar do ícone antigo + nome tipografado,
- *    sem o ciclo MODEL/PROSTATE (experimento experiment/brand-sinal-v1).
+ *  · marca — identidade da refinada: "sinal" (lockup compacto do ARARAT Sinal) ou "03d2" (assinatura
+ *    horizontal do ARARAT 03D2, SVG oficial no HTML via assinaturaSvg; seletor de idioma "EN / PT").
+ *    Ambas sem o ciclo MODEL/PROSTATE.
  */
 export function SiteHeader({
   brandWords,
   menuFocus = false,
   solid = false,
   languageSwitch = false,
-  marcaSinal = false,
-}: { brandWords?: readonly string[]; menuFocus?: boolean; solid?: boolean; languageSwitch?: boolean; marcaSinal?: boolean } = {}) {
+  marca,
+  assinaturaSvg = null,
+}: {
+  brandWords?: readonly string[];
+  menuFocus?: boolean;
+  solid?: boolean;
+  languageSwitch?: boolean;
+  marca?: "sinal" | "03d2";
+  assinaturaSvg?: string | null;
+} = {}) {
   const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -65,13 +75,13 @@ export function SiteHeader({
   };
 
   return (
-    <header className={styles.header} data-scrolled={scrolled || open} data-open={open} data-solid={solid || undefined} data-localized={languageSwitch || undefined} data-marca={marcaSinal ? "sinal" : undefined}>
+    <header className={styles.header} data-scrolled={scrolled || open} data-open={open} data-solid={solid || undefined} data-localized={languageSwitch || undefined} data-marca={marca}>
       <div className={styles.bar}>
         <a href="#inicio" className={styles.brand} aria-label={t("ARARAT MODEL — início")}>
-          {marcaSinal ? <LogoSinal /> : <BrandMark cycleWords={brandWords} />}
+          {marca === "03d2" ? <AssinaturaCabecalho03d2 svg={assinaturaSvg} /> : marca === "sinal" ? <LogoSinal /> : <BrandMark cycleWords={brandWords} />}
         </a>
 
-        {languageSwitch && <LanguageSwitch />}
+        {languageSwitch && <LanguageSwitch par={marca === "03d2"} />}
         <MotionToggle />
 
         <button

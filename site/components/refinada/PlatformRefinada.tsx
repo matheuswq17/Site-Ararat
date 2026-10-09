@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslation } from "@/lib/i18n";
+import { useMarcaTema } from "@/lib/marca-tema";
 
 import { RevealWords } from "../text/RevealWords";
 import { PlataformaFluxo } from "./PlataformaFluxo";
@@ -43,8 +44,11 @@ const VIEWER_DOCUMENTADO_FLUXO = [
 
 export function PlatformRefinada() {
   const { t } = useTranslation();
+  const marca = useMarcaTema();
   return (
     <section id="plataforma" className={styles.section} aria-labelledby="plataforma-title">
+      {/* ARARAT 03D2: linha de estrato oficial (06_grafismos) como divisor único da página, decorativa. */}
+      {marca === "03d2" && <span className="marca-estrato" aria-hidden="true" />}
       <div className="wrap">
         <header className={styles.header}>
           <p className="eyebrow">{t("Plataforma")}</p>
