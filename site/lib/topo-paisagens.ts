@@ -22,6 +22,8 @@ import MONTANHA_050S from "@/public/refinada/topo-revisao-0.5.0-sinal/fechamento
 import MONTANHA_050SE from "@/public/refinada/topo-revisao-0.5.0-sinal/fechamento-montanha-escuro.json";
 import MONTANHA_060D from "@/public/refinada/topo-revisao-0.6.0-03d2/fechamento-montanha.json";
 import MONTANHA_060DE from "@/public/refinada/topo-revisao-0.6.0-03d2/fechamento-montanha-escuro.json";
+import MONTANHA_070D from "@/public/refinada/topo-revisao-0.7.0-03d2/fechamento-montanha.json";
+import MONTANHA_070DE from "@/public/refinada/topo-revisao-0.7.0-03d2/fechamento-montanha-escuro.json";
 
 export type LinhaPaisagem = { d: string; stroke: string; opacity?: number; width: number; ouro?: boolean };
 
@@ -126,10 +128,14 @@ export const PAISAGENS: Record<string, Paisagem> = {
   // crista #777777 e trecho luminoso com núcleo + filete (a continuação volta a ser visível passo a passo).
   "0.6.0-03d2": paisagem050sinal(MONTANHA_060D, "0.6.0-03d2", "/refinada/topo-revisao-0.6.0-03d2/topo-revisao.js"),
   "0.6.0-03d2-escuro": paisagem050sinal(MONTANHA_060DE, "0.6.0-03d2-escuro", "/refinada/topo-revisao-0.6.0-03d2/topo-revisao.js"),
+  // codex/brand-03d2-editorial-v1: fechamento 0.7.0-03d2 do Motion (@ e340de1; 5/5) — traço único de destaque sem halo,
+  // crista #919191 (claro) / #5E5E5E (escuro), crista final 0,75; mesma geometria e contrato.
+  "0.7.0-03d2": paisagem050sinal(MONTANHA_070D, "0.7.0-03d2", "/refinada/topo-revisao-0.7.0-03d2/topo-revisao.js"),
+  "0.7.0-03d2-escuro": paisagem050sinal(MONTANHA_070DE, "0.7.0-03d2-escuro", "/refinada/topo-revisao-0.7.0-03d2/topo-revisao.js"),
 };
 
 /** Versão mostrada por padrão (a mais nova registrada). */
-export const VERSAO_PADRAO = "0.6.0-03d2";
+export const VERSAO_PADRAO = "0.7.0-03d2";
 
 export function paisagemDe(versao: string | null | undefined): Paisagem {
   return (versao && PAISAGENS[versao]) || PAISAGENS[VERSAO_PADRAO];

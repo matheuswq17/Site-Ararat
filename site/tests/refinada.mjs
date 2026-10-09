@@ -355,10 +355,10 @@ await test("convite 'Role para explorar': na 1ª tela, fora dos botões e do tex
   notes.push("    · " + rows.join(" · "));
 });
 
-// montanha 1.0.0-03d2 (mesmo contrato da 0.9.0-sinal) (contrato do Motion, CONTRATO-SITE.md §2 e §7): a luz ambiente
+// montanha 1.1.0-03d2 (= 1.0.0-03d2 + composicao) (mesmo contrato da 0.9.0-sinal) (contrato do Motion, CONTRATO-SITE.md §2 e §7): a luz ambiente
 // passa a vir DESLIGADA por padrão ("repouso: nada se redesenha"; ambient: true só para comparação). Os
 // dois testes abaixo substituem os da luz ambiente da 0.7.x e conferem o novo contrato, com o mesmo rigor.
-await test("montanha 1.0.0-03d2: sem luz ambiente em repouso, pixels da arte parados; pausa, aba oculta e passagem seguem apagadas; uma só fonte do arco", async () => {
+await test("montanha 1.1.0-03d2: sem luz ambiente em repouso, pixels da arte parados; pausa, aba oculta e passagem seguem apagadas; uma só fonte do arco", async () => {
   const { ctx, page, errors } = await open([1280, 720]);
   await page.waitForFunction(() => document.querySelector("[data-opening=root]")?.dataset.sculpture === "canvas", null, { timeout: 9000 });
   const amb = () => page.evaluate(() => document.querySelector("[data-opening=sticky] canvas")?.dataset.ambient ?? "ausente");
@@ -385,7 +385,7 @@ await test("montanha 1.0.0-03d2: sem luz ambiente em repouso, pixels da arte par
   await page.waitForTimeout(400);
   const passing = await page.evaluate(() => ({ a: document.querySelector("[data-opening=sticky] canvas")?.dataset.ambient ?? "ausente", p: parseFloat(document.querySelector("[data-opening=root]").style.getPropertyValue("--opening-p")) }));
   const arcs = await page.evaluate(() => ({ canvases: document.querySelectorAll("[data-opening=sticky] canvas").length, siteArc: document.querySelectorAll("#inicio svg path[class*='arc'], [class*='orbit']").length }));
-  notes.push(`    · 1.0.0-03d2: ambiente ${[...seen].join("/")} em repouso, arte idêntica em 1,5 s · pausa → ${paused} · aba oculta → ${hidden} · passagem (p ${passing.p.toFixed(2)}) → ${passing.a}`);
+  notes.push(`    · 1.1.0-03d2: ambiente ${[...seen].join("/")} em repouso, arte idêntica em 1,5 s · pausa → ${paused} · aba oculta → ${hidden} · passagem (p ${passing.p.toFixed(2)}) → ${passing.a}`);
   for (const v of [paused, hidden, passing.a]) assert(v === "off" || v === "ausente", `ambiente ligado: ${v}`);
   assert(passing.p > 0.56, "passagem não avançou");
   assert(arcs.canvases === 1 && arcs.siteArc === 0, `arco: ${JSON.stringify(arcs)}`);
@@ -393,7 +393,7 @@ await test("montanha 1.0.0-03d2: sem luz ambiente em repouso, pixels da arte par
   await ctx.close();
 });
 
-await test("abertura 1.0.0-03d2 assenta (data-intro=done) sem ligar luz ambiente; resize mantém composição", async () => {
+await test("abertura 1.1.0-03d2 assenta (data-intro=done) sem ligar luz ambiente; resize mantém composição", async () => {
   const { ctx, page, errors } = await open([1440, 900], { intro: true, init: () => {
     window.__t = {};
     const t0 = performance.now();
@@ -502,7 +502,7 @@ async function openCom(vp, o = {}) {
   return { ctx, page, errors };
 }
 
-// ── MÓDULO REAL do Motion (codex/brand-03d2-v1: public/refinada/time-interativo-0.5.0-03d2; antes 0.4.0-sinal, 0.2.0) ─────
+// ── MÓDULO REAL do Motion (codex/brand-03d2-editorial-v1: public/refinada/time-interativo-0.6.0-03d2; antes 0.5.0-03d2, 0.4.0-sinal, 0.2.0) ─────
 // foto natural por padrão; troca: foto → pontos → reorganização → foto do escolhido; cursor inerte.
 const fasesAte = async (page, id, ms = 6000) => { const vistas = new Set(); const rotulos = new Set(); const t0 = Date.now(); while (Date.now() - t0 < ms) { const r = await page.evaluate(() => { const p = document.querySelector("#time [data-shown]"); return { f: p.dataset.fase, a: p.dataset.ativo, v: p.dataset.visivel ?? p.dataset.ativo, l: p.getAttribute("aria-label"), c: p.nextElementSibling?.querySelector("span")?.textContent }; }); vistas.add(r.f); rotulos.add(`${r.v}=${r.l}=${r.c}`); if (r.f === "recompondo" && r.v !== id) rotulos.add(`ERRO-recompondo-${r.v}=x=x`); if (r.a === id && /^(foto|foto-estatica|falha)$/.test(r.f)) return { t: Date.now() - t0, fases: [...vistas], rotulos: [...rotulos] }; await page.waitForTimeout(20); } return { t: -1, fases: [...vistas], rotulos: [...rotulos] }; };
 const NOMES = { matheus: "Matheus Xavier Silva de Toledo", miguel: "Miguel", rodrigo: "Rodrigo Gobbo", hartmann: "Luiz G. Hartmann", victor: "Victor Arthur Ohannesian" };
@@ -583,7 +583,7 @@ await test("Time [módulo real] seleções rápidas terminam na última; enquadr
 await test("Time [módulo real] foto atrasada (retrato anterior e legenda dele ficam), recorte 404 → foto retangular da mesma pessoa, recorte+foto 404 → aviso coerente", async () => {
   const atraso = async (r) => { await new Promise((x) => setTimeout(x, 2500)); await r.continue(); };
   const nf = (r) => r.fulfill({ status: 404, body: "" });
-  const { ctx, page, errors } = await openCom([1440, 900], { routes: [[/time-interativo-0\.5\.0-03d2\/retratos\/hartmann-recorte/, atraso], [/time-interativo-0\.5\.0-03d2\/retratos\/miguel-recorte/, nf], [/time-interativo-0\.5\.0-03d2\/retratos\/victor-/, nf]] });
+  const { ctx, page, errors } = await openCom([1440, 900], { routes: [[/time-interativo-0\.6\.0-03d2\/retratos\/hartmann-recorte/, atraso], [/time-interativo-0\.6\.0-03d2\/retratos\/miguel-recorte/, nf], [/time-interativo-0\.6\.0-03d2\/retratos\/victor-/, nf]] });
   await irRetrato(page);
   await faseE(page, "foto");
   await page.locator("#time details[data-id=hartmann] > summary").click();

@@ -179,6 +179,14 @@ export const MODULOS_FLUXO: Record<string, ModuloFluxo> = {
     base: "/refinada/plataforma-fluxo-0.1.0/assets/",
     exportName: "createPlataformaFluxo",
   },
+  // codex/brand-03d2-editorial-v1: fluxo 0.5.0-03d2 do Motion (@ e340de1; 1/1): telas maiores, aproximações nos
+  // controles, hierarquia de movimento e enquadramentos de celular; capturas do 0.1.0 (mesmos sha256).
+  "0.5.0-03d2": {
+    versao: "0.5.0-03d2",
+    url: "/refinada/plataforma-fluxo-0.5.0-03d2/plataforma-fluxo.js",
+    base: "/refinada/plataforma-fluxo-0.1.0/assets/",
+    exportName: "createPlataformaFluxo",
+  },
   // codex/brand-03d2-v1: fluxo 0.4.0-03d2 do Motion (@ 8568d8f; 1/1): anel e realce com os tokens de foco do 03D2
   // (Hub #111111 + filete #F6F6F6; Viewer #EDEDED + filete #111111); assets do 0.1.0 (mesmos sha256).
   "0.4.0-03d2": {
@@ -188,7 +196,7 @@ export const MODULOS_FLUXO: Record<string, ModuloFluxo> = {
     exportName: "createPlataformaFluxo",
   },
 };
-export const MODULO_FLUXO_PADRAO: string | null = "0.4.0-03d2";
+export const MODULO_FLUXO_PADRAO: string | null = "0.5.0-03d2";
 
 export type EstadoFluxo = { modo: "animado" | "estatico"; etapa: number; nome: string; progresso: number; layout: string; carregado: string; falha: string | null };
 export type PlataformaFluxoModulo = {
