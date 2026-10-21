@@ -13,7 +13,7 @@ App Next.js em `site/`. A experiência nova ocupa `/` (inglês, principal), `/pt
 | Estilo comum | `site/styles/ararat/site.css` (base do Atlas) e `integracao.css` (páginas internas) |
 | Estrutura de uma página | `site/components/ararat/` (`Home`, `Plataforma`, `Solucoes`, `Evidencias`, `Empresa`) |
 | Comportamento (montanha, camadas, palco, demonstração, biografia) | `site/lib/ararat/cliente/` |
-| Título, descrição e Open Graph | `meta` no conteúdo; montagem em `site/lib/ararat/metadados.ts` |
+| Título, descrição e Open Graph | `meta` no conteúdo (todas as páginas, inclusive a Home: `meta.home`); montagem em `site/lib/ararat/metadados.ts` |
 
 ## Regras que o próprio build confere
 
@@ -40,6 +40,21 @@ App Next.js em `site/`. A experiência nova ocupa `/` (inglês, principal), `/pt
    - nunca definir `ARARAT_REVISAO_PRIVADA` num ambiente aberto;
    - promover para produção só por pedido explícito.
 6. **Domínio definitivo:** quando houver, definir `ARARAT_SITE_URL`. Isso ativa canonical, `og:url` e hreflang absolutos. Retirar `noindex` só na publicação aprovada (`metadados.ts`).
+
+## Textos e SEO (21/10/2026)
+
+- Cada página tem uma intenção própria em `meta` (título e descrição): Home = empresa e foco; Soluções = frentes
+  clínicas; Próstata = segmentação prostática, lesões suspeitas e PI-RADS; Plataforma = preparação do caso e revisão
+  pelo radiologista; Evidências = o que cada estudo avaliou. Não repetir o mesmo texto entre páginas.
+- `extra.tituloHome` saiu: a Home usa `meta.home`, como as demais (antes o título vinha de `extra.tituloHome` e a
+  descrição de `abertura.sub`).
+- Próstata: `prostata.pesquisa` é uma linha de pesquisa (imagem + dados clínicos), separada dos quatro componentes e da
+  categoria PI-RADS; estágio `investigacao`, sem números. Em Evidências, a ficha `risco` e o campo "Aplica-se a" de
+  cada estudo.
+- Estágio `novo` = "Em aprimoramento" (classificador PI-RADS: primeira versão treinada, sendo refeita).
+- Não publicar números de desempenho, nem como disponíveis: PI-RADS funcional, justificativa por componente, risco
+  calibrado, recomendação de biópsia, laudo pronto para assinatura ou tempo de processamento.
+- `noindex` continua em todas as páginas; canonical/hreflang absolutos e sitemap dependem de `ARARAT_SITE_URL`.
 
 ## Movimento: transição entre páginas e montanha (revisão privada, 14/10/2026)
 

@@ -13,9 +13,10 @@ const HREFLANG: Record<Idioma, string> = { en: "en", pt: "pt-BR", es: "es" };
  */
 export function metadados(chave: Pagina | `pessoa:${string}`, idioma: Idioma, titulo?: string, descricao?: string): Metadata {
   const c = conteudo(idioma);
-  const meta = !chave.startsWith("pessoa:") ? (c.meta as Record<string, readonly [string, string]>)[chave === "home" ? "home" : chave] : undefined;
-  const title = titulo ?? (chave === "home" ? c.extra.tituloHome : meta?.[0]) ?? "ARARAT";
-  const description = descricao ?? (chave === "home" ? c.abertura.sub : meta?.[1]) ?? "";
+  // Todas as páginas, inclusive a Home, usam a tabela `meta` do conteúdo (título e descrição próprios por página).
+  const meta = !chave.startsWith("pessoa:") ? (c.meta as Record<string, readonly [string, string]>)[chave] : undefined;
+  const title = titulo ?? meta?.[0] ?? "ARARAT";
+  const description = descricao ?? meta?.[1] ?? "";
   const linguas = Object.fromEntries(IDIOMAS.map((l) => [HREFLANG[l], href(chave, l)]));
   const absoluto = !!SITE_URL;
   return {

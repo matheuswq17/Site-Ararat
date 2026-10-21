@@ -114,6 +114,21 @@ export function PaginaProstata({ idioma }: { idioma: Idioma }) {
               </ol>
               <p className="legenda pirads-nota">{P.pirads_nota}</p>
               <p className="validacao"><Ponto cheio />{c.caso.validacao}</p>
+              {/* pesquisa: linha de investigação, separada dos componentes e da categoria PI-RADS; sem números */}
+              <div className="pesquisa-comp" id="pesquisa">
+                <h2 className="rotulo-sec">{P.pesquisa.rotulo}</h2>
+                <div className="comps">
+                  <div className="comp" id="c-risco">
+                    <h3>{P.pesquisa.nome}</h3>
+                    <dl>
+                      <dt>{R.tarefa}</dt><dd>{P.pesquisa.tarefa}</dd>
+                      <dt>{R.papel}</dt><dd>{P.pesquisa.papel}</dd>
+                      <dt>{R.estagio}</dt><dd><ChipEstagio idioma={idioma} chave={P.pesquisa.estagio} /></dd>
+                    </dl>
+                  </div>
+                </div>
+                <p className="legenda">{P.pesquisa.nota}</p>
+              </div>
             </div>
           </div>
         </div>

@@ -111,6 +111,10 @@
 
 /* Próstata: validação no nível da frente, abaixo dos componentes */
 .componentes .validacao{margin-top:18px}
+/* Próstata: linha de pesquisa (imagem + dados clínicos), separada dos quatro componentes */
+.pesquisa-comp{margin-top:clamp(36px,5vw,56px)}
+.pesquisa-comp > .rotulo-sec{display:block;margin:0 0 12px;font:500 13px/1.4 var(--sans);letter-spacing:.06em;text-transform:uppercase}
+.pesquisa-comp > .legenda{margin-top:14px;max-width:70ch}
 .uro .mais{margin-top:24px}
 
 /* ---------- Evidências ---------- */
