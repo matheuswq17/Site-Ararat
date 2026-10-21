@@ -1,5 +1,5 @@
 import ESTATICO from "@/public/refinada/plataforma-fluxo-estatico-v1/derivados.json";
-import REENQ from "@/public/institucional/capturas-v1/derivados.json";
+import REENQ from "./capturas-reenquadradas";
 import type { T } from "./textos";
 
 /**
