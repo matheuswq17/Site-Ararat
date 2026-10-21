@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Mídia com permissão pendente (capturas reais do Hub/Viewer e camadas de segmentação): só na revisão local privada.
+# Preenchida por scripts/ararat-midia-privada.mjs a partir da cópia de revisão; nunca entra no Git nem em Preview aberto.
+/public/privado/
+
+# Capturas históricas adicionais sem permissão: apenas na revisão local completa.
+/public/institucional/capturas-v1/

@@ -1,0 +1,1018 @@
+/* EXPERIMENTO brand-sinal-v1 — identidade ARARAT Sinal v1.0 sobre a refinada ("/", "/pt",
+   /previa/refinada). Escopo: o wrapper [data-marca="sinal"] (display: contents) ou
+   html:has([data-marca="sinal"]). As rotas de comparação (/previa, /a, /b, /original) não o têm e
+   ficam com a aparência anterior.
+
+   Fonte: pacote local ARARAT_Sinal_Brand_System_v1.0 (zip SHA-256 8c6caf54…0190d) e brand book
+   "ARARAT Sinal". Valores = tokens oficiais (02_tokens/ararat-sinal.tokens.css), sem valor novo de cor:
+     escuro (padrão)  bg gray-5 #111111 · surface gray-10 #1B1B1B · raised gray-20 #303030
+                      text gray-90 #E2E2E2 · body gray-80 #C6C6C6 · muted gray-60 #919191
+                      border gray-20 · border-strong gray-50 #777777 · focus gray-90
+                      ação primária gray-90 / gray-5
+     claro (editorial: Ciência, Time) bg gray-97 #F6F6F6 · raised #EDEDED · text gray-5 · body gray-20
+                      muted gray-40 #5E5E5E · border gray-80 · border-strong gray-50 · focus gray-5
+   Exceções explícitas dos tokens (documentadas, kit original intacto):
+     · surface claro #FFFFFF NÃO é usado (as superfícies claras institucionais ficam em gray-97/#EDEDED);
+     · signal (#FFFFFF/#000000) só existe dentro dos SVGs oficiais do logo (o ponto) — nunca neste CSS;
+     · viewport canvas #000000 e cores clínicas só existem DENTRO das capturas reais (imagens intactas).
+   Sem navy, ouro, cobre, sage, gradientes ou sombras decorativas: superfícies e fios de 1 px separam.
+
+   As variáveis antigas do site (--navy-*, --gold-*, --gray-*, --white-*) são redirecionadas para PAPÉIS
+   do Sinal e, em seguida, cada função é conferida no uso real (seções 3–9). Conferência automática:
+   tests/sinal-contraste.mjs (texto renderizado), tests/sinal-layout.mjs, lint-sinal.mjs + busca de cor. */
+
+/* ── 1. Fontes oficiais (08_fontes, WOFF2 sem alteração, OFL em /marca-sinal/v1.0/fontes/) ── */
+@font-face {
+  font-family: "Geist";
+  src: url("/marca-sinal/v1.0/fontes/Geist-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/marca-sinal/v1.0/fontes/GeistMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/marca-sinal/v1.0/fontes/GeistMono-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+/* Reserva métrica (fontes do sistema, nenhum arquivo novo): largura média medida com fontTools nos
+   textos do site (Geist × Liberation Sans ≈ Arial; Geist Mono × Liberation Mono ≈ Courier New);
+   ascent/descent = métricas typo (1005/−295 por 1000) ÷ size-adjust. */
+@font-face {
+  font-family: "Geist Reserva";
+  src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("LiberationSans"), local("Arimo"), local("Helvetica");
+  font-weight: 400;
+  size-adjust: 103.8%;
+  ascent-override: 96.86%;
+  descent-override: 28.43%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Geist Reserva";
+  src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("LiberationSans"), local("Arimo"), local("Helvetica");
+  font-weight: 500;
+  size-adjust: 106.2%;
+  ascent-override: 94.62%;
+  descent-override: 27.77%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Geist Reserva";
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Liberation Sans Bold"), local("LiberationSans-Bold"), local("Arimo Bold"), local("Helvetica Bold");
+  font-weight: 600;
+  size-adjust: 101.2%;
+  ascent-override: 99.29%;
+  descent-override: 29.15%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Geist Mono Reserva";
+  src: local("Courier New"), local("CourierNewPSMT"), local("Liberation Mono"), local("LiberationMono"), local("Cousine"), local("Menlo");
+  size-adjust: 100%;
+  ascent-override: 100.52%;
+  descent-override: 29.5%;
+  line-gap-override: 0%;
+}
+
+/* ── 2. Tokens ─────────────────────────────────────────────────────────────────────────── */
+[data-marca="sinal"],
+html:has([data-marca="sinal"]) {
+  /* Escala oficial (L* em passos iguais) */
+  --ararat-gray-5: #111111;
+  --ararat-gray-10: #1b1b1b;
+  --ararat-gray-20: #303030;
+  --ararat-gray-30: #474747;
+  --ararat-gray-40: #5e5e5e;
+  --ararat-gray-50: #777777;
+  --ararat-gray-60: #919191;
+  --ararat-gray-70: #ababab;
+  --ararat-gray-80: #c6c6c6;
+  --ararat-gray-90: #e2e2e2;
+  --ararat-gray-97: #f6f6f6;
+  /* Semânticos — tema escuro (padrão institucional) */
+  --ararat-bg: var(--ararat-gray-5);
+  --ararat-surface: var(--ararat-gray-10);
+  --ararat-surface-raised: var(--ararat-gray-20);
+  --ararat-text: var(--ararat-gray-90);
+  --ararat-text-body: var(--ararat-gray-80);
+  --ararat-text-muted: var(--ararat-gray-60);
+  --ararat-border: var(--ararat-gray-20);
+  --ararat-border-strong: var(--ararat-gray-50);
+  --ararat-focus: var(--ararat-gray-90);
+  --ararat-data-positive: var(--ararat-gray-80);
+  --ararat-data-negative: var(--ararat-gray-50);
+  --ararat-data-axis: var(--ararat-gray-50);
+  --ararat-action-primary-bg: var(--ararat-gray-90);
+  --ararat-action-primary-fg: var(--ararat-gray-5);
+  /* Tipografia, espaço, raio, traço e tempo (tokens oficiais) */
+  --ararat-font-sans: "Geist", "Geist Reserva", "Helvetica Neue", Arial, sans-serif;
+  --ararat-font-mono: "Geist Mono", "Geist Mono Reserva", "SFMono-Regular", Menlo, monospace;
+  --ararat-radius-none: 0px;
+  --ararat-radius-xs: 2px;
+  --ararat-radius-s: 4px;
+  --ararat-stroke-hair: 1px;
+  --ararat-stroke-line: 1.5px;
+  --ararat-stroke-focus: 2px;
+  --ararat-dur-product: 160ms;
+  --ararat-ease-out: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Fontes do site → Geist (títulos, corpo e interface). Mono é aplicada por papel (seção 4). */
+  --font-title: var(--ararat-font-sans);
+  --font-body: var(--ararat-font-sans);
+  --font-brand: var(--ararat-font-sans);
+
+  /* Redirecionamento por PAPEL (escuro). Nenhum valor fora da escala. */
+  --navy-950: var(--ararat-bg);
+  --navy-900: var(--ararat-bg);
+  --navy-800: var(--ararat-surface);
+  --navy-700: var(--ararat-surface-raised);
+  --navy-600: var(--ararat-surface-raised);
+  --white-100: var(--ararat-text);
+  --white-000: var(--ararat-text);
+  --gray-200: var(--ararat-text-body);
+  --gray-300: var(--ararat-text-muted);
+  /* "Ouro" → sem acento cromático: destaque por contraste. 500 (fios, marcadores, fundos de controle
+     ativo) = gray-90; 400 (rótulos) = muted gray-60; 300 (texto claro de apoio) = body gray-80; 600 = gray-50. */
+  --gold-600: var(--ararat-gray-50);
+  --gold-500: var(--ararat-gray-90);
+  --gold-400: var(--ararat-text-muted);
+  --gold-300: var(--ararat-text-body);
+  --blue-500: var(--ararat-data-negative);
+  --blue-400: var(--ararat-data-negative);
+  --blue-300: var(--ararat-data-negative);
+  --amber-500: var(--ararat-gray-60);
+  --green-500: var(--ararat-gray-60);
+  --red-500: var(--ararat-gray-60);
+
+  --surface-app: var(--ararat-bg);
+  --surface-raised: var(--ararat-surface);
+  --surface-sunken: var(--ararat-bg);
+  --surface-card: var(--ararat-surface);
+  --surface-selected: var(--ararat-surface-raised);
+  --border-subtle: var(--ararat-border);
+  --border-default: var(--ararat-border-strong);
+  --border-strong: var(--ararat-border-strong);
+  --border-focus: var(--ararat-focus);
+  --text-primary: var(--ararat-text);
+  --text-secondary: var(--ararat-text-body);
+  --text-tertiary: var(--ararat-text-muted);
+  --text-link: var(--ararat-text);
+  --accent-focus: var(--ararat-focus);
+  --accent-selected: var(--ararat-text);
+  --contour-line: var(--ararat-surface);
+  --pattern-topo: none;
+  --rule-gold: linear-gradient(var(--ararat-border-strong), var(--ararat-border-strong));
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --shadow-gold-glow: none;
+  --shadow-focus-ring: none;
+  /* Raios: radius-s (4 px) em controles; radius-none no resto. */
+  --radius-xs: var(--ararat-radius-xs);
+  --radius-sm: var(--ararat-radius-s);
+  --radius-md: var(--ararat-radius-s);
+  --radius-lg: var(--ararat-radius-none);
+  --radius-xl: var(--ararat-radius-none);
+  --radius-pill: var(--ararat-radius-s);
+  --ease-standard: var(--ararat-ease-out);
+  --duration-base: var(--ararat-dur-product);
+
+  font-synthesis: none;
+}
+
+html:has([data-marca="sinal"]) {
+  background: var(--ararat-bg);
+}
+html:has([data-marca="sinal"]) body {
+  background: var(--ararat-bg);
+  color: var(--ararat-text-body);
+  font-family: var(--ararat-font-sans);
+}
+
+/* ── 3. Foco, seleção, salto, barra de rolagem ─────────────────────────────────────────── */
+[data-marca="sinal"] :focus-visible {
+  outline: var(--ararat-stroke-focus) solid var(--ararat-focus);
+  outline-offset: 3px;
+  border-radius: var(--ararat-radius-s);
+}
+[data-marca="sinal"] :is(#ciencia, #time) :focus-visible {
+  outline-color: var(--ararat-gray-5) !important;
+}
+[data-marca="sinal"] ::selection {
+  background: var(--ararat-gray-90);
+  color: var(--ararat-gray-5);
+}
+[data-marca="sinal"] :is(#ciencia, #time) ::selection {
+  background: var(--ararat-gray-5);
+  color: var(--ararat-gray-97);
+}
+html:has([data-marca="sinal"]) .skip-link {
+  background: var(--ararat-gray-90);
+  color: var(--ararat-gray-5);
+  border-radius: var(--ararat-radius-s);
+  font-family: var(--ararat-font-sans);
+  font-weight: 500;
+}
+@media not (forced-colors: active) {
+  @supports not selector(::-webkit-scrollbar) {
+    html:has([data-marca="sinal"]) {
+      scrollbar-color: #5e5e5e #111111;
+    }
+  }
+  html:has([data-marca="sinal"])::-webkit-scrollbar,
+  html:has([data-marca="sinal"])::-webkit-scrollbar-track,
+  html:has([data-marca="sinal"])::-webkit-scrollbar-corner {
+    background: #111111;
+  }
+  html:has([data-marca="sinal"])::-webkit-scrollbar-thumb {
+    background: #5e5e5e;
+    border-color: #111111;
+    border-radius: 2px;
+  }
+  html:has([data-marca="sinal"])::-webkit-scrollbar-thumb:hover,
+  html:has([data-marca="sinal"])::-webkit-scrollbar-thumb:active {
+    background: #919191;
+  }
+}
+
+/* ── 4. Tipografia por papel ───────────────────────────────────────────────────────────────
+   Geist 500 em títulos (tracking negativo, display-*), 400 no corpo, 500/600 na interface.
+   Geist Mono em rótulos técnicos (eyebrow), números, dados, legendas técnicas; numerais tabulares.
+   Geist Pixel Square NÃO é usado nesta versão. */
+[data-tipografia="refinada"][data-marca="sinal"] {
+  --fs-body: 1rem;
+  --fs-eyebrow: 0.6875rem; /* eyebrow oficial: 11 px */
+  font-family: var(--ararat-font-sans);
+  font-size: var(--fs-body);
+  font-weight: 400;
+}
+[data-marca="sinal"] :is(h1, h2, h3, h4) {
+  font-family: var(--ararat-font-sans);
+}
+[data-tipografia="refinada"][data-marca="sinal"] main section h2 {
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+}
+[data-tipografia="refinada"][data-marca="sinal"] main h3 {
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 1.3;
+}
+[data-tipografia="refinada"][data-marca="sinal"] main section p {
+  line-height: 1.6;
+}
+/* Rótulos técnicos (eyebrow oficial): Geist Mono 500, 11 px, caixa alta, tracking 0,14 em. */
+[data-tipografia="refinada"][data-marca="sinal"] :is(
+    .eyebrow,
+    [class*="JourneyMriScene"][class*="__label"],
+    #jornada [class*="__stepKicker"],
+    #plataforma [class*="__stopLabel"],
+    #plataforma [class*="__audienceTitle"],
+    #plataforma [class*="__produto"],
+    #explicabilidade [class*="__stepLabel"],
+    #contato dt,
+    footer [class*="__tagline"],
+    [data-opening="invite"],
+    #plataforma [class*="__pendingLabel"],
+    #ciencia [class*="__pubKicker"]
+  ) {
+  font-family: var(--ararat-font-mono);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+[data-tipografia="refinada"][data-marca="sinal"] .eyebrow {
+  font-size: 0.6875rem;
+  line-height: 16px;
+  color: var(--ararat-text-muted);
+}
+/* Números e dados: mono tabular. */
+[data-marca="sinal"] :is(
+    #jornada [class*="__stepNum"],
+    #plataforma [class*="__stepNum"],
+    #plataforma [class*="__routeNum"],
+    #plataforma [class*="__num"],
+    #plataforma [class*="__legendaNum"],
+    #ciencia [class*="__partNum"],
+    #time [class*="__num"],
+    [class*="CapturaProdutoFigura"][class*="__marker"],
+    [class*="CapturaProdutoFigura"][class*="__rotulo"],
+    #explicabilidade [class*="__bars"] li > span,
+    [class*="__dlgTitle"]
+  ) {
+  font-family: var(--ararat-font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+[data-marca="sinal"] #explicabilidade [class*="__reading"] > li::before {
+  font-family: var(--ararat-font-mono);
+  font-variant-numeric: tabular-nums;
+}
+/* Botões e navegação: Geist 500, sem tracking. */
+[data-tipografia="refinada"][data-marca="sinal"] .btn {
+  font-family: var(--ararat-font-sans);
+  font-weight: 500;
+  font-size: 0.9375rem;
+  letter-spacing: 0;
+}
+[data-tipografia="refinada"][data-marca="sinal"] header nav a:not(.btn) {
+  font-family: var(--ararat-font-sans);
+  font-weight: 500;
+  font-size: 0.875rem;
+  letter-spacing: 0;
+}
+[data-tipografia="refinada"][data-marca="sinal"] :is(strong, b) {
+  font-weight: 600;
+}
+/* Pesos explícitos da refinada.css (Space Grotesk 500/600) → Geist 500 em títulos de seção; os 600
+   de rótulos de UI continuam 600 (eixo real da Geist variável). */
+[data-tipografia="refinada"][data-marca="sinal"] #ciencia [class*="__partNum"],
+[data-tipografia="refinada"][data-marca="sinal"] footer nav a {
+  font-weight: 500;
+}
+/* Títulos de seção: display-m/l fluido (40 → 56 px), tracking −0,03 em. */
+[data-tipografia="refinada"][data-marca="sinal"] #plataforma > div > header h2,
+[data-tipografia="refinada"][data-marca="sinal"] #explicabilidade h2 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  max-width: 14em;
+}
+[data-tipografia="refinada"][data-marca="sinal"] #plataforma header p,
+[data-tipografia="refinada"][data-marca="sinal"] #explicabilidade header p {
+  font-size: 1.125rem;
+  line-height: 1.55;
+  max-width: 36em;
+  color: var(--ararat-text-body);
+}
+/* Larguras em em fixadas pela refinada.css para Space Grotesk/Source Sans → recalculadas para Geist
+   (0 = 0,60 em a 500; 0,59 em a 400). */
+[data-tipografia="refinada"][data-marca="sinal"] #contato [class*="Contact-module"][class*="__title"] { max-width: 12em; }
+[data-tipografia="refinada"][data-marca="sinal"] #ciencia [class*="__statement"] { max-width: 18em; }
+[data-tipografia="refinada"][data-marca="sinal"] #ciencia [class*="Science-module"][class*="__lead"] { max-width: 32em; }
+[data-tipografia="refinada"][data-marca="sinal"] #ciencia [class*="Science-module"][class*="__disclaimer"] { max-width: 42em; }
+[data-tipografia="refinada"][data-marca="sinal"] #plataforma [class*="__routeText"] { max-width: 18em; }
+[data-tipografia="refinada"][data-marca="sinal"] #jornada [class*="__openingLead"] { max-width: 24em; }
+[data-tipografia="refinada"][data-marca="sinal"] #passagem [class*="Passage-module"][class*="__text"] { max-width: 34em; }
+
+/* ── 5. Primeira dobra — composição editorial do Sinal ─────────────────────────────────────
+   Texto alinhado à esquerda no grid (eyebrow mono, mensagem em display, descrição factual existente,
+   duas ações, estado científico); a arte (terreno do Motion) continua no slot da base. A 2ª frase em
+   tom secundário (text-muted), como no brand book. */
+[data-marca="sinal"] [data-opening="content"] {
+  align-items: flex-start;
+  text-align: left;
+}
+[data-marca="sinal"] [data-opening="content"] > div,
+[data-marca="sinal"] [data-opening="content"] [class*="__actions"] {
+  justify-content: flex-start;
+}
+[data-marca="sinal"] [data-opening="note"] {
+  text-align: left;
+  font-family: var(--ararat-font-mono);
+  font-size: 0.6875rem !important;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ararat-text-muted) !important;
+}
+[data-tipografia="refinada"][data-marca="sinal"] #hero-title {
+  font-weight: 500;
+  font-size: clamp(2.35rem, 5.4vw, 5rem);
+  letter-spacing: -0.035em;
+  line-height: 1;
+  max-width: 12em;
+  color: var(--ararat-text);
+}
+[data-marca="sinal"] #hero-title [data-tom="secundario"] {
+  color: var(--ararat-text-muted);
+}
+[data-tipografia="refinada"][data-marca="sinal"] [data-opening="content"] p:not(.eyebrow):not(.ill-note) {
+  font-size: clamp(1.0625rem, 1.3vw, 1.125rem);
+  line-height: 1.55;
+  max-width: 30em;
+  color: var(--ararat-text-body);
+}
+@media (max-width: 600px) {
+  [data-tipografia="refinada"][data-marca="sinal"] #hero-title {
+    font-size: clamp(2.05rem, 10.2vw, 2.75rem);
+    letter-spacing: -0.03em;
+  }
+  [data-tipografia="refinada"][data-marca="sinal"] #plataforma > div > header h2,
+  [data-tipografia="refinada"][data-marca="sinal"] #explicabilidade h2 {
+    font-size: clamp(1.8rem, 8vw, 2.2rem);
+  }
+  [data-tipografia="refinada"][data-marca="sinal"] #plataforma header p,
+  [data-tipografia="refinada"][data-marca="sinal"] #explicabilidade header p {
+    font-size: 1.0625rem;
+  }
+}
+@media (max-height: 760px) and (min-width: 601px) {
+  [data-tipografia="refinada"][data-marca="sinal"] #hero-title {
+    font-size: clamp(2.2rem, 4.6vw, 4.1rem);
+  }
+}
+@media (max-width: 600px) and (max-height: 700px) {
+  [data-tipografia="refinada"][data-marca="sinal"] #hero-title {
+    font-size: clamp(1.85rem, 9vw, 2.35rem);
+  }
+}
+[data-marca="sinal"] [data-opening="invite"] {
+  color: var(--ararat-text-muted);
+  text-shadow: none;
+}
+[data-marca="sinal"] [data-opening="invite"] [class*="__inviteLine"] {
+  background: var(--ararat-border-strong);
+}
+/* Contêiner do módulo da Jornada (journey.css do pacote do Motion: fundo navy fixo) — só o FUNDO
+   do contêiner recebe o bg do Sinal, para continuar invisível no hero. O desenho do módulo não muda. */
+[data-marca="sinal"] .ararat-journey {
+  background: var(--ararat-bg);
+}
+
+/* ── 6. Controles ──────────────────────────────────────────────────────────────────────────
+   Primário: action-primary (gray-90 / gray-5, 14,6:1); secundário: fio border-strong, texto gray-90.
+   Hover por troca de superfície; sem brilho, sombra ou deslocamento extra. */
+[data-marca="sinal"] .btn {
+  border-radius: var(--ararat-radius-s);
+  min-height: 44px;
+  padding: 10px 18px;
+}
+[data-marca="sinal"] .btn-gold {
+  background: var(--ararat-action-primary-bg);
+  color: var(--ararat-action-primary-fg);
+}
+[data-marca="sinal"] .btn-gold:hover {
+  background: var(--ararat-gray-80);
+}
+[data-marca="sinal"] .btn-ghost {
+  border-color: var(--ararat-border-strong);
+  color: var(--ararat-text);
+}
+[data-marca="sinal"] .btn-ghost:hover {
+  border-color: var(--ararat-gray-90);
+  background: var(--ararat-surface);
+  color: var(--ararat-text);
+}
+[data-marca="sinal"] .btn:active {
+  filter: none;
+  background: var(--ararat-surface-raised);
+}
+[data-marca="sinal"] .btn-gold:active {
+  background: var(--ararat-gray-70);
+}
+[data-marca="sinal"] .language-switch {
+  border-color: var(--ararat-border-strong);
+  border-radius: var(--ararat-radius-s);
+  color: var(--ararat-text-body);
+  font-family: var(--ararat-font-mono);
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+[data-marca="sinal"] .language-switch:hover {
+  color: var(--ararat-text);
+  border-color: var(--ararat-gray-90);
+}
+/* Desativado (pausa com movimento reduzido do sistema): borda tracejada + cursor, texto legível. */
+[data-marca="sinal"] header button:disabled {
+  border-style: dashed;
+  cursor: not-allowed;
+}
+
+/* ── 7. Cabeçalho ──────────────────────────────────────────────────────────────────────── */
+[data-marca="sinal"] header[data-marca="sinal"] {
+  border-bottom: 1px solid transparent;
+}
+[data-marca="sinal"] header[data-marca="sinal"][data-scrolled="true"] {
+  background: var(--ararat-bg);
+  border-bottom-color: var(--ararat-border);
+  backdrop-filter: none;
+}
+[data-marca="sinal"] header[data-marca="sinal"] [class*="__menuButton"] {
+  background: var(--ararat-bg);
+  border-radius: var(--ararat-radius-s);
+}
+[data-marca="sinal"] header[data-marca="sinal"] [class*="__nav"] {
+  background-color: var(--ararat-bg);
+}
+@media (min-width: 1081px) {
+  [data-marca="sinal"] header[data-marca="sinal"] [class*="__nav"] {
+    background-color: transparent;
+  }
+}
+[data-marca="sinal"] header[data-marca="sinal"] [class*="__link"]::after {
+  background: var(--ararat-gray-90);
+}
+[data-marca="sinal"] header[data-marca="sinal"] [class*="__motionToggle"] {
+  border-radius: var(--ararat-radius-s);
+}
+
+/* ── 8. Seções escuras ─────────────────────────────────────────────────────────────────── */
+[data-marca="sinal"] :is(#passagem, #plataforma, #explicabilidade, #contato, #faq),
+[data-marca="sinal"] #jornada,
+[data-marca="sinal"] [data-opening="root"] #jornada {
+  background: var(--ararat-bg);
+}
+/* Fios entre seções escuras (separação por linha, não por sombra ou degradê). */
+[data-marca="sinal"] :is(#plataforma, #explicabilidade, #faq, #contato) {
+  border-top: 1px solid var(--ararat-border);
+}
+[data-marca="sinal"] #passagem [class*="__line"] {
+  background: var(--ararat-border-strong);
+}
+[data-marca="sinal"] #passagem [class*="__arc"] path {
+  stroke: var(--ararat-border-strong);
+}
+
+/* Jornada (Site): quadro, trilho, etapas, legendas. O conteúdo desenhado pelo módulo é do Motion. */
+[data-marca="sinal"] #jornada [class*="__frame"] {
+  background: var(--ararat-bg);
+  box-shadow: none;
+  outline: 1px solid var(--ararat-border);
+}
+[data-marca="sinal"] #jornada [class*="__corner"] {
+  background:
+    linear-gradient(var(--ararat-gray-60), var(--ararat-gray-60)) top left / 18px 1px no-repeat,
+    linear-gradient(var(--ararat-gray-60), var(--ararat-gray-60)) top left / 1px 18px no-repeat,
+    linear-gradient(var(--ararat-gray-60), var(--ararat-gray-60)) bottom right / 18px 1px no-repeat,
+    linear-gradient(var(--ararat-gray-60), var(--ararat-gray-60)) bottom right / 1px 18px no-repeat;
+}
+[data-marca="sinal"] #jornada [class*="__railTrack"] {
+  background: var(--ararat-border);
+}
+[data-marca="sinal"] #jornada [class*="__railFill"] {
+  background: var(--ararat-gray-90);
+}
+[data-marca="sinal"] #jornada [class*="__stepButton"]::before {
+  background: var(--ararat-bg);
+  border-color: var(--ararat-border-strong);
+}
+[data-marca="sinal"] #jornada [class*="__stepButton"][data-reached]::before {
+  border-color: var(--ararat-gray-90);
+}
+[data-marca="sinal"] #jornada [class*="__stepButton"][aria-pressed="true"]::before {
+  background: var(--ararat-gray-90);
+  border-color: var(--ararat-gray-90);
+  box-shadow: none;
+}
+[data-marca="sinal"] #jornada [class*="__stepButton"][aria-pressed="true"] {
+  border-color: var(--ararat-border-strong);
+  background: var(--ararat-surface);
+}
+[data-marca="sinal"] #jornada [class*="__stepNum"] {
+  color: var(--ararat-text-muted);
+}
+[data-marca="sinal"] #jornada :is([class*="__sceneLabel"], [class*="__summary"]) {
+  background: var(--ararat-surface);
+  border-left-color: var(--ararat-border-strong);
+}
+[data-marca="sinal"] #jornada [class*="__sceneLabel"][data-emphasis] {
+  color: var(--ararat-action-primary-fg);
+  background: var(--ararat-action-primary-bg);
+}
+[data-marca="sinal"] #jornada [class*="__stepMore"] > summary {
+  text-decoration-color: var(--ararat-border-strong);
+}
+/* Etapas fora de leitura: esmaecidas como na base, mas com título em text (gray-90) e opacidade 0,5 →
+   ≈ 4,4:1 sobre gray-5 (título grande; mínimo 3:1). Antes: corpo gray-80 a 0,38 = 2,6:1. */
+[data-marca="sinal"] #jornada [class*="__stepInner"] {
+  opacity: 0.5;
+}
+[data-marca="sinal"] #jornada [class*="__step"][data-active] [class*="__stepInner"] {
+  opacity: 1;
+}
+[data-marca="sinal"] #jornada [class*="__stepTitle"] {
+  color: var(--ararat-text);
+}
+[data-marca="sinal"] #jornada [class*="__human"] {
+  color: var(--ararat-text);
+}
+[data-marca="sinal"] [class*="JourneyMriScene"] [class*="__lattice"] line {
+  stroke: var(--ararat-gray-70);
+  stroke-opacity: 0.3;
+}
+[data-marca="sinal"] [class*="JourneyMriScene"] [class*="__panel"] {
+  fill: var(--ararat-surface);
+  stroke: var(--ararat-border);
+}
+[data-marca="sinal"] [class*="JourneyMriScene"] [class*="__tileFrame"] {
+  stroke: var(--ararat-gray-60);
+}
+[data-marca="sinal"] [class*="JourneyMriScene"] [class*="__barTrack"] {
+  fill: var(--ararat-border);
+}
+
+/* Plataforma */
+[data-marca="sinal"] #plataforma [class*="__documented"] {
+  background: var(--ararat-surface);
+  border-color: var(--ararat-border);
+}
+[data-marca="sinal"] #plataforma [class*="__audienceTitle"] {
+  color: var(--ararat-text-muted);
+  font-size: 0.6875rem;
+}
+/* Destaque do título ("com um caso público"): tom secundário em vez de cor (como no brand book). */
+[data-marca="sinal"] #plataforma [class*="__gold"] {
+  color: var(--ararat-text-muted);
+}
+[data-marca="sinal"] #plataforma [class*="__docMoreSummary"] {
+  color: var(--ararat-text);
+  text-decoration-color: var(--ararat-border-strong);
+}
+[data-marca="sinal"] #plataforma [class*="__docList"] li {
+  border-radius: var(--ararat-radius-s);
+}
+
+/* Molduras das capturas reais — a imagem NÃO muda (cores clínicas e aparência originais). Moldura =
+   fio de 1 px + superfície; marcador numerado em mono sobre gray-90. Nenhum símbolo/ponto da marca. */
+[data-marca="sinal"] [class*="CapturaProdutoFigura"][class*="__window"] {
+  background: var(--ararat-bg);
+  box-shadow: none;
+  outline: 1px solid var(--ararat-border);
+}
+[data-marca="sinal"] [class*="CapturaProdutoFigura"][class*="__figure"][data-destaque] [class*="__window"] {
+  box-shadow: none;
+  outline: 1px solid var(--ararat-border-strong);
+}
+[data-marca="sinal"] [class*="CapturaProdutoFigura"][class*="__marker"] {
+  color: var(--ararat-action-primary-fg);
+  background: var(--ararat-action-primary-bg);
+  box-shadow: none;
+  outline: 3px solid var(--ararat-bg);
+  border-radius: var(--ararat-radius-s);
+}
+[data-marca="sinal"] [class*="CapturaProdutoFigura"][class*="__figure"]:not([data-destaque]) [class*="__marker"] {
+  box-shadow: none;
+}
+[data-marca="sinal"] [class*="CapturaProdutoFigura"][class*="__falha"] {
+  border-color: var(--ararat-border-strong);
+}
+[data-marca="sinal"] [class*="CapturaProdutoFigura"][class*="__dialog"] {
+  background: var(--ararat-bg);
+  border-color: var(--ararat-border-strong);
+}
+[data-marca="sinal"] [class*="CapturaProdutoFigura"][class*="__dialog"]::backdrop {
+  background: rgba(17, 17, 17, 0.92);
+}
+
+/* Demonstração Hub → Viewer (PlataformaFluxo): moldura, legendas e controles. As capturas mantêm o
+   fundo do próprio produto (Hub claro, Viewer escuro) e nada é desenhado por cima delas. */
+[data-marca="sinal"] [class*="PlataformaFluxo"][class*="__aviso"] {
+  border-left: 1px solid var(--ararat-border-strong);
+  background: var(--ararat-surface);
+  color: var(--ararat-text-body);
+}
+[data-marca="sinal"] [class*="PlataformaFluxo"][class*="__aviso"] strong {
+  color: var(--ararat-text);
+}
+[data-marca="sinal"] [class*="PlataformaFluxo"][class*="__produto"],
+[data-marca="sinal"] [class*="PlataformaFluxo"][class*="__atribuicao"] {
+  color: var(--ararat-text-muted);
+}
+[data-marca="sinal"] [class*="PlataformaFluxo"][class*="__atribuicao"] a {
+  color: var(--ararat-text-body);
+}
+[data-marca="sinal"] [class*="PlataformaFluxo"][class*="__legendaNum"] {
+  opacity: 1;
+  color: var(--ararat-text-muted);
+}
+[data-marca="sinal"] [class*="PlataformaFluxo"][class*="__legendaTitulo"],
+[data-marca="sinal"] [class*="PlataformaFluxo"][class*="__titulo"] {
+  font-family: var(--ararat-font-sans);
+  font-weight: 600;
+}
+[data-marca="sinal"] [class*="PlataformaFluxo"][class*="__legendas"] li {
+  color: var(--ararat-text-muted);
+}
+[data-marca="sinal"] [class*="PlataformaFluxo"][class*="__captura"] {
+  border-radius: var(--ararat-radius-none);
+}
+/* Fundo da moldura (visto só enquanto a captura carrega ou se falhar): gray-97 para o Hub claro e
+   gray-5 para o Viewer escuro. A imagem em si não muda. */
+[data-marca="sinal"] [class*="PlataformaFluxo"][class*="__captura"][data-produto="hub"] {
+  background: var(--ararat-gray-97);
+  border-color: var(--ararat-border-strong);
+}
+[data-marca="sinal"] [class*="PlataformaFluxo"][class*="__captura"][data-produto="viewer"] {
+  background: var(--ararat-bg);
+  border-color: var(--ararat-border);
+}
+[data-marca="sinal"] [class*="PlataformaFluxo"][class*="__falha"] {
+  background: var(--ararat-surface);
+}
+
+/* Explicabilidade (demonstração ilustrativa já rotulada como tal; nenhum ícone de SHAP/XAI). */
+[data-marca="sinal"] #explicabilidade [class*="__artWrap"] {
+  background: var(--ararat-bg);
+  box-shadow: none;
+  outline: 1px solid var(--ararat-border);
+}
+[data-marca="sinal"] #explicabilidade [class*="__badge"] {
+  color: var(--ararat-text-body);
+  border: 1px dashed var(--ararat-border-strong);
+  border-radius: var(--ararat-radius-xs);
+  font-family: var(--ararat-font-mono);
+  letter-spacing: 0.08em;
+}
+[data-marca="sinal"] #explicabilidade [class*="__choice"] {
+  border-radius: var(--ararat-radius-s);
+  border-color: var(--ararat-border-strong);
+}
+[data-marca="sinal"] #explicabilidade [class*="__choice"][aria-pressed="true"] {
+  background: var(--ararat-action-primary-bg);
+  border-color: var(--ararat-action-primary-bg);
+  color: var(--ararat-action-primary-fg);
+}
+[data-marca="sinal"] #explicabilidade [class*="__barTrack"] {
+  background: var(--ararat-surface-raised);
+  border-radius: 0;
+}
+[data-marca="sinal"] #explicabilidade [class*="__barFill"] {
+  background: var(--ararat-data-negative);
+  border-radius: 0;
+}
+[data-marca="sinal"] #explicabilidade [class*="__bars"] li[data-active] [class*="__barFill"] {
+  background: var(--ararat-data-positive);
+}
+[data-marca="sinal"] #explicabilidade [class*="__reading"] > li::before {
+  border-color: var(--ararat-border-strong);
+  color: var(--ararat-text);
+}
+[data-marca="sinal"] [class*="ExplainMri"] [class*="__art"] {
+  background: var(--ararat-bg);
+}
+/* Anotações da ilustração de explicabilidade (SVG do Site sobre RM): cinza, sem cor de marca. */
+[data-marca="sinal"] [class*="ExplainMri"] :is([class*="__contour"], [class*="__window"], [class*="__texLink"], [class*="__insetFrame"]) {
+  stroke: var(--ararat-gray-90);
+}
+[data-marca="sinal"] [class*="ExplainMri"] [class*="__texBox"] {
+  stroke: var(--ararat-gray-70);
+}
+[data-marca="sinal"] [class*="ExplainMri"] [class*="__glandLine"] {
+  stroke: var(--ararat-gray-80);
+}
+[data-marca="sinal"] [class*="ExplainMri"] [class*="__roiLine"] {
+  fill: none;
+  stroke: var(--ararat-gray-90);
+  stroke-dasharray: 4 3;
+}
+
+/* FAQ */
+[data-marca="sinal"] #faq [class*="__plus"]::before,
+[data-marca="sinal"] #faq [class*="__plus"]::after {
+  background: var(--ararat-text);
+}
+[data-marca="sinal"] #faq [class*="__link"] {
+  color: var(--ararat-text);
+  text-decoration-color: var(--ararat-border-strong);
+}
+
+/* Contato: campo de voxels oficial (relevo quantizado em cinza) numa faixa PRÓPRIA na base da seção,
+   abaixo de todo o texto — nunca sob texto (o contraste renderizado não depende da opacidade). */
+[data-marca="sinal"] #contato {
+  position: relative;
+  isolation: isolate;
+  --faixa-voxels: clamp(120px, 16vw, 240px);
+  padding-bottom: calc(clamp(64px, 9vh, 112px) + var(--faixa-voxels));
+}
+[data-marca="sinal"] #contato .sinal-voxels {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--faixa-voxels);
+  z-index: -1;
+  background: url("/marca-sinal/v1.0/grafismos/voxels-escuro.svg") 50% 38% / cover no-repeat;
+  opacity: 0.55;
+  pointer-events: none;
+}
+[data-marca="sinal"] #contato article[class*="__path"] {
+  border-top: 1px solid var(--ararat-gray-90);
+}
+[data-marca="sinal"] #contato article[class*="__path"] + article[class*="__path"] {
+  border-top-color: var(--ararat-border-strong);
+}
+[data-marca="sinal"] #contato [class*="__action"] {
+  text-decoration-color: var(--ararat-border-strong);
+}
+[data-marca="sinal"] #contato [class*="__primary"] {
+  background: var(--ararat-action-primary-bg);
+  color: var(--ararat-action-primary-fg);
+}
+[data-marca="sinal"] #contato [class*="__channel"] {
+  background: var(--ararat-bg);
+  border: 1px dashed var(--ararat-border-strong);
+  border-radius: var(--ararat-radius-xs);
+}
+[data-marca="sinal"] #contato [class*="__channelDot"] {
+  background: var(--ararat-gray-60);
+  border-radius: 0;
+}
+[data-marca="sinal"] #contato [class*="__pending"] {
+  border-top-color: var(--ararat-border);
+}
+
+/* Rodapé */
+[data-marca="sinal"] footer {
+  background: var(--ararat-bg);
+  border-top: 1px solid var(--ararat-border);
+}
+[data-marca="sinal"] footer a[class*="__logo"] {
+  /* proteção do lockup full: 2× o diâmetro do ponto (≈ 6 px a 48 px → 12 px) */
+  display: inline-block;
+  padding: 12px 12px 12px 0;
+}
+[data-marca="sinal"] footer nav a:hover {
+  color: var(--ararat-text);
+}
+[data-marca="sinal"] footer [class*="__tagline"] {
+  font-size: 0.75rem; /* 12 px: piso de legibilidade da tagline (teste do rodapé) */
+  color: var(--ararat-text-muted);
+}
+[data-marca="sinal"] footer [class*="__small"] {
+  color: var(--ararat-text-muted);
+}
+
+/* ── 9. Seções claras (Ciência, Time) — tema claro do Sinal, superfície institucional gray-97 ── */
+[data-marca="sinal"] #ciencia,
+[data-marca="sinal"] #time {
+  --navy-900: var(--ararat-gray-5);
+  --white-100: var(--ararat-gray-97);
+  --gold-500: var(--ararat-gray-5);
+  --gold-ink: var(--ararat-gray-5);
+  --ararat-focus: var(--ararat-gray-5);
+  background: var(--ararat-gray-97);
+  color: var(--ararat-gray-20);
+}
+[data-marca="sinal"] #ciencia :is(h2, h3, [class*="__title"], [class*="__statement"]) {
+  color: var(--ararat-gray-5);
+}
+[data-marca="sinal"] #ciencia .eyebrow,
+[data-marca="sinal"] #time .eyebrow {
+  color: var(--ararat-gray-40);
+}
+[data-marca="sinal"] #ciencia :is(
+    [class*="__lead"],
+    [class*="__partNote"],
+    [class*="__cardText"],
+    [class*="__facts"],
+    [class*="__principles"],
+    [class*="__limit"],
+    [class*="__note"],
+    [class*="__stageLine"],
+    [class*="__disclaimer"],
+    [class*="__evMeta"],
+    [class*="__item"] dd,
+    [class*="__evidence"] ul,
+    [class*="__pubQuestion"]
+  ) {
+  color: var(--ararat-gray-20);
+}
+[data-marca="sinal"] #ciencia :is([class*="__pubRef"], [class*="__pubNote"], [class*="__landNote"], [class*="__nota"], [class*="__pubKicker"]) {
+  color: var(--ararat-gray-40);
+}
+[data-marca="sinal"] #ciencia [class*="Science-module"][class*="__lead"] {
+  border-left: 1px solid var(--ararat-gray-50);
+}
+[data-marca="sinal"] #ciencia [class*="__card"]:is(section) {
+  border-top: 1px solid var(--ararat-gray-5);
+}
+[data-marca="sinal"] #ciencia :is([class*="__parts"], [class*="__more"]) {
+  border-color: var(--ararat-gray-80);
+}
+[data-marca="sinal"] #ciencia [class*="__part"] {
+  border-bottom-color: var(--ararat-gray-80);
+}
+/* Publicação: superfície #EDEDED (surface-raised claro) com fio — sem #FFFFFF. */
+[data-marca="sinal"] #ciencia [class*="__pub"]:is(article) {
+  background: #ededed;
+  border-left: 1px solid var(--ararat-gray-5);
+  border-radius: 0;
+}
+[data-marca="sinal"] #ciencia [class*="__pubLink"] {
+  background: var(--ararat-gray-5);
+  color: var(--ararat-gray-97);
+  border-radius: var(--ararat-radius-s);
+  font-family: var(--ararat-font-sans);
+  font-weight: 500;
+}
+[data-marca="sinal"] #ciencia [class*="__pubLink"]:is(:hover, :focus-visible) {
+  background: var(--ararat-gray-20);
+  outline-color: var(--ararat-gray-5);
+}
+[data-marca="sinal"] #ciencia [class*="__moreSummary"]:focus-visible {
+  outline-color: var(--ararat-gray-5);
+}
+/* Ícones oficiais (03_icones) em currentColor via máscara do SVG sem alteração. 24 px (grade). */
+[data-marca="sinal"] #ciencia [class*="__cardIcone"] {
+  display: block;
+  width: 24px;
+  height: 24px;
+  margin-bottom: 14px;
+  color: var(--ararat-gray-5);
+  background-color: currentColor;
+  -webkit-mask: var(--icone) center / 24px 24px no-repeat;
+  mask: var(--icone) center / 24px 24px no-repeat;
+}
+[data-marca="sinal"] #ciencia [data-icone="nenhum"] {
+  background: none;
+}
+[data-marca="sinal"] #ciencia [data-icone="extracao-radiomica"] { --icone: url("/marca-sinal/v1.0/icones/ararat-icone-extracao-radiomica.svg"); }
+[data-marca="sinal"] #ciencia [data-icone="segmentacao"] { --icone: url("/marca-sinal/v1.0/icones/ararat-icone-segmentacao.svg"); }
+[data-marca="sinal"] #ciencia [data-icone="revisao-clinica"] { --icone: url("/marca-sinal/v1.0/icones/ararat-icone-revisao-clinica.svg"); }
+@media (max-width: 640px) {
+  [data-marca="sinal"] #ciencia [data-icone="nenhum"] {
+    display: none;
+  }
+}
+/* Histograma de intensidade oficial: grafismo conceitual, rotulado. */
+[data-marca="sinal"] #ciencia .sinal-histograma {
+  margin: clamp(24px, 4vh, 40px) 0 0;
+  max-width: 560px;
+}
+[data-marca="sinal"] #ciencia .sinal-histograma img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+[data-marca="sinal"] #ciencia .sinal-histograma figcaption {
+  margin-top: 8px;
+  font-family: var(--ararat-font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ararat-gray-40);
+}
+
+/* Time: tema claro + retratos em P&B por CSS (reversível; arquivos originais intactos, mesma pessoa,
+   mesmo enquadramento). Cinco integrantes, ordem, nomes e biografias inalterados. */
+[data-marca="sinal"] #time {
+  --t-ink: var(--ararat-gray-5);
+  --t-text: var(--ararat-gray-20);
+  --t-muted: var(--ararat-gray-40);
+  --t-line: var(--ararat-gray-80);
+  --t-line-strong: var(--ararat-gray-50);
+  --t-gold: var(--ararat-gray-5);
+  --t-gold-text: var(--ararat-gray-5);
+}
+/* P&B de exibição: o módulo 0.4.0-sinal aplica grayscale(1) contrast(1.04) na própria img.rp-foto (cor:
+   "mono"); aqui o MESMO tratamento vai só para as <img> que o módulo não controla (fallback do Site,
+   acordeão do celular, sem JS). Sem filtro no contêiner, para não duplicar. */
+[data-marca="sinal"] #time img:not(.rp-foto) {
+  filter: grayscale(1) contrast(1.04);
+}
+[data-marca="sinal"] #time :is([class*="__portrait"], [class*="__failure"], [class*="__inlineImg"]) {
+  background: #ededed;
+  border-radius: 0;
+}
+[data-marca="sinal"] #time [class*="__semFoto"] {
+  background: var(--ararat-gray-90);
+  border-radius: 0;
+}
+[data-marca="sinal"] #time [class*="__chev"] {
+  border-color: var(--ararat-gray-50);
+}
+/* Seleção aberta: nome em gray-5 600, fio de 1 px à esquerda (sem cor). */
+[data-marca="sinal"] #time [class*="__member"][open] > [class*="__summary"] [class*="__name"] {
+  font-weight: 600;
+}
+[data-marca="sinal"] #time [class*="__member"][open]::before {
+  width: 1px;
+}
+
+/* Fechamento da Ciência (montanha + revisão humana) — texto sobre o claro. */
+/* Fechamento da Ciência, combinado com o Motion (0.5.0-sinal): frases 1–3 em gray-30 #474747 a 500
+   (8,6:1); a 4ª — a decisão — a 600 SEMPRE (peso fixo: trocar o peso na etapa causaria reflow) e "acende"
+   por contraste: gray-30 nas etapas 0–3 → gray-5 #111111 (17,5:1) na etapa 4 em diante. Nunca branco/preto puro. */
+[data-marca="sinal"] [class*="RevisaoHumanaRefinada"][class*="__comp"] {
+  --gold-ink: var(--ararat-gray-5);
+  --navy-900: var(--ararat-gray-30);
+}
+[data-marca="sinal"] [class*="RevisaoHumanaRefinada"][class*="__frases"] {
+  color: var(--ararat-gray-30);
+  font-family: var(--ararat-font-sans);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+[data-marca="sinal"] [class*="RevisaoHumanaRefinada"][class*="__decisao"] {
+  font-weight: 600;
+}
+[data-marca="sinal"] [class*="RevisaoHumanaRefinada"][class*="__frase"]:focus-visible {
+  outline-color: var(--ararat-gray-5);
+}
+[data-marca="sinal"] [class*="RevisaoHumanaRefinada"][class*="__nota"] {
+  color: var(--ararat-gray-40);
+}
+
+@media (forced-colors: active) {
+  [data-marca="sinal"] .btn-gold {
+    border-color: ButtonText;
+  }
+}

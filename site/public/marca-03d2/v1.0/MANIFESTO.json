@@ -1,0 +1,147 @@
+{
+ "pacote": "ARARAT_Brand_System_03D2_v1.0",
+ "versao": "1.0",
+ "zip_sha256": "716d2738db1caa270768897a6fa96f95ac7dc6109774f472aea1d4ddc82dcc58",
+ "origem": "C:\\ARARAT-Website\\brand-system-ararat-03d2\\ARARAT_Brand_System_03D2_v1.0 (pasta e zip conferidos: 325/325 contra manifesto.json do kit)",
+ "regra": "Cópias byte a byte, nos mesmos caminhos relativos do kit. Nada foi editado; hashes = manifesto.json do kit.",
+ "arquivos": [
+  {
+   "caminho": "01_logo/assinatura-horizontal/ararat-horizontal-negativo.svg",
+   "bytes": 2677,
+   "sha256": "a8bdffeaf82b2fac7ba4af7852e93509ad2e50eb6d153c30a20268dd8485b602",
+   "uso": "rodapé (assinatura horizontal completa, <img>)"
+  },
+  {
+   "caminho": "01_logo/favicon/favicon.ico",
+   "bytes": 2077,
+   "sha256": "6cdeaa33cadbc582fb91264d468cf019367366164fb5a167f8ec99e25768f375",
+   "uso": "favicon 16/32/48"
+  },
+  {
+   "caminho": "01_logo/favicon/favicon.svg",
+   "bytes": 1183,
+   "sha256": "ba47fa004526efcd5fb4167859a965ac4e074806ceed562e619032d3755ad93a",
+   "uso": "favicon vetorial (troca de tinta com o tema do sistema)"
+  },
+  {
+   "caminho": "01_logo/favicon/apple-touch-icon-180.png",
+   "bytes": 2968,
+   "sha256": "48454b787237da9f65cfe41c5366ec31e7d6347f973b751893c44c2503127eaf",
+   "uso": "ícone iOS"
+  },
+  {
+   "caminho": "01_logo/favicon/icon-192.png",
+   "bytes": 3155,
+   "sha256": "eac48bb6e3b6e3d896d9a31d88df7910812a8f25a9ba772d7afed9c13d41ca92",
+   "uso": "ícone de app (manifesto)"
+  },
+  {
+   "caminho": "01_logo/favicon/icon-512.png",
+   "bytes": 9562,
+   "sha256": "17a8b7a2b1d0df52e3441ba10af47cfdb9f5147c0ab38180d35b36e0776c821a",
+   "uso": "ícone de app (manifesto)"
+  },
+  {
+   "caminho": "01_logo/favicon/icon-maskable-512.png",
+   "bytes": 7977,
+   "sha256": "55d611a9a9cae9bc12b06d9ba19bdd23766112f94c801364ffe5be12b2db4f77",
+   "uso": "ícone de app maskable (manifesto)"
+  },
+  {
+   "caminho": "01_logo/favicon/site.webmanifest",
+   "bytes": 473,
+   "sha256": "a064dc5b8ea3e9f929dfe1a3efd201e489940bf5ce440aef57bd8dfb62bc73dc",
+   "uso": "manifesto web (caminhos relativos a esta pasta)"
+  },
+  {
+   "caminho": "02_tokens/ararat-03d2.tokens.css",
+   "bytes": 9022,
+   "sha256": "66d0cc354841bab0ddd6286ee901b8d3e16ae839c2fff66ba8cb29bbd632d890",
+   "uso": "referência dos valores: tests/marca-03d2-integridade.mjs confere a camada do Site contra este arquivo"
+  },
+  {
+   "caminho": "03_tipografia/fontes/Geist-Variable.woff2",
+   "bytes": 69652,
+   "sha256": "a369fcf5628ea2aa4e1b9e2ec6a5b3624e365bda588e1f0f2f12b564f728fbb8",
+   "uso": "Geist 400/500/600 (texto, títulos, interface)"
+  },
+  {
+   "caminho": "03_tipografia/fontes/GeistMono-Variable.woff2",
+   "bytes": 71368,
+   "sha256": "fba8f577f38a2bbcbe818efa6348dd58f36303a10b8737c42fefad275be563ab",
+   "uso": "Geist Mono 400/500 (rótulos, dados)"
+  },
+  {
+   "caminho": "03_tipografia/fontes/Geist-OFL.txt",
+   "bytes": 4368,
+   "sha256": "930853ee1daa68554d9e35c8a9175affb74f699fad9a5da6ee5ebe76379d9137",
+   "uso": "licença"
+  },
+  {
+   "caminho": "03_tipografia/fontes/GeistMono-OFL.txt",
+   "bytes": 4368,
+   "sha256": "930853ee1daa68554d9e35c8a9175affb74f699fad9a5da6ee5ebe76379d9137",
+   "uso": "licença"
+  },
+  {
+   "caminho": "05_icones/svg/ararat-icone-documento.svg",
+   "bytes": 308,
+   "sha256": "984538fea85c6a76f8f9ea890553f9d561ccb25fd73dd4e527745e0b3ed22c01",
+   "uso": "Ciência · estudo publicado"
+  },
+  {
+   "caminho": "05_icones/svg/ararat-icone-cortes.svg",
+   "bytes": 296,
+   "sha256": "c34874daed365c87577c2c6f911ae0c9851fea8613236673f56b8292e2b47189",
+   "uso": "Ciência · segmentação"
+  },
+  {
+   "caminho": "05_icones/svg/ararat-icone-revisao.svg",
+   "bytes": 333,
+   "sha256": "4b402f337db7ce8c84b559546f907f6e19581936f2919dd6a5bab34043abb6bc",
+   "uso": "Ciência · limites e revisão humana"
+  },
+  {
+   "caminho": "06_grafismos/ararat-planos-tonais-escuro.svg",
+   "bytes": 1299,
+   "sha256": "54fe055c43c232bc39302f2298793f1ecef7a0b5151fae3a7a620268ab39518e",
+   "uso": "Contato · faixa decorativa própria (uma vez na página), sem texto por cima"
+  },
+  {
+   "caminho": "06_grafismos/ararat-planos-tonais-escuro-retrato.svg",
+   "bytes": 1322,
+   "sha256": "a27b7b5e5fd7ecaabd69ee4f47dfae62670aaa1fc36460eae8a954e55e43a8ee",
+   "uso": "Contato · mesma faixa no celular (formato retrato, mantém o cume)"
+  },
+  {
+   "caminho": "06_grafismos/ararat-linha-de-estrato.svg",
+   "bytes": 7918,
+   "sha256": "00e71fac2b934a57b25e60ce2727f41679ef1cf75784f1592c5d35cbfdf5608b",
+   "uso": "divisor único antes do FAQ"
+  },
+  {
+   "caminho": "07_motion/ararat-assinatura-animavel.svg",
+   "bytes": 3065,
+   "sha256": "d90069f7644e8459f1bc7c2150b8c67700c2e1e17b8697a8eaaad31b2a0e2c5b",
+   "uso": "cabeçalho: assinatura horizontal (mesmos 14 caminhos da horizontal) inserida no HTML, com camadas para a revelação"
+  },
+  {
+   "caminho": "07_motion/ararat-revelacao.css",
+   "bytes": 1204,
+   "sha256": "ff98fa1143801afb92d2af95a13eb3319d9674abf42638a52892b855b812e9b5",
+   "uso": "revelação de 900 ms (uma vez por sessão; reduzido = 140 ms; pausa = quadro final)"
+  },
+  {
+   "caminho": "06_grafismos/ararat-planos-tonais-claro.svg",
+   "bytes": 1299,
+   "sha256": "82e49d0e53a18b54cef92d554a0cf1fdb53030c6c0bcce8ef2f9928b2e722198",
+   "uso": "Contato (claro, editorial-v1) · faixa própria na base da seção, uma vez na página, sem texto por cima"
+  },
+  {
+   "caminho": "06_grafismos/ararat-planos-tonais-claro-retrato.svg",
+   "bytes": 1322,
+   "sha256": "a4868202c94c567d6a7f89cc5e9cf62ac07a19b90d6a9298e1b7f9ebbfa8af7d",
+   "uso": "Contato (claro, editorial-v1) · mesma faixa no celular (retrato 4:5, mantém o cume)"
+  }
+ ]
+}

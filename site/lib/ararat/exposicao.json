@@ -1,0 +1,25 @@
+{
+  "_doc": "Fronteira de publicação (portfolio-site-v1, 14/10/2026). Lido por proxy.ts (bloqueio em execução) e por scripts/ararat-verificar-midia.mjs + tests/ararat/verifica-exposicao.mjs (verificação). Variante PÚBLICA = ARARAT_REVISAO_PRIVADA diferente de 1: só as rotas e os arquivos listados em 'publico' respondem; todo o resto recebe 404 com o cabeçalho x-ararat-bloqueio. Revisão PRIVADA (ARARAT_REVISAO_PRIVADA=1, só em 127.0.0.1): tudo continua acessível, inclusive as comparações. Nada é apagado: os arquivos anteriores continuam no repositório e no histórico.",
+  "publico": {
+    "paginas": ["/", "/solutions", "/platform", "/research", "/company", "/pt", "/es"],
+    "prefixosPaginas": ["/solutions/", "/company/team/", "/pt/", "/es/"],
+    "prefixosArquivos": ["/ararat/", "/previa/home-montanha-1.2.1-03d2/", "/previa/home-montanha-1.3.1-03d2-candidato/"],
+    "next": "/_next/ responde (código e dados do Next); /_next/image só com url liberada"
+  },
+  "pastasPublic": {
+    "ararat": { "classe": "site-novo", "exposicao": "publica", "git": true, "nota": "fontes (OFL), marca 03D2 (provisória), pacotes do Motion (sha256 conferidos), fotos da equipe (já versionadas antes)" },
+    "previa/home-montanha-1.2.1-03d2": { "classe": "site-novo", "exposicao": "publica", "git": true, "nota": "pacote da montanha 1.2.1-03d2 usado pela Home nova" },
+    "previa/home-montanha-1.3.1-03d2-candidato": { "classe": "movimento-aprovado", "exposicao": "publica", "git": true, "nota": "Pacote original preservado (014e0257…), ritmo aprovado: repouso de 5 s; padrão sem liberar capturas. O nome histórico candidato permanece para preservar a integridade. Posters da 1.2.1." },
+    "previa/home-montanha-1.3.0-03d2-candidato": { "classe": "candidato-privado", "exposicao": "bloqueada-no-publico", "git": true, "nota": "módulo candidato anterior do Motion (1ef10fb2…), só na revisão privada com ?montanha=anterior (comparação do repouso); posters herdados da 1.2.1" },
+    "previa": { "classe": "versao-anterior", "exposicao": "bloqueada-no-publico", "git": true, "nota": "montanhas e Homes anteriores; comparação na revisão privada" },
+    "refinada": { "classe": "versao-anterior", "exposicao": "bloqueada-no-publico", "git": true, "nota": "inclui capturas do Hub/Viewer versionadas antes desta integração (mesma origem das pendentes); já servidas por main — decisão do responsável" },
+    "product": { "classe": "versao-anterior", "exposicao": "bloqueada-no-publico", "git": true, "nota": "inclui product/refinada (capturas anteriores); já servidas por main — decisão do responsável" },
+    "institucional": { "classe": "versao-anterior", "exposicao": "bloqueada-no-publico", "git": true, "nota": "capturas-v1 do institucional anterior (/previa/institucional)" },
+    "imaging": { "classe": "versao-anterior", "exposicao": "bloqueada-no-publico", "git": true },
+    "brand": { "classe": "versao-anterior", "exposicao": "bloqueada-no-publico", "git": true },
+    "marca-03d2": { "classe": "exploracao-marca", "exposicao": "bloqueada-no-publico", "git": true },
+    "marca-sinal": { "classe": "exploracao-marca", "exposicao": "bloqueada-no-publico", "git": true },
+    "motion": { "classe": "versao-anterior", "exposicao": "bloqueada-no-publico", "git": true },
+    "privado": { "classe": "permissao-pendente", "exposicao": "bloqueada-no-publico", "git": false, "nota": "capturas e assets da demonstração; só na revisão privada; ignorada pelo Git" }
+  }
+}

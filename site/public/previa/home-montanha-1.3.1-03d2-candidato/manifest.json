@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "name": "ararat-home-montanha-03d2",
+  "version": "1.3.1-03d2-candidato",
+  "status": "candidato-nao-integrado",
+  "scope": "Revisão da 1.3.0-03d2-candidato com UMA mudança aprovada pelo proprietário (20/10/2026): no perfil 'recomendado', repouso de exatamente 5 s entre o fim completo de uma passagem (resposta do relevo incluída) e o início da próxima. Nada mais muda. Não substitui a 1.3.0-03d2-candidato nem a 1.2.1-03d2; não integrar sem aceite; não publicar.",
+  "base": {
+    "pacote": "1.3.0-03d2-candidato",
+    "origem": "portfolio-motion-v1 @ 2f1c24d: motion/portfolio-v1/montanha/pacotes/1.3.0-03d2-candidato (servido pelo Site em /previa/home-montanha-1.3.0-03d2-candidato/)",
+    "manifestSha256": "d628b4630da107cab8bbda2669ae652f962c4607c193aea845eb72a664ac0240",
+    "homeSculptureSha256": "1ef10fb2659ff48196e2d39341568fa379b8bfdc5028dca9eb2e03d961447ff6",
+    "alterados": [
+      "web/home-sculpture.js"
+    ],
+    "mudancasNoModulo": [
+      "VERSION = '1.3.1-03d2-candidato' e nota no cabeçalho",
+      "perfil 'recomendado': + repousoVisivel: 5000 (demais valores idênticos; repouso 9000 e jitRep 0.15 ficam só como registro e não são usados quando repousoVisivel existe)",
+      "agenda: repouso da passagem i = repousoVisivel + atraso − (1 − U_FIM)·d_i (U_FIM = 0.97, o mesmo ponto em que o envelope da 1.3.0 chega a 0); sem repousoVisivel, a fórmula da 1.3.0",
+      "envelope: o 0.97 da 1.3.0 passa a ser a constante U_FIM (mesmo valor)"
+    ],
+    "herdados": "posters, web/journey.* e web/previa-driver.js continuam sendo os da 1.2.1-03d2 (como na 1.3.0). O quadro de repouso e o desenho de cada passagem são os da 1.3.0."
+  },
+  "files": [
+    {
+      "path": "web/home-sculpture.js",
+      "sizeBytes": 106982,
+      "sha256": "014e0257dc8df118ec57f3da419d3d243b66d73e71560284917fce24386c0a25"
+    }
+  ],
+  "sculpture": {
+    "entry": "web/home-sculpture.js",
+    "exports": [
+      "createHomeSculpture",
+      "createMountainSculpture",
+      "homeComposition",
+      "VERSION",
+      "PASSO_UTIL",
+      "alturaUtilEfetiva"
+    ],
+    "apiNova": {
+      "ambient": "'passagem' (novo, opt-in) | true (respiração da 1.2.x, inalterada) | false (padrão, sem luz)",
+      "ambientPerfil": "'recomendado' (padrão) | 'expressivo' — só com ambient:'passagem'",
+      "_passagem": "objeto parcial que sobrescreve parâmetros do perfil; SÓ revisão (ex.: {primeira:300}); o Site não deve usar",
+      "data-ambient-config": "'passagem:recomendado' | 'passagem:expressivo' | 'enabled' | 'disabled'",
+      "_debug().ambient": "acrescenta modo, perfil, parametros, repouso, timer, passagem {i,u,ate,band,sweep}"
+    },
+    "apiInalterada": [
+      "setPaused",
+      "setReducedMotion",
+      "setLayout",
+      "setPassage",
+      "playIntro",
+      "setIntroTime",
+      "getComposition",
+      "destroy"
+    ],
+    "mudancaNoSite": "só a identificação do pacote em lib/ararat/montanha-candidata.ts (versao, base, sha256). ambient 'passagem', ambientPerfil 'recomendado' e intro:false sem mudança; não usar _passagem."
+  },
+  "perfis": {
+    "unidades": "ms; faixa = fração do trecho visível do arco; nucleo em px CSS; relevo = opacidade máx. da varredura 'screen'; sigma × raio do arco",
+    "recomendado": {
+      "primeira": 1400,
+      "dur": 2600,
+      "repouso": 9000,
+      "repousoVisivel": 5000,
+      "jitDur": 0.08,
+      "jitRep": 0.15,
+      "faixa": 0.16,
+      "nucleo": {
+        "wide": 2.6,
+        "narrow": 2.2
+      },
+      "borda": [
+        2.4,
+        0.3
+      ],
+      "alfa": 0.9,
+      "cobre": 0.14,
+      "relevo": 0.22,
+      "sigma": 0.6,
+      "atraso": 260
+    },
+    "expressivo": {
+      "primeira": 1200,
+      "dur": 3000,
+      "repouso": 7000,
+      "jitDur": 0.08,
+      "jitRep": 0.15,
+      "faixa": 0.22,
+      "nucleo": {
+        "wide": 3.2,
+        "narrow": 2.6
+      },
+      "borda": [
+        2.8,
+        0.38
+      ],
+      "alfa": 1,
+      "cobre": 0.32,
+      "relevo": 0.36,
+      "sigma": 0.75,
+      "atraso": 200
+    },
+    "curva": "posição do trecho: cubic-bezier(0.42,0.04,0.3,1); envelope: smoothstep(0,0.22,u)·(1−smoothstep(0.68,0.97,u))",
+    "cores": "núcleo gray-90 do 03D2; cobre #D4895A só no pico (mistura máx. 14 % / 32 %); arco base #919191 inalterado",
+    "repousoVisivel": "ms sem luz entre o fim completo de uma passagem (envelope do relevo, atrasado de 'atraso', chega a 0) e o início da próxima (envelope do arco deixa 0). Exato no relógio do ambiente. Só no 'recomendado'; o 'expressivo' segue a 1.3.0."
+  },
+  "ciclo": {
+    "relogio": "só corre com p = 0, abertura concluída, herói visível (IntersectionObserver), aba visível, sem pausa e sem reduzido",
+    "repouso": "0 requestAnimationFrame e 0 quadros; um setTimeout acorda a próxima passagem; desarmado em pausa, aba oculta, fora da tela, reduzido e destroy. 1.3.1/recomendado: 5 000 ms sem luz entre passagens; ciclo início→início = d_i + 5 000 + atraso − 0,03·d_i ≈ 7,7–7,9 s (1.3.0: ~10,6–11,3 s)",
+    "passagem": "quadros contínuos (1 por rAF) durante ~2,4–3,2 s",
+    "abertura": "inalterada (900 ms, uma vez; o Site controla por sessionStorage)"
+  },
+  "builtAt": "2026-10-20",
+  "verificacao": {
+    "teste": "headless (Chromium, sem GPU), Site da cópia do Motion (BUILD_ID ejrkIAjBdr62reNeEaptS, ?montanha=candidata), trocando só o módulo servido; ferramentas montanha-repouso.mjs/.py e montanha-repouso-estados.py",
+    "repouso": "4 repousos seguidos: 4999,6 / 4999,7 / 4999,3 / 5000,7 ms no relógio do ambiente (resolução ±2 ms pelo u arredondado); 5019–5037 ms em tempo real (atraso do timer, igual ao da 1.3.0)",
+    "duracaoEIntensidade": "por índice de passagem, iguais à 1.3.0: d 2701/2628/2580/2505 ms; luz 2783/2700/2667/2600 ms; alfa máx 0,9; relevo máx 0,22; pixels acesos máx 3106/3104/3104 (240×144)",
+    "primeiraPassagem": "início em 1400 ms do relógio do ambiente nas duas versões",
+    "estados": "pausa, reduzido, aba oculta e fora da tela, no meio de uma passagem e de um repouso (16 execuções, 1.3.0 e 1.3.1): relógio parado no estado, 0 quadro com luz, sem passagem acumulada nem repetida ao retomar, repousos seguintes de 5 s, intro 'done' sempre, 0 ondas",
+    "observadoEmNavegadorRenderizado": "NÃO"
+  }
+}

@@ -35,7 +35,7 @@ type Rect = { x: number; y: number; w: number; h: number; r?: number };
 type Arc = { cx: number; cy: number; r: number; [k: string]: unknown };
 type Sculpture = {
   setPassage(p: number): void;
-  setLayout(l: { art?: Rect | null; target?: Rect | null; ready?: boolean; arc?: Arc | null }): void;
+  setLayout(l: { art?: Rect | null; target?: Rect | null; ready?: boolean; arc?: Arc | null; composicao?: Composicao }): void;
   setPaused(v: boolean): void;
   setReducedMotion(v: boolean): void;
   setIntroTime(ms: number | null): void;
@@ -60,6 +60,26 @@ const COVER_COLOR = "#0d1b2a";
  *  concluída mas a cena ainda não foi revelada (RM em carregamento) — controles ocultos + aviso. */
 type Cover = { groups: boolean; scene: boolean; loading: boolean };
 
+
+/** Composição do desenho no slot (montanha ≥ 1.1.0-03d2; contrato EDITORIAL-03D2-MOTION.md §3.1 e §6).
+ *  · duas colunas (≥ 1200 px, declarado pelo CSS): "centro" — a massa da montanha fica na altura do bloco de texto.
+ *  · abaixo: "topo" (= 1.0.0-03d2, pixel a pixel).
+ *  · celular baixo (o slot passa da dobra): alturaUtil = altura da 1ª tela abaixo do topo do slot NO DOCUMENTO.
+ *    O .front não é fixo, então ar.top + scrollY não muda com a rolagem: o valor depende só da tela. Só quando a
+ *    dobra corta o desenho e ao menos metade do slot está na 1ª tela (num celular deitado a arte já fica abaixo).
+ *  Módulos anteriores ignoram a opção. */
+type Composicao = { alinhar: "topo" | "centro"; alturaUtil?: number };
+function composicaoDoSlot(slot: HTMLElement | null | undefined, ar: DOMRect | null | undefined): Composicao {
+  // Quem decide é o layout: o CSS da composição editorial (duas colunas, ≥ 1200 px) declara
+  // --opening-composicao: centro no slot. Rotas sem esse layout seguem em "topo".
+  if (slot && getComputedStyle(slot).getPropertyValue("--opening-composicao").trim() === "centro") return { alinhar: "centro" };
+  if (!ar || ar.height <= 0) return { alinhar: "topo" };
+  const visivel = Math.floor(window.innerHeight - (ar.top + window.scrollY));
+  // Em "topo" o desenho termina a ≈ 72 % da altura do slot (Motion: 390 × 844, slot 534 + 312, sopé em ≈ 759); só
+  // quando a dobra corta antes disso (folga: 75 %) a montanha é recomposta na altura visível.
+  return visivel < ar.height * 0.75 && visivel >= ar.height / 2 ? { alinhar: "topo", alturaUtil: visivel } : { alinhar: "topo" };
+}
+
 export function HomeOpening({
   motionPackage,
   mri,
@@ -72,6 +92,10 @@ export function HomeOpening({
   revealOnChange = false,
   journeySteps,
   journeyIntro,
+  coverColor = COVER_COLOR,
+  titleLines,
+  titleSecondary,
+  introModuloMs,
 }: {
   motionPackage: MotionPackageInfo | null;
   mri: MriSource;
@@ -93,9 +117,21 @@ export function HomeOpening({
    *  setLayout + setPassage de novo, fazendo o módulo redesenhar ~30 vezes por segundo parado, sem
    *  rolagem (medido na 0.6.0 e na 0.2.1). Com esta opção o observador compara o valor antigo. */
   revealOnChange?: boolean;
+  /** Duração da abertura do PRÓPRIO módulo (ms), contada de quando ele começa. Com ela, o fim da abertura do
+   *  Site por TEMPO (1400 ms após a navegação) não corta a abertura do módulo: ela termina sozinha nesse prazo
+   *  (rede de segurança: setIntroTime(null) ao fim dele). Interação, pausa, resize ou movimento reduzido continuam
+   *  concluindo na hora. Sem a opção (rotas de comparação), o comportamento anterior. 03D2: 900 ms. */
+  introModuloMs?: number;
   /** Textos das etapas da Jornada (padrão do componente se ausente). */
   journeySteps?: JourneyStep[];
   journeyIntro?: string;
+  /** Cor com que o módulo da escultura cobre o quadro da jornada (= fundo da seção sob o quadro).
+   *  Experimento brand-sinal-v1: gray-5 #111111. */
+  coverColor?: string;
+  /** Título do hero (linhas). Padrão: PREVIEW_COPY.titleLines. brand-sinal-v1: a mensagem do Sinal. */
+  titleLines?: readonly string[];
+  /** Índice da linha em tom secundário (data-tom="secundario"). */
+  titleSecondary?: number;
 }) {
   const { t } = useTranslation();
   const rootRef = useRef<HTMLDivElement>(null);
@@ -213,6 +249,7 @@ export function HomeOpening({
           target,
           ready: scene.ready,
           arc: scene.arc,
+          composicao: composicaoDoSlot(slot, ar),
         });
         s.setPassage(p);
         reveal = host.querySelector("canvas")?.dataset.reveal ?? "covered";
@@ -436,6 +473,7 @@ export function HomeOpening({
     let ro: ResizeObserver | null = null;
     let canvasMo: MutationObserver | null = null;
     let headMo: MutationObserver | null = null;
+    let introTimer: ReturnType<typeof setTimeout> | undefined;
 
     (async () => {
       try {
@@ -445,6 +483,7 @@ export function HomeOpening({
         if (cancelled) return;
         if (typeof mod.createHomeSculpture !== "function") throw new Error("createHomeSculpture ausente");
         const introOn = !!document.getElementById("ararat-intro") && performance.now() < INTRO_DEADLINE_MS;
+        const introInicio = performance.now();
         const hr = host.getBoundingClientRect();
         const frame = document.querySelector<HTMLElement>("#jornada [data-layout]");
         const fr = frame?.getBoundingClientRect();
@@ -452,14 +491,19 @@ export function HomeOpening({
         const scene = readScene();
         sculpture.current = mod.createHomeSculpture(host, {
           reducedMotion: latest.current.reduced,
+          // Luz ambiente da 1ª dobra (montanha 1.2.0-03d2): o módulo decide quando corre (p = 0, depois da abertura,
+          // visível, sem pausa, sem movimento reduzido) e para o laço fora disso. O Site só liga a opção do pacote;
+          // sem ela, a opção NÃO é passada (pacotes de outras rotas mantêm o próprio padrão).
+          ...(config.ambient ? { ambient: true } : {}),
           paused: latest.current.paused,
           intro: introOn,
-          coverColor: COVER_COLOR,
+          coverColor,
           // 1ª pintura já com a geometria real (sem quadro a descoberto nem pose provisória)
           art: ar ? { x: ar.left - hr.left, y: ar.top - hr.top, w: ar.width, h: ar.height } : null,
           target: fr ? { x: fr.left - hr.left, y: fr.top - hr.top, w: fr.width, h: fr.height, r: 12 } : null,
           ready: scene.ready,
           arc: scene.arc,
+          composicao: composicaoDoSlot(slotRef.current, ar),
         });
         const canvas = host.querySelector("canvas");
         if (!canvas || canvas.dataset.renderer === "none") throw new Error("canvas indisponível");
@@ -481,8 +525,12 @@ export function HomeOpening({
         if (introOn) {
           headMo = new MutationObserver(() => {
             if (!document.getElementById("ararat-intro")) {
-              sculpture.current?.setIntroTime(null);
               headMo?.disconnect();
+              // Fim por tempo (intro-script marca o motivo): deixa o módulo completar o próprio gesto.
+              const porTempo = (window as Window & { __araratIntroFim?: string }).__araratIntroFim === "tempo";
+              const resta = introModuloMs && porTempo ? introInicio + introModuloMs - performance.now() : 0;
+              if (resta > 0) introTimer = setTimeout(() => sculpture.current?.setIntroTime(null), resta);
+              else sculpture.current?.setIntroTime(null);
             }
           });
           headMo.observe(document.head, { childList: true });
@@ -509,12 +557,13 @@ export function HomeOpening({
       ro?.disconnect();
       canvasMo?.disconnect();
       headMo?.disconnect();
+      clearTimeout(introTimer);
       try {
         sculpture.current?.destroy();
       } catch {}
       sculpture.current = null;
     };
-  }, [config, readScene, schedule, update]);
+  }, [config, readScene, schedule, update, introModuloMs]);
 
   // Estado público de cobertura só depois que o React aplicou inert/controles/aviso no DOM:
   // quem observa data-cover (testes, CSS) nunca vê "revealed" com os controles ainda presos.
@@ -552,10 +601,10 @@ export function HomeOpening({
           <div className={`wrap ${styles.content}`} data-opening="content">
             <p className={`eyebrow ${styles.eyebrow}`}>{t(c.eyebrow)}</p>
             <h1 id="hero-title" className={styles.title}>
-              {c.titleLines.map((line, i) => (
-                <span key={line} className={styles.line} style={{ "--i": i } as CSSProperties}>
+              {(titleLines ?? c.titleLines).map((line, i, all) => (
+                <span key={line} className={styles.line} style={{ "--i": i } as CSSProperties} data-tom={i === titleSecondary ? "secundario" : undefined}>
                   {t(line)}
-                  {i < c.titleLines.length - 1 ? " " : ""}
+                  {i < all.length - 1 ? " " : ""}
                 </span>
               ))}
             </h1>

@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "name": "ararat-ciencia-fechamento-03d2",
+  "version": "0.7.0-03d2",
+  "status": "experimental-03d2-editorial",
+  "scope": "Rodada editorial 03D2 (experimental). Não substitui 0.6.0-03d2 nem versões anteriores; não publicar; sem aprovação estética.",
+  "base": {
+    "pacote": "topo-revisao 0.6.0-03d2 (integrado pelo Construction em a6fec2f)",
+    "manifestSha256": "db289e5e19cf471f288064476ef038917001ff1328f75c18e061515fe0f50c98"
+  },
+  "temas": {
+    "claro": {
+      "geometria": "fechamento-0.7.0-03d2",
+      "paisagem": "fechamento-montanha.json",
+      "estatico": "fechamento-estatico.svg",
+      "fundoPrevisto": "#F6F6F6",
+      "crista": "#919191",
+      "destaque": "#111111"
+    },
+    "escuro": {
+      "geometria": "fechamento-0.7.0-03d2-escuro",
+      "paisagem": "fechamento-montanha-escuro.json",
+      "estatico": "fechamento-estatico-escuro.svg",
+      "fundoPrevisto": "#111111",
+      "crista": "#5E5E5E",
+      "destaque": "#EDEDED"
+    }
+  },
+  "mudancas": {
+    "trecho": "traço único 3.4 px, alfa 1, 1.6× o comprimento do trecho, cor do destaque; sem filete/halo (0.6.0: filete 8 px na cor do fundo + núcleo 2,8 px a 0,72×)",
+    "crista": "tom mais claro (claro #919191 / escuro #5E5E5E; 0.6.0: #777777), o traço escuro separa-se dela por contraste; opacidade final 0.75 (0.6.0: 0,5) na coreografia E no estático",
+    "naoMuda": [
+      "caminhos (82, idênticos à 0.3.0)",
+      "quatro frases e faixas de p",
+      "encerramento crista → arco em e",
+      "enquadramento (viewBox 0 -72 1440 432, xMidYMax slice)",
+      "contrato createTopoRevisao / setProgresso(p, e)",
+      "estático = composição final",
+      "terreno parado (só o trecho anda)"
+    ]
+  },
+  "contrato": "idêntico à 0.6.0-03d2; o Site troca só a URL/versão e a entrada de PAISAGENS (\"0.7.0-03d2\" e \"-escuro\").",
+  "fallback": "fechamento-estatico[-escuro].svg = composição final do tema (sem JS, pausa, reduzido, falha).",
+  "files": [
+    {
+      "path": "fechamento-estatico-escuro.svg",
+      "sizeBytes": 40528,
+      "sha256": "69fb8a250b079a44f68fdcc84104ff2fdb0f65d0ec842f740b6eda1520fabfd0"
+    },
+    {
+      "path": "fechamento-estatico.svg",
+      "sizeBytes": 40518,
+      "sha256": "b76aa752b2c61fd0ffef95df2f9384a4673d7eafbd2cf114fd7b138c2c5590b3"
+    },
+    {
+      "path": "fechamento-montanha-escuro.json",
+      "sizeBytes": 46355,
+      "sha256": "fb0552a35f0a37e5e063b7437aa8c87ae9f2d2cbbe431225afa96b2ad9ef6cfe"
+    },
+    {
+      "path": "fechamento-montanha.json",
+      "sizeBytes": 46337,
+      "sha256": "ad4f539bd6cf21ec118d7379259e6a1bcd59f689242ee3097ebd27afb424e798"
+    },
+    {
+      "path": "topo-revisao.js",
+      "sizeBytes": 38319,
+      "sha256": "5d3289d5e238fdad81425f68b6cd10a3d49597f7d0ba8e1b183b20761ecb0407"
+    }
+  ]
+}

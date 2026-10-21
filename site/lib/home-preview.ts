@@ -23,6 +23,9 @@ export type PreviewPackage = {
   readonly baseUrl: string;
   /** Versão esperada no manifesto; outra versão desativa a prévia animada (fica o layout estático). */
   readonly version: string;
+  /** Liga a luz ambiente do módulo (opção `ambient` de createHomeSculpture). Só pacotes que a definem para a 1ª
+   *  dobra (montanha ≥ 1.2.0-03d2): luz só em p = 0 depois da abertura. Ausente = desligada. */
+  readonly ambient?: boolean;
 };
 
 export const PREVIEW_PACKAGE = {
@@ -44,15 +47,40 @@ export const PREVIEW_PACKAGE = {
  * A 0.6.0-draft fica em public/previa/home-montanha-0.6.0/ para comparação (e 0.5.0/0.4.0).
  * Só a /previa/refinada lê este pacote; /previa, /previa/a e /previa/b seguem na 0.2.1.
  */
+// brand-sinal-v1: montanha 0.9.0-sinal do Motion (experiment/brand-sinal-motion-v1 @ 99c91c8), copiada sem alteração
+// para public/previa/home-montanha-0.9.0-sinal/ e conferida (sync-manifest --check 71/71). A 0.7.0 segue em public/previa/.
+// codex/brand-03d2-v1: montanha 1.0.0-03d2 + jornada 0.4.3-03d2 do Motion (codex/brand-03d2-motion-v1 @ 8568d8f),
+// extraída com git archive para public/previa/home-montanha-1.0.0-03d2/ (sync-manifest --check 71/71; sha256 do
+// manifest = MANIFESTO.json da rodada). Abertura = gesto 03D2 de 900 ms (o relevo sobe da linha de base); arco #919191.
+// A 0.9.0-sinal e as anteriores ficam em public/previa/ sem alteração.
 export const REFINADA_PACKAGE = {
-  dir: "home-montanha-0.7.0",
-  baseUrl: "/previa/home-montanha-0.7.0/",
-  version: "0.7.0-draft",
+  // codex/brand-03d2-editorial-v1: montanha 1.2.0-03d2 do Motion (codex/brand-03d2-editorial-motion-v1 @ e4bed14,
+  // pacote em fe31932; sync-manifest --check 93/93; sha256 do manifest = MANIFESTO.json) = 1.1.0-03d2 + luz ambiente
+  // da 1ª dobra (onda nas curvas de nível, só em p = 0, depois da abertura; contrato AMBIENTE-1A-DOBRA-MOTION.md).
+  // Só web/home-sculpture.js muda; os outros 92 arquivos são os da 1.1.0. A 1.1.0-03d2 (composicao + posters
+  // editoriais) e a 1.0.0-03d2 continuam em public/previa/ para comparação.
+  dir: "home-montanha-1.2.0-03d2",
+  baseUrl: "/previa/home-montanha-1.2.0-03d2/",
+  version: "1.2.0-03d2",
+  ambient: true,
 } as const satisfies PreviewPackage;
 
 /** Largura máxima do slot da arte (CSS: width min(1100px, 100cqw)) e limite celular/desktop
  *  (o módulo usa a composição "narrow" abaixo de 600 px de área). */
 export const ART_SLOT = { maxWidth: 1100, narrowBelow: 600 } as const;
+
+/** Largura REAL do slot da arte na composição editorial (duas colunas, ≥ 1200 px; marca-03d2.css §11.1):
+ *  frente = min(viewport, content-max + 2·gutter) com padding gutter; colunas 5fr/7fr com gap clamp(24, 3vw, 64);
+ *  slot = 7/12 de (largura interna − gap). gutter = clamp(20px, 5vw, 72px) e content-max = 1320 (styles/site.css).
+ *  Medido na página: 1200 → 609, 1280 → 650, 1440 → 731, 1920 → 736, 2560 → 733 (headless, sem barra lateral). */
+export const EDITORIAL_SLOT = { minViewport: 1200, contentMax: 1320 } as const;
+export function editorialSlotWidth(vw: number): number {
+  const clamp = (lo: number, v: number, hi: number) => Math.min(hi, Math.max(lo, v));
+  const gutter = clamp(20, 0.05 * vw, 72);
+  const inner = Math.min(vw - 2 * gutter, EDITORIAL_SLOT.contentMax);
+  const gap = clamp(24, 0.03 * vw, 64);
+  return ((inner - gap) * 7) / 12;
+}
 
 /** Uma faixa do <picture>: media em largura de viewport + variantes 1x/2x desenhadas na largura
  *  CSS `areaW` (o traço do poster coincide com o do canvas quando o slot tem ~areaW px). */
@@ -77,6 +105,8 @@ export type PreviewConfig = {
   posterMobile: ArtPoster;
   /** Variantes por largura do slot (0.2.1-draft), em ordem; a última cobre até o fim. */
   posterSources: PosterSource[];
+  /** Luz ambiente da 1ª dobra (do pacote; ver PreviewPackage.ambient). */
+  ambient: boolean;
 };
 
 /** Textos da proposta. */

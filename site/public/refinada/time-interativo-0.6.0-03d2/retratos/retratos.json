@@ -1,0 +1,229 @@
+{
+ "nome": "ararat-time-interativo-retratos",
+ "versao": "0.1.0-draft",
+ "metodo": {
+  "mascara": "IS-Net isnet-general-use (rembg 2.0.85, onnxruntime CPU) — segmentação, não generativa",
+  "borda": "pymatting.estimate_foreground_ml (descontaminação de cor só onde 0 < alfa < 1)",
+  "recorte": "4:5, olhos a 30 % (motion/proposta/time/retratos.json)",
+  "reducao": "Lanczos, só para baixo, largura máx. 800 px; nunca ampliado",
+  "formato": "WebP com alfa sem perda (alpha_quality 100), cor q90; foto retangular WebP q90",
+  "naoFeito": "nenhuma geração, preenchimento, retoque, upscale ou troca de rosto"
+ },
+ "integrantes": [
+  {
+   "id": "matheus",
+   "nome": "Matheus Xavier Silva de Toledo",
+   "fonte": {
+    "arquivo": "matheus.jpeg",
+    "sha256": "ed6177d91beb52326239015b9bedd896e983e118b5ff97bffb20b8aa5d225f37",
+    "largura": 1292,
+    "altura": 1600
+   },
+   "recorteFonte": {
+    "x": 259.7,
+    "y": 250,
+    "w": 810.7,
+    "h": 1013.3
+   },
+   "derivado": {
+    "largura": 800,
+    "altura": 1000,
+    "reduzidoDe": [
+     810,
+     1013
+    ],
+    "ampliado": false
+   },
+   "arquivos": {
+    "recorte": "matheus-recorte.webp",
+    "foto": "matheus-foto.webp",
+    "mascara": "matheus-mascara.png"
+   },
+   "sha256": {
+    "recorte": "05067542e1f254c6c28a33f7c1f87eab99fff9357c1a5b2892589fa0b095b55f",
+    "foto": "2ce5c4ad216713f39228f6bb0e60c8b873096488de38e3cbe26951d212a02ac2"
+   },
+   "bytes": {
+    "recorte": 94044,
+    "foto": 69114
+   },
+   "conferencia": {
+    "difMaxOndeAlfa1": 2.9685450542160652e-08,
+    "areaSujeito": 0.606
+   },
+   "alt": "Retrato de Matheus Xavier Silva de Toledo"
+  },
+  {
+   "id": "miguel",
+   "nome": "Miguel",
+   "fonte": {
+    "arquivo": "Miguel.png",
+    "sha256": "9dbc6648819ca67a78e964683eed2a91a8db99d78080d8791efcb25f57bdfd33",
+    "largura": 1179,
+    "altura": 1334
+   },
+   "recorteFonte": {
+    "x": 120.7,
+    "y": 0,
+    "w": 874.7,
+    "h": 1093.3
+   },
+   "derivado": {
+    "largura": 800,
+    "altura": 1000,
+    "reduzidoDe": [
+     874,
+     1093
+    ],
+    "ampliado": false
+   },
+   "arquivos": {
+    "recorte": "miguel-recorte.webp",
+    "foto": "miguel-foto.webp",
+    "mascara": "miguel-mascara.png"
+   },
+   "sha256": {
+    "recorte": "568cb97b07dc368eb9adf520285b3f36cc141ee8e2029e85d70de67163433eae",
+    "foto": "eb8affdc2e56a9ec40576cff0859b0b9dc7288c8d170ed251732536b7492a200"
+   },
+   "bytes": {
+    "recorte": 101870,
+    "foto": 91444
+   },
+   "conferencia": {
+    "difMaxOndeAlfa1": 2.9685450542160652e-08,
+    "areaSujeito": 0.697
+   },
+   "alt": "Retrato de Miguel"
+  },
+  {
+   "id": "rodrigo",
+   "nome": "Rodrigo Gobbo",
+   "fonte": {
+    "arquivo": "rodrigo_gobbo.jpeg",
+    "sha256": "1bc8d1a1b694e681dc2a8e85257a37ae0df1ec0aeca65a32964643afa4db7f3c",
+    "largura": 1280,
+    "altura": 853
+   },
+   "recorteFonte": {
+    "x": 395,
+    "y": 30,
+    "w": 480,
+    "h": 600
+   },
+   "derivado": {
+    "largura": 480,
+    "altura": 600,
+    "reduzidoDe": [
+     480,
+     600
+    ],
+    "ampliado": false
+   },
+   "arquivos": {
+    "recorte": "rodrigo-recorte.webp",
+    "foto": "rodrigo-foto.webp",
+    "mascara": "rodrigo-mascara.png"
+   },
+   "sha256": {
+    "recorte": "afd35e810bd03012e28140136d574ec8c8866a3f0483646f4d112909c5c3bdf3",
+    "foto": "ef69c03574208cbf32e8c101961af78bcf8cbae71392f71be31114fd08a86a27"
+   },
+   "bytes": {
+    "recorte": 36442,
+    "foto": 32102
+   },
+   "conferencia": {
+    "difMaxOndeAlfa1": 2.9685450542160652e-08,
+    "areaSujeito": 0.647
+   },
+   "alt": "Retrato de Rodrigo Gobbo"
+  },
+  {
+   "id": "hartmann",
+   "nome": "Luiz G. Hartmann",
+   "fonte": {
+    "arquivo": "Hartmann.png",
+    "sha256": "bca23e0c321df7a6b40641c6bdcfc30868bb27d3993891b82b3fa92ee4f44f06",
+    "largura": 1181,
+    "altura": 1331
+   },
+   "recorteFonte": {
+    "x": 93.3,
+    "y": 0,
+    "w": 1005.3,
+    "h": 1256.7
+   },
+   "derivado": {
+    "largura": 800,
+    "altura": 1000,
+    "reduzidoDe": [
+     1006,
+     1257
+    ],
+    "ampliado": false
+   },
+   "arquivos": {
+    "recorte": "hartmann-recorte.webp",
+    "foto": "hartmann-foto.webp",
+    "mascara": "hartmann-mascara.png"
+   },
+   "sha256": {
+    "recorte": "46a1871d8368a07fd87b4d6e439996a5a5c47e15d4b4bb1e87c3c8122cb37c0d",
+    "foto": "23ad2bf7576590da4bb4c8834ddd5e96041d09b1499884ad6e81c8d7fdc5a501"
+   },
+   "bytes": {
+    "recorte": 81226,
+    "foto": 68454
+   },
+   "conferencia": {
+    "difMaxOndeAlfa1": 2.945170685109133e-08,
+    "areaSujeito": 0.656
+   },
+   "alt": "Retrato de Luiz G. Hartmann"
+  },
+  {
+   "id": "victor",
+   "nome": "Victor Arthur Ohannesian",
+   "fonte": {
+    "arquivo": "victor.jpg",
+    "sha256": "b7f96ec649b03fef57e8fc098fe97bb9d2d21f41d3c39ff4cf05a8962640a30d",
+    "largura": 400,
+    "altura": 400
+   },
+   "recorteFonte": {
+    "x": 72.3,
+    "y": 47.7,
+    "w": 251.4,
+    "h": 314.3
+   },
+   "derivado": {
+    "largura": 252,
+    "altura": 314,
+    "reduzidoDe": [
+     252,
+     314
+    ],
+    "ampliado": false
+   },
+   "arquivos": {
+    "recorte": "victor-recorte.webp",
+    "foto": "victor-foto.webp",
+    "mascara": "victor-mascara.png"
+   },
+   "sha256": {
+    "recorte": "d8279110e33537cf78b0c193c764e7f38175ea922c0d79e4dac327b31cee7ee9",
+    "foto": "0d0ff7d874a0c73cabf73157b5a0472b5c2c277174f5d0393f790e7ff58e54c5"
+   },
+   "bytes": {
+    "recorte": 16888,
+    "foto": 13036
+   },
+   "conferencia": {
+    "difMaxOndeAlfa1": 2.0335702344276285e-08,
+    "areaSujeito": 0.685
+   },
+   "alt": "Retrato de Victor Arthur Ohannesian"
+  }
+ ]
+}

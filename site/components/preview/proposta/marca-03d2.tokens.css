@@ -1,0 +1,240 @@
+/* GERADO por tests/marca-03d2-tokens.mjs a partir de public/marca-03d2/v1.0/02_tokens/ararat-03d2.tokens.css
+   (cópia byte a byte do kit ARARAT 03D2 v1.0). Não editar à mão: rode "node tests/marca-03d2-tokens.mjs --gerar".
+   Só os seletores mudam: escala e tema ESCURO no escopo da marca (o site é escuro por padrão); tema CLARO nas
+   seções claras (#plataforma, #ciencia, #time, #contato). O bloco prefers-color-scheme do kit é omitido. */
+
+/* :root do kit — escalas, tipografia, espaço, raio, bordas, tempos, layout */
+[data-marca="03d2"],
+html:has([data-marca="03d2"]) {
+  --ararat-gray-1000: #000000;
+  --ararat-gray-950: #111111;
+  --ararat-gray-900: #1B1B1B;
+  --ararat-gray-850: #242424;
+  --ararat-gray-800: #303030;
+  --ararat-gray-700: #474747;
+  --ararat-gray-600: #5E5E5E;
+  --ararat-gray-500: #777777;
+  --ararat-gray-400: #919191;
+  --ararat-gray-300: #ABABAB;
+  --ararat-gray-200: #C6C6C6;
+  --ararat-gray-150: #D4D4D4;
+  --ararat-gray-100: #E2E2E2;
+  --ararat-gray-50: #EDEDED;
+  --ararat-gray-25: #F6F6F6;
+  --ararat-gray-0: #FFFFFF;
+  --ararat-brand-ink: #111111;
+  --ararat-brand-paper: #F6F6F6;
+  --ararat-font-sans: 'Geist', 'Geist Fallback', Arial, sans-serif;
+  --ararat-font-mono: 'Geist Mono', 'Geist Mono Fallback', 'Courier New', monospace;
+  --ararat-type-display-size: 64px;
+  --ararat-type-display-line: 68px;
+  --ararat-type-display-weight: 500;
+  --ararat-type-display-tracking: -0.035em;
+  --ararat-type-display-family: var(--ararat-font-sans);
+  --ararat-type-h1-size: 44px;
+  --ararat-type-h1-line: 48px;
+  --ararat-type-h1-weight: 500;
+  --ararat-type-h1-tracking: -0.03em;
+  --ararat-type-h1-family: var(--ararat-font-sans);
+  --ararat-type-h2-size: 32px;
+  --ararat-type-h2-line: 38px;
+  --ararat-type-h2-weight: 500;
+  --ararat-type-h2-tracking: -0.025em;
+  --ararat-type-h2-family: var(--ararat-font-sans);
+  --ararat-type-h3-size: 24px;
+  --ararat-type-h3-line: 30px;
+  --ararat-type-h3-weight: 500;
+  --ararat-type-h3-tracking: -0.015em;
+  --ararat-type-h3-family: var(--ararat-font-sans);
+  --ararat-type-h4-size: 18px;
+  --ararat-type-h4-line: 26px;
+  --ararat-type-h4-weight: 500;
+  --ararat-type-h4-tracking: -0.005em;
+  --ararat-type-h4-family: var(--ararat-font-sans);
+  --ararat-type-body-lg-size: 18px;
+  --ararat-type-body-lg-line: 28px;
+  --ararat-type-body-lg-weight: 400;
+  --ararat-type-body-lg-tracking: 0em;
+  --ararat-type-body-lg-family: var(--ararat-font-sans);
+  --ararat-type-body-size: 16px;
+  --ararat-type-body-line: 26px;
+  --ararat-type-body-weight: 400;
+  --ararat-type-body-tracking: 0em;
+  --ararat-type-body-family: var(--ararat-font-sans);
+  --ararat-type-body-sm-size: 14px;
+  --ararat-type-body-sm-line: 22px;
+  --ararat-type-body-sm-weight: 400;
+  --ararat-type-body-sm-tracking: 0em;
+  --ararat-type-body-sm-family: var(--ararat-font-sans);
+  --ararat-type-ui-size: 14px;
+  --ararat-type-ui-line: 20px;
+  --ararat-type-ui-weight: 500;
+  --ararat-type-ui-tracking: 0.005em;
+  --ararat-type-ui-family: var(--ararat-font-sans);
+  --ararat-type-caption-size: 12px;
+  --ararat-type-caption-line: 18px;
+  --ararat-type-caption-weight: 400;
+  --ararat-type-caption-tracking: 0.01em;
+  --ararat-type-caption-family: var(--ararat-font-sans);
+  --ararat-type-label-size: 11px;
+  --ararat-type-label-line: 16px;
+  --ararat-type-label-weight: 500;
+  --ararat-type-label-tracking: 0.14em;
+  --ararat-type-label-family: var(--ararat-font-mono);
+  --ararat-type-data-size: 13px;
+  --ararat-type-data-line: 20px;
+  --ararat-type-data-weight: 400;
+  --ararat-type-data-tracking: 0em;
+  --ararat-type-data-family: var(--ararat-font-mono);
+  --ararat-space-0: 0px;
+  --ararat-space-0-5: 2px;
+  --ararat-space-1: 4px;
+  --ararat-space-2: 8px;
+  --ararat-space-3: 12px;
+  --ararat-space-4: 16px;
+  --ararat-space-5: 20px;
+  --ararat-space-6: 24px;
+  --ararat-space-8: 32px;
+  --ararat-space-10: 40px;
+  --ararat-space-12: 48px;
+  --ararat-space-16: 64px;
+  --ararat-space-20: 80px;
+  --ararat-space-24: 96px;
+  --ararat-space-32: 128px;
+  --ararat-radius-none: 0px;
+  --ararat-radius-xs: 2px;
+  --ararat-radius-sm: 4px;
+  --ararat-radius-md: 6px;
+  --ararat-radius-lg: 8px;
+  --ararat-radius-xl: 12px;
+  --ararat-radius-pill: 999px;
+  --ararat-border-hairline: 1px;
+  --ararat-border-control: 1px;
+  --ararat-border-strong: 1.5px;
+  --ararat-border-focus: 2px;
+  --ararat-border-focus-offset: 2px;
+  --ararat-duration-instant: 80ms;
+  --ararat-duration-fast: 140ms;
+  --ararat-duration-base: 200ms;
+  --ararat-duration-slow: 320ms;
+  --ararat-duration-reveal: 900ms;
+  --ararat-duration-layer-stagger: 110ms;
+  --ararat-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ararat-easing-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --ararat-easing-exit: cubic-bezier(0.4, 0, 1, 1);
+  --ararat-easing-linear: linear;
+  --ararat-layout-header-height: 72px;
+  --ararat-layout-header-height-mobile: 64px;
+  --ararat-layout-content-max: 1280px;
+  --ararat-layout-gutter: 24px;
+  --ararat-layout-gutter-mobile: 16px;
+}
+
+/* [data-theme="escuro"] do kit — tema padrão do site */
+[data-marca="03d2"],
+html:has([data-marca="03d2"]) {
+  --ararat-bg-canvas: #111111;
+  --ararat-bg-surface: #1B1B1B;
+  --ararat-bg-raised: #242424;
+  --ararat-bg-sunken: #000000;
+  --ararat-bg-inverse: #F6F6F6;
+  --ararat-bg-hover: #242424;
+  --ararat-bg-selected: #303030;
+  --ararat-text-primary: #EDEDED;
+  --ararat-text-secondary: #C6C6C6;
+  --ararat-text-tertiary: #ABABAB;
+  --ararat-text-disabled: #5E5E5E;
+  --ararat-text-inverse: #111111;
+  --ararat-border-subtle: #303030;
+  --ararat-border-default: #474747;
+  --ararat-border-strong: #919191;
+  --ararat-border-inverse: #C6C6C6;
+  --ararat-focus-ring: #EDEDED;
+  --ararat-focus-halo: #111111;
+  --ararat-action-primary: #EDEDED;
+  --ararat-action-primary-hover: #C6C6C6;
+  --ararat-action-primary-pressed: #FFFFFF;
+  --ararat-action-primary-text: #111111;
+  --ararat-action-secondary-border: #919191;
+  --ararat-action-secondary-hover: #242424;
+  --ararat-action-disabled: #303030;
+  --ararat-action-disabled-text: #777777;
+  --ararat-control-border: #919191;
+  --ararat-control-fill: #1B1B1B;
+  --ararat-control-checked: #EDEDED;
+  --ararat-notice-info-border: #474747;
+  --ararat-notice-warning-border: #EDEDED;
+  --ararat-notice-critical-bg: #EDEDED;
+  --ararat-notice-critical-text: #111111;
+  --ararat-logo-ink: #F6F6F6;
+  --ararat-graphic-plane: #242424;
+  color-scheme: dark;
+}
+
+/* :root, [data-theme="claro"] do kit — seções claras */
+[data-marca="03d2"] :is(#plataforma, #ciencia, #time, #contato) {
+  --ararat-bg-canvas: #F6F6F6;
+  --ararat-bg-surface: #FFFFFF;
+  --ararat-bg-raised: #FFFFFF;
+  --ararat-bg-sunken: #EDEDED;
+  --ararat-bg-inverse: #111111;
+  --ararat-bg-hover: #EDEDED;
+  --ararat-bg-selected: #E2E2E2;
+  --ararat-text-primary: #111111;
+  --ararat-text-secondary: #474747;
+  --ararat-text-tertiary: #5E5E5E;
+  --ararat-text-disabled: #919191;
+  --ararat-text-inverse: #F6F6F6;
+  --ararat-border-subtle: #E2E2E2;
+  --ararat-border-default: #C6C6C6;
+  --ararat-border-strong: #777777;
+  --ararat-border-inverse: #303030;
+  --ararat-focus-ring: #111111;
+  --ararat-focus-halo: #F6F6F6;
+  --ararat-action-primary: #111111;
+  --ararat-action-primary-hover: #303030;
+  --ararat-action-primary-pressed: #000000;
+  --ararat-action-primary-text: #F6F6F6;
+  --ararat-action-secondary-border: #777777;
+  --ararat-action-secondary-hover: #EDEDED;
+  --ararat-action-disabled: #E2E2E2;
+  --ararat-action-disabled-text: #919191;
+  --ararat-control-border: #777777;
+  --ararat-control-fill: #FFFFFF;
+  --ararat-control-checked: #111111;
+  --ararat-notice-info-border: #C6C6C6;
+  --ararat-notice-warning-border: #111111;
+  --ararat-notice-critical-bg: #111111;
+  --ararat-notice-critical-text: #F6F6F6;
+  --ararat-logo-ink: #111111;
+  --ararat-graphic-plane: #EDEDED;
+  color-scheme: light;
+}
+
+/* @media (max-width: 720px) do kit */
+@media (max-width: 720px) {
+  [data-marca="03d2"],
+  html:has([data-marca="03d2"]) {
+    --ararat-type-display-size: 40px;
+    --ararat-type-display-line: 44px;
+    --ararat-type-h1-size: 32px;
+    --ararat-type-h1-line: 36px;
+    --ararat-type-h2-size: 26px;
+    --ararat-type-h2-line: 32px;
+    --ararat-type-h3-size: 20px;
+    --ararat-type-h3-line: 26px;
+  }
+}
+
+/* @media (prefers-reduced-motion: reduce) do kit */
+@media (prefers-reduced-motion: reduce) {
+  [data-marca="03d2"],
+  html:has([data-marca="03d2"]) {
+    --ararat-duration-instant: 0ms;
+    --ararat-duration-fast: 0ms;
+    --ararat-duration-base: 0ms;
+    --ararat-duration-slow: 0ms;
+    --ararat-duration-reveal: 0ms;
+    --ararat-duration-layer-stagger: 0ms;
+  }
+}

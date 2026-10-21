@@ -7,7 +7,8 @@ const dictionary = JSON.parse(await readFile(new URL("../lib/locales/en.json", i
 const browser = await chromium.launch();
 let count = 0;
 try {
-  for (const [route, lang, title] of [["/", "en", "From image to understanding."], ["/pt", "pt-BR", "Da imagem ao conhecimento."], ["/previa/refinada", "pt-BR", "Da imagem ao conhecimento."]]) {
+  // brand-sinal-v1: 1ª dobra com a mensagem do ARARAT Sinal (EN = adaptação editorial registrada).
+  for (const [route, lang, title] of [["/", "en", "Contrast is information. We measure. You decide."], ["/pt", "pt-BR", "Contraste é informação. Nós medimos. Você decide."], ["/previa/refinada", "pt-BR", "Contraste é informação. Nós medimos. Você decide."]]) {
     const context = await browser.newContext();
     const page = await context.newPage();
     const errors = [];
@@ -16,8 +17,8 @@ try {
     assert.equal(await page.locator("html").getAttribute("lang"), lang);
     assert.equal((await page.locator("#hero-title").textContent()).replace(/\s+/g, " ").trim(), title);
     assert.equal(await page.locator("#time-lista > li").count(), 5);
-    assert.equal(await page.locator('[data-opening="root"]').getAttribute("data-preview-version"), "0.7.0-draft");
-    assert.equal(await page.locator('[data-fluxo="root"]').getAttribute("data-modulo"), "0.1.0-draft");
+    assert.equal(await page.locator('[data-opening="root"]').getAttribute("data-preview-version"), "1.2.0-03d2");
+    assert.equal(await page.locator('[data-fluxo="root"]').getAttribute("data-modulo"), "0.5.0-03d2");
     if (lang === "en") {
       const untranslated = await page.evaluate((dict) => {
         const keys = new Set(Object.keys(dict).filter((key) => key !== dict[key]));
@@ -53,7 +54,8 @@ try {
       assert.equal(await page.locator(".language-switch").isVisible(), true);
     }
     if (lang === "en") {
-      await page.route(/time-interativo-0\.2\.0\/retratos\/victor-.*\.webp/, (route) => route.abort());
+      // codex/brand-03d2-editorial-v1: retratos do pacote 0.6.0-03d2 (antes 0.5.0-03d2, 0.4.0-sinal, 0.2.0).
+      await page.route(/time-interativo-0\.6\.0-03d2\/retratos\/victor-.*\.webp/, (route) => route.abort());
       await page.locator('#time-lista > li').nth(4).locator('summary').first().click();
       await page.locator('#time [data-shown]').scrollIntoViewIfNeeded();
       await page.locator('#time [data-portrait-failure]').waitFor({ state: "visible" });

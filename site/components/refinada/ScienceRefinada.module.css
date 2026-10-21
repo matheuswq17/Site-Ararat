@@ -11,6 +11,12 @@
   padding-top: 18px;
 }
 
+/* Ícone (experimento brand-sinal-v1): o SVG oficial vira máscara e herda currentColor; 24 px (grade do
+   ícone). Blocos sem ícone reservam a mesma altura nas colunas. Fora da marca Sinal, nada aparece. */
+.cardIcone {
+  display: none;
+}
+
 .cardTitle {
   font-family: var(--font-title);
   font-size: 1.15rem;

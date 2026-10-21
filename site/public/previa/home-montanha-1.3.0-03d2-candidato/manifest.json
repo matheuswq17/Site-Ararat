@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "name": "ararat-home-montanha-03d2",
+  "version": "1.3.0-03d2-candidato",
+  "status": "candidato-nao-integrado",
+  "scope": "Rodada 'evolução do movimento' (14/10/2026): luz ambiente em PASSAGENS (arco + relevo coordenados) no lugar da respiração. Candidato para revisão visual; não substitui a 1.2.1-03d2; não integrar sem aceite; não publicar.",
+  "base": {
+    "pacote": "1.2.1-03d2",
+    "origem": "institucional-motion-v1 @ a6fa4f0: motion/institucional-v1/montanha/pacotes/1.2.1-03d2 (servido pelo Site em /previa/home-montanha-1.2.1-03d2/)",
+    "manifestSha256": "9b03f9045963bc7ff1d6f5d9ea3d705c8180219dd767d28b240140b1757092e0",
+    "homeSculptureSha256": "f919d61ddc29437749b5e50f0a42cd211637bd4e2547a693878818789fad8ba9",
+    "alterados": [
+      "web/home-sculpture.js"
+    ],
+    "herdados": "todos os demais 245 arquivos da 1.2.1-03d2 (assets/posters, web/journey.*, web/previa-driver.js), SEM mudança. Os posters continuam válidos: o quadro de repouso do candidato é idêntico ao da 1.2.1 (ver verificacao.compatibilidade)."
+  },
+  "files": [
+    {
+      "path": "web/home-sculpture.js",
+      "sizeBytes": 105502,
+      "sha256": "1ef10fb2659ff48196e2d39341568fa379b8bfdc5028dca9eb2e03d961447ff6"
+    }
+  ],
+  "sculpture": {
+    "entry": "web/home-sculpture.js",
+    "exports": [
+      "createHomeSculpture",
+      "createMountainSculpture",
+      "homeComposition",
+      "VERSION",
+      "PASSO_UTIL",
+      "alturaUtilEfetiva"
+    ],
+    "apiNova": {
+      "ambient": "'passagem' (novo, opt-in) | true (respiração da 1.2.x, inalterada) | false (padrão, sem luz)",
+      "ambientPerfil": "'recomendado' (padrão) | 'expressivo' — só com ambient:'passagem'",
+      "_passagem": "objeto parcial que sobrescreve parâmetros do perfil; SÓ revisão (ex.: {primeira:300}); o Site não deve usar",
+      "data-ambient-config": "'passagem:recomendado' | 'passagem:expressivo' | 'enabled' | 'disabled'",
+      "_debug().ambient": "acrescenta modo, perfil, parametros, repouso, timer, passagem {i,u,ate,band,sweep}"
+    },
+    "apiInalterada": [
+      "setPaused",
+      "setReducedMotion",
+      "setLayout",
+      "setPassage",
+      "playIntro",
+      "setIntroTime",
+      "getComposition",
+      "destroy"
+    ],
+    "mudancaNoSite": "uma linha em abertura.ts: ambient: parametro('ambient') !== '0' ? 'passagem' : false (e o caminho do pacote). Nada mais."
+  },
+  "perfis": {
+    "unidades": "ms; faixa = fração do trecho visível do arco; nucleo em px CSS; relevo = opacidade máx. da varredura 'screen'; sigma × raio do arco",
+    "recomendado": {
+      "primeira": 1400,
+      "dur": 2600,
+      "repouso": 9000,
+      "jitDur": 0.08,
+      "jitRep": 0.15,
+      "faixa": 0.16,
+      "nucleo": {
+        "wide": 2.6,
+        "narrow": 2.2
+      },
+      "borda": [
+        2.4,
+        0.3
+      ],
+      "alfa": 0.9,
+      "cobre": 0.14,
+      "relevo": 0.22,
+      "sigma": 0.6,
+      "atraso": 260
+    },
+    "expressivo": {
+      "primeira": 1200,
+      "dur": 3000,
+      "repouso": 7000,
+      "jitDur": 0.08,
+      "jitRep": 0.15,
+      "faixa": 0.22,
+      "nucleo": {
+        "wide": 3.2,
+        "narrow": 2.6
+      },
+      "borda": [
+        2.8,
+        0.38
+      ],
+      "alfa": 1,
+      "cobre": 0.32,
+      "relevo": 0.36,
+      "sigma": 0.75,
+      "atraso": 200
+    },
+    "curva": "posição do trecho: cubic-bezier(0.42,0.04,0.3,1); envelope: smoothstep(0,0.22,u)·(1−smoothstep(0.68,0.97,u))",
+    "cores": "núcleo gray-90 do 03D2; cobre #D4895A só no pico (mistura máx. 14 % / 32 %); arco base #919191 inalterado"
+  },
+  "ciclo": {
+    "relogio": "só corre com p = 0, abertura concluída, herói visível (IntersectionObserver), aba visível, sem pausa e sem reduzido",
+    "repouso": "0 requestAnimationFrame e 0 quadros; um setTimeout acorda a próxima passagem; desarmado em pausa, aba oculta, fora da tela, reduzido e destroy",
+    "passagem": "quadros contínuos (1 por rAF) durante ~2,4–3,2 s",
+    "abertura": "inalterada (900 ms, uma vez; o Site controla por sessionStorage)"
+  },
+  "verificacao": {
+    "estados": "18/18 (headless): ver docs/review/montanha-luz-motion-2026-10-14/testes/estados.json",
+    "compatibilidade": "24/24 quadros idênticos à 1.2.1 (ambient false; ambient true t=2000/4500; repouso do modo passagem = 1.2.1 ambient:false; abertura em 300/700 ms) em 860×516@1/@2, 820×492@1, 365×292@3; 8 controles diferem como esperado",
+    "observadoEmNavegadorRenderizado": "NÃO (painel do navegador do app oculto e servidores locais do Windows fora do ar no momento da verificação)"
+  },
+  "builtAt": "2026-10-14"
+}

@@ -1,0 +1,48 @@
+{
+  "versao": "0.9.0-sinal",
+  "pose": "assentada (abertura concluída, passagem 0), sem luz ambiente (desligada por padrão na 0.9.0-sinal) — idêntica ao 1º quadro do módulo nessa área",
+  "areaCss": {
+    "w": 1100,
+    "h": 660,
+    "aspect": "5:3 (slot desktop da /previa)",
+    "ratio": 1.667
+  },
+  "pixels": {
+    "w": 2200,
+    "h": 1320,
+    "scale": 2
+  },
+  "background": {
+    "navy": "#111111 (--ararat-bg do Sinal; o nome \"navy\" e o arquivo sem sufixo mantêm a regra da 0.7.1)",
+    "transparente": "alfa; usar sobre o fundo do hero"
+  },
+  "objeto": {
+    "note": "px CSS da área: cume e pico secundário (à esquerda, geometria B 0.7.1); arco neutro #777777 atrás dos cumes",
+    "cume": {
+      "x": 550,
+      "y": 83.2
+    },
+    "secundario": {
+      "x": 291.3,
+      "y": 151
+    },
+    "arco": {
+      "cx": 550,
+      "cy": 317.2,
+      "r": 308,
+      "de": 172,
+      "ate": 368,
+      "topo": 9.2,
+      "cor": "#777777",
+      "opacidade": 1,
+      "largura": 2,
+      "pontas": "dissolvidas (~14°) atrás do sopé"
+    },
+    "bordas": "encostas dissolvidas antes da borda lateral (alfa 0 nos 14 px de cada lado; rampa suave de max(34, 0,1·w) px)",
+    "layout": "wide",
+    "simplificado": false
+  },
+  "traco": "curvas e arco com largura fixa em px CSS (como o canvas): este arquivo só tem o traço exato quando exibido a 1100 px de largura; para outras larguras, use as variantes de arte-escultura-variantes.json",
+  "regra": "arcR = min(0,28·w, 0,5·h, 340) (w ≥ 600) ou min(0,37·w, 0,56·h) (w < 600); topo do arco a max(6 px, 3% de arcR) do topo da área; cume a 0,24·arcR abaixo do topo do arco.",
+  "representacao": "Paisagem decorativa (montanha B 0.7.1 em cinzas) — não é o logo (o símbolo do Sinal fica no Site), não é geografia exata do monte real nem anatomia."
+}

@@ -9,7 +9,9 @@
  *  - pula com hash profundo, prefers-reduced-motion ou pausa do usuário;
  *  - scroll, roda, toque, clique ou tecla concluem a abertura sem bloquear a ação;
  *  - resize/troca de breakpoint durante a entrada conclui direto no estado final;
- *  - encerra sozinha em 1400 ms (composição assentada em ~1200 ms).
+ *  - encerra sozinha em 1400 ms (composição assentada em ~1200 ms). O motivo do fim fica em
+ *    window.__araratIntroFim ("tempo" | "interacao"): com `introModuloMs` (03D2), o fim por tempo
+ *    deixa o módulo da montanha completar o próprio gesto; a interação conclui na hora.
  * Sem JS, nada é injetado e o conteúdo aparece em estado final.
  *
  * Portão da RM (independe da abertura): com JS, a RM fica invisível enquanto o
@@ -20,7 +22,8 @@
  * no HTML, oculto) durante essa espera — entra após 450 ms, só se a RM ainda não chegou.
  */
 /**
- * Layout de ABERTURA da rota experimental /previa (só nela; nunca em "/"). Aplicado antes da
+ * Layout de ABERTURA da rota experimental /previa e da refinada (/previa/refinada e /previa/refinada/en; desde
+ * institucional-site-v1, "/" e "/pt" são a home institucional e não usam este layout). Aplicado antes da
  * 1ª pintura quando há JS, sem movimento reduzido e sem pausa salva — senão vale o layout
  * estático de components/preview/HomeOpening.module.css (hero com poster + jornada em fluxo).
  * A jornada começa no topo; o hero vira uma camada sobre a trilha; a pista (--runway) dá a
@@ -62,7 +65,7 @@ try{
 var s=null;try{s=window.sessionStorage}catch(e){}
 function g(k){try{return s&&s.getItem(k)}catch(e){return null}}
 var rm=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-if(!rm&&g("ararat:paused")!=="1"&&(location.pathname==="/"||location.pathname==="/pt"||/^\\/previa(\\/(a|b|refinada))?\\/?$/.test(location.pathname))){
+if(!rm&&g("ararat:paused")!=="1"&&/^\\/previa(\\/(a|b|refinada(\\/en)?))?\\/?$/.test(location.pathname)){
 var os=document.createElement("style");os.id="ararat-opening";os.textContent=OPENING_CSS;document.head.appendChild(os)}
 var h=location.hash;var deep=h&&h!=="#"&&h!=="#inicio";
 if(rm||deep||g("ararat:intro")==="1"||g("ararat:paused")==="1"){return}
@@ -71,10 +74,10 @@ var st=document.createElement("style");st.id="ararat-intro";
 st.textContent=":root{--intro-word:ararat-word-in;--intro-line:ararat-line-in;--intro-fade:ararat-fade-in;--intro-arc:ararat-arc-draw;--intro-focus:ararat-focus-in;--intro-poster:0}[data-opening=root] [data-opening=poster]{opacity:0!important}";
 document.head.appendChild(st);
 var ev=["wheel","touchstart","pointerdown","keydown"],y=window.scrollY||0,vw=window.innerWidth;
-function end(){var n=document.getElementById("ararat-intro");if(n&&n.parentNode){n.parentNode.removeChild(n)}
+function end(r){window.__araratIntroFim=r==="tempo"?"tempo":"interacao";var n=document.getElementById("ararat-intro");if(n&&n.parentNode){n.parentNode.removeChild(n)}
 for(var i=0;i<ev.length;i++){removeEventListener(ev[i],end,true)}removeEventListener("scroll",sc,true);removeEventListener("resize",rz)}
 function sc(){if(Math.abs((window.scrollY||0)-y)>4){end()}}
 function rz(){if(window.innerWidth!==vw){end()}}
 for(var i=0;i<ev.length;i++){addEventListener(ev[i],end,{capture:true,passive:true})}
-addEventListener("scroll",sc,{capture:true,passive:true});addEventListener("resize",rz);setTimeout(end,1400);
+addEventListener("scroll",sc,{capture:true,passive:true});addEventListener("resize",rz);setTimeout(function(){end("tempo")},1400);
 }catch(e){}})();`;

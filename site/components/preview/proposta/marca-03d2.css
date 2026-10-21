@@ -1,0 +1,1357 @@
+/* ALTERNATIVA codex/brand-03d2-v1 — identidade ARARAT 03D2 v1.0 sobre a refinada ("/", "/pt",
+   /previa/refinada). Escopo: o wrapper [data-marca="03d2"] (display: contents) ou
+   html:has([data-marca="03d2"]). As rotas de comparação (/previa, /a, /b, /original) não o têm e ficam
+   com a aparência anterior. A camada do Sinal (marca-sinal.css) continua no repositório, sem uso nestas rotas.
+
+   Fonte: kit ARARAT_Brand_System_03D2_v1.0 (zip SHA-256 716d2738…dcc58; 325/325 arquivos conferidos contra
+   manifesto.json). Valores = tokens oficiais, carregados por marca-03d2.tokens.css (gerado a partir do arquivo
+   do kit; conferência: node tests/marca-03d2-tokens.mjs). Este arquivo só usa NOMES de token por função
+   (--ararat-text-secondary, não #C6C6C6), com duas exceções documentadas no relatório:
+     · a moldura das capturas reais usa o fundo preto da moldura de imagem do kit (06_grafismos);
+     · cores clínicas só existem DENTRO das capturas e da RM (imagens intactas, sem filtro).
+   O branco puro (#FFFFFF) é permitido pelos tokens deste kit (bg/surface claro, action/primary-pressed
+   escuro); a regra do ponto branco do Sinal não se aplica.
+   Sem navy, ouro, cobre, sage, gradientes ou sombras decorativas: superfícies e fios de 1 px separam.
+
+   As variáveis antigas do site (--navy-*, --gold-*, --gray-*, --white-*) são redirecionadas para PAPÉIS do
+   03D2; depois, cada função é conferida no uso real (seções 3–9). Conferência automática:
+   tests/marca-03d2-contraste.mjs, tests/marca-03d2-layout.mjs, tests/marca-03d2-cores.mjs. */
+
+/* ── 1. Fontes oficiais (03_tipografia/fontes, WOFF2 variáveis sem alteração, OFL ao lado) ─────────
+   Mesmo @font-face do kit (ararat-fontes.css), com caminhos absolutos e o mesmo nome de família. A reserva
+   "Geist Fallback" / "Geist Mono Fallback" usa as métricas calibradas do kit. */
+@font-face {
+  font-family: "Geist";
+  src: url("/marca-03d2/v1.0/03_tipografia/fontes/Geist-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/marca-03d2/v1.0/03_tipografia/fontes/GeistMono-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist Fallback";
+  src: local("Arial"), local("Liberation Sans"), local("Helvetica");
+  size-adjust: 101.7%;
+  ascent-override: 98.82%;
+  descent-override: 29.01%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Geist Mono Fallback";
+  src: local("Courier New"), local("Liberation Mono"), local("Courier");
+  size-adjust: 99.98%;
+  ascent-override: 100.52%;
+  descent-override: 29.5%;
+  line-gap-override: 0%;
+}
+
+/* ── 2. Papéis do site → tokens 03D2 ─────────────────────────────────────────────────────────────
+   Os tokens (escala, tema escuro padrão, tema claro em #ciencia/#time) vêm de marca-03d2.tokens.css.
+   Aqui só o redirecionamento das variáveis antigas do site, por função. */
+[data-marca="03d2"],
+html:has([data-marca="03d2"]),
+[data-marca="03d2"] :is(#plataforma, #contato) {
+  /* Dados (barras da Explicabilidade): sem tokens próprios no kit → texto secundário / borda forte. */
+  --marca-dado-positivo: var(--ararat-text-secondary);
+  --marca-dado-negativo: var(--ararat-border-strong);
+  --marca-dado-eixo: var(--ararat-border-strong);
+
+  /* Fontes do site → Geist (títulos, corpo e interface). Mono é aplicada por papel (seção 4). */
+  --font-title: var(--ararat-font-sans);
+  --font-body: var(--ararat-font-sans);
+  --font-brand: var(--ararat-font-sans);
+
+  /* Redirecionamento por PAPEL (tema escuro). Nenhum valor fora dos tokens. */
+  --navy-950: var(--ararat-bg-canvas);
+  --navy-900: var(--ararat-bg-canvas);
+  --navy-800: var(--ararat-bg-surface);
+  --navy-700: var(--ararat-bg-raised);
+  --navy-600: var(--ararat-bg-selected);
+  --white-100: var(--ararat-text-primary);
+  --white-000: var(--ararat-text-primary);
+  --gray-200: var(--ararat-text-secondary);
+  --gray-300: var(--ararat-text-tertiary);
+  /* "Ouro" → sem acento cromático: destaque por contraste. 500 (fios, marcadores, fundos de controle
+     ativo) = text/primary; 400 (rótulos) = text/tertiary; 300 (apoio) = text/secondary; 600 = border/strong. */
+  --gold-600: var(--ararat-border-strong);
+  --gold-500: var(--ararat-text-primary);
+  --gold-400: var(--ararat-text-tertiary);
+  --gold-300: var(--ararat-text-secondary);
+  --blue-500: var(--marca-dado-negativo);
+  --blue-400: var(--marca-dado-negativo);
+  --blue-300: var(--marca-dado-negativo);
+  --amber-500: var(--ararat-text-tertiary);
+  --green-500: var(--ararat-text-tertiary);
+  --red-500: var(--ararat-text-tertiary);
+
+  --surface-app: var(--ararat-bg-canvas);
+  --surface-raised: var(--ararat-bg-surface);
+  --surface-sunken: var(--ararat-bg-sunken);
+  --surface-card: var(--ararat-bg-surface);
+  --surface-selected: var(--ararat-bg-selected);
+  --border-subtle: var(--ararat-border-subtle);
+  --border-default: var(--ararat-border-default);
+  --border-strong: var(--ararat-border-strong);
+  --border-focus: var(--ararat-focus-ring);
+  --text-primary: var(--ararat-text-primary);
+  --text-secondary: var(--ararat-text-secondary);
+  --text-tertiary: var(--ararat-text-tertiary);
+  --text-link: var(--ararat-text-primary);
+  --accent-focus: var(--ararat-focus-ring);
+  --accent-selected: var(--ararat-text-primary);
+  --contour-line: var(--ararat-bg-surface);
+  --pattern-topo: none;
+  --rule-gold: linear-gradient(var(--ararat-border-default), var(--ararat-border-default));
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --shadow-gold-glow: none;
+  --shadow-focus-ring: none;
+  /* Raios do kit: controles sm (4 px), cartões md (6 px), molduras de imagem md; resto none. */
+  --radius-xs: var(--ararat-radius-xs);
+  --radius-sm: var(--ararat-radius-sm);
+  --radius-md: var(--ararat-radius-md);
+  --radius-lg: var(--ararat-radius-md);
+  --radius-xl: var(--ararat-radius-md);
+  --radius-pill: var(--ararat-radius-sm);
+  --ease-standard: var(--ararat-easing-standard);
+  --ease-out: var(--ararat-easing-enter);
+  --duration-base: var(--ararat-duration-base);
+  --duration-slow: var(--ararat-duration-slow);
+
+  font-synthesis: none;
+}
+
+/* O <html> recebe os tokens (escopo html:has) mas não o atributo de tema: fundo e esquema escuros aqui. */
+html:has([data-marca="03d2"]) {
+  background: var(--ararat-bg-canvas);
+  color-scheme: dark;
+}
+html:has([data-marca="03d2"]) body {
+  background: var(--ararat-bg-canvas);
+  color: var(--ararat-text-secondary);
+  font-family: var(--ararat-font-sans);
+}
+
+/* ── 3. Foco, seleção, salto, barra de rolagem ─────────────────────────────────────────────────
+   Foco do kit: anel de 2 px na cor do texto (focus/ring), afastado 2 px, só com teclado. Nas seções claras
+   o mesmo token resolve para #111111 (tema claro). */
+[data-marca="03d2"] :focus-visible {
+  outline: var(--ararat-border-focus) solid var(--ararat-focus-ring);
+  outline-offset: var(--ararat-border-focus-offset);
+  border-radius: var(--ararat-radius-sm);
+}
+[data-marca="03d2"] ::selection {
+  background: var(--ararat-text-primary);
+  color: var(--ararat-bg-canvas);
+}
+html:has([data-marca="03d2"]) .skip-link {
+  background: var(--ararat-action-primary);
+  color: var(--ararat-action-primary-text);
+  border-radius: var(--ararat-radius-sm);
+  font-family: var(--ararat-font-sans);
+  font-weight: 500;
+}
+@media not (forced-colors: active) {
+  @supports not selector(::-webkit-scrollbar) {
+    html:has([data-marca="03d2"]) {
+      scrollbar-color: var(--ararat-gray-600) var(--ararat-bg-canvas);
+    }
+  }
+  html:has([data-marca="03d2"])::-webkit-scrollbar,
+  html:has([data-marca="03d2"])::-webkit-scrollbar-track,
+  html:has([data-marca="03d2"])::-webkit-scrollbar-corner {
+    background: var(--ararat-bg-canvas);
+  }
+  html:has([data-marca="03d2"])::-webkit-scrollbar-thumb {
+    background: var(--ararat-gray-600);
+    border-color: var(--ararat-bg-canvas);
+    border-radius: var(--ararat-radius-xs);
+  }
+  html:has([data-marca="03d2"])::-webkit-scrollbar-thumb:hover,
+  html:has([data-marca="03d2"])::-webkit-scrollbar-thumb:active {
+    background: var(--ararat-gray-400);
+  }
+}
+
+/* ── 4. Tipografia por papel (escala do kit) ─────────────────────────────────────────────────────
+   Geist 500 em títulos (display/h1/h2/h3/h4 com o tracking do token), 400 no corpo, 500 na interface,
+   600 só em ênfase e na frase de decisão. Geist Mono: label (11/16, 500, 0,14 em, caixa alta) em rótulos
+   técnicos e data (13/20, 400, tabular) em números, IDs e medidas. */
+[data-tipografia="refinada"][data-marca="03d2"] {
+  --fs-body: 1rem;
+  --fs-eyebrow: 0.6875rem;
+  font-family: var(--ararat-font-sans);
+  font-size: var(--fs-body);
+  font-weight: 400;
+}
+[data-marca="03d2"] :is(h1, h2, h3, h4) {
+  font-family: var(--ararat-font-sans);
+}
+[data-tipografia="refinada"][data-marca="03d2"] main section h2 {
+  font-weight: var(--ararat-type-h1-weight);
+  letter-spacing: var(--ararat-type-h1-tracking);
+  line-height: 1.09;
+}
+[data-tipografia="refinada"][data-marca="03d2"] main h3 {
+  font-weight: var(--ararat-type-h4-weight);
+  letter-spacing: var(--ararat-type-h4-tracking);
+  line-height: 1.35;
+}
+[data-tipografia="refinada"][data-marca="03d2"] main section p {
+  line-height: 1.625; /* body 16/26 */
+}
+[data-tipografia="refinada"][data-marca="03d2"] :is(
+    .eyebrow,
+    [class*="JourneyMriScene"][class*="__label"],
+    #jornada [class*="__stepKicker"],
+    #plataforma [class*="__stopLabel"],
+    #plataforma [class*="__audienceTitle"],
+    #plataforma [class*="__produto"],
+    #explicabilidade [class*="__stepLabel"],
+    #contato dt,
+    [data-opening="invite"],
+    #plataforma [class*="__pendingLabel"],
+    #ciencia [class*="__pubKicker"]
+  ) {
+  font-family: var(--ararat-font-mono);
+  font-weight: var(--ararat-type-label-weight);
+  letter-spacing: var(--ararat-type-label-tracking);
+  text-transform: uppercase;
+}
+[data-tipografia="refinada"][data-marca="03d2"] .eyebrow {
+  font-size: var(--ararat-type-label-size);
+  line-height: var(--ararat-type-label-line);
+  color: var(--ararat-text-tertiary);
+}
+/* Plataforma e Explicabilidade tinham um rótulo de seção ampliado (18 px); no 03D2 todo rótulo de seção é
+   label (11/16), como no kit. */
+[data-tipografia="refinada"][data-marca="03d2"] :is(#plataforma, #explicabilidade) .eyebrow {
+  font-size: var(--ararat-type-label-size);
+  line-height: var(--ararat-type-label-line);
+  color: var(--ararat-text-tertiary);
+}
+[data-marca="03d2"] :is(
+    #jornada [class*="__stepNum"],
+    #plataforma [class*="__stepNum"],
+    #plataforma [class*="__routeNum"],
+    #plataforma [class*="__num"],
+    #plataforma [class*="__legendaNum"],
+    #ciencia [class*="__partNum"],
+    #time [class*="__num"],
+    [class*="CapturaProdutoFigura"][class*="__marker"],
+    [class*="CapturaProdutoFigura"][class*="__rotulo"],
+    #explicabilidade [class*="__bars"] li > span,
+    [class*="__dlgTitle"]
+  ) {
+  font-family: var(--ararat-font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+[data-marca="03d2"] #explicabilidade [class*="__reading"] > li::before {
+  font-family: var(--ararat-font-mono);
+  font-variant-numeric: tabular-nums;
+}
+/* Botões: ui 500, 15 px (ar-btn--lg do kit) na página; navegação: ui 14/20. */
+[data-tipografia="refinada"][data-marca="03d2"] .btn {
+  font-family: var(--ararat-font-sans);
+  font-weight: 500;
+  font-size: 0.9375rem;
+  letter-spacing: var(--ararat-type-ui-tracking);
+}
+[data-tipografia="refinada"][data-marca="03d2"] header nav a:not(.btn) {
+  font-family: var(--ararat-font-sans);
+  font-weight: var(--ararat-type-ui-weight);
+  font-size: var(--ararat-type-ui-size);
+  line-height: var(--ararat-type-ui-line);
+  letter-spacing: var(--ararat-type-ui-tracking);
+}
+[data-tipografia="refinada"][data-marca="03d2"] :is(strong, b) {
+  font-weight: 600;
+}
+[data-tipografia="refinada"][data-marca="03d2"] #ciencia [class*="__partNum"],
+[data-tipografia="refinada"][data-marca="03d2"] footer nav a {
+  font-weight: 500;
+}
+/* Títulos de seção: h1 do kit (44/48, −0,03 em; 32/36 no celular), fluido entre os dois. */
+[data-tipografia="refinada"][data-marca="03d2"] #plataforma > div > header h2,
+[data-tipografia="refinada"][data-marca="03d2"] #explicabilidade h2 {
+  font-size: clamp(2rem, 3.4vw, 2.75rem);
+  max-width: 16em;
+}
+[data-tipografia="refinada"][data-marca="03d2"] #plataforma header p,
+[data-tipografia="refinada"][data-marca="03d2"] #explicabilidade header p {
+  font-size: var(--ararat-type-body-lg-size);
+  line-height: 1.556; /* body-lg 18/28 */
+  max-width: 36em;
+  color: var(--ararat-text-secondary);
+}
+[data-tipografia="refinada"][data-marca="03d2"] #contato [class*="Contact-module"][class*="__title"] { max-width: 12em; }
+[data-tipografia="refinada"][data-marca="03d2"] #ciencia [class*="__statement"] { max-width: 18em; }
+[data-tipografia="refinada"][data-marca="03d2"] #ciencia [class*="Science-module"][class*="__lead"] { max-width: 32em; }
+[data-tipografia="refinada"][data-marca="03d2"] #ciencia [class*="Science-module"][class*="__disclaimer"] { max-width: 42em; }
+[data-tipografia="refinada"][data-marca="03d2"] #plataforma [class*="__routeText"] { max-width: 18em; }
+[data-tipografia="refinada"][data-marca="03d2"] #jornada [class*="__openingLead"] { max-width: 24em; }
+[data-tipografia="refinada"][data-marca="03d2"] #passagem [class*="Passage-module"][class*="__text"] { max-width: 34em; }
+
+/* ── 5. Primeira dobra ──────────────────────────────────────────────────────────────────────────
+   Composição da aplicação "primeira dobra" do kit traduzida para o site: texto à esquerda (label mono,
+   mensagem em display 64/68 → 40/44 no celular, descrição existente em body-lg, as mesmas duas ações,
+   estado científico em label). A 2ª frase em text/tertiary, como no kit. A arte continua sendo o terreno
+   do Motion no slot da base (o recorte das camadas NÃO entra aqui: a montanha aprovada fica). */
+[data-marca="03d2"] [data-opening="content"] {
+  align-items: flex-start;
+  text-align: left;
+}
+[data-marca="03d2"] [data-opening="content"] > div,
+[data-marca="03d2"] [data-opening="content"] [class*="__actions"] {
+  justify-content: flex-start;
+}
+[data-marca="03d2"] [data-opening="note"] {
+  text-align: left;
+  font-family: var(--ararat-font-mono);
+  font-size: var(--ararat-type-label-size) !important;
+  letter-spacing: var(--ararat-type-label-tracking);
+  text-transform: uppercase;
+  color: var(--ararat-text-tertiary) !important;
+}
+[data-tipografia="refinada"][data-marca="03d2"] #hero-title {
+  font-weight: var(--ararat-type-display-weight);
+  font-size: clamp(2.5rem, 4.45vw, 4rem); /* display 64 px a partir de 1440 */
+  letter-spacing: var(--ararat-type-display-tracking);
+  line-height: 1.0625; /* 68/64 */
+  max-width: 12em;
+  color: var(--ararat-text-primary);
+}
+[data-marca="03d2"] #hero-title [data-tom="secundario"] {
+  color: var(--ararat-text-tertiary);
+}
+[data-tipografia="refinada"][data-marca="03d2"] [data-opening="content"] p:not(.eyebrow):not(.ill-note) {
+  font-size: var(--ararat-type-body-lg-size);
+  line-height: 1.556;
+  max-width: 30em;
+  color: var(--ararat-text-secondary);
+}
+@media (max-width: 600px) {
+  [data-tipografia="refinada"][data-marca="03d2"] #hero-title {
+    font-size: min(2.5rem, 10.2vw); /* display celular 40/44 */
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+  [data-tipografia="refinada"][data-marca="03d2"] #plataforma > div > header h2,
+  [data-tipografia="refinada"][data-marca="03d2"] #explicabilidade h2 {
+    font-size: min(2rem, 8.4vw); /* h1 celular 32/36 */
+  }
+  [data-tipografia="refinada"][data-marca="03d2"] #plataforma header p,
+  [data-tipografia="refinada"][data-marca="03d2"] #explicabilidade header p,
+  [data-tipografia="refinada"][data-marca="03d2"] [data-opening="content"] p:not(.eyebrow):not(.ill-note) {
+    font-size: 1.0625rem;
+  }
+}
+@media (max-height: 760px) and (min-width: 601px) {
+  [data-tipografia="refinada"][data-marca="03d2"] #hero-title {
+    font-size: clamp(2.2rem, 4.2vw, 3.6rem);
+  }
+}
+@media (max-width: 600px) and (max-height: 700px) {
+  [data-tipografia="refinada"][data-marca="03d2"] #hero-title {
+    font-size: clamp(1.85rem, 9vw, 2.35rem);
+  }
+}
+[data-marca="03d2"] [data-opening="invite"] {
+  color: var(--ararat-text-tertiary);
+  text-shadow: none;
+}
+[data-marca="03d2"] [data-opening="invite"] [class*="__inviteLine"] {
+  background: var(--ararat-border-strong);
+}
+/* Contêiner do módulo da Jornada (journey.css do pacote do Motion) — só o FUNDO do contêiner recebe o
+   bg/canvas, para continuar invisível no hero. O desenho do módulo não muda. */
+[data-marca="03d2"] .ararat-journey {
+  background: var(--ararat-bg-canvas);
+}
+
+/* ── 6. Controles (ar-btn do kit) ───────────────────────────────────────────────────────────────
+   Primário: action/primary (#EDEDED) com action/primary-text; hover action/primary-hover; pressionado
+   action/primary-pressed (#FFFFFF no escuro: branco puro permitido pelo kit). Secundário: borda
+   action/secondary-border, hover action/secondary-hover. Sem brilho, sombra ou deslocamento. */
+[data-marca="03d2"] .btn {
+  border-radius: var(--ararat-radius-sm);
+  min-height: 44px;
+  padding: 10px 20px;
+  transition:
+    background-color var(--ararat-duration-fast) var(--ararat-easing-standard),
+    border-color var(--ararat-duration-fast) var(--ararat-easing-standard),
+    color var(--ararat-duration-fast) var(--ararat-easing-standard);
+}
+[data-marca="03d2"] .btn-gold {
+  background: var(--ararat-action-primary);
+  color: var(--ararat-action-primary-text);
+}
+[data-marca="03d2"] .btn-gold:hover {
+  background: var(--ararat-action-primary-hover);
+}
+[data-marca="03d2"] .btn-gold:active {
+  filter: none;
+  background: var(--ararat-action-primary-pressed);
+}
+[data-marca="03d2"] .btn-ghost {
+  border-color: var(--ararat-action-secondary-border);
+  color: var(--ararat-text-primary);
+}
+[data-marca="03d2"] .btn-ghost:hover {
+  border-color: var(--ararat-action-secondary-border);
+  background: var(--ararat-action-secondary-hover);
+  color: var(--ararat-text-primary);
+}
+[data-marca="03d2"] .btn-ghost:active {
+  filter: none;
+  background: var(--ararat-bg-selected);
+}
+/* Seletor de idioma (ar-lang do kit): "EN / PT", Geist Mono 500 12/16, 0,08 em; o idioma atual em
+   text/primary sublinhado (2 px), o outro em text/tertiary e é o link. */
+[data-marca="03d2"] .language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  min-height: 44px;
+  border: 0;
+  background: none;
+  padding: 0;
+  font-family: var(--ararat-font-mono);
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 16px;
+  letter-spacing: 0.08em;
+  color: var(--ararat-text-tertiary);
+  text-decoration: none;
+}
+[data-marca="03d2"] .language-switch [data-lang] {
+  padding: 8px 6px;
+  border-radius: var(--ararat-radius-xs);
+}
+[data-marca="03d2"] .language-switch [data-lang][data-atual] {
+  color: var(--ararat-text-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+}
+[data-marca="03d2"] .language-switch:hover [data-lang]:not([data-atual]) {
+  color: var(--ararat-text-primary);
+}
+[data-marca="03d2"] .language-switch [data-lang-sep] {
+  color: var(--ararat-text-tertiary);
+}
+/* Desativado (pausa com movimento reduzido do sistema): borda tracejada + cursor, texto legível. */
+[data-marca="03d2"] header button:disabled {
+  border-style: dashed;
+  cursor: not-allowed;
+}
+
+/* ── 7. Cabeçalho (ar-header do kit) ────────────────────────────────────────────────────────────
+   bg/canvas, fio border/subtle quando rolado, links ui em text/secondary → text/primary, sublinhado de
+   2 px em text/primary. Assinatura: ver components/marca/Marca03d2.module.css. */
+[data-marca="03d2"] header[data-marca="03d2"] {
+  border-bottom: 1px solid transparent;
+}
+[data-marca="03d2"] header[data-marca="03d2"][data-scrolled="true"] {
+  background: var(--ararat-bg-canvas);
+  border-bottom-color: var(--ararat-border-subtle);
+  backdrop-filter: none;
+}
+[data-marca="03d2"] header[data-marca="03d2"] [class*="__menuButton"],
+[data-marca="03d2"] header[data-marca="03d2"] [class*="__motionToggle"] {
+  background: var(--ararat-bg-canvas);
+  border: 1px solid var(--ararat-border-strong);
+  border-radius: var(--ararat-radius-sm);
+  color: var(--ararat-text-primary);
+}
+[data-marca="03d2"] header[data-marca="03d2"] [class*="__motionToggle"]:hover:not(:disabled) {
+  background: var(--ararat-bg-hover);
+  border-color: var(--ararat-text-primary);
+}
+[data-marca="03d2"] header[data-marca="03d2"] [class*="__motionToggle"][aria-pressed="true"] {
+  border-color: var(--ararat-text-primary);
+  color: var(--ararat-text-primary);
+}
+[data-marca="03d2"] header[data-marca="03d2"] [class*="__nav"] {
+  background-color: var(--ararat-bg-canvas);
+}
+@media (min-width: 1081px) {
+  [data-marca="03d2"] header[data-marca="03d2"] [class*="__nav"] {
+    background-color: transparent;
+  }
+}
+[data-marca="03d2"] header[data-marca="03d2"] [class*="__link"] {
+  color: var(--ararat-text-secondary);
+}
+[data-marca="03d2"] header[data-marca="03d2"] [class*="__link"]:hover {
+  color: var(--ararat-text-primary);
+}
+[data-marca="03d2"] header[data-marca="03d2"] [class*="__link"]::after {
+  height: 2px;
+  background: var(--ararat-text-primary);
+}
+/* Área de proteção da assinatura (1 a = altura das maiúsculas, ≈ 0,85 × a altura da tinta: 19 px a 192 px de
+   largura, 16–17 px no celular): o primeiro controle à direita fica a ≥ 1 a. Abaixo de 360 px a margem lateral
+   (e até 379 px) vai para o gutter-mobile do kit (16 px), o menu fica no alvo mínimo de 44 px e o seletor um pouco mais justo —
+   a prioridade é manter a horizontal com ≥ 160 px, não trocar para a compacta. */
+[data-marca="03d2"] header[data-marca="03d2"] [class*="__bar"] {
+  gap: 20px;
+}
+@media (max-width: 379px) {
+  [data-marca="03d2"] header[data-marca="03d2"] [class*="__bar"] {
+    gap: 6px;
+    padding-inline: var(--ararat-layout-gutter-mobile);
+  }
+  [data-marca="03d2"] header[data-marca="03d2"] .language-switch {
+    margin-left: 12px;
+  }
+  [data-marca="03d2"] header[data-marca="03d2"] [class*="__menuButton"] {
+    width: 44px;
+    height: 44px;
+  }
+  [data-marca="03d2"] header[data-marca="03d2"] .language-switch [data-lang] {
+    padding-inline: 4px;
+  }
+}
+@media (max-width: 359px) {
+  [data-marca="03d2"] header[data-marca="03d2"] .language-switch {
+    margin-left: 11px;
+  }
+}
+
+/* ── 8. Seções escuras ─────────────────────────────────────────────────────────────────── */
+[data-marca="03d2"] :is(#passagem, #plataforma, #explicabilidade, #contato, #faq),
+[data-marca="03d2"] #jornada,
+[data-marca="03d2"] [data-opening="root"] #jornada {
+  background: var(--ararat-bg-canvas);
+}
+/* Fios entre seções escuras (separação por linha, não por sombra ou degradê). */
+[data-marca="03d2"] :is(#plataforma, #explicabilidade, #faq, #contato) {
+  border-top: 1px solid var(--ararat-border-subtle);
+}
+[data-marca="03d2"] #passagem [class*="__line"] {
+  background: var(--ararat-border-strong);
+}
+[data-marca="03d2"] #passagem [class*="__arc"] path {
+  stroke: var(--ararat-border-strong);
+}
+
+/* Jornada (Site): quadro, trilho, etapas, legendas. O conteúdo desenhado pelo módulo é do Motion. */
+[data-marca="03d2"] #jornada [class*="__frame"] {
+  background: var(--ararat-bg-canvas);
+  box-shadow: none;
+  outline: 1px solid var(--ararat-border-subtle);
+}
+[data-marca="03d2"] #jornada [class*="__corner"] {
+  background:
+    linear-gradient(var(--ararat-border-strong), var(--ararat-border-strong)) top left / 18px 1px no-repeat,
+    linear-gradient(var(--ararat-border-strong), var(--ararat-border-strong)) top left / 1px 18px no-repeat,
+    linear-gradient(var(--ararat-border-strong), var(--ararat-border-strong)) bottom right / 18px 1px no-repeat,
+    linear-gradient(var(--ararat-border-strong), var(--ararat-border-strong)) bottom right / 1px 18px no-repeat;
+}
+[data-marca="03d2"] #jornada [class*="__railTrack"] {
+  background: var(--ararat-border-subtle);
+}
+[data-marca="03d2"] #jornada [class*="__railFill"] {
+  background: var(--ararat-text-primary);
+}
+[data-marca="03d2"] #jornada [class*="__stepButton"]::before {
+  background: var(--ararat-bg-canvas);
+  border-color: var(--ararat-border-strong);
+}
+[data-marca="03d2"] #jornada [class*="__stepButton"][data-reached]::before {
+  border-color: var(--ararat-text-primary);
+}
+[data-marca="03d2"] #jornada [class*="__stepButton"][aria-pressed="true"]::before {
+  background: var(--ararat-text-primary);
+  border-color: var(--ararat-text-primary);
+  box-shadow: none;
+}
+[data-marca="03d2"] #jornada [class*="__stepButton"][aria-pressed="true"] {
+  border-color: var(--ararat-border-strong);
+  background: var(--ararat-bg-surface);
+}
+[data-marca="03d2"] #jornada [class*="__stepNum"] {
+  color: var(--ararat-text-tertiary);
+}
+[data-marca="03d2"] #jornada :is([class*="__sceneLabel"], [class*="__summary"]) {
+  background: var(--ararat-bg-surface);
+  border-left-color: var(--ararat-border-strong);
+}
+[data-marca="03d2"] #jornada [class*="__sceneLabel"][data-emphasis] {
+  color: var(--ararat-action-primary-text);
+  background: var(--ararat-action-primary);
+}
+[data-marca="03d2"] #jornada [class*="__stepMore"] > summary {
+  text-decoration-color: var(--ararat-border-strong);
+}
+/* Etapas fora de leitura: esmaecidas como na base, com título em text/primary (#EDEDED) a 0,5 → ≈ 4,7:1
+   sobre bg/canvas (título grande; mínimo 3:1). */
+[data-marca="03d2"] #jornada [class*="__stepInner"] {
+  opacity: 0.5;
+}
+[data-marca="03d2"] #jornada [class*="__step"][data-active] [class*="__stepInner"] {
+  opacity: 1;
+}
+[data-marca="03d2"] #jornada [class*="__stepTitle"] {
+  color: var(--ararat-text-primary);
+}
+[data-marca="03d2"] #jornada [class*="__human"] {
+  color: var(--ararat-text-primary);
+}
+[data-marca="03d2"] [class*="JourneyMriScene"] [class*="__lattice"] line {
+  stroke: var(--ararat-text-tertiary);
+  stroke-opacity: 0.3;
+}
+[data-marca="03d2"] [class*="JourneyMriScene"] [class*="__panel"] {
+  fill: var(--ararat-bg-surface);
+  stroke: var(--ararat-border-subtle);
+}
+[data-marca="03d2"] [class*="JourneyMriScene"] [class*="__tileFrame"] {
+  stroke: var(--ararat-border-strong);
+}
+[data-marca="03d2"] [class*="JourneyMriScene"] [class*="__barTrack"] {
+  fill: var(--ararat-border-subtle);
+}
+
+/* Plataforma */
+[data-marca="03d2"] #plataforma [class*="__documented"] {
+  background: var(--ararat-bg-surface);
+  border-color: var(--ararat-border-subtle);
+}
+[data-marca="03d2"] #plataforma [class*="__audienceTitle"] {
+  color: var(--ararat-text-tertiary);
+  font-size: 0.6875rem;
+}
+/* Destaque do título ("com um caso público"): text/tertiary em vez de cor (como a 2ª frase da primeira dobra do kit). */
+[data-marca="03d2"] #plataforma [class*="__gold"] {
+  color: var(--ararat-text-tertiary);
+}
+[data-marca="03d2"] #plataforma [class*="__docMoreSummary"] {
+  color: var(--ararat-text-primary);
+  text-decoration-color: var(--ararat-border-strong);
+}
+[data-marca="03d2"] #plataforma [class*="__docList"] li {
+  border-radius: var(--ararat-radius-sm);
+}
+
+/* Molduras das capturas reais — moldura de imagem do kit (06_grafismos/ararat-moldura-imagem.css): fundo
+   preto (gray/1000), fio border/default. Sem raio (nenhum recorte novo na imagem). A imagem NÃO muda: cores
+   clínicas e aparência originais, sem filtro, plano tonal ou símbolo. Marcador numerado em mono. */
+[data-marca="03d2"] [class*="CapturaProdutoFigura"][class*="__window"] {
+  background: var(--ararat-gray-1000);
+  box-shadow: none;
+  outline: 1px solid var(--ararat-border-default);
+}
+[data-marca="03d2"] [class*="CapturaProdutoFigura"][class*="__figure"][data-destaque] [class*="__window"] {
+  box-shadow: none;
+  outline: 1px solid var(--ararat-border-strong);
+}
+[data-marca="03d2"] [class*="CapturaProdutoFigura"][class*="__marker"] {
+  color: var(--ararat-action-primary-text);
+  background: var(--ararat-action-primary);
+  box-shadow: none;
+  outline: 3px solid var(--ararat-bg-canvas);
+  border-radius: var(--ararat-radius-sm);
+}
+[data-marca="03d2"] [class*="CapturaProdutoFigura"][class*="__figure"]:not([data-destaque]) [class*="__marker"] {
+  box-shadow: none;
+}
+[data-marca="03d2"] [class*="CapturaProdutoFigura"][class*="__falha"] {
+  border-color: var(--ararat-border-strong);
+}
+[data-marca="03d2"] [class*="CapturaProdutoFigura"][class*="__dialog"] {
+  background: var(--ararat-bg-canvas);
+  border-color: var(--ararat-border-strong);
+}
+[data-marca="03d2"] [class*="CapturaProdutoFigura"][class*="__dialog"]::backdrop {
+  background: rgb(17 17 17 / 0.92); /* bg/canvas a 92 % */
+}
+
+/* Demonstração Hub → Viewer (PlataformaFluxo): moldura, legendas e controles. As capturas mantêm o
+   fundo do próprio produto (Hub claro, Viewer escuro) e nada é desenhado por cima delas.
+   Aviso = ar-notice--demo do kit (fio tracejado border/strong, sem fundo, raio md). */
+[data-marca="03d2"] [class*="PlataformaFluxo"][class*="__aviso"] {
+  border: 1px dashed var(--ararat-border-strong);
+  border-radius: var(--ararat-radius-md);
+  background: transparent;
+  color: var(--ararat-text-secondary);
+}
+[data-marca="03d2"] [class*="PlataformaFluxo"][class*="__aviso"] strong {
+  color: var(--ararat-text-primary);
+}
+[data-marca="03d2"] [class*="PlataformaFluxo"][class*="__produto"],
+[data-marca="03d2"] [class*="PlataformaFluxo"][class*="__atribuicao"] {
+  color: var(--ararat-text-tertiary);
+}
+[data-marca="03d2"] [class*="PlataformaFluxo"][class*="__atribuicao"] a {
+  color: var(--ararat-text-secondary);
+}
+[data-marca="03d2"] [class*="PlataformaFluxo"][class*="__legendaNum"] {
+  opacity: 1;
+  color: var(--ararat-text-tertiary);
+}
+[data-marca="03d2"] [class*="PlataformaFluxo"][class*="__legendaTitulo"],
+[data-marca="03d2"] [class*="PlataformaFluxo"][class*="__titulo"] {
+  font-family: var(--ararat-font-sans);
+  font-weight: 600;
+}
+[data-marca="03d2"] [class*="PlataformaFluxo"][class*="__legendas"] li {
+  color: var(--ararat-text-tertiary);
+}
+[data-marca="03d2"] [class*="PlataformaFluxo"][class*="__captura"] {
+  border-radius: var(--ararat-radius-none);
+}
+/* Fundo da moldura (visto só enquanto a captura carrega ou se falhar): canvas claro do kit (#F6F6F6) para
+   o Hub claro e bg/sunken (#000000, "visor de imagem") para o Viewer escuro. A imagem em si não muda. */
+[data-marca="03d2"] [class*="PlataformaFluxo"][class*="__captura"][data-produto="hub"] {
+  background: var(--ararat-gray-25);
+  border-color: var(--ararat-border-strong);
+}
+[data-marca="03d2"] [class*="PlataformaFluxo"][class*="__captura"][data-produto="viewer"] {
+  background: var(--ararat-bg-sunken);
+  border-color: var(--ararat-border-subtle);
+}
+[data-marca="03d2"] [class*="PlataformaFluxo"][class*="__falha"] {
+  background: var(--ararat-bg-surface);
+}
+
+/* Explicabilidade (demonstração ilustrativa já rotulada como tal; nenhum ícone de SHAP/XAI). */
+[data-marca="03d2"] #explicabilidade [class*="__artWrap"] {
+  background: var(--ararat-bg-canvas);
+  box-shadow: none;
+  outline: 1px solid var(--ararat-border-subtle);
+}
+[data-marca="03d2"] #explicabilidade [class*="__badge"] {
+  color: var(--ararat-text-secondary);
+  border: 1px dashed var(--ararat-border-strong);
+  border-radius: var(--ararat-radius-xs);
+  font-family: var(--ararat-font-mono);
+  letter-spacing: 0.08em;
+}
+[data-marca="03d2"] #explicabilidade [class*="__choice"] {
+  border-radius: var(--ararat-radius-sm);
+  border-color: var(--ararat-border-strong);
+}
+[data-marca="03d2"] #explicabilidade [class*="__choice"][aria-pressed="true"] {
+  background: var(--ararat-action-primary);
+  border-color: var(--ararat-action-primary);
+  color: var(--ararat-action-primary-text);
+}
+[data-marca="03d2"] #explicabilidade [class*="__barTrack"] {
+  background: var(--ararat-bg-selected);
+  border-radius: 0;
+}
+[data-marca="03d2"] #explicabilidade [class*="__barFill"] {
+  background: var(--marca-dado-negativo);
+  border-radius: 0;
+}
+[data-marca="03d2"] #explicabilidade [class*="__bars"] li[data-active] [class*="__barFill"] {
+  background: var(--marca-dado-positivo);
+}
+[data-marca="03d2"] #explicabilidade [class*="__reading"] > li::before {
+  border-color: var(--ararat-border-strong);
+  color: var(--ararat-text-primary);
+}
+[data-marca="03d2"] [class*="ExplainMri"] [class*="__art"] {
+  background: var(--ararat-bg-canvas);
+}
+/* Anotações da ilustração de explicabilidade (SVG do Site sobre a RM, não sobre capturas): text/primary
+   (#EDEDED, o mesmo valor dos filtros em lib/marca-tema.tsx), sem cor de marca e sem plano tonal. */
+[data-marca="03d2"] [class*="ExplainMri"] :is([class*="__contour"], [class*="__window"], [class*="__texLink"], [class*="__insetFrame"]) {
+  stroke: var(--ararat-text-primary);
+}
+[data-marca="03d2"] [class*="ExplainMri"] [class*="__texBox"] {
+  stroke: var(--ararat-text-tertiary);
+}
+[data-marca="03d2"] [class*="ExplainMri"] [class*="__glandLine"] {
+  stroke: var(--ararat-text-secondary);
+}
+[data-marca="03d2"] [class*="ExplainMri"] [class*="__roiLine"] {
+  fill: none;
+  stroke: var(--ararat-text-primary);
+  stroke-dasharray: 4 3;
+}
+
+/* FAQ */
+[data-marca="03d2"] #faq [class*="__plus"]::before,
+[data-marca="03d2"] #faq [class*="__plus"]::after {
+  background: var(--ararat-text-primary);
+}
+[data-marca="03d2"] #faq [class*="__link"] {
+  color: var(--ararat-text-primary);
+  text-decoration-color: var(--ararat-border-strong);
+}
+
+/* Contato: recorte das camadas oficial (06_grafismos, SVG sem alteração; um só tom graphic/plane #242424
+   sobre #111111) numa faixa PRÓPRIA na base da seção, abaixo de todo o texto — nunca sob texto. Uma vez na
+   página; a assinatura completa aparece no cabeçalho e no rodapé. No celular, o arquivo em retrato (4:5)
+   mantém o cume (o 16:9 perderia o cume no formato estreito). Sem opacidade extra. */
+[data-marca="03d2"] #contato {
+  position: relative;
+  isolation: isolate;
+  --faixa-recorte: clamp(160px, 22vw, 340px);
+  padding-bottom: calc(clamp(64px, 9vh, 112px) + var(--faixa-recorte));
+}
+[data-marca="03d2"] #contato .marca-recorte {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--faixa-recorte);
+  z-index: -1;
+  background: url("/marca-03d2/v1.0/06_grafismos/ararat-planos-tonais-claro.svg") 50% 22% / cover no-repeat;
+  pointer-events: none;
+}
+@media (max-width: 720px) {
+  [data-marca="03d2"] #contato {
+    --faixa-recorte: clamp(200px, 62vw, 320px);
+  }
+  [data-marca="03d2"] #contato .marca-recorte {
+    background-image: url("/marca-03d2/v1.0/06_grafismos/ararat-planos-tonais-claro-retrato.svg");
+    background-position: 50% 30%;
+  }
+}
+[data-marca="03d2"] #contato article[class*="__path"] {
+  border-top: 1px solid var(--ararat-text-primary);
+}
+[data-marca="03d2"] #contato article[class*="__path"] + article[class*="__path"] {
+  border-top-color: var(--ararat-border-strong);
+}
+[data-marca="03d2"] #contato [class*="__action"] {
+  text-decoration-color: var(--ararat-border-strong);
+}
+[data-marca="03d2"] #contato [class*="__primary"] {
+  background: var(--ararat-action-primary);
+  color: var(--ararat-action-primary-text);
+}
+[data-marca="03d2"] #contato [class*="__channel"] {
+  background: var(--ararat-bg-canvas);
+  border: 1px dashed var(--ararat-border-strong);
+  border-radius: var(--ararat-radius-xs);
+}
+/* Estado por forma (etiqueta do kit): círculo vazio = canal ainda pendente. */
+[data-marca="03d2"] #contato [class*="__channelDot"] {
+  background: transparent;
+  border: 1.5px solid var(--ararat-text-tertiary);
+  border-radius: 50%;
+}
+[data-marca="03d2"] #contato [class*="__pending"] {
+  border-top-color: var(--ararat-border-subtle);
+}
+
+/* Rodapé */
+[data-marca="03d2"] footer {
+  background: var(--ararat-bg-canvas);
+  border-top: 1px solid var(--ararat-border-subtle);
+}
+[data-marca="03d2"] footer a[class*="__logo"] {
+  /* área de proteção da assinatura: 1 a (altura das maiúsculas) — ver Marca03d2.module.css */
+  display: inline-block;
+}
+[data-marca="03d2"] footer nav a:hover {
+  color: var(--ararat-text-primary);
+}
+/* Frase do rodapé: body-sm (14/22) em text/secondary, como no rodapé do kit — texto, não rótulo.
+   (":is(footer, #rodape)" iguala a especificidade da lista de rótulos de refinada.css, que usa ids.) */
+[data-tipografia="refinada"][data-marca="03d2"] :is(footer, #rodape) [class*="__tagline"] {
+  font-weight: 400;
+  font-family: var(--ararat-font-sans);
+  font-size: var(--ararat-type-body-sm-size);
+  line-height: var(--ararat-type-body-sm-line);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ararat-text-secondary);
+}
+[data-marca="03d2"] footer [class*="__small"] {
+  color: var(--ararat-text-tertiary);
+}
+
+/* ── 9. Seções claras (Ciência, Time) — tema claro do kit ───────────────────────────────────────
+   marca-03d2.tokens.css aplica o tema CLARO a #ciencia e #time; aqui os nomes de função resolvem para
+   bg/canvas #F6F6F6, text/primary #111111, text/secondary #474747, text/tertiary #5E5E5E,
+   border/default #C6C6C6, border/strong #777777, bg/surface #FFFFFF. As variáveis antigas do site são
+   redeclaradas nestas seções (o var() do wrapper já chegou resolvido no tema escuro). */
+[data-marca="03d2"] #ciencia,
+[data-marca="03d2"] #time {
+  --navy-900: var(--ararat-text-primary);
+  --white-100: var(--ararat-bg-canvas);
+  --gold-500: var(--ararat-text-primary);
+  --gold-ink: var(--ararat-text-primary);
+  background: var(--ararat-bg-canvas);
+  color: var(--ararat-text-secondary);
+}
+[data-marca="03d2"] #ciencia :is(h2, h3, [class*="__title"], [class*="__statement"]) {
+  color: var(--ararat-text-primary);
+}
+[data-marca="03d2"] #ciencia .eyebrow,
+[data-marca="03d2"] #time .eyebrow {
+  color: var(--ararat-text-tertiary);
+}
+[data-marca="03d2"] #ciencia :is(
+    [class*="__lead"],
+    [class*="__partNote"],
+    [class*="__cardText"],
+    [class*="__facts"],
+    [class*="__principles"],
+    [class*="__limit"],
+    [class*="__note"],
+    [class*="__stageLine"],
+    [class*="__disclaimer"],
+    [class*="__evMeta"],
+    [class*="__item"] dd,
+    [class*="__evidence"] ul,
+    [class*="__pubQuestion"]
+  ) {
+  color: var(--ararat-text-secondary);
+}
+[data-marca="03d2"] #ciencia :is([class*="__pubRef"], [class*="__pubNote"], [class*="__landNote"], [class*="__nota"], [class*="__pubKicker"]) {
+  color: var(--ararat-text-tertiary);
+}
+[data-marca="03d2"] #ciencia [class*="Science-module"][class*="__lead"] {
+  border-left: 1px solid var(--ararat-border-strong);
+}
+[data-marca="03d2"] #ciencia [class*="__card"]:is(section) {
+  border-top: 1px solid var(--ararat-text-primary);
+}
+[data-marca="03d2"] #ciencia :is([class*="__parts"], [class*="__more"]) {
+  border-color: var(--ararat-border-default);
+}
+[data-marca="03d2"] #ciencia [class*="__part"] {
+  border-bottom-color: var(--ararat-border-default);
+}
+/* Publicação: cartão do kit (ar-card: bg/surface #FFFFFF, fio border/subtle, raio lg). */
+[data-marca="03d2"] #ciencia [class*="__pub"]:is(article) {
+  background: var(--ararat-bg-surface);
+  border: 1px solid var(--ararat-border-subtle);
+  border-radius: var(--ararat-radius-lg);
+}
+[data-marca="03d2"] #ciencia [class*="__pubLink"] {
+  background: var(--ararat-action-primary);
+  color: var(--ararat-action-primary-text);
+  border-radius: var(--ararat-radius-sm);
+  font-family: var(--ararat-font-sans);
+  font-weight: 500;
+}
+[data-marca="03d2"] #ciencia [class*="__pubLink"]:hover {
+  background: var(--ararat-action-primary-hover);
+}
+[data-marca="03d2"] #ciencia [class*="__pubLink"]:active {
+  background: var(--ararat-action-primary-pressed);
+}
+/* Ícones oficiais (05_icones, traço 1,5 em currentColor) aplicados como máscara do SVG sem alteração;
+   24 px (grade). Só onde o conceito corresponde ao bloco: estudo publicado → documento; segmentação →
+   cortes; limites e revisão humana → revisão. "Alcance" sem ícone. */
+[data-marca="03d2"] #ciencia [class*="__cardIcone"] {
+  display: block;
+  width: 24px;
+  height: 24px;
+  margin-bottom: 14px;
+  color: var(--ararat-text-primary);
+  background-color: currentColor;
+  -webkit-mask: var(--icone) center / 24px 24px no-repeat;
+  mask: var(--icone) center / 24px 24px no-repeat;
+}
+[data-marca="03d2"] #ciencia [data-icone="nenhum"] {
+  background: none;
+}
+[data-marca="03d2"] #ciencia [data-icone="documento"] { --icone: url("/marca-03d2/v1.0/05_icones/svg/ararat-icone-documento.svg"); }
+[data-marca="03d2"] #ciencia [data-icone="cortes"] { --icone: url("/marca-03d2/v1.0/05_icones/svg/ararat-icone-cortes.svg"); }
+[data-marca="03d2"] #ciencia [data-icone="revisao"] { --icone: url("/marca-03d2/v1.0/05_icones/svg/ararat-icone-revisao.svg"); }
+@media (max-width: 640px) {
+  [data-marca="03d2"] #ciencia [data-icone="nenhum"] {
+    display: none;
+  }
+}
+
+/* Time: tema claro + retratos em P&B só na exibição (reversível; arquivos originais intactos, mesma pessoa,
+   mesmo enquadramento). Cinco integrantes, ordem, nomes e biografias inalterados. */
+[data-marca="03d2"] #time {
+  --t-ink: var(--ararat-text-primary);
+  --t-text: var(--ararat-text-secondary);
+  --t-muted: var(--ararat-text-tertiary);
+  --t-line: var(--ararat-border-default);
+  --t-line-strong: var(--ararat-border-strong);
+  --t-gold: var(--ararat-text-primary);
+  --t-gold-text: var(--ararat-text-primary);
+}
+/* P&B de exibição: o módulo time-interativo aplica grayscale(1) contrast(1.04) na própria img.rp-foto
+   (cor: "mono"); aqui o MESMO tratamento vai só para as <img> que o módulo não controla (fallback do Site,
+   acordeão do celular, sem JS). Sem filtro no contêiner, para não duplicar. */
+[data-marca="03d2"] #time img:not(.rp-foto) {
+  filter: grayscale(1) contrast(1.04);
+}
+[data-marca="03d2"] #time :is([class*="__portrait"], [class*="__failure"], [class*="__inlineImg"]) {
+  background: var(--ararat-bg-sunken);
+  border-radius: 0;
+}
+/* Com o módulo do Motion ativo (0.5.0-03d2), quadro e coluna ficam transparentes: o plano tonal (bg/sunken) é
+   pintado pelo módulo (opção `fundo`), alinhado ao pixel inteiro junto com a foto. Um fundo pintado pelo Site
+   na fração de pixel deixaria uma linha diferente entre os modos normal e reduzido (contrato do Motion §3). */
+[data-marca="03d2"] #time [class*="__portraitCol"]:has([data-motor="modulo"]),
+[data-marca="03d2"] #time [class*="__portrait"][data-motor="modulo"] {
+  background: transparent;
+}
+[data-marca="03d2"] #time [class*="__semFoto"] {
+  background: var(--ararat-bg-selected);
+  border-radius: 0;
+}
+[data-marca="03d2"] #time [class*="__chev"] {
+  border-color: var(--ararat-border-strong);
+}
+[data-marca="03d2"] #time [class*="__member"][open] > [class*="__summary"] [class*="__name"] {
+  font-weight: 600;
+}
+[data-marca="03d2"] #time [class*="__member"][open]::before {
+  width: 1px;
+}
+
+/* Fechamento da Ciência (montanha + revisão humana), combinado com o desenho do Motion: frases 1–3 em
+   text/secondary (#474747, mesmo valor do módulo) a 500; a 4ª — a decisão — a 600 SEMPRE (peso fixo: trocar
+   o peso na etapa causaria reflow) e acende por contraste para text/primary (#111111) na etapa 4. */
+[data-marca="03d2"] [class*="RevisaoHumanaRefinada"][class*="__comp"] {
+  --gold-ink: var(--ararat-text-primary);
+  --navy-900: var(--ararat-text-secondary);
+}
+[data-marca="03d2"] [class*="RevisaoHumanaRefinada"][class*="__frases"] {
+  color: var(--ararat-text-secondary);
+  font-family: var(--ararat-font-sans);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+[data-marca="03d2"] [class*="RevisaoHumanaRefinada"][class*="__decisao"] {
+  font-weight: 600;
+}
+[data-marca="03d2"] [class*="RevisaoHumanaRefinada"][class*="__nota"] {
+  color: var(--ararat-text-tertiary);
+}
+
+/* ── 10. Divisor único: linha de estrato (06_grafismos, SVG sem alteração; currentColor, 1 px) ─────
+   Uma vez na página: no topo da Plataforma, com o perfil no terço direito e a linha de base sobre o fio
+   da seção (mesma cor, border/default). Decorativo, aria-hidden. */
+[data-marca="03d2"] #plataforma {
+  position: relative;
+  border-top-color: var(--ararat-border-default);
+}
+[data-marca="03d2"] #plataforma > .marca-estrato {
+  position: absolute;
+  top: -28px;
+  left: 0;
+  right: 0;
+  height: 28px;
+  color: var(--ararat-border-default);
+  background-color: currentColor;
+  -webkit-mask: url("/marca-03d2/v1.0/06_grafismos/ararat-linha-de-estrato.svg") right bottom / 1200px 28px no-repeat;
+  mask: url("/marca-03d2/v1.0/06_grafismos/ararat-linha-de-estrato.svg") right bottom / 1200px 28px no-repeat;
+  pointer-events: none;
+}
+
+@media (forced-colors: active) {
+  [data-marca="03d2"] .btn-gold {
+    border-color: ButtonText;
+  }
+}
+
+/* ══ 11. Composição editorial (codex/brand-03d2-editorial-v1) ═══════════════════════════════════════════════
+   Presença editorial com precisão de instrumento: hierarquia forte, ritmo claro/escuro por capítulo e as
+   imagens reais com mais espaço. Só layout, tipografia e temas — os módulos do Motion não mudam aqui. */
+
+/* ── 11.1 Primeira dobra: texto e montanha numa composição só ─────────────────────────────────────────────
+   Hierarquia: "Contrast is information. / We measure." em h1 (44/48 → 32/36 no celular) e "You decide."
+   em display (64/68 → 40/44) a 600 — a frase da decisão humana é a mais forte da tela. Uma ação principal
+   (botão primário, entrar na imagem) e uma secundária como link com seta (Plataforma), sem dois botões
+   competindo. Nota de estado científico mantida. */
+[data-tipografia="refinada"][data-marca="03d2"] #hero-title {
+  font-size: var(--ararat-type-h1-size);
+  line-height: 1.09;
+  letter-spacing: var(--ararat-type-h1-tracking);
+  max-width: none;
+}
+[data-tipografia="refinada"][data-marca="03d2"] #hero-title > span:last-child {
+  display: block;
+  margin-top: 0.12em;
+  font-size: var(--ararat-type-display-size);
+  line-height: 1.0625;
+  font-weight: 600;
+  letter-spacing: var(--ararat-type-display-tracking);
+  color: var(--ararat-text-primary);
+}
+@media (max-width: 600px) {
+  [data-tipografia="refinada"][data-marca="03d2"] #hero-title {
+    font-size: min(var(--ararat-type-h1-size), 8.4vw);
+  }
+  [data-tipografia="refinada"][data-marca="03d2"] #hero-title > span:last-child {
+    font-size: min(var(--ararat-type-display-size), 11.2vw);
+  }
+}
+/* Ações e nota de estado visíveis desde o 1º quadro (contrato EDITORIAL-03D2-MOTION.md §6.3): só o título e o
+   subtítulo mantêm a entrada da abertura; nada que se pode clicar ou ler como aviso começa com opacidade 0. */
+[data-marca="03d2"] [data-opening="content"] :is([class*="__actions"], [data-opening="note"]) {
+  animation: none;
+}
+/* Ação secundária = link com seta (ar-link--arrow do kit): mesmo alvo de toque, sem moldura de botão. */
+[data-marca="03d2"] [data-opening="content"] .btn-ghost {
+  border-color: transparent;
+  background: transparent;
+  padding-inline: 4px;
+  color: var(--ararat-text-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+  text-decoration-color: var(--ararat-border-strong);
+}
+[data-marca="03d2"] [data-opening="content"] .btn-ghost:hover {
+  background: transparent;
+  border-color: transparent;
+  text-decoration-color: var(--ararat-text-primary);
+}
+@media (max-width: 600px) {
+  /* Celular: o primário ocupa a largura; o link fica alinhado à esquerda, abaixo. */
+  [data-marca="03d2"] [data-opening="content"] [class*="__actions"] {
+    align-items: flex-start;
+  }
+  [data-marca="03d2"] [data-opening="content"] [class*="__actions"] .btn-gold {
+    align-self: stretch;
+  }
+}
+
+/* Desktop (≥ 1200 px): duas colunas — texto à esquerda, arte à direita, na mesma altura. A montanha vem para
+   junto do texto e cabe inteira na 1ª tela também em telas baixas (1280 × 600). O slot continua sendo o
+   retângulo que o Site passa ao módulo (art), na proporção do poster (5:3); a geometria não muda. */
+@media (min-width: 1200px) {
+  [data-marca="03d2"] [data-opening="front"] {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: center;
+    column-gap: clamp(24px, 3vw, 64px);
+    width: 100%;
+    max-width: calc(var(--content-max) + var(--gutter) * 2);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+    padding-bottom: clamp(48px, 9vh, 104px);
+  }
+  [data-marca="03d2"] [data-opening="content"] {
+    grid-column: 1;
+    grid-row: 1;
+    margin: 0;
+    padding-inline: 0;
+    max-width: none;
+    width: 100%;
+  }
+  [data-marca="03d2"] [data-opening="front"] > [class*="__art"] {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+    padding-top: 0;
+    align-self: center;
+  }
+  [data-marca="03d2"] [data-opening="slot"] {
+    width: 100%;
+    /* Montanha ≥ 1.1.0-03d2: desenho centrado na altura do slot (lido pela ponte, HomeOpening.tsx). */
+    --opening-composicao: centro;
+  }
+  /* O convite à rolagem é absoluto dentro da frente (agora uma grade centrada): alinha à margem do texto. */
+  [data-marca="03d2"] [data-opening="front"] > [data-opening="invite"] {
+    left: var(--gutter);
+  }
+}
+
+/* ── 11.2 Time: comparação natural × P&B (só para revisão: ?retrato=natural) ──────────────────────────────
+   Padrão = P&B de exibição. Com ?retrato=natural, as fotos que o Site controla também ficam sem filtro; o
+   módulo recebe cor "natural". Os pontos da troca seguem monocromáticos nas duas. */
+[data-marca="03d2"] #time[data-retrato="natural"] img:not(.rp-foto) {
+  filter: none;
+}
+
+/* ── 11.3 Ritmo por capítulo (tema claro/escuro) ───────────────────────────────────────────────────────────
+   escuro  · Primeira dobra + Jornada + Passagem — a imagem (RM legível sobre escuro)
+   CLARO   · Plataforma — o produto: capturas reais do Hub (claro) e do Viewer (escuro) em moldura preta
+   escuro  · Explicabilidade — de novo a RM
+   CLARO   · Ciência + Time — publicação e pessoas (leitura longa)
+   escuro  · FAQ
+   CLARO   · Contato — o convite, com o recorte das camadas (claro) como fecho
+   escuro  · Rodapé
+   Os tokens claros entram por marca-03d2.tokens.css (seções #plataforma, #ciencia, #time, #contato). Na troca de
+   tema não há fio nem degradê: a própria mudança de superfície separa os capítulos. */
+[data-marca="03d2"] :is(#plataforma, #contato) {
+  background: var(--ararat-bg-canvas);
+  color: var(--ararat-text-secondary);
+}
+[data-marca="03d2"] #contato {
+  border-top: 0;
+}
+[data-marca="03d2"] #contato :is(h2, h3, [class*="__title"]) {
+  color: var(--ararat-text-primary);
+}
+[data-marca="03d2"] #plataforma :is(h2, h3) {
+  color: var(--ararat-text-primary);
+}
+[data-marca="03d2"] #faq {
+  border-top: 0;
+}
+
+/* ── 11.4 Plataforma: capturas reais ─────────────────────────────────────────────────────────────────────
+   O tema claro dá às capturas o contraste de uma página de produto (Hub claro e Viewer escuro, cada um na própria
+   placa). A legenda das etapas mantém a coluna de 280 px: estreitá-la alonga a lista e, em telas baixas, a grade
+   passaria da altura do palco (medido: 1280 × 600). O enquadramento dentro do palco (aproximações por etapa,
+   para os controles ficarem legíveis) é do módulo do Motion — pedido com as medidas reais em
+   docs/coordination/BRAND-03D2-EDITORIAL-SITE.md. Nada é ampliado pelo Site. */
+
+/* ── 11.5 Ciência: publicação em composição editorial ─────────────────────────────────────────────────────
+   Fio superior forte (text/primary, 2 px), sem cartão. Esquerda: título bibliográfico curto (h2) e a pergunta
+   estudada em destaque (body-lg maior, text/primary). Direita: referência completa (autoria, título, periódico,
+   DOI em mono) e a ação de ler a publicação (botão primário). Nota de separação da segmentação abaixo. */
+[data-marca="03d2"] #ciencia [class*="__pub"]:is(article) {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  grid-template-areas:
+    "kicker kicker"
+    "titulo ref"
+    "pergunta ref"
+    "pergunta acao"
+    "nota nota";
+  column-gap: clamp(32px, 5vw, 88px);
+  row-gap: 20px;
+  max-width: none;
+  margin-top: clamp(48px, 7vh, 80px);
+  padding: clamp(28px, 3vw, 40px) 0 clamp(28px, 3vw, 40px);
+  background: transparent;
+  border: 0;
+  border-top: 2px solid var(--ararat-text-primary);
+  border-bottom: 1px solid var(--ararat-border-default);
+  border-radius: 0;
+}
+[data-marca="03d2"] #ciencia [class*="__pubKicker"] { grid-area: kicker; }
+[data-marca="03d2"] #ciencia [class*="__pubTitle"] {
+  grid-area: titulo;
+  margin: 0;
+  font-size: var(--ararat-type-h2-size);
+  line-height: 1.19;
+  font-weight: 500;
+  letter-spacing: var(--ararat-type-h2-tracking);
+  color: var(--ararat-text-primary);
+  max-width: 22em;
+}
+[data-marca="03d2"] #ciencia :is([class*="__pubQuestion"], #_) {
+  grid-area: pergunta;
+  margin: 0;
+  padding-left: 20px;
+  border-left: 2px solid var(--ararat-text-primary);
+  font-size: 1.25rem;
+  line-height: 1.5;
+  color: var(--ararat-text-primary);
+  max-width: 34em;
+  align-self: start;
+}
+[data-marca="03d2"] #ciencia [class*="__pubLabel"] {
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--ararat-font-mono);
+  font-size: var(--ararat-type-label-size);
+  line-height: var(--ararat-type-label-line);
+  font-weight: 500;
+  letter-spacing: var(--ararat-type-label-tracking);
+  text-transform: uppercase;
+  color: var(--ararat-text-tertiary);
+}
+[data-marca="03d2"] #ciencia [class*="__pubRef"] {
+  grid-area: ref;
+  margin: 0;
+  align-self: start;
+  font-size: var(--ararat-type-body-sm-size);
+  line-height: var(--ararat-type-body-sm-line);
+  color: var(--ararat-text-secondary);
+}
+[data-marca="03d2"] #ciencia [class*="__pubLink"] {
+  grid-area: acao;
+  align-self: end;
+  justify-self: start;
+  min-height: 44px;
+  padding-inline: 20px;
+}
+[data-marca="03d2"] #ciencia [class*="__pubNote"] {
+  grid-area: nota;
+  margin: 0;
+  font-size: var(--ararat-type-caption-size);
+  line-height: var(--ararat-type-caption-line);
+}
+@media (max-width: 900px) {
+  [data-marca="03d2"] #ciencia [class*="__pub"]:is(article) {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "kicker" "titulo" "pergunta" "acao" "ref" "nota";
+  }
+  [data-marca="03d2"] #ciencia [class*="__pubTitle"] {
+    font-size: var(--ararat-type-h3-size);
+  }
+  [data-marca="03d2"] #ciencia [class*="__pubQuestion"] {
+    font-size: 1.125rem;
+  }
+}
+
+/* ══ 12. Entradas editoriais (codex/titulos-movimento-03d2-v1) ════════════════════════════════════════════════
+   Comportamento em components/motion/entrada-editorial.css (comum às quatro identidades). Aqui, só os valores do
+   03D2 e os pontos que existem nesta identidade. Nada é animado sobre a RM, as capturas ou os módulos do Motion. */
+[data-tipografia="refinada"][data-marca="03d2"] {
+  --entrada-desloc: 12px;
+  --entrada-dur: 450ms; /* entre ararat-duration-slow (320) e -reveal (900): entrada de bloco de texto */
+  --entrada-ease: var(--ararat-easing-enter); /* desacelera, sem overshoot */
+  --entrada-atraso-titulo: 70ms;
+  --fio-dur: 520ms;
+  --link-dur: var(--ararat-duration-base); /* 200 ms */
+  --link-ease: var(--ararat-easing-standard);
+  --link-fio: 1px;
+  --link-fio-ativo: 2px;
+}
+
+/* 12.1 Pergunta estudada: o filete de 2 px text/primary que o 03D2 já põe à esquerda da pergunta é o fio desenhado
+   (TextReveal lê largura e cor calculadas; estado final idêntico). Nada a declarar aqui. */
+
+/* 12.2 Link principal da 1ª dobra ("Explore the platform" →): sublinhado engrossa e a seta avança com cursor OU
+   foco de teclado. O anel de foco do kit continua (não depende da animação). */
+[data-marca="03d2"] [data-opening="content"] .btn-ghost {
+  transition: text-decoration-thickness var(--link-dur) var(--link-ease), text-decoration-color var(--link-dur) var(--link-ease);
+}
+[data-marca="03d2"] [data-opening="content"] .btn-ghost:is(:hover, :focus-visible) {
+  text-decoration-thickness: var(--link-fio-ativo);
+  text-decoration-color: var(--ararat-text-primary);
+}
+[data-marca="03d2"] [data-opening="content"] .btn-ghost:focus-visible svg {
+  transform: translateX(3px);
+}
+html[data-motion="paused"] [data-marca="03d2"] [data-opening="content"] .btn-ghost {
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-marca="03d2"] [data-opening="content"] .btn-ghost {
+    transition: none;
+  }
+}
+
+/* 12.3 "You decide." — revelação única de baixo para cima, só na abertura (uma vez por aba, quando o estilo
+   #ararat-intro existe). SUBSTITUI a entrada desta linha (ararat-word-in), não se soma a ela: mesmo elemento,
+   mesmos tempos. clip-path não ocupa espaço (sem deslocamento) e o recorte final tem folga para ascendentes e
+   descendentes (nenhuma letra cortada). Sem a abertura (2ª visita, pausa, reduzido, sem JS) a frase aparece
+   pronta. As ações seguem visíveis desde o 1º quadro (§ acima). */
+html:has(#ararat-intro) [data-tipografia="refinada"][data-marca="03d2"] #hero-title > span:last-child {
+  animation-name: ararat-decidir-revela;
+  /* a curva de saída das outras linhas faz ~80 % do recorte nos primeiros 100 ms (lido como "aparecer");
+     aqui o recorte começa macio e desacelera, sem overshoot, para a revelação ser lida de baixo para cima */
+  animation-duration: 700ms;
+  animation-timing-function: cubic-bezier(0.33, 0, 0.2, 1);
+}
+@keyframes ararat-decidir-revela {
+  from {
+    clip-path: inset(100% -0.15em -0.3em -0.15em);
+  }
+  to {
+    clip-path: inset(-0.3em -0.15em -0.3em -0.15em);
+  }
+}

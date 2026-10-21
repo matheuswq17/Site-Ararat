@@ -1,0 +1,35 @@
+/* Fontes oficiais do kit 03D2 v1.0 (mesmo @font-face de components/preview/proposta/marca-03d2.css §1), para as
+   páginas institucionais, que não carregam a camada da refinada. WOFF2 variáveis do kit, sem alteração. */
+@font-face {
+  font-family: "Geist";
+  src: url("/marca-03d2/v1.0/03_tipografia/fontes/Geist-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/marca-03d2/v1.0/03_tipografia/fontes/GeistMono-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist Fallback";
+  src: local("Arial"), local("Liberation Sans"), local("Helvetica");
+  size-adjust: 101.7%;
+  ascent-override: 98.82%;
+  descent-override: 29.01%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Geist Mono Fallback";
+  src: local("Courier New"), local("Liberation Mono"), local("Courier");
+  size-adjust: 99.98%;
+  ascent-override: 100.52%;
+  descent-override: 29.5%;
+  line-gap-override: 0%;
+}
+
+/* ── 2. Papéis do site → tokens 03D2 ─────────────────────────────────────────────────────────────
+   Os tokens (escala, tema escuro padrão, tema claro em #ciencia/#time) vêm de marca-03d2.tokens.css.

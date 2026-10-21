@@ -1,0 +1,185 @@
+/* Site ARARAT — integração do Atlas clínico (portfolio-site-v1, 14/10/2026). Carregado depois de site.css.
+   - Descrição textual das capturas na variante apta a publicação (sem quadro vazio).
+   - Composições próprias das páginas internas (Plataforma, Soluções, Próstata, Tireoide, Evidências, Empresa), na
+     mesma linguagem do Atlas: Lora nos títulos, Inter na leitura, mineral claro / clínico escuro, cobre só em ação. */
+
+/* ---------- títulos e topo das internas na linguagem do Atlas ---------- */
+.atlas .topo-pag{padding-block:clamp(56px,7vw,104px) clamp(48px,6vw,88px)}
+.atlas .topo-pag .titulo-sec{max-width:20ch;font-size:clamp(36px,5vw,68px);line-height:1.04;letter-spacing:-.02em}
+.atlas .topo-pag .lead{max-width:62ch}
+.atlas .titulo-medio{font-size:clamp(28px,3.2vw,44px);line-height:1.1;letter-spacing:-.01em}
+.atlas .estrato{opacity:.35}
+.atlas .mais{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:20px}
+
+/* ---------- captura como texto (variante pública) ---------- */
+.cap-texto{display:grid;gap:6px;margin:0;padding:14px 0 0;border-top:1px solid var(--linha);max-width:62ch}
+.cap-texto-rot{font:600 11.5px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.cap-texto-alt{font-size:15px;line-height:1.55;color:var(--tinta)}
+.escura .cap-texto{border-top-color:var(--clin-linha)}
+.escura .cap-texto-alt{color:var(--clin-fg)}
+.cap-texto.compacto .cap-texto-alt{font-size:14px}
+.midia-texto{display:grid;gap:16px}
+.camada-texto{display:grid;gap:6px}
+
+/* ---------- Plataforma: topo com produtos e a demonstração ---------- */
+.plat-topo-grade{display:grid;gap:clamp(28px,4vw,56px);grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);align-items:end}
+.plat-produtos{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.plat-produtos li{display:grid;gap:8px;padding:16px 0;border-top:1px solid var(--clin-linha)}
+.plat-produtos img{height:22px;width:auto;justify-self:start}
+.plat-produtos span{font-size:14.5px;color:var(--clin-suave)}
+.demo-topo,.demo-texto{margin-top:clamp(32px,4vw,52px);padding-top:clamp(24px,3vw,36px);border-top:1px solid var(--clin-linha);scroll-margin-top:calc(var(--head) + 16px)}
+.demo-acao{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center}
+.demo-acao .legenda{max-width:52ch}
+.demo-topo .demo-semjs,.demo-texto{max-width:none}
+.demo-topo .demo-semjs > summary,.demo-texto > summary{cursor:pointer;font-weight:600;font-size:15px;padding:10px 0;min-height:44px;display:flex;align-items:center}
+.demo-topo .demo-semjs{margin-top:20px}
+.demo-texto > .lead-menor{color:var(--clin-suave);max-width:62ch;margin:6px 0 14px}
+.demo-roteiro{list-style:none;margin:0;padding:0;display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))}
+.demo-roteiro li{display:grid;gap:6px;padding:14px 16px;background:var(--clin-1);border:1px solid var(--clin-linha);border-radius:2px;font-size:14.5px;line-height:1.5}
+.demo-roteiro .mono{font-size:12px;color:var(--clin-suave)}
+.demo-roteiro .aviso-demo{font-size:13px;color:var(--clin-suave)}
+@media (max-width:899px){.plat-topo-grade{grid-template-columns:1fr;align-items:start}}
+
+/* estado da demonstração (carregando / falha): na coluna de texto, nunca sobre o desenho */
+.d-estado{margin:0;padding:10px 12px;border-left:2px solid var(--cobre-claro);background:var(--clin-1);color:var(--clin-fg);font:500 14.5px/1.5 var(--sans);text-wrap:pretty}
+.d-estado[hidden]{display:none}
+
+/* ---------- Plataforma: tarefas com composições diferentes ---------- */
+.tarefa{display:grid;gap:clamp(20px,3vw,40px);padding-block:clamp(36px,5vw,64px);border-top:1px solid var(--linha);scroll-margin-top:calc(var(--head) + 8px)}
+.escura .tarefa{border-top-color:var(--clin-linha)}
+.tarefa:first-of-type{border-top:0}
+.t-txt{display:grid;gap:12px;align-content:start;max-width:60ch}
+.t-txt .prod{font:600 12px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.escura .t-txt .prod{color:var(--clin-suave)}
+.t-txt h2{font-family:var(--serif);font-weight:500;font-size:clamp(26px,2.6vw,36px);line-height:1.12}
+.t-txt p{font-size:16px;line-height:1.6}
+.escura .t-txt p{color:#D3D5D4}
+.t-itens{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.t-itens li{font-size:13.5px;line-height:1.35;padding:6px 10px;border:1px solid var(--linha);border-radius:999px}
+.escura .t-itens li{border-color:var(--clin-linha);color:var(--clin-fg)}
+.t-midia{display:grid;gap:16px;min-width:0;align-content:start}
+.t-fig{display:grid;gap:8px;margin:0;min-width:0}
+.t-fig .moldura img{width:100%}
+.t-fig .tiras{display:grid;gap:6px}
+.t-fig .tiras img{width:100%}
+.t-fig .m1{max-width:404px}
+.escura .t-fig .legenda{color:var(--clin-suave)}
+/* Hub: faixa larga — texto à esquerda, fila grande e o painel ao lado */
+.tarefa-larga{grid-template-columns:minmax(0,1fr) minmax(0,2.2fr)}
+.tarefa-larga .t-midia{grid-template-columns:minmax(0,2fr) minmax(0,1fr);align-items:start}
+/* Viewer, navegar: texto em duas colunas acima, planos em largura total */
+.tarefa-plena .t-txt{max-width:none;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);column-gap:clamp(24px,4vw,64px)}
+.tarefa-plena .t-txt .prod,.tarefa-plena .t-txt h2{grid-column:1}
+.tarefa-plena .t-txt p,.tarefa-plena .t-txt .t-itens{grid-column:2}
+.tarefa-plena .t-txt h2{grid-row:2 / span 2}
+/* mosaico das demais tarefas do Viewer: 2 colunas no desktop */
+.tarefas-grade{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(24px,4vw,64px);border-top:1px solid var(--clin-linha)}
+.tarefas-grade .tarefa{border-top:0;padding-block:clamp(32px,4vw,56px)}
+.tarefas-grade .tarefa:nth-child(n+3){border-top:1px solid var(--clin-linha)}
+.tarefa-revisar .decisao{font-size:15px;color:var(--clin-fg)}
+@media (max-width:1023px){
+ .tarefa-larga{grid-template-columns:1fr}
+ .tarefa-plena .t-txt{grid-template-columns:1fr}
+ .tarefa-plena .t-txt p,.tarefa-plena .t-txt .t-itens,.tarefa-plena .t-txt h2{grid-column:1;grid-row:auto}
+}
+@media (max-width:899px){
+ .tarefas-grade{grid-template-columns:1fr}
+ .tarefas-grade .tarefa:nth-child(n+2){border-top:1px solid var(--clin-linha)}
+ .tarefa-larga .t-midia{grid-template-columns:1fr}
+}
+
+/* ---------- Soluções ---------- */
+.frente-cab{display:grid;gap:14px;max-width:68ch;margin-bottom:clamp(28px,4vw,48px)}
+.frente-cab .lead{color:#D3D5D4}
+.comp-mapa{list-style:none;margin:0;padding:0;display:grid;gap:1px;grid-template-columns:repeat(4,minmax(0,1fr));background:var(--clin-linha);border:1px solid var(--clin-linha)}
+.comp-mapa li{display:grid;gap:12px;align-content:start;padding:20px 18px;background:var(--clin-0);--estagio-cor:var(--clin-fg)}
+.comp-mapa h3{font:600 16.5px/1.3 var(--sans);color:var(--clin-fg)}
+.comp-mapa p{font-size:14px;line-height:1.5;color:var(--clin-suave)}
+.comp-mapa p b{display:block;font:600 11.5px var(--sans);letter-spacing:.07em;text-transform:uppercase;margin-bottom:4px}
+@media (max-width:1023px){.comp-mapa{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.comp-mapa{grid-template-columns:1fr}}
+.frente-tireoide .titulo-medio{font-size:clamp(24px,2.4vw,32px)}
+
+/* eixos: como ler os estágios */
+.eixos{display:grid;gap:14px;max-width:72ch}
+.eixos-t{font:600 13px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.eixos dl{margin:0;display:grid;gap:0}
+.eixos dl > div{display:grid;grid-template-columns:minmax(120px,.36fr) 1fr;gap:4px 20px;padding:12px 0;border-top:1px solid var(--linha)}
+.eixos dt{font-weight:600;font-size:15px}
+.eixos dd{margin:0;font-size:15px;line-height:1.55;color:var(--muted)}
+@media (max-width:560px){.eixos dl > div{grid-template-columns:1fr}}
+
+/* Próstata: validação no nível da frente, abaixo dos componentes */
+.componentes .validacao{margin-top:18px}
+.uro .mais{margin-top:24px}
+
+/* ---------- Evidências ---------- */
+.exp-validacao{display:flex;gap:10px;align-items:baseline;max-width:70ch;margin:0 0 8px;font-size:15.5px;line-height:1.55;--estagio-cor:currentColor}
+#fichas .ficha-ev h3{font:600 16.5px/1.3 var(--sans)}
+#fichas .ficha-ev .link-seta{justify-self:start;font-size:14.5px}
+.estudo{scroll-margin-top:calc(var(--head) + 16px)}
+.estudo-cab h3{font-family:var(--serif);font-weight:500;font-size:clamp(22px,2.2vw,30px);line-height:1.15}
+
+/* ---------- Empresa ---------- */
+.atlas .rostos img{filter:grayscale(1)}
+#contato .lead{color:#D3D5D4;max-width:60ch}
+/* biografia: mesma entrada curta do menu (E6) — 200 ms, opacidade + 8 px; fechar, Esc e foco imediatos */
+@media (prefers-reduced-motion:no-preference){
+ html:not([data-movimento=pausado]) .bio-dlg[open]{animation:bio-entra 200ms cubic-bezier(.2,0,0,1)}
+}
+@keyframes bio-entra{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* Próstata: o rótulo "Desenvolvimento" é mais longo que "Estágio" */
+.atlas .comp dl{grid-template-columns:minmax(124px,max-content) minmax(0,1fr)}
+@media (max-width:560px){.atlas .comp dl{grid-template-columns:1fr}}
+/* Plataforma: os planos não passam de uma largura confortável de leitura */
+.tarefa-plena .t-fig{max-width:1120px}
+
+/* Caso da Home sem palco montado (sequência desktop, celular, sem JS, falha ou variante sem mídia): o quadro do palco
+   não reserva altura vazia; só o seletor de capítulos fica, em fluxo normal. */
+.atlas-grade:not([data-palco=ativo]) .palco-atlas{position:static;height:auto}
+.atlas-grade:not([data-palco=ativo]) .palco-midia{display:none}
+
+/* Texto muito ampliado (abaixo de 300 px CSS, por exemplo 320 px a 150 %): uma coluna, palavras longas quebram, títulos
+   menores — sem rolagem lateral. */
+@media (max-width:299px){
+ .atlas{overflow-wrap:anywhere}
+ .atlas .duas-col,.atlas .adocao-duas,.atlas .estudo,.atlas .estudo-dl > div,.atlas .uro,.atlas .adocao-3{grid-template-columns:minmax(0,1fr)!important}
+ .atlas .duas-col > *,.atlas .estudo > *,.atlas .adocao-duas > *,.atlas .ficha,.atlas .ficha dl{min-width:0}
+ .atlas .topo-pag .titulo-sec,.atlas .titulo-sec{font-size:28px;letter-spacing:-.01em}
+ .atlas .titulo-medio{font-size:24px}
+}
+
+/* Teto técnico também nas camadas do módulo saidas-caso (748 px naturais) e nas figuras de fallback delas, com e sem
+   JS (Motion, ATLAS-INTEGRACAO-CORRECOES-MOTION-2026-10-13 §2.2). Sem isso, as camadas chegavam a 2,0 em DPR 4. */
+[data-saidas-host]{--nat:748;max-width:min(100%,calc(var(--nat) * 1.75px / var(--dpr-real,var(--dpr,1))))}
+.palco-midia [data-midia=model] .saidas-host{max-width:min(100%,calc(var(--nat,748) * 1.75px / var(--dpr-real,var(--dpr,1))))}
+.palco-saidas .camada img{width:100%;max-width:min(374px,calc(var(--nat,748) * 1.75px / var(--dpr-real,var(--dpr,1))))}
+/* capturas da demonstração (roteiro estático e palco estático): mesmo teto, pela largura natural do arquivo */
+.semjs-imgs img.cap,.d-estatico img.cap{max-width:min(100%,calc(var(--nat) * var(--teto) / var(--dpr-real, var(--dpr, 1)) * 1px))}
+
+/* ---------- variante SEM capturas (14/10, fechamento): composição própria para texto, não a página com imagens
+   trocadas por descrições. Home: três colunas de produto. Plataforma: grade de tarefas. Próstata: componentes em
+   largura total. */
+.produtos-texto{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--clin-linha);border:1px solid var(--clin-linha)}
+.prod-col{display:grid;gap:14px;align-content:start;padding:clamp(22px,2.4vw,32px);background:var(--clin-0);min-width:0;scroll-margin-top:calc(var(--head) + 16px)}
+.prod-col .cap-titulo{font-size:clamp(20px,1.7vw,24px)}
+.prod-col .cap-texto{font-size:15.5px;max-width:none}
+.prod-col .decisao{font-size:17px;max-width:none}
+.prod-col .legenda{color:var(--clin-suave)}
+.prod-comps,.prod-tarefas{list-style:none;margin:0;padding:0;display:grid;border-top:1px solid var(--clin-linha)}
+.prod-comps li{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 12px;padding:10px 0;border-bottom:1px solid var(--clin-linha);font-size:14.5px;color:var(--clin-fg);--estagio-cor:var(--clin-fg)}
+.prod-tarefas li{border-bottom:1px solid var(--clin-linha)}
+.prod-tarefas a{display:flex;align-items:center;min-height:44px;font-size:15px;color:var(--clin-fg);text-decoration:none}
+.prod-tarefas a:hover,.prod-tarefas a:focus-visible{text-decoration:underline;text-underline-offset:3px}
+@media (max-width:1023px){.produtos-texto{grid-template-columns:1fr}}
+.tarefas-texto{grid-template-columns:repeat(2,minmax(0,1fr))}
+.tarefas-texto .tarefa-celula{display:grid;align-content:start;gap:0;min-width:0;border-top:1px solid var(--clin-linha);padding-bottom:clamp(24px,3vw,40px)}
+.tarefas-texto .tarefa-celula:nth-child(-n+2){border-top:0}
+.tarefas-texto .tarefa{border-top:0;padding-bottom:16px}
+.tarefas-texto .decisao{font-size:15.5px}
+.tarefa.sem-midia{grid-template-columns:1fr}
+@media (max-width:899px){.tarefas-texto{grid-template-columns:1fr}.tarefas-texto .tarefa-celula:nth-child(2){border-top:1px solid var(--clin-linha)}}
+.prostata2.sem-midia{grid-template-columns:1fr}
+.prostata2.sem-midia .comps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(24px,4vw,64px)}
+@media (max-width:899px){.prostata2.sem-midia .comps{grid-template-columns:1fr}}

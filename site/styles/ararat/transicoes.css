@@ -1,0 +1,25 @@
+/* ---------- Transição entre páginas — CANDIDATO PRIVADO (rodada de movimento, 14/10/2026)
+   Coreografia "A" do Motion (MONTANHA-LUZ-E-TRANSICOES-MOTION-2026-10-14.md §3.2): o conteúdo antigo sai de uma vez no
+   commit da rota; o novo entra em 180 ms, opacidade 0 → 1 e 6 px → 0. Cabeçalho e rodapé parados. Sem View Transitions
+   API (sobreposição e captura de ponteiro; e, medido aqui, 110–170 ms de captura antes da troca em headless).
+   A classe .pagina-entra é posta por EntradaPagina.tsx só em navegação no app, no modo "candidata", sem reduzido e sem
+   pausa. Só vale com <html data-transicao="candidata"> (revisão privada); a variante pública não tem o atributo. */
+:root {
+  --pagina-entra-dur: 180ms;
+  --pagina-entra-desloc: 6px;
+  --pagina-entra-ease: cubic-bezier(.23, 1, .32, 1);
+}
+@keyframes ararat-pagina-entra { from { opacity: 0; transform: translateY(var(--pagina-entra-desloc)); } }
+@keyframes ararat-pagina-entra-opacidade { from { opacity: 0; } }
+/* fechamento 14/10 (proposta ao Motion): entra o CONTEÚDO de cada seção (filhos diretos das <section> do <main>); o
+   fundo de cada seção já está inteiro no commit. Assim nada fica transparente sobre o papel do <body>: sem clarão no
+   topo escuro e sem pulso escuro em seção clara (a versão anterior pintava o <html> de escuro durante a entrada). */
+:root[data-transicao="candidata"] #conteudo.pagina-entra > section > * {
+  animation: ararat-pagina-entra var(--pagina-entra-dur) var(--pagina-entra-ease) both;
+}
+/* voltar/avançar: só opacidade — o palco fixo do Atlas e a rolagem restaurada não se deslocam */
+:root[data-transicao="candidata"] #conteudo.pagina-entra.so-opacidade > section > * { animation-name: ararat-pagina-entra-opacidade; }
+
+/* movimento reduzido ou site pausado: troca imediata (redundante com EntradaPagina, que nem põe a classe) */
+@media (prefers-reduced-motion: reduce) { :root[data-transicao] #conteudo.pagina-entra > section > * { animation: none; } }
+:root[data-transicao][data-movimento="pausado"] #conteudo.pagina-entra > section > * { animation: none; }

@@ -1,0 +1,439 @@
+{
+  "versao": "1.1.0-03d2",
+  "familia": {
+    "proporcao": "5:3",
+    "composicao": "wide",
+    "alinhar": "centro",
+    "variantes": [
+      {
+        "areaCss": {
+          "w": 600,
+          "h": 360
+        },
+        "arquivos": {
+          "1x": "assets/arte-escultura-editorial-w600@1x.webp",
+          "2x": "assets/arte-escultura-editorial-w600@2x.webp"
+        },
+        "objeto": {
+          "cume": {
+            "x": 300,
+            "y": 88.9
+          },
+          "secundario": {
+            "x": 158.9,
+            "y": 125.9
+          },
+          "arcoTopo": 48.5,
+          "arcoRaio": 168,
+          "desenho": {
+            "x": 12.6,
+            "y": 45.5,
+            "w": 515.7,
+            "h": 264.6,
+            "margemSuperior": 45.5,
+            "margemInferior": 49.8
+          },
+          "simplificado": false
+        },
+        "bytes1x": 54996,
+        "sha2561x": "faa05f49fe26f287e548389d75f325418f2aba86fb74503f70f2d3f38522e6d1",
+        "bytes2x": 136850,
+        "sha2562x": "300210857781e61f82492c2cebb5bda39dfe7cbf534296be05d401c2f8fc4051"
+      },
+      {
+        "areaCss": {
+          "w": 620,
+          "h": 372
+        },
+        "arquivos": {
+          "1x": "assets/arte-escultura-editorial-w620@1x.webp",
+          "2x": "assets/arte-escultura-editorial-w620@2x.webp"
+        },
+        "objeto": {
+          "cume": {
+            "x": 310,
+            "y": 91.8
+          },
+          "secundario": {
+            "x": 164.2,
+            "y": 130.1
+          },
+          "arcoTopo": 50.2,
+          "arcoRaio": 173.6,
+          "desenho": {
+            "x": 13,
+            "y": 47.2,
+            "w": 532.9,
+            "h": 273.3,
+            "margemSuperior": 47.2,
+            "margemInferior": 51.5
+          },
+          "simplificado": false
+        },
+        "bytes1x": 57428,
+        "sha2561x": "2ef58b476d8fdc5abd9cbe5a90a3ffe023a552fa64e2cc3e902f204959c60a17",
+        "bytes2x": 142334,
+        "sha2562x": "ad47852620dfd2c35cb077a11c7b7a19d898ba2958e62e24ac71f6b6fd4c01f5"
+      },
+      {
+        "areaCss": {
+          "w": 640,
+          "h": 384
+        },
+        "arquivos": {
+          "1x": "assets/arte-escultura-editorial-w640@1x.webp",
+          "2x": "assets/arte-escultura-editorial-w640@2x.webp"
+        },
+        "objeto": {
+          "cume": {
+            "x": 320,
+            "y": 94.8
+          },
+          "secundario": {
+            "x": 169.5,
+            "y": 134.3
+          },
+          "arcoTopo": 51.8,
+          "arcoRaio": 179.2,
+          "desenho": {
+            "x": 13.5,
+            "y": 48.8,
+            "w": 550.1,
+            "h": 282,
+            "margemSuperior": 48.8,
+            "margemInferior": 53.2
+          },
+          "simplificado": false
+        },
+        "bytes1x": 60304,
+        "sha2561x": "6ace65c06dae6d0ddc85949d6fb1035992952ce031e70049eca23f67b7fc5d12",
+        "bytes2x": 148158,
+        "sha2562x": "0ff2015ebe424d1cdaf0d4d2dbf2a4162f2d07fd046a020665ff58725c4252b1"
+      },
+      {
+        "areaCss": {
+          "w": 660,
+          "h": 396
+        },
+        "arquivos": {
+          "1x": "assets/arte-escultura-editorial-w660@1x.webp",
+          "2x": "assets/arte-escultura-editorial-w660@2x.webp"
+        },
+        "objeto": {
+          "cume": {
+            "x": 330,
+            "y": 97.7
+          },
+          "secundario": {
+            "x": 174.8,
+            "y": 138.5
+          },
+          "arcoTopo": 53.4,
+          "arcoRaio": 184.8,
+          "desenho": {
+            "x": 13.9,
+            "y": 50.4,
+            "w": 567.3,
+            "h": 290.7,
+            "margemSuperior": 50.4,
+            "margemInferior": 54.9
+          },
+          "simplificado": false
+        },
+        "bytes1x": 62840,
+        "sha2561x": "84abecd20ab0f681da598de6a9fe93dc6ccc77e662f8aae128984834fb15f6bf",
+        "bytes2x": 153794,
+        "sha2562x": "68c6201efae6243a6ac59320154fd0179a866fb5d3b8ee3fb90fddee011cb74f"
+      },
+      {
+        "areaCss": {
+          "w": 680,
+          "h": 408
+        },
+        "arquivos": {
+          "1x": "assets/arte-escultura-editorial-w680@1x.webp",
+          "2x": "assets/arte-escultura-editorial-w680@2x.webp"
+        },
+        "objeto": {
+          "cume": {
+            "x": 340,
+            "y": 100.7
+          },
+          "secundario": {
+            "x": 180.1,
+            "y": 142.7
+          },
+          "arcoTopo": 55,
+          "arcoRaio": 190.4,
+          "desenho": {
+            "x": 14.3,
+            "y": 52,
+            "w": 584.5,
+            "h": 299.4,
+            "margemSuperior": 52,
+            "margemInferior": 56.6
+          },
+          "simplificado": false
+        },
+        "bytes1x": 65702,
+        "sha2561x": "89c4bab12bb18f2e7052858a158b30f1e44022d7b214f936b94940b67286c8a7",
+        "bytes2x": 158520,
+        "sha2562x": "fb76b69ed3f8370e9868b4c6dd3e2e810c7954fa6efb149f99ef6bcb49fc5746"
+      },
+      {
+        "areaCss": {
+          "w": 700,
+          "h": 420
+        },
+        "arquivos": {
+          "1x": "assets/arte-escultura-editorial-w700@1x.webp",
+          "2x": "assets/arte-escultura-editorial-w700@2x.webp"
+        },
+        "objeto": {
+          "cume": {
+            "x": 350,
+            "y": 103.7
+          },
+          "secundario": {
+            "x": 185.4,
+            "y": 146.9
+          },
+          "arcoTopo": 56.6,
+          "arcoRaio": 196,
+          "desenho": {
+            "x": 14.7,
+            "y": 53.6,
+            "w": 601.7,
+            "h": 308.1,
+            "margemSuperior": 53.6,
+            "margemInferior": 58.3
+          },
+          "simplificado": false
+        },
+        "bytes1x": 68722,
+        "sha2561x": "3114bb80004e0f096852898bac429a9c3a0f5cf92a6c61f88c38667525fe27f4",
+        "bytes2x": 163698,
+        "sha2562x": "c38922e5fff2f955e6ceddb35deb5b1304789a5eafdba57746d47c237d825c0d"
+      },
+      {
+        "areaCss": {
+          "w": 720,
+          "h": 432
+        },
+        "arquivos": {
+          "1x": "assets/arte-escultura-editorial-w720@1x.webp",
+          "2x": "assets/arte-escultura-editorial-w720@2x.webp"
+        },
+        "objeto": {
+          "cume": {
+            "x": 360,
+            "y": 106.6
+          },
+          "secundario": {
+            "x": 190.7,
+            "y": 151.1
+          },
+          "arcoTopo": 58.2,
+          "arcoRaio": 201.6,
+          "desenho": {
+            "x": 15.2,
+            "y": 55.2,
+            "w": 618.9,
+            "h": 316.8,
+            "margemSuperior": 55.2,
+            "margemInferior": 60
+          },
+          "simplificado": false
+        },
+        "bytes1x": 71444,
+        "sha2561x": "b371e34fa14e4cfd04336164f721b1e429a0e08103d63198540befabf36789a6",
+        "bytes2x": 169406,
+        "sha2562x": "2bd5050148f3ba3e6f21f34f0f1716386d8ac48ffc6d417ade019ae7b1c8a4a6"
+      },
+      {
+        "areaCss": {
+          "w": 736,
+          "h": 442
+        },
+        "arquivos": {
+          "1x": "assets/arte-escultura-editorial-w736@1x.webp",
+          "2x": "assets/arte-escultura-editorial-w736@2x.webp"
+        },
+        "objeto": {
+          "cume": {
+            "x": 368,
+            "y": 109.2
+          },
+          "secundario": {
+            "x": 194.9,
+            "y": 154.6
+          },
+          "arcoTopo": 59.7,
+          "arcoRaio": 206.1,
+          "desenho": {
+            "x": 15.5,
+            "y": 56.7,
+            "w": 632.6,
+            "h": 323.7,
+            "margemSuperior": 56.7,
+            "margemInferior": 61.5
+          },
+          "simplificado": false
+        },
+        "bytes1x": 73722,
+        "sha2561x": "f0d373dca6e7593ceaff28351a46305375dfbf02c80aeaae7efc3268ee559716",
+        "bytes2x": 173720,
+        "sha2562x": "ecd92c4a6e851fdee1f0b793f0ef6b54bd3a04c48975ad072b199310d1037661"
+      },
+      {
+        "areaCss": {
+          "w": 760,
+          "h": 456
+        },
+        "arquivos": {
+          "1x": "assets/arte-escultura-editorial-w760@1x.webp",
+          "2x": "assets/arte-escultura-editorial-w760@2x.webp"
+        },
+        "objeto": {
+          "cume": {
+            "x": 380,
+            "y": 112.6
+          },
+          "secundario": {
+            "x": 201.2,
+            "y": 159.5
+          },
+          "arcoTopo": 61.5,
+          "arcoRaio": 212.8,
+          "desenho": {
+            "x": 16,
+            "y": 58.5,
+            "w": 653.3,
+            "h": 334.2,
+            "margemSuperior": 58.5,
+            "margemInferior": 63.4
+          },
+          "simplificado": false
+        },
+        "bytes1x": 77126,
+        "sha2561x": "1621884e38e774c21c9f3180872981e769850bf3dbe8192aadbbd7448f2bd118",
+        "bytes2x": 179758,
+        "sha2562x": "8ea0622305fa707bda78d20bb1f48083744c5e28e34302b95569eb28d8ba44c5"
+      }
+    ]
+  },
+  "faixasPorLarguraDoSlot": [
+    {
+      "de": 600,
+      "ate": 616,
+      "variante": 600
+    },
+    {
+      "de": 617,
+      "ate": 636,
+      "variante": 620
+    },
+    {
+      "de": 637,
+      "ate": 656,
+      "variante": 640
+    },
+    {
+      "de": 657,
+      "ate": 676,
+      "variante": 660
+    },
+    {
+      "de": 677,
+      "ate": 696,
+      "variante": 680
+    },
+    {
+      "de": 697,
+      "ate": 716,
+      "variante": 700
+    },
+    {
+      "de": 717,
+      "ate": 733,
+      "variante": 720
+    },
+    {
+      "de": 734,
+      "ate": 755,
+      "variante": 736
+    },
+    {
+      "de": 756,
+      "ate": 9999,
+      "variante": 760
+    }
+  ],
+  "pictureEditorialExemplo": [
+    {
+      "w": 600,
+      "vw0": 1200,
+      "vw1": 1215,
+      "media": "(min-width: 1200px) and (max-width: 1215.98px)",
+      "srcset": "assets/arte-escultura-editorial-w600@1x.webp 1x, assets/arte-escultura-editorial-w600@2x.webp 2x",
+      "slotEstimado": "609–617"
+    },
+    {
+      "w": 620,
+      "vw0": 1216,
+      "vw1": 1254,
+      "media": "(min-width: 1216px) and (max-width: 1254.98px)",
+      "srcset": "assets/arte-escultura-editorial-w620@1x.webp 1x, assets/arte-escultura-editorial-w620@2x.webp 2x",
+      "slotEstimado": "617–637"
+    },
+    {
+      "w": 640,
+      "vw0": 1255,
+      "vw1": 1294,
+      "media": "(min-width: 1255px) and (max-width: 1294.98px)",
+      "srcset": "assets/arte-escultura-editorial-w640@1x.webp 1x, assets/arte-escultura-editorial-w640@2x.webp 2x",
+      "slotEstimado": "637–657"
+    },
+    {
+      "w": 660,
+      "vw0": 1295,
+      "vw1": 1333,
+      "media": "(min-width: 1295px) and (max-width: 1333.98px)",
+      "srcset": "assets/arte-escultura-editorial-w660@1x.webp 1x, assets/arte-escultura-editorial-w660@2x.webp 2x",
+      "slotEstimado": "657–676"
+    },
+    {
+      "w": 680,
+      "vw0": 1334,
+      "vw1": 1373,
+      "media": "(min-width: 1334px) and (max-width: 1373.98px)",
+      "srcset": "assets/arte-escultura-editorial-w680@1x.webp 1x, assets/arte-escultura-editorial-w680@2x.webp 2x",
+      "slotEstimado": "677–697"
+    },
+    {
+      "w": 700,
+      "vw0": 1374,
+      "vw1": 1413,
+      "media": "(min-width: 1374px) and (max-width: 1413.98px)",
+      "srcset": "assets/arte-escultura-editorial-w700@1x.webp 1x, assets/arte-escultura-editorial-w700@2x.webp 2x",
+      "slotEstimado": "697–717"
+    },
+    {
+      "w": 720,
+      "vw0": 1414,
+      "vw1": 1446,
+      "media": "(min-width: 1414px) and (max-width: 1446.98px)",
+      "srcset": "assets/arte-escultura-editorial-w720@1x.webp 1x, assets/arte-escultura-editorial-w720@2x.webp 2x",
+      "slotEstimado": "717–734"
+    },
+    {
+      "w": 736,
+      "vw0": 1447,
+      "vw1": 1700,
+      "media": "(min-width: 1447px)",
+      "srcset": "assets/arte-escultura-editorial-w736@1x.webp 1x, assets/arte-escultura-editorial-w736@2x.webp 2x",
+      "slotEstimado": "734–736"
+    }
+  ],
+  "nota": "Só ≥ 1200 px (duas colunas). Abaixo disso o Site continua com as famílias movel/desktop da 1.0.0 (composição \"topo\")."
+}

@@ -1,0 +1,125 @@
+{
+  "experimento": "experiment/brand-sinal-v1",
+  "pacote": {
+    "arquivo": "ARARAT_Sinal_Brand_System_v1.0.zip",
+    "sha256": "8c6caf542ca414dfb299148b43201fe70227247a83c001601c4213344370190d",
+    "pasta_local": "C:\\ARARAT-Website\\brand-system-sinal\\ARARAT_Sinal_Brand_System_v1.0 (123 arquivos, idênticos ao zip)"
+  },
+  "regra": "Cópias byte a byte; nenhum arquivo editado, convertido ou subconjuntado. Conferir com: node tests/sinal-integridade.mjs",
+  "status": "Brand system v1.0 — primeira versão; ainda não validado com radiologistas; busca de anterioridade no INPI pendente (00_LEIAME.md).",
+  "nao_usados": "Geist Pixel Square (opcional; não usado), mockups de 07_aplicacoes (referência visual, não evidência), fotos de 05_fotografia (ausentes no pacote).",
+  "arquivos": [
+    {
+      "caminho": "favicon/ararat-app-icon-180px.png",
+      "bytes": 4442,
+      "sha256": "56e6a82a015b74ad8f2fd5ca62414e483c95a72be6299c20bfeae9a5479eab9f",
+      "origem": "ARARAT_Sinal_Brand_System_v1.0/01_logo/png/ararat-app-icon-180px.png",
+      "uso": "apple-touch-icon"
+    },
+    {
+      "caminho": "favicon/ararat-app-icon-512px.png",
+      "bytes": 15096,
+      "sha256": "aae9ee3b5e91a6cb2cc2bc604be1bd4450d30eb384ee6119f0330bb5557f74eb",
+      "origem": "ARARAT_Sinal_Brand_System_v1.0/01_logo/png/ararat-app-icon-512px.png",
+      "uso": "ícone 512"
+    },
+    {
+      "caminho": "favicon/ararat-favicon-16.svg",
+      "bytes": 453,
+      "sha256": "e869bda120687da847d7c2e0b61dff069f6d52d5cb35d40d29de1aacf4b8984c",
+      "origem": "ARARAT_Sinal_Brand_System_v1.0/01_logo/favicon/ararat-favicon-16.svg",
+      "uso": "favicon 16"
+    },
+    {
+      "caminho": "favicon/ararat-favicon-32.svg",
+      "bytes": 454,
+      "sha256": "551a68f90c8ad39da60a44a40bc63681c0be5db4724c7314d889a49c177725aa",
+      "origem": "ARARAT_Sinal_Brand_System_v1.0/01_logo/favicon/ararat-favicon-32.svg",
+      "uso": "favicon 32"
+    },
+    {
+      "caminho": "favicon/favicon.ico",
+      "bytes": 1356,
+      "sha256": "e2787342f8b52bd47b1f1bad6aa5cd06d3a8238007e7077ff71deb79c601e658",
+      "origem": "ARARAT_Sinal_Brand_System_v1.0/01_logo/favicon/favicon.ico",
+      "uso": "favicon 16/32"
+    },
+    {
+      "caminho": "fontes/Geist-OFL.txt",
+      "bytes": 4368,
+      "sha256": "930853ee1daa68554d9e35c8a9175affb74f699fad9a5da6ee5ebe76379d9137",
+      "origem": "ARARAT_Sinal_Brand_System_v1.0/08_fontes/Geist-OFL.txt",
+      "uso": "licença OFL"
+    },
+    {
+      "caminho": "fontes/Geist-Variable.woff2",
+      "bytes": 69652,
+      "sha256": "a369fcf5628ea2aa4e1b9e2ec6a5b3624e365bda588e1f0f2f12b564f728fbb8",
+      "origem": "ARARAT_Sinal_Brand_System_v1.0/08_fontes/Geist-Variable.woff2",
+      "uso": "Geist 400/500/600"
+    },
+    {
+      "caminho": "fontes/GeistMono-Medium.woff2",
+      "bytes": 51500,
+      "sha256": "85b99e603f84a47dc8118b5af058ad8f387d7c507a00faeef1b5b60eb371e844",
+      "origem": "ARARAT_Sinal_Brand_System_v1.0/08_fontes/GeistMono-Medium.woff2",
+      "uso": "Geist Mono 500 (rótulos)"
+    },
+    {
+      "caminho": "fontes/GeistMono-Regular.woff2",
+      "bytes": 50356,
+      "sha256": "e4507fb4fb5f832fbbb6c06aea4206274ba3083007f23fa8cbc0e87a10acf95b",
+      "origem": "ARARAT_Sinal_Brand_System_v1.0/08_fontes/GeistMono-Regular.woff2",
+      "uso": "Geist Mono 400"
+    },
+    {
+      "caminho": "grafismos/histograma-claro.svg",
+      "bytes": 1842,
+      "sha256": "4c11a9d874f9488224a76addd2a28732e9a4f3f6799cddfcd2792b08a4a92ffb",
+      "origem": "ARARAT_Sinal_Brand_System_v1.0/04_grafismos/histograma-claro.svg",
+      "uso": "Ciência · grafismo conceitual rotulado"
+    },
+    {
+      "caminho": "grafismos/voxels-escuro.svg",
+      "bytes": 37923,
+      "sha256": "b3c172e65d2e587220101dad3af77e291ee1a927b25dcaef87c1496d38b02c68",
+      "origem": "ARARAT_Sinal_Brand_System_v1.0/04_grafismos/voxels-escuro.svg",
+      "uso": "Contato · faixa decorativa"
+    },
+    {
+      "caminho": "icones/ararat-icone-extracao-radiomica.svg",
+      "bytes": 353,
+      "sha256": "65c7bd58db9f8e6704d57569f2fcc4d75a7e193b10c9963fc24160245f4ac3b8",
+      "origem": "ARARAT_Sinal_Brand_System_v1.0/03_icones/ararat-icone-extracao-radiomica.svg",
+      "uso": "Ciência · classificação publicada"
+    },
+    {
+      "caminho": "icones/ararat-icone-revisao-clinica.svg",
+      "bytes": 337,
+      "sha256": "5fc768cf84ea7107cf914b2ea6d6451e205eba0baff2fbef1f7580b372146204",
+      "origem": "ARARAT_Sinal_Brand_System_v1.0/03_icones/ararat-icone-revisao-clinica.svg",
+      "uso": "Ciência · limites e revisão humana"
+    },
+    {
+      "caminho": "icones/ararat-icone-segmentacao.svg",
+      "bytes": 462,
+      "sha256": "df3839ab7eae446835e91beb582f02e018a41b3f3fa60c9a1741a964f569951c",
+      "origem": "ARARAT_Sinal_Brand_System_v1.0/03_icones/ararat-icone-segmentacao.svg",
+      "uso": "Ciência · segmentação"
+    },
+    {
+      "caminho": "logo/ararat-lockup-horizontal-compacto-escuro.svg",
+      "bytes": 2876,
+      "sha256": "f9d613908b05f668d69efd797ca7d941403f35d5d5b9b64d378dce449e4f2f9c",
+      "origem": "ARARAT_Sinal_Brand_System_v1.0/01_logo/lockup/ararat-lockup-horizontal-compacto-escuro.svg",
+      "uso": "cabeçalho (< 40 px)"
+    },
+    {
+      "caminho": "logo/ararat-lockup-horizontal-escuro.svg",
+      "bytes": 2897,
+      "sha256": "7873fdf31415661060f1565c789d50189dd228295cdb17a74801a87279526863",
+      "origem": "ARARAT_Sinal_Brand_System_v1.0/01_logo/lockup/ararat-lockup-horizontal-escuro.svg",
+      "uso": "rodapé (≥ 40 px)"
+    }
+  ]
+}

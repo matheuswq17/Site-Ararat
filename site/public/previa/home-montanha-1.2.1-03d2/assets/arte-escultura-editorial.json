@@ -1,0 +1,47 @@
+{
+  "versao": "1.1.0-03d2",
+  "pose": "assentada (abertura concluída, passagem 0), sem luz ambiente — idêntica ao 1º quadro do módulo nessa área com composicao { alinhar: \"centro\" }",
+  "areaCss": {
+    "w": 736,
+    "h": 442,
+    "aspect": "5:3 (slot da 1ª dobra editorial ≥ 1200 px, medido pelo Construction)",
+    "ratio": 1.665
+  },
+  "pixels": {
+    "w": 1472,
+    "h": 884,
+    "scale": 2
+  },
+  "composicao": {
+    "alinhar": "centro"
+  },
+  "background": {
+    "navy": "#111111 (arquivo sem sufixo)",
+    "transparente": "alfa; usar sobre o fundo do hero"
+  },
+  "objeto": {
+    "cume": {
+      "x": 368,
+      "y": 109.2
+    },
+    "secundario": {
+      "x": 194.9,
+      "y": 154.6
+    },
+    "arco": {
+      "cx": 368,
+      "cy": 265.8,
+      "r": 206.1,
+      "cor": "#919191",
+      "largura": 2
+    },
+    "desenho": {
+      "x": 15.490791320800781,
+      "y": 56.7424,
+      "w": 632.6281051635742,
+      "h": 323.7250743652344
+    }
+  },
+  "regra": "arcR = min(0,28·w, 0,5·h, 340) (igual à 1.0.0); alinhar \"centro\": topo do arco = y + max(pad, (h − 1,565·arcR)/2).",
+  "representacao": "Paisagem decorativa (montanha B em cinzas) — não é a logo, não é geografia exata nem anatomia."
+}

@@ -1,6 +1,7 @@
 /**
- * /previa/refinada — rodada integral (cabeçalho MODEL ↔ PROSTATE, correções funcionais, ritmo
- * editorial, convite à rolagem). Complementa tests/previa.mjs, navegacao.mjs e
+ * /previa/refinada — rodada integral (cabeçalho, correções funcionais, ritmo editorial, convite à
+ * rolagem). Branch codex/brand-03d2-v1: cabeçalho e rodapé conferem as assinaturas oficiais do ARARAT
+ * 03D2 (o ciclo MODEL ↔ PROSTATE segue testado na main) e as cores esperadas são as do 03D2. Complementa tests/previa.mjs, navegacao.mjs e
  * fontes-carregamento.mjs (que continuam valendo para a rota).
  *   node tests/refinada.mjs          (servidor em :3000; ONLY=regex filtra)
  */
@@ -24,6 +25,14 @@ async function sharpDiff(a, b) {
   return n / (A.info.width * A.info.height);
 }
 const browser = await chromium.launch();
+// ARARAT Sinal (brand-sinal-v1, combinado com o Motion 0.5.0-sinal): a decisão "acende" por contraste —
+// gray-30 (#474747, como as demais frases) nas etapas 0–3 → gray-5 (#111111) na etapa 4 em diante, sempre a
+// 600; antes navy #0D1B2A → ouro #856514.
+// Fundo claro: gray-97 #F6F6F6 (antes #F5F7FA). A coreografia testada é a mesma.
+const COR_TEXTO_CLARO = "rgb(71, 71, 71)";
+const COR_DECISAO = "rgb(17, 17, 17)";
+const FUNDO_CLARO = "rgb(246, 246, 246)";
+
 async function open(vp = [1440, 900], o = {}) {
   const ctx = await browser.newContext({ viewport: { width: vp[0], height: vp[1] }, reducedMotion: o.reduced ? "reduce" : "no-preference", javaScriptEnabled: !o.noJs, hasTouch: !!o.touch });
   const page = await ctx.newPage();
@@ -34,63 +43,45 @@ async function open(vp = [1440, 900], o = {}) {
   await page.goto(BASE + ROUTE + (o.query ?? ""), { waitUntil: "networkidle" });
   return { ctx, page, errors };
 }
-// Registro de cada mudança da palavra (rAF), da caixa da marca e dos vizinhos no cabeçalho.
-const WORD_LOG = () => {
-  window.__w = [];
-  window.__boxes = new Set();
-  const t0 = performance.now();
-  const tick = () => {
-    const e = document.querySelector("header [data-word]");
-    if (e) {
-      const s = e.textContent;
-      const l = window.__w.at(-1);
-      if (!l || l[1] !== s) window.__w.push([Math.round(performance.now() - t0), s]);
-      // arranjo do cabeçalho depois das fontes da página (a troca de fonte da marca no 1º segundo não conta)
-      if (performance.now() - t0 > 1500) {
-      const vis = [...document.querySelectorAll("header a, header button")].filter((x) => x.getBoundingClientRect().width > 0);
-      window.__boxes.add(vis.map((x) => { const r = x.getBoundingClientRect(); return `${Math.round(r.left)},${Math.round(r.width)}`; }).join("|"));
-      }
-    }
-    requestAnimationFrame(tick);
-  };
-  requestAnimationFrame(tick);
-};
-const words = (page) => page.evaluate(() => window.__w);
 
-// ── 1. Cabeçalho MODEL ↔ PROSTATE ───────────────────────────────────────────────────────────
-await test("cabeçalho: MODEL no HTML; após a abertura, ~5 s parada e troca de 500–650 ms; nada ao redor se desloca; sem palavra transitória real", async () => {
-  const { ctx, page, errors } = await open([1440, 900], { intro: true, init: WORD_LOG });
+// ── 1. Cabeçalho — alternativa codex/brand-03d2-v1: assinatura HORIZONTAL oficial do ARARAT 03D2 ─────
+// O ciclo MODEL ↔ PROSTATE não existe nesta identidade; os testes do ciclo ficam na main. Aqui: o SVG
+// oficial (animável = mesmos caminhos da horizontal) no HTML, sem palavra animada, nome acessível estável,
+// largura ≥ 160 px e área de proteção (1 a) até o próximo controle em 320–1440 px.
+const ASSINATURA = "/marca-03d2/v1.0/07_motion/ararat-assinatura-animavel.svg";
+const ASSINATURA_RODAPE = "/marca-03d2/v1.0/01_logo/assinatura-horizontal/ararat-horizontal-negativo.svg";
+await test("cabeçalho: assinatura oficial do 03D2 (SVG no HTML, idêntico ao arquivo); sem ciclo MODEL/PROSTATE nem wordmark digitado, também após 12 s, com pausa, reduzido e sem JS", async () => {
+  const svg = (await (await fetch(BASE + ASSINATURA)).text()).trim();
   const html = await (await fetch(BASE + ROUTE)).text();
-  assert(/data-word="MODEL"[^>]*>MODEL</.test(html), "HTML sem MODEL inicial");
-  await page.waitForTimeout(19500);
-  const w = await words(page);
-  const settled = w.filter((x) => x[1] === "MODEL" || x[1] === "PROSTATE");
-  const swaps = [];
-  for (let i = 1; i < settled.length; i++) if (settled[i][1] !== settled[i - 1][1]) {
-    const start = w.find((x) => x[0] > settled[i - 1][0])[0];
-    swaps.push({ to: settled[i][1], start, dur: settled[i][0] - start, hold: start - settled[i - 1][0] });
-  }
-  notes.push(`    · trocas: ${swaps.map((s) => `${s.to} em ${s.start} ms (parada ${s.hold} ms, troca ${s.dur} ms)`).join(" · ")}`);
-  assert(swaps.length >= 2, `trocas: ${swaps.length}`);
-  assert(swaps[0].start >= 5000, "1ª troca antes de ~5 s");
-  for (const s of swaps) {
-    assert(s.dur >= 450 && s.dur <= 700, `troca de ${s.dur} ms`);
-    if (s !== swaps[0]) assert(s.hold >= 4800 && s.hold <= 5600, `parada de ${s.hold} ms`);
-  }
-  const transients = w.map((x) => x[1]).filter((s) => s !== "MODEL" && s !== "PROSTATE");
-  assert(!transients.some((s) => /^(PROSTATA|MODELO)$/.test(s) || s.startsWith("ARARAT")), "palavra real transitória");
-  const boxes = await page.evaluate(() => window.__boxes.size);
-  assert(boxes === 1, `posições de links/botões do cabeçalho mudaram (${boxes} arranjos)`);
+  assert(html.match(/<header[\s\S]*?<\/header>/)[0].includes(svg), "HTML sem o SVG oficial idêntico no cabeçalho");
+  assert(!/data-word=/.test(html), "ciclo no HTML");
+  const { ctx, page, errors } = await open([1440, 900], { intro: true });
+  const sem = () => page.evaluate(() => ({ ciclo: !!document.querySelector("header [data-word]"), texto: document.querySelector("header a[aria-label]").innerText.trim(), tipo: document.querySelector("header a[aria-label] [data-assinatura]")?.dataset.assinatura, caminhos: [...document.querySelectorAll("header a[aria-label] svg path")].flatMap((e) => e.getAttribute("d").split(/(?=M)/).filter((x) => x.trim())).length }));
+  const r0 = await sem();
+  await page.waitForTimeout(12000);
+  const r1 = await sem();
+  assert(!r0.ciclo && !r1.ciclo && r0.texto === "" && r1.texto === "" && r1.tipo === "animavel" && r1.caminhos === 14, "cabeçalho: " + JSON.stringify({ r0, r1 }));
   assert(!errors.length, errors[0]);
   await ctx.close();
+  for (const o of [{ reduced: true }, { noJs: true }]) {
+    const x = await open([1280, 720], o);
+    const r = await x.page.evaluate(() => ({ tipo: document.querySelector("header a[aria-label] [data-assinatura]")?.dataset.assinatura, caminhos: [...document.querySelectorAll("header a[aria-label] svg path")].flatMap((e) => e.getAttribute("d").split(/(?=M)/).filter((x) => x.trim())).length, ciclo: !!document.querySelector("header [data-word]") }));
+    assert(r.tipo === "animavel" && r.caminhos === 14 && !r.ciclo, `${JSON.stringify(o)}: ${JSON.stringify(r)}`);
+    await x.ctx.close();
+  }
+  const { createHash } = await import("node:crypto");
+  const manif = JSON.parse(await (await fetch(BASE + "/marca-03d2/v1.0/MANIFESTO.json")).text()).arquivos;
+  for (const arq of [ASSINATURA, ASSINATURA_RODAPE]) {
+    const h = createHash("sha256").update(Buffer.from(await (await fetch(BASE + arq)).arrayBuffer())).digest("hex");
+    assert(h === manif.find((a) => arq.endsWith(a.caminho)).sha256, "SVG servido difere do oficial: " + arq);
+  }
 });
 
-await test("cabeçalho: nome acessível estável ('ARARAT MODEL — início'), palavra aria-hidden, sem aria-live; nome oficial, título e rodapé sem PROSTATE", async () => {
+await test("cabeçalho: nome acessível estável ('ARARAT MODEL — início'), logo decorativo (aria-hidden), sem aria-live; nome oficial, título e rodapé sem PROSTATE", async () => {
   const { ctx, page } = await open();
   const a = await page.locator("header a[aria-label]").first().getAttribute("aria-label");
   assert(a === "ARARAT MODEL — início", a);
-  const hid = await page.evaluate(() => document.querySelector("header [data-word]").closest("[aria-hidden=true]") !== null);
-  assert(hid, "palavra não está em aria-hidden");
+  assert((await page.locator("header a[aria-label] [data-assinatura]").getAttribute("aria-hidden")) === "true", "logo sem aria-hidden");
   assert(!(await page.locator("header [aria-live]").count()), "aria-live no cabeçalho");
   assert(!/PROSTATE/i.test(await page.title()), "título com PROSTATE");
   const foot = await page.locator("footer").innerText();
@@ -100,76 +91,33 @@ await test("cabeçalho: nome acessível estável ('ARARAT MODEL — início'), p
   await ctx.close();
 });
 
-await test("cabeçalho: limites em 320–1440 px — marca sem invadir menu/links nem cortar, sem rolagem lateral", async () => {
+await test("cabeçalho: limites em 320–1440 px — assinatura horizontal ≥ 160 px sem deformar, com 1 a de proteção até menu/links/idioma, sem cortar, sem rolagem lateral", async () => {
   const rows = [];
   for (const w of [320, 340, 360, 390, 768, 1081, 1100, 1180, 1280, 1440]) {
     const { ctx, page } = await open([w, 800]);
     const m = await page.evaluate(() => {
       const vis = (s) => [...document.querySelectorAll(s)].find((e) => e.getBoundingClientRect().width > 0);
       const r = (e) => e && e.getBoundingClientRect();
-      const cycle = document.querySelector("header [data-word]").parentElement.getBoundingClientRect();
-      const icon = document.querySelector("header a[aria-label] img").getBoundingClientRect();
-      const next = r(vis("header nav ul")) ?? r(vis("header button[aria-expanded]"));
-      // reserva = largura de PROSTATE (todas as palavras na mesma célula)
-      return { left: Math.round(icon.left), right: Math.round(cycle.right), next: Math.round(next.left), sw: document.documentElement.scrollWidth, vw: innerWidth };
+      const logo = document.querySelector("header a[aria-label] [data-assinatura] svg").getBoundingClientRect();
+      const next = r(vis("header nav ul")) ?? r(vis("header button[aria-expanded]")) ?? r(vis("header .language-switch"));
+      const lang = r(vis("header .language-switch"));
+      const prox = Math.min(next.left, lang ? lang.left : Infinity);
+      return { left: Math.round(logo.left), right: Math.round(logo.right), w: logo.width, h: logo.height, ratio: logo.width / logo.height, next: Math.round(prox), sw: document.documentElement.scrollWidth, vw: innerWidth };
     });
-    rows.push(`${w}: marca ${m.left}–${m.right}, próximo ${m.next}`);
-    assert(m.left >= 0 && m.right < m.next, `${w}px: marca (até ${m.right}) encosta em ${m.next}`);
+    const a = m.h * (118 / 122) * (100 / 118); // altura das maiúsculas
+    rows.push(`${w}: assinatura ${m.left}–${m.right} (${Math.round(m.w)} px), próximo ${m.next}`);
+    assert(m.left >= 0 && m.right + a <= m.next + 0.5, `${w}px: assinatura (até ${m.right}) a menos de 1 a (${a.toFixed(1)} px) de ${m.next}`);
+    assert(m.w >= 160 && Math.abs(m.ratio - 1025.6 / 122) < 0.05, `${w}px: assinatura ${m.w}px, proporção ${m.ratio}`);
     assert(m.sw <= m.vw, `${w}px: rolagem lateral`);
     await ctx.close();
   }
   notes.push("    · " + rows.join(" · "));
 });
 
-await test("cabeçalho: pausa assenta a palavra e para o ciclo; retomar não acelera trocas atrasadas", async () => {
-  const { ctx, page } = await open([1280, 720], { init: WORD_LOG });
-  await page.waitForFunction(() => window.__w.some((x) => x[1] === "PROSTATE"), null, { timeout: 9000 });
-  await page.waitForTimeout(200);
-  // pausa no meio da troca seguinte
-  await page.waitForFunction(() => { const e = document.querySelector("header [data-word]"); return e.textContent !== "PROSTATE" && e.textContent !== "MODEL"; }, null, { timeout: 9000, polling: 10 });
-  await page.locator("header button[aria-pressed]").first().click();
-  await page.waitForTimeout(100);
-  const at = await page.evaluate(() => document.querySelector("header [data-word]").textContent);
-  assert(at === "MODEL" || at === "PROSTATE", `pausa não assentou: ${at}`);
-  const n0 = (await words(page)).length;
-  await page.waitForTimeout(12000);
-  assert((await words(page)).length === n0, "palavra mudou com a pausa");
-  await page.locator("header button[aria-pressed]").first().click();
-  const t = Date.now();
-  await page.waitForFunction((n) => window.__w.length > n, n0, { timeout: 9000 });
-  const dt = Date.now() - t;
-  notes.push(`    · pausa: assentou em ${at}; após retomar, 1ª mudança em ${dt} ms`);
-  assert(dt > 4500, `troca imediata ao retomar (${dt} ms)`);
-  await ctx.close();
-});
-
-await test("cabeçalho: aba oculta interrompe; volta sem rajada; movimento reduzido e sem JS = MODEL estático", async () => {
-  const { ctx, page } = await open([1280, 720], { init: WORD_LOG });
-  await page.waitForTimeout(1000);
-  await page.evaluate(() => { Object.defineProperty(document, "hidden", { configurable: true, get: () => true }); document.dispatchEvent(new Event("visibilitychange")); });
-  const n0 = (await words(page)).length;
-  await page.waitForTimeout(9000);
-  assert((await words(page)).length === n0, "mudou com a aba oculta");
-  await page.evaluate(() => { Object.defineProperty(document, "hidden", { configurable: true, get: () => false }); document.dispatchEvent(new Event("visibilitychange")); });
-  await page.waitForTimeout(4200);
-  assert((await words(page)).length === n0, "troca logo ao voltar (rajada)");
-  await page.waitForTimeout(2500);
-  assert((await words(page)).length > n0, "ciclo não retomou");
-  await ctx.close();
-  const r = await open([1280, 720], { reduced: true, init: WORD_LOG });
-  await r.page.waitForTimeout(12000);
-  const wr = await words(r.page);
-  assert(wr.length === 1 && wr[0][1] === "MODEL", `reduzido: ${JSON.stringify(wr)}`);
-  await r.ctx.close();
-  const nj = await open([1280, 720], { noJs: true });
-  assert((await nj.page.locator("header [data-word]").textContent()) === "MODEL", "sem JS");
-  await nj.ctx.close();
-});
-
 // ── 2. Correções funcionais ─────────────────────────────────────────────────────────────────
 await test("Explicabilidade: leitura, ordem e barras coerentes nas três seleções e alinhadas à Jornada (Textura > Intensidade > Forma)", async () => {
   // Referência: contribuições da cena da Jornada no pacote em uso (forma, textura, intensidade).
-  const pkg = (await (await fetch(BASE + ROUTE)).text()).match(/\/previa\/(home-montanha-[\d.]+)\//)[1];
+  const pkg = (await (await fetch(BASE + ROUTE)).text()).match(/\/previa\/(home-montanha-[\w.-]+)\//)[1];
   const js = await (await fetch(`${BASE}/previa/${pkg}/web/journey.js`)).text();
   const contrib = JSON.parse(js.match(/const CONTRIB = (\[[^\]]+\])/)[1]);
   const keys = ["forma", "textura", "intensidade"];
@@ -347,7 +295,7 @@ await test("Contato: dois públicos, nenhum link de volta a seções nem formul�
   await ctx.close();
 });
 
-await test("Rodapé: símbolo oficial + nome + tagline em texto legível; um só aviso permanente", async () => {
+await test("Rodapé: assinatura horizontal oficial do 03D2 + tagline em texto legível; um só aviso permanente", async () => {
   const { ctx, page } = await open([1440, 900], { reduced: true });
   const m = await page.evaluate(() => {
     const f = document.querySelector("footer");
@@ -355,7 +303,8 @@ await test("Rodapé: símbolo oficial + nome + tagline em texto legível; um só
     return { tagFs: tag && parseFloat(getComputedStyle(tag).fontSize), imgs: [...f.querySelectorAll("img")].map((i) => i.getAttribute("src")), ps: [...f.querySelectorAll("p")].length };
   });
   assert(m.tagFs >= 12, "tagline ilegível");
-  assert(m.imgs.length === 1 && /icone/.test(m.imgs[0]), "logo: " + m.imgs.join(","));
+  // codex/brand-03d2-v1: assinatura horizontal negativa oficial (antes: lockup do Sinal / ícone PNG + nome tipografado)
+  assert(m.imgs.length === 1 && m.imgs[0] === ASSINATURA_RODAPE, "logo: " + m.imgs.join(","));
   assert(m.ps === 2, `parágrafos no rodapé: ${m.ps}`);
   await ctx.close();
 });
@@ -406,38 +355,97 @@ await test("convite 'Role para explorar': na 1ª tela, fora dos botões e do tex
   notes.push("    · " + rows.join(" · "));
 });
 
-await test("montanha (pacote da refinada): luz ambiente em repouso; pausa geral, aba oculta e passagem apagam; uma só fonte do arco", async () => {
-  const { ctx, page, errors } = await open([1280, 720]);
+// montanha 1.2.0-03d2 (contrato AMBIENTE-1A-DOBRA-MOTION.md §4–5; pedido do proprietário em 09/10/2026): a luz
+// ambiente VOLTA, só na 1ª dobra (p = 0), depois da revelação, e o módulo para o laço fora disso. Os dois testes abaixo
+// substituem os do contrato 1.1.0 ("sem luz ambiente em repouso" / "abertura sem ligar luz ambiente"), com o mesmo
+// rigor: além do atributo do módulo, contam os quadros pedidos PELO MÓDULO (rAF por origem na pilha da chamada) e
+// comparam pixels da arte.
+const RAF_POR_ORIGEM = () => {
+  const o = window.requestAnimationFrame.bind(window);
+  window.__rafMontanha = 0;
+  window.requestAnimationFrame = (f) => { if (/home-sculpture\.js/.test(new Error().stack || "")) window.__rafMontanha++; return o(f); };
+};
+async function estadoMontanha(page, ms = 1000) {
+  const a = await page.evaluate(() => window.__rafMontanha);
+  await page.waitForTimeout(ms);
+  return page.evaluate((a) => {
+    const c = document.querySelector("[data-opening=sticky] canvas");
+    return { amb: c?.dataset.ambient ?? "ausente", frame: c?.dataset.ambientFrame ?? "ausente", config: c?.dataset.ambientConfig ?? "ausente", intro: c?.dataset.intro ?? "ausente",
+      raf: window.__rafMontanha - a, p: parseFloat(document.querySelector("[data-opening=root]").style.getPropertyValue("--opening-p")) || 0 };
+  }, a);
+}
+await test("montanha 1.2.0-03d2: luz ambiente só na 1ª dobra parada; sem redesenho na pausa, aba oculta, rolagem, demais etapas e fora da tela; retomada e retorno ao topo sem repetir a abertura; uma só fonte do arco", async () => {
+  const { ctx, page, errors } = await open([1280, 720], { init: RAF_POR_ORIGEM });
   await page.waitForFunction(() => document.querySelector("[data-opening=root]")?.dataset.sculpture === "canvas", null, { timeout: 9000 });
-  const amb = () => page.evaluate(() => document.querySelector("[data-opening=sticky] canvas")?.dataset.ambient);
-  const seen = new Set();
-  for (let i = 0; i < 40; i++) { seen.add(await amb()); await page.waitForTimeout(150); }
-  assert(seen.has("light") || seen.has("on"), `luz ambiente não rodou: ${[...seen]}`);
-  // pausa geral (botão do cabeçalho)
+  await page.waitForFunction(() => document.querySelector("[data-opening=sticky] canvas")?.dataset.ambient === "light", null, { timeout: 6000 });
+  const linhas = [];
+  const parado = await estadoMontanha(page);
+  linhas.push(`1ª dobra ${parado.amb}/${parado.frame} ${parado.raf} rAF/s`);
+  assert(parado.config === "enabled" && parado.amb === "light" && parado.frame === "light" && parado.p === 0, `1ª dobra: ${JSON.stringify(parado)}`);
+  assert(parado.raf >= 15, `1ª dobra sem laço do módulo: ${parado.raf} rAF/s`);
+  // A luz anda: dois quadros da arte com 1,5 s de intervalo diferem.
+  const box = await page.locator("[data-opening=slot]").boundingBox();
+  const clip = { x: Math.max(0, box.x), y: Math.max(0, box.y), width: Math.min(box.width, 1280 - Math.max(0, box.x)), height: Math.min(box.height, 720 - Math.max(0, box.y)) };
+  const q1 = await page.screenshot({ clip });
+  await page.waitForTimeout(1500);
+  assert(Buffer.compare(q1, await page.screenshot({ clip })) !== 0, "a luz ambiente não se move na 1ª dobra");
+  // Pausa geral: sem luz, sem laço, quadro parado; retomada: a luz volta.
   await page.locator("header button[aria-pressed]").first().click();
   await page.waitForTimeout(400);
-  const paused = await amb();
+  const pausa = await estadoMontanha(page);
+  const p1 = await page.screenshot({ clip });
+  await page.waitForTimeout(1200);
+  const pausaParada = Buffer.compare(p1, await page.screenshot({ clip })) === 0;
+  linhas.push(`pausa ${pausa.amb}/${pausa.frame} ${pausa.raf} rAF/s`);
+  assert(pausa.amb === "off" && pausa.frame === "none" && pausa.raf === 0 && pausaParada, `pausa: ${JSON.stringify({ ...pausa, pausaParada })}`);
   await page.locator("header button[aria-pressed]").first().click();
-  // aba oculta
+  await page.waitForFunction(() => document.querySelector("[data-opening=sticky] canvas")?.dataset.ambient === "light", null, { timeout: 3000 });
+  linhas.push("retomada light");
+  // Aba oculta: sem laço.
   await page.evaluate(() => { Object.defineProperty(document, "hidden", { configurable: true, get: () => true }); document.dispatchEvent(new Event("visibilitychange")); });
-  await page.waitForTimeout(400);
-  const hidden = await amb();
+  await page.waitForTimeout(300);
+  const oculta = await estadoMontanha(page);
+  linhas.push(`aba oculta ${oculta.amb} ${oculta.raf} rAF/s`);
+  assert(oculta.amb !== "light" && oculta.raf === 0, `aba oculta: ${JSON.stringify(oculta)}`);
   await page.evaluate(() => { Object.defineProperty(document, "hidden", { configurable: true, get: () => false }); document.dispatchEvent(new Event("visibilitychange")); });
-  // passagem: desde a 0.7.0 o ambiente atravessa a passagem e só some depois de pEnd = 0,56 (a rolagem
-  // é a única autoridade). Aqui, p além da entrega (≈ 0,65 em 1280×720) → apagado.
-  await page.evaluate(() => scrollTo({ top: 350, behavior: "instant" }));
-  await page.waitForTimeout(400);
-  const passing = await page.evaluate(() => ({ a: document.querySelector("[data-opening=sticky] canvas")?.dataset.ambient, p: parseFloat(document.querySelector("[data-opening=root]").style.getPropertyValue("--opening-p")) }));
+  await page.waitForFunction(() => document.querySelector("[data-opening=sticky] canvas")?.dataset.ambient === "light", null, { timeout: 3000 });
+  // Entrada da rolagem (faixa de saída, p < 0,04), passagem, Jornada e Plataforma (arte fora da tela): sem laço do módulo.
+  const etapas = [];
+  for (const [nome, alvo] of [["p≈0,02", "small"], ["passagem", 350], ["Jornada", "jornada"], ["Plataforma", "plataforma"]]) {
+    await page.evaluate((alvo) => {
+      if (alvo === "small") scrollTo({ top: Math.round(innerHeight * 0.02 * 0.74), behavior: "instant" });
+      else if (typeof alvo === "number") scrollTo({ top: alvo, behavior: "instant" });
+      else document.getElementById(alvo).scrollIntoView({ behavior: "instant" });
+    }, alvo);
+    await page.waitForTimeout(1200); // a passagem e a ponte assentam
+    const e = await estadoMontanha(page);
+    etapas.push({ nome, ...e });
+    linhas.push(`${nome} (p ${e.p.toFixed(3)}) ${e.amb}/${e.frame} ${e.raf} rAF/s`);
+    assert(e.p > 0 && e.amb !== "light" && e.raf === 0, `${nome}: ${JSON.stringify(e)}`);
+  }
+  assert(etapas[0].p < 0.04 && etapas[1].p > 0.04, `posições de rolagem: ${etapas.map((e) => e.p).join(",")}`);
+  // Retorno ao topo: a luz volta sem repetir a abertura.
+  await page.evaluate(() => scrollTo({ top: 0, behavior: "instant" }));
+  await page.waitForFunction(() => document.querySelector("[data-opening=sticky] canvas")?.dataset.ambient === "light", null, { timeout: 3000 });
+  const volta = await estadoMontanha(page);
+  const abertura = await page.evaluate(() => !!document.getElementById("ararat-intro"));
+  linhas.push(`retorno ${volta.amb} ${volta.raf} rAF/s, intro ${volta.intro}`);
+  assert(volta.amb === "light" && volta.raf >= 15 && volta.intro === "done" && !abertura, `retorno: ${JSON.stringify({ ...volta, abertura })}`);
   const arcs = await page.evaluate(() => ({ canvases: document.querySelectorAll("[data-opening=sticky] canvas").length, siteArc: document.querySelectorAll("#inicio svg path[class*='arc'], [class*='orbit']").length }));
-  notes.push(`    · luz ambiente: ${[...seen].join("/")} em repouso · pausa → ${paused} · aba oculta → ${hidden} · passagem (p ${passing.p.toFixed(2)}) → ${passing.a}`);
-  assert(paused === "off" && hidden === "off" && passing.a === "off" && passing.p > 0.56, "ambiente não parou");
   assert(arcs.canvases === 1 && arcs.siteArc === 0, `arco: ${JSON.stringify(arcs)}`);
   assert(!errors.length, errors[0]);
   await ctx.close();
+  // Movimento reduzido: nenhum laço do módulo e nenhuma luz.
+  const r = await open([1280, 720], { reduced: true, init: RAF_POR_ORIGEM });
+  await r.page.waitForTimeout(1500);
+  const red = await estadoMontanha(r.page);
+  linhas.push(`reduzido ${red.amb} ${red.raf} rAF/s`);
+  assert(red.amb !== "light" && red.raf === 0, `reduzido: ${JSON.stringify(red)}`);
+  await r.ctx.close();
+  notes.push("    · 1.2.0-03d2: " + linhas.join(" · "));
 });
 
-await test("ambiente liga sozinho após a abertura (sem rolagem/mouse), dentro de 2 s do assentamento; resize mantém composição", async () => {
-  // 1ª visita (abertura toca). Assentamento = fim do estilo de abertura (#ararat-intro some, ≤ 1,4 s).
+await test("abertura 1.2.0-03d2: revelação uma vez (data-intro=done) e a luz ambiente só depois dela; resize mantém composição", async () => {
   const { ctx, page, errors } = await open([1440, 900], { intro: true, init: () => {
     window.__t = {};
     const t0 = performance.now();
@@ -446,28 +454,36 @@ await test("ambiente liga sozinho após a abertura (sem rolagem/mouse), dentro d
       if (document.getElementById("ararat-intro")) mark("introVista");
       else if (window.__t.introVista != null) mark("assentou");
       const c = document.querySelector("[data-opening=sticky] canvas");
-      if (c?.dataset.ambient && c.dataset.ambient !== "off") mark("ambiente");
-      if (c?.dataset.ambient === "light") mark("luz");
+      if (c?.dataset.intro === "done") mark("introDone");
+      if (c?.dataset.ambient === "light" && window.__t.introDone == null) mark("luzAntes");
+      if (c?.dataset.ambient === "light") mark("ambiente");
       requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
   } });
-  await page.waitForTimeout(6000);
+  await page.waitForTimeout(5000);
   const t = await page.evaluate(() => window.__t);
-  const settle = t.assentou ?? 1400;
-  const dt = (t.luz ?? Infinity) - settle;
-  notes.push(`    · abertura assentou em ${settle} ms; ambiente "on" em ${t.ambiente} ms; luz visível (data-ambient=light) em ${t.luz} ms → ${dt} ms após o assentamento (critério do plano 004: ≤ 2000 ms)`);
-  assert(t.ambiente != null && t.luz != null, "ambiente não ligou sozinho");
-  // resize durante o ambiente: segue ligado, sem rolagem lateral, slot remedido
+  notes.push(`    · abertura: estilo visto em ${t.introVista} ms, assentou em ${t.assentou} ms, data-intro=done em ${t.introDone} ms; luz ambiente ${t.ambiente == null ? "nunca ligou" : "ligou em " + t.ambiente + " ms"}`);
+  assert(t.introDone != null, "abertura não marcou data-intro=done");
+  assert(t.luzAntes == null, `luz ambiente antes do fim da abertura (${t.luzAntes} ms)`);
+  assert(t.ambiente != null && t.ambiente >= t.introDone, `luz ambiente não ligou depois da abertura: ${JSON.stringify(t)}`);
+  // Uma vez por sessão: recarregar na mesma aba não repete a revelação.
+  await page.reload({ waitUntil: "networkidle" });
+  const repetiu = await page.evaluate(() => !!document.getElementById("ararat-intro") || window.__araratIntroFim != null);
+  assert(!repetiu, "a revelação se repetiu na mesma sessão");
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.waitForTimeout(1500);
-  const r = await page.evaluate(() => ({ amb: document.querySelector("[data-opening=sticky] canvas")?.dataset.ambient, sw: document.documentElement.scrollWidth, vw: innerWidth, slotY: Math.round(document.querySelector("[data-opening=slot]").getBoundingClientRect().top) }));
-  assert(r.sw <= r.vw && r.amb && r.slotY === 518, `após resize: ${JSON.stringify(r)}`);
+  const r = await page.evaluate(() => ({ sw: document.documentElement.scrollWidth, vw: innerWidth, slotY: Math.round(document.querySelector("[data-opening=slot]").getBoundingClientRect().top) }));
+  const fresh = await browser.newContext({ viewport: { width: 1280, height: 720 } });
+  const fp = await fresh.newPage();
+  await fp.goto(BASE + ROUTE, { waitUntil: "networkidle" });
+  await fp.waitForTimeout(1500);
+  const slotRef = await fp.evaluate(() => Math.round(document.querySelector("[data-opening=slot]").getBoundingClientRect().top));
+  await fresh.close();
+  assert(r.sw <= r.vw && r.slotY === slotRef, `após resize: ${JSON.stringify({ ...r, slotRef })}`);
   assert(!errors.length, errors[0]);
-  assert(dt <= 2000, `luz só ${dt} ms após o assentamento`);
   await ctx.close();
 });
-
 
 // ---------------- rodada 6: time, FAQ, publicação, Para quem, avisos, contato, rodapé ----------------
 const ORDEM_TIME = ["Matheus Xavier Silva de Toledo", "Miguel", "Rodrigo Gobbo", "Luiz G. Hartmann", "Victor Arthur Ohannesian"];
@@ -534,6 +550,8 @@ async function openCom(vp, o = {}) {
   if (o.stub) await page.route("**" + STUB_URL, (r) => r.fulfill({ body: STUB, contentType: "text/javascript" }));
   if (o.routes) for (const [re, fn] of o.routes) await page.route(re, fn);
   await page.addInitScript(() => sessionStorage.setItem("ararat:intro", "1"));
+  // Diagnóstico (não usado na suíte): DESLOC_TIME=<px> desloca a seção Time em subpixel.
+  if (process.env.DESLOC_TIME) await page.addInitScript((d) => addEventListener("DOMContentLoaded", () => { const st = document.createElement("style"); st.textContent = `#time{position:relative;top:${d}px}`; document.head.append(st); }), process.env.DESLOC_TIME);
   await page.addInitScript(CONTA_QUADROS);
   if (o.stub) await page.addInitScript((u) => (window.__TIME_RETRATO_TESTE__ = { url: u }), STUB_URL);
   if (o.semModulo) await page.addInitScript(() => (window.__TIME_RETRATO_TESTE__ = { url: "/refinada/time-interativo-0.2.0/src/nao-existe.js" }));
@@ -541,7 +559,7 @@ async function openCom(vp, o = {}) {
   return { ctx, page, errors };
 }
 
-// ── MÓDULO REAL do Motion (public/refinada/time-interativo-0.2.0), direção de 07/10 ─────────
+// ── MÓDULO REAL do Motion (codex/brand-03d2-editorial-v1: public/refinada/time-interativo-0.6.0-03d2; antes 0.5.0-03d2, 0.4.0-sinal, 0.2.0) ─────
 // foto natural por padrão; troca: foto → pontos → reorganização → foto do escolhido; cursor inerte.
 const fasesAte = async (page, id, ms = 6000) => { const vistas = new Set(); const rotulos = new Set(); const t0 = Date.now(); while (Date.now() - t0 < ms) { const r = await page.evaluate(() => { const p = document.querySelector("#time [data-shown]"); return { f: p.dataset.fase, a: p.dataset.ativo, v: p.dataset.visivel ?? p.dataset.ativo, l: p.getAttribute("aria-label"), c: p.nextElementSibling?.querySelector("span")?.textContent }; }); vistas.add(r.f); rotulos.add(`${r.v}=${r.l}=${r.c}`); if (r.f === "recompondo" && r.v !== id) rotulos.add(`ERRO-recompondo-${r.v}=x=x`); if (r.a === id && /^(foto|foto-estatica|falha)$/.test(r.f)) return { t: Date.now() - t0, fases: [...vistas], rotulos: [...rotulos] }; await page.waitForTimeout(20); } return { t: -1, fases: [...vistas], rotulos: [...rotulos] }; };
 const NOMES = { matheus: "Matheus Xavier Silva de Toledo", miguel: "Miguel", rodrigo: "Rodrigo Gobbo", hartmann: "Luiz G. Hartmann", victor: "Victor Arthur Ohannesian" };
@@ -555,7 +573,7 @@ await test("Time [módulo real] abertura: foto natural de Matheus sem pontos; cu
     const t0 = await faseE(page, "foto");
     const f0 = await fimOk(page, "matheus");
     const look = await page.evaluate(() => { const t = document.getElementById("time"); return { bg: getComputedStyle(t).backgroundColor, prov: /aguarda o módulo/.test(t.textContent), botoes: t.querySelectorAll("button").length, pontosVistos: getComputedStyle(t.querySelector("canvas.rp-pontos")).visibility }; });
-    assert(t0 >= 0 && f0.ok && f0.fase === "foto" && look.botoes === 0 && !look.prov && look.pontosVistos === "hidden" && look.bg === "rgb(245, 247, 250)", "abertura: " + JSON.stringify({ t0, f0, look }));
+    assert(t0 >= 0 && f0.ok && f0.fase === "foto" && look.botoes === 0 && !look.prov && look.pontosVistos === "hidden" && look.bg === FUNDO_CLARO, "abertura: " + JSON.stringify({ t0, f0, look }));
     const b = await page.locator(PORTRAIT).boundingBox();
     const q0 = await quadros(page);
     await page.mouse.move(b.x + b.width / 2, b.y + b.height / 2, { steps: 4 }); await page.waitForTimeout(500);
@@ -622,7 +640,7 @@ await test("Time [módulo real] seleções rápidas terminam na última; enquadr
 await test("Time [módulo real] foto atrasada (retrato anterior e legenda dele ficam), recorte 404 → foto retangular da mesma pessoa, recorte+foto 404 → aviso coerente", async () => {
   const atraso = async (r) => { await new Promise((x) => setTimeout(x, 2500)); await r.continue(); };
   const nf = (r) => r.fulfill({ status: 404, body: "" });
-  const { ctx, page, errors } = await openCom([1440, 900], { routes: [[/time-interativo-0\.2\.0\/retratos\/hartmann-recorte/, atraso], [/time-interativo-0\.2\.0\/retratos\/miguel-recorte/, nf], [/time-interativo-0\.2\.0\/retratos\/victor-/, nf]] });
+  const { ctx, page, errors } = await openCom([1440, 900], { routes: [[/time-interativo-0\.6\.0-03d2\/retratos\/hartmann-recorte/, atraso], [/time-interativo-0\.6\.0-03d2\/retratos\/miguel-recorte/, nf], [/time-interativo-0\.6\.0-03d2\/retratos\/victor-/, nf]] });
   await irRetrato(page);
   await faseE(page, "foto");
   await page.locator("#time details[data-id=hartmann] > summary").click();
@@ -1010,7 +1028,7 @@ await test("Ciência fechamento [módulo real, versão padrão da paisagem]: mon
   const etapas = ida.map((x) => x.etapa).join(",");
   assert(ida.every((x) => x.motor === "modulo" && x.modo === "animado") && etapas === "1,2,3,4,4" && ida.every((x) => +x.etapa === Math.min(4, x.frase + 1)), "ida: " + JSON.stringify(ida));
   assert(JSON.stringify(volta.map((x) => [x.etapa, x.trechos, x.ouroDash])) === JSON.stringify(ida.map((x) => [x.etapa, x.trechos, x.ouroDash])), "volta ≠ ida: " + JSON.stringify({ ida, volta }));
-  assert(ida[0].decisao === "rgb(13, 27, 42)" && ida[3].decisao === "rgb(133, 101, 20)" && ida[2].trechos > 0 && ida[0].trechos >= 1, "coreografia/frase: " + JSON.stringify(ida));
+  assert(ida[0].decisao === COR_TEXTO_CLARO && ida[3].decisao === COR_DECISAO && ida[2].trechos > 0 && ida[0].trechos >= 1, "coreografia/frase: " + JSON.stringify(ida));
   // Fim da sequência assentado: curvas originais idênticas ao SSR e nenhum trecho. Sem encerramento (0.1/0.2) é
   // p = 1; com encerramento (0.3.0+) o estático é o FINAL do encerramento (e = 1: topo da área a --header-h + 12).
   const yFim = await page.evaluate((y4) => { const c = document.querySelector("[data-frase-ativa]"); if (!c.hasAttribute("data-com-encerramento")) return y4 + 200; const pa = c.querySelector("[class*=paisagem]"); const u = c.querySelector("[data-i='3']"); const hdr = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-h")) || 72; const Y = (el) => el.getBoundingClientRect().top + scrollY; const s1 = Y(u) + u.getBoundingClientRect().height / 2 - 0.45 * innerHeight; return Math.max(s1 + 0.2 * innerHeight, Y(pa) - hdr - 12) + 40; }, ida[4].y);
@@ -1039,7 +1057,7 @@ await test("Ciência fechamento [módulo real]: pausa no meio → composição e
   await page.evaluate(() => document.querySelector("header button[aria-pressed]").click());
   await page.waitForTimeout(1300);
   const quadroDepois = await page.evaluate((sel) => document.querySelector(`${sel} svg`).innerHTML, COMP);
-  assert(antes.modo === "animado" && antes.etapa === "3" && pausa.modo === "estatico" && pausa.trechos === 0 && curvasPausa === ssr && pausa.decisao === "rgb(133, 101, 20)" && quadroDepois === quadroAntes, "pausa: " + JSON.stringify({ antes, pausa, igual: curvasPausa === ssr, retoma: quadroDepois === quadroAntes }));
+  assert(antes.modo === "animado" && antes.etapa === "3" && pausa.modo === "estatico" && pausa.trechos === 0 && curvasPausa === ssr && pausa.decisao === COR_DECISAO && quadroDepois === quadroAntes, "pausa: " + JSON.stringify({ antes, pausa, igual: curvasPausa === ssr, retoma: quadroDepois === quadroAntes }));
   // resize no meio: p segue a posição (fonte única) e o módulo recebe o mesmo valor
   await page.setViewportSize({ width: 1000, height: 720 }); await page.waitForTimeout(700);
   const rs = { p: (await compEstado(page)).p, esp: +(await pEsperado(page)).toFixed(4), alvo: await page.evaluate(() => null) };
@@ -1056,7 +1074,7 @@ await test("Ciência fechamento [módulo real]: pausa no meio → composição e
   await aus.page.evaluate((y) => scrollTo({ top: y, behavior: "instant" }), y);
   await aus.page.waitForTimeout(600);
   const a = await topoEstado(aus.page);
-  assert(a.motor === "falhou" && a.modo === null && a.trechos === 0 && a.decisao === "rgb(133, 101, 20)" && !aus.errors.length, "ausente: " + JSON.stringify(a));
+  assert(a.motor === "falhou" && a.modo === null && a.trechos === 0 && a.decisao === COR_DECISAO && !aus.errors.length, "ausente: " + JSON.stringify(a));
   await aus.ctx.close();
   notes.push(`    · módulo real 1280: etapa ${antes.etapa} → pausa = estático (curvas = SSR, decisão dourada) → retomar devolve o mesmo quadro; resize 1280→1000 p ${rs.p}≈${rs.esp}; reduzido estático; módulo ausente → SVG estático sem erro`);
 });
@@ -1165,7 +1183,7 @@ async function exigeArco(page) {
   if (!pos.tem) throw new Error(`PENDENTE: a versão padrão (${pos.versao}) não traz a continuação crista → arco — aguardando o módulo do Motion (topo-revisao ≥ 0.3.0)`);
   return pos;
 }
-const GOLD = "rgb(133, 101, 20)";
+const GOLD = COR_DECISAO;
 await test("Ciência continuação: evolução visível entre P2 e E, ida e volta contínuas com paradas, frase final dourada em toda a etapa adicional", async () => {
   const { ctx, page, errors } = await open([1440, 900]);
   const pos = await exigeArco(page);
@@ -1185,7 +1203,7 @@ await test("Ciência continuação: evolução visível entre P2 e E, ida e volt
   const diffs = [];
   for (let i = 1; i <= N; i++) { const a = await sharpDiff(ida[i - 1].img, ida[i].img); diffs.push(a); }
   const mudam = diffs.filter((d) => d > 0.0005).length;
-  assert(mudam >= N - 2, `passos sem mudança visível entre P2 e E: ${diffs.map((d) => d.toFixed(4))}`);
+  assert(mudam >= N - 2, `passos sem mudança visível entre P2 e E: ${diffs.map((d) => d.toFixed(4))} · arco ${ida.map((x) => x.arco.toFixed(3)).join(" ")}`);
   // volta: mesmas posições → mesmo estado (assentado)
   for (let i = N; i >= 0; i -= 2) { await ir(pos.P2 + ((pos.E - pos.P2) * i) / N); const v = await estadoArco(page); assert(v.svg === ida[i].svg && Math.abs(v.arco - ida[i].arco) < 1e-3, `volta ≠ ida em i${i}`); }
   // parada intermediária: 0 mutações em repouso

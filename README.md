@@ -1,42 +1,25 @@
 # Site ARARAT
 
-Site institucional e prévia interativa do ARARAT, em Next.js e TypeScript.
+Site institucional monocromático em Next.js, com inglês em `/`, português em `/pt` e espanhol em `/es`.
 
 ## Desenvolvimento
 
-```powershell
-cd site
-npm ci
-npm run dev
-```
+Na pasta `site`, execute `npm ci` e `npm run dev`. Para verificar: `npm run build` e `npm run typecheck`.
 
-A página inicial `/` usa a refinada em inglês. `/pt` apresenta a mesma página em português; o seletor EN/PT preserva a seção e os parâmetros na troca. `/previa/refinada` permanece em português para revisão, e `/previa`, `/previa/a` e `/previa/b` continuam disponíveis para comparação. A home anterior fica em `/previa/original`.
+O guia de conteúdo, rotas e movimento fica em [site/EDITAR-ARARAT.md](site/EDITAR-ARARAT.md).
 
-Os textos são traduzidos no HTML inicial e nos controles, avisos e nomes acessíveis. As capturas do Hub e do Viewer preservam a interface original em português, com legendas no idioma da página. As traduções estão em `site/lib/locales/en.json`; novos textos precisam de uma entrada correspondente. As animações e os arquivos do Motion não são traduzidos nem modificados.
+## Versão principal
 
-## Verificação
+Usa os movimentos aprovados: títulos por linhas com GSAP, transição de 180 ms e montanha 1.3.1 com repouso de 5 s. Os pacotes originais e as versões de comparação foram preservados.
 
-```powershell
-cd site
-npm run typecheck
-npm run build
-node tests/locales.mjs
-```
+A variante padrão usa composição sem capturas com permissão pendente e mantém `noindex`. Não definir `ARARAT_REVISAO_PRIVADA=1` em ambiente aberto: essa opção é apenas para revisão local, com mídia fornecida separadamente. As quatro capturas adicionais do institucional anterior não fazem parte desta integração nem do histórico novo enviado.
 
-`tests/locales.mjs` verifica a home atual em inglês e português, navegação entre idiomas, acessibilidade textual, seis larguras e a apresentação sem JavaScript. `tests/e2e.mjs` mantém os testes da home anterior em `/previa/original`; `tests/refinada.mjs` e `tests/plataforma-fluxo.mjs` cobrem as interações da refinada.
+A branch local `portfolio-site-v1` mantém a entrega completa e os commits intermediários. Esta integração incorpora o estado validado em um commit sobre a main anterior, sem reescrever ou apagar o histórico existente.
 
-Para conferir o build sem disputar a pasta do servidor de desenvolvimento:
+## Publicação
 
-```powershell
-$env:ARARAT_BUILD_DIR = '.next-verificacao'
-npm run build
-Remove-Item Env:ARARAT_BUILD_DIR
-```
+Vercel: Root Directory `site`, framework Next.js, install `npm ci`, build `npm run build`.
 
-## Vercel
+O deploy automático da branch `main` fica desativado em `vercel.json` (também em `site/vercel.json` para o Root Directory configurado). Enviar código ao GitHub não é autorização para publicar o site. Preview e produção continuam dependendo da decisão do proprietário e das pendências institucionais.
 
-Importe `matheuswq17/Site-Ararat`, usando Root Directory `site` e framework Next.js. Comandos: `npm ci` e `npm run build`; saída padrão do framework. A página principal é `/` (inglês); a versão portuguesa está em `/pt`. A indexação continua desativada enquanto a revisão de publicação estiver pendente.
-
-O código inclui as mídias necessárias às demonstrações. O repositório não contém os manuscritos, documentos privados de coordenação, originais de retratos ou gravações de testes. A presença de uma mídia neste repositório não concede licença de reutilização a terceiros.
-
-Leia `AGENTS.md` para o fluxo de commits locais e integração entre agentes.
+As capturas históricas que já existiam na main permanecem no histórico anterior; o bloqueio HTTP das versões antigas não remove arquivos do GitHub.

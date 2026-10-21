@@ -49,7 +49,7 @@ const FEATURES: Feature[] = [
     name: "Forma",
     origin: (m) =>
       m
-        ? "O contorno da região segmentada, em dourado: a silhueta que a forma descreve."
+        ? "O contorno da região segmentada, em destaque: a silhueta que a forma descreve."
         : "A silhueta da janela central, com as bordas da própria imagem suavemente realçadas.",
     aspect: "Contorno e distribuição espacial da região neste corte.",
   },
@@ -62,7 +62,7 @@ const FEATURES: Feature[] = [
   {
     key: "intensidade",
     name: "Intensidade",
-    origin: (m) => `Os tons de cinza ${m ? "da região" : "da janela central"} numa escala de cor, para ficarem comparáveis.`,
+    origin: (m) => `Os tons de cinza ${m ? "da região" : "da janela central"} em curvas de mesma intensidade, para ficarem comparáveis.`,
     aspect: "Distribuição dos valores de sinal na região.",
   },
 ];

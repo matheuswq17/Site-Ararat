@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { isSafeRelativePath, type MotionPackageInfo } from "./motion-contract";
 import { normalizeMap, sourceFromMotion, SITE_MRI, type MriSource } from "./mri";
-import { ART_SLOT, PREVIEW_PACKAGE, type ArtPoster, type PosterSource, type PreviewConfig, type PreviewPackage } from "./home-preview";
+import { ART_SLOT, EDITORIAL_SLOT, editorialSlotWidth, PREVIEW_PACKAGE, type ArtPoster, type PosterSource, type PreviewConfig, type PreviewPackage } from "./home-preview";
 
 /* Leitura de um pacote experimental da prévia (public/previa/<pkg.dir>/manifest.json).
  * Padrão: PREVIEW_PACKAGE (0.2.1-draft: /previa, /previa/a, /previa/b). A /previa/refinada passa
@@ -77,6 +77,65 @@ function posterSources(pkg: PreviewPackage, listed: Set<string>): PosterSource[]
   };
   if (!family(fams.movel.variantes, 0, ART_SLOT.narrowBelow - 1, true)) return null;
   if (!family(fams.desktop.variantes, ART_SLOT.narrowBelow, Infinity, false)) return null;
+  const editorial = editorialSources(pkg, listed);
+  if (editorial === null) return null;
+  if (!editorial.length) return out;
+  // Com a família editorial: as faixas acima terminam antes de 1200 px (viewport = slot até lá) …
+  const below = out.filter((s) => s.slotMin < EDITORIAL_SLOT.minViewport);
+  const last = below[below.length - 1];
+  // (a última faixa abaixo era aberta: vai até 1199 px, onde o slot de uma coluna já está no teto de 1100)
+  const lastTo = EDITORIAL_SLOT.minViewport - 1;
+  below[below.length - 1] = { ...last, media: `(min-width: ${last.slotMin}px) and (max-width: ${lastTo}.98px)` };
+  // … e a partir de 1200 px vale a família editorial, escolhida pela largura do slot de duas colunas.
+  return [...below, ...editorial];
+}
+
+/**
+ * Família editorial (montanha ≥ 1.1.0-03d2, assets/arte-escultura-editorial-variantes.json): posters desenhados com
+ * alinhar "centro" para o slot de duas colunas. A escolha segue as faixas do próprio índice (faixasPorLarguraDoSlot,
+ * mesma regra de 5/6), aplicadas à função REAL do slot (editorialSlotWidth), e não à função estimada do exemplo
+ * do Motion. Como a largura do slot não cresce sempre com a viewport (o gap aumenta até 64 px depois que o
+ * conteúdo atinge 1320 px), as faixas são calculadas viewport a viewport e depois agrupadas.
+ * [] = pacote sem família editorial (≤ 1.0.0-03d2); null = índice incoerente com o manifesto.
+ */
+function editorialSources(pkg: PreviewPackage, listed: Set<string>): PosterSource[] | null {
+  if (!listed.has("assets/arte-escultura-editorial-variantes.json")) return [];
+  const idx = readJson(pkg, "assets/arte-escultura-editorial-variantes.json");
+  const vs: Raw[] = idx?.familia?.variantes ?? [];
+  const faixas: Raw[] = idx?.faixasPorLarguraDoSlot ?? [];
+  const byW = new Map<number, { w: number; h: number; x1: string; x2: string }>();
+  for (const v of vs) {
+    const w = Number(v.areaCss?.w), h = Number(v.areaCss?.h);
+    if (!(w > 0 && h > 0) || !ok(listed, v.arquivos?.["1x"]) || !ok(listed, v.arquivos?.["2x"])) return null;
+    byW.set(w, { w, h, x1: v.arquivos["1x"], x2: v.arquivos["2x"] });
+  }
+  const pick = (slot: number) => {
+    const s = Math.round(slot);
+    const f = faixas.find((x) => s >= Number(x.de) && s <= Number(x.ate));
+    return f ? byW.get(Number(f.variante)) : undefined;
+  };
+  const LAST = 2600; // a partir daqui o slot é constante (gap e conteúdo no teto)
+  const out: PosterSource[] = [];
+  let cur: { v: { w: number; h: number; x1: string; x2: string }; from: number; to: number; lo: number; hi: number } | null = null;
+  const flush = (open: boolean) => {
+    if (!cur) return;
+    const media = open ? `(min-width: ${cur.from}px)` : `(min-width: ${cur.from}px) and (max-width: ${cur.to}.98px)`;
+    out.push({ media, srcSet: `${pkg.baseUrl}${cur.v.x1} 1x, ${pkg.baseUrl}${cur.v.x2} 2x`, areaW: cur.v.w, areaH: cur.v.h, slotMin: Math.round(cur.lo), slotMax: Math.round(cur.hi) });
+  };
+  for (let vw = EDITORIAL_SLOT.minViewport; vw <= LAST; vw++) {
+    const slot = editorialSlotWidth(vw);
+    const v = pick(slot);
+    if (!v) return null;
+    if (cur && cur.v === v) {
+      cur.to = vw;
+      cur.lo = Math.min(cur.lo, slot);
+      cur.hi = Math.max(cur.hi, slot);
+    } else {
+      flush(false);
+      cur = { v, from: vw, to: vw, lo: slot, hi: slot };
+    }
+  }
+  flush(true);
   return out;
 }
 
@@ -97,6 +156,7 @@ export function readPreviewConfig(pkg: PreviewPackage = PREVIEW_PACKAGE): Previe
     posterDesktop: desktop,
     posterMobile: mobile,
     posterSources: sources,
+    ambient: pkg.ambient === true,
   };
 }
 

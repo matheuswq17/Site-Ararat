@@ -1,0 +1,121 @@
+/* Entrada editorial de títulos, rótulos, fio da pergunta (Ciência) e links principais — COMPORTAMENTO compartilhado
+   pelas quatro identidades da refinada (Original, Canônica, Sinal, 03D2). Marcas postas por TextReveal (editorial).
+   Os valores visuais vêm dos tokens de cada identidade (proposta/refinada.css ou marca-*.css):
+     --entrada-desloc          deslocamento vertical da entrada (≈ 12 px)
+     --entrada-dur             duração da entrada (400–500 ms)
+     --entrada-ease            desaceleração suave, sem overshoot
+     --entrada-atraso-titulo   atraso do título depois do rótulo (60–80 ms)
+     --fio-cor / --fio-largura / --fio-dur   fio da pergunta estudada
+     --link-dur / --link-ease  links principais (160–220 ms)
+     --link-fio / --link-fio-ativo           espessura do sublinhado em repouso / ao passar o cursor ou com foco
+   Estado padrão = final (sem JS, falha, impressão). Só "pending" esconde, e só blocos que ainda não entraram na
+   tela. transform/opacity: sem deslocar layout. Sem laço: transições e animações de uma vez. */
+
+/* ── Títulos e rótulos como bloco ────────────────────────────────────────────────────────────────────────── */
+/* As palavras (.rw) do sistema anterior ficam paradas: o título anima inteiro. */
+[data-tipografia="refinada"] [data-reveal-bloco][data-reveal-state] .rw {
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+[data-tipografia="refinada"] :is([data-reveal-bloco], [data-reveal="rotulo"])[data-reveal-state="pending"] {
+  opacity: 0;
+  transform: translateY(var(--entrada-desloc, 12px));
+}
+[data-tipografia="refinada"] :is([data-reveal-bloco], [data-reveal="rotulo"])[data-reveal-state="in"] {
+  animation: entrada-bloco var(--entrada-dur, 450ms) var(--entrada-ease, cubic-bezier(0.22, 1, 0.36, 1)) both;
+}
+[data-tipografia="refinada"] [data-reveal-bloco][data-reveal-com-rotulo][data-reveal-state="in"] {
+  animation-delay: var(--entrada-atraso-titulo, 70ms);
+}
+@keyframes entrada-bloco {
+  from {
+    opacity: 0;
+    transform: translateY(var(--entrada-desloc, 12px));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── Fio da pergunta estudada (Ciência) ──────────────────────────────────────────────────────────────────────
+   Um traço vertical junto ao bloco, desenhado de cima para baixo. O texto não se move. Posição e cor por identidade. */
+[data-tipografia="refinada"] [data-reveal="fio"] {
+  position: relative;
+}
+[data-tipografia="refinada"] [data-reveal="fio"]::before {
+  content: "";
+  position: absolute;
+  left: var(--fio-x, -14px);
+  top: var(--fio-topo, 0.25em);
+  bottom: var(--fio-base, 0.25em);
+  width: var(--fio-largura, 2px);
+  background: var(--fio-cor, currentColor);
+  transform-origin: top;
+  pointer-events: none;
+}
+[data-tipografia="refinada"] [data-reveal="fio"][data-reveal-state="pending"]::before {
+  transform: scaleY(0);
+}
+[data-tipografia="refinada"] [data-reveal="fio"][data-reveal-state="in"]::before {
+  animation: fio-desenho var(--fio-dur, 520ms) var(--entrada-ease, cubic-bezier(0.22, 1, 0.36, 1)) 120ms both;
+}
+@keyframes fio-desenho {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* ── Links principais comuns às quatro identidades: os links textuais do FAQ ─────────────────────────────────
+   (outros links, como o link com seta da 1ª dobra da 03D2, entram pelo CSS da própria identidade)
+   O sublinhado engrossa e a seta (se houver) avança ~3 px ao passar o cursor ou com foco do teclado. O foco
+   continua visível pelo anel de foco da identidade — não depende da animação. */
+[data-tipografia="refinada"] #faq [class*="__link"] {
+  text-decoration-line: underline;
+  text-decoration-thickness: var(--link-fio, 1px);
+  transition: text-decoration-thickness var(--link-dur, 180ms) var(--link-ease, ease-out),
+    text-decoration-color var(--link-dur, 180ms) var(--link-ease, ease-out);
+}
+[data-tipografia="refinada"] #faq [class*="__link"]:is(:hover, :focus-visible) {
+  text-decoration-thickness: var(--link-fio-ativo, 2px);
+}
+[data-tipografia="refinada"] #faq [class*="__link"] svg {
+  transition: transform var(--link-dur, 180ms) var(--link-ease, ease-out);
+}
+[data-tipografia="refinada"] #faq [class*="__link"]:is(:hover, :focus-visible) svg {
+  transform: translateX(3px);
+}
+
+/* ── Pausa geral, movimento reduzido e impressão: estado final imediato, sem transição ──────────────────── */
+html[data-motion="paused"] [data-tipografia="refinada"] :is([data-reveal-bloco], [data-reveal="rotulo"])[data-reveal-state],
+html[data-motion="paused"] [data-tipografia="refinada"] [data-reveal="fio"][data-reveal-state]::before {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+html[data-motion="paused"] [data-tipografia="refinada"] :is(#faq [class*="__link"], #faq [class*="__link"] svg) {
+  transition: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-tipografia="refinada"] :is([data-reveal-bloco], [data-reveal="rotulo"])[data-reveal-state],
+  [data-tipografia="refinada"] [data-reveal="fio"][data-reveal-state]::before {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  [data-tipografia="refinada"] :is(#faq [class*="__link"], #faq [class*="__link"] svg) {
+    transition: none !important;
+  }
+}
+@media print {
+  [data-tipografia="refinada"] :is([data-reveal-bloco], [data-reveal="rotulo"])[data-reveal-state],
+  [data-tipografia="refinada"] [data-reveal="fio"][data-reveal-state]::before {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

@@ -95,6 +95,9 @@
   position: absolute;
   inset: 0;
 }
+.stage[data-oculto] {
+  visibility: hidden;
+}
 /* Com o módulo: as fotos empilhadas do Site saem (e, sendo lazy, nem chegam a carregar). */
 .portrait[data-motor="modulo"] .portraitImg {
   display: none;

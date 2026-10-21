@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "image": "assets/mri-base.webp",
+  "width": 806,
+  "height": 802,
+  "coordinateSystem": "pixels da imagem-base exportada; origem no canto superior esquerdo; x para a direita, y para baixo",
+  "orientation": "axial, conforme a fonte (sem espelhamento nem rotação)",
+  "glandPath": "M326.5 476.6L314.5 476.9L310.5 475.1L305.5 474.9L292.5 464.9L287.5 459.7L286.6 456.5L276.4 440.5L272.4 429.5L271.9 421.5L270.0 416.5L270.1 380.5L271.9 376.5L272.1 371.5L274.4 364.5L276.6 360.5L280.5 356.7L282.1 352.5L287.5 347.0L297.5 340.7L302.3 336.5L310.5 332.4L315.5 331.6L324.5 328.1L331.5 327.9L336.5 326.0L349.5 326.1L353.5 327.9L356.5 328.0L387.5 328.0L393.5 326.0L442.5 326.1L446.5 327.9L450.5 328.4L466.9 337.5L475.5 349.3L480.6 358.5L482.9 365.5L483.1 376.5L485.0 382.5L485.0 404.5L483.1 409.5L482.9 419.5L481.1 423.5L480.6 427.5L476.4 435.5L475.6 440.5L467.5 453.0L456.5 459.6L444.5 462.0L437.5 461.9L433.5 460.1L426.5 459.9L422.5 458.1L416.5 457.9L412.5 455.4L405.5 454.9L401.5 453.1L378.5 453.1L372.5 455.4L365.5 459.6L360.5 460.4L343.5 468.4L333.5 474.6L329.5 475.1Z",
+  "roiPath": "M394.5 433.6L379.5 433.9L368.5 430.0L362.5 431.9L354.5 431.9L338.5 425.6L334.5 423.4L324.1 413.5L316.5 401.3L310.4 393.5L310.0 388.5L310.4 375.5L317.4 362.5L322.5 356.7L324.5 352.1L328.7 350.5L344.5 338.4L349.5 337.6L358.5 334.1L365.5 333.9L369.5 332.1L373.5 331.9L382.5 328.1L388.5 327.9L394.5 326.0L397.5 326.9L398.4 331.5L399.5 332.9L409.5 338.4L417.5 344.1L425.9 352.5L428.1 356.5L437.6 366.5L439.9 373.5L440.0 377.5L439.9 383.5L438.1 387.5L437.9 390.5L432.4 401.5L431.6 406.5L423.9 417.5L414.5 425.6L409.5 426.4Z",
+  "gland": {
+    "centroid": [
+      376.3,
+      396.3
+    ],
+    "bbox": [
+      270,
+      326,
+      215,
+      151
+    ],
+    "areaPx": 26863
+  },
+  "roi": {
+    "centroid": [
+      375.6,
+      382.5
+    ],
+    "bbox": [
+      310,
+      326,
+      130,
+      108
+    ],
+    "areaPx": 10363,
+    "label": "subregião central da segmentação demonstrativa de origem (exemplo didático)"
+  },
+  "sampleCrop": {
+    "x": 344,
+    "y": 350,
+    "size": 64,
+    "insideRoi": 1.0
+  },
+  "textureCrop": {
+    "x": 328,
+    "y": 334,
+    "size": 96,
+    "insideRoi": 0.935,
+    "note": "recorte de exibição do painel Textura (v0.4): mostrado a ~1:1, sem ampliar a grade de pixels"
+  },
+  "intensityHistogram": {
+    "bins": [
+      0.184,
+      0.197,
+      0.274,
+      0.5,
+      0.514,
+      0.577,
+      1.0,
+      0.799,
+      0.769,
+      0.948,
+      0.527,
+      0.487,
+      0.472,
+      0.18,
+      0.082,
+      0.17
+    ],
+    "binGray": [
+      14,
+      17,
+      20,
+      24,
+      27,
+      30,
+      34,
+      37,
+      40,
+      43,
+      47,
+      50,
+      53,
+      57,
+      60,
+      63
+    ],
+    "note": "Ilustrativo: valores 8-bit do PNG renderizado dentro da região. Não é feature radiômica (DICOM), sem unidade física."
+  },
+  "resolution": {
+    "fileWidth": 806,
+    "fileHeight": 802,
+    "duplicatedRows": 425,
+    "duplicatedColumns": 427,
+    "effective": "≈379×377 px distintos: a fonte já é uma ampliação ~2× por vizinho mais próximo",
+    "maxRecommendedCssScale": 1.3
+  },
+  "metadata": {
+    "source": "references/imaging/mri-axial-demo.png (cópia do maestro de C:/Site_ararat/assets/img/, site anterior)",
+    "maskSource": "references/imaging/mri-axial-segmentation.png — sobreposição colorida na mesma grade de pixels (deslocamento 0, erro médio 0.000 nos pixels cinza)",
+    "crop": {
+      "x": 1,
+      "y": 1,
+      "width": 806,
+      "height": 802,
+      "sourceSize": [
+        812,
+        803
+      ]
+    },
+    "nature": "Imagem demonstrativa e máscaras demonstrativas. Não processada pelo ARARAT, não validada clinicamente; a região não representa lesão.",
+    "glandPathFrom": "união das cores da sobreposição (contorno suavizado σ=1,2 px, tolerância 0,6 px)",
+    "roiPathFrom": "componente laranja central da sobreposição",
+    "license": "PENDENTE — autoria, licença e desidentificação não confirmadas",
+    "deidentification": "PENDENTE",
+    "clinicalValidation": false
+  }
+}
