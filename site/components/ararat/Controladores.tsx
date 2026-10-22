@@ -11,6 +11,7 @@ import { acompanharDensidade, ancoraDaCarga, espiarRestauracao, montarCaso, repo
 import { montarEntradas } from "@/lib/ararat/cliente/entradas";
 import { montarControleRevisao, montarTextos, prepararEntrada } from "@/lib/ararat/cliente/textos";
 import { montarDemo } from "@/lib/ararat/cliente/demo";
+import { montarNavegacao } from "@/lib/ararat/cliente/navegacao";
 import { montarBios } from "@/lib/ararat/cliente/bio";
 import { parametro } from "@/lib/ararat/cliente/externo";
 
@@ -33,7 +34,7 @@ export function Controladores({ idioma, modulos }: { idioma: Idioma; modulos: Mo
     // âncora que o navegador já posicionou: a montagem abaixo pode deslocá-la; reposicionada no fim (ver caso.ts)
     const ancora = ancoraDaCarga();
     iniciarMovimento([x.pausar, x.retomar]);
-    const desfazer: Array<() => void> = [montarMenu(), montarIdiomas(), acompanharDensidade(), montarAncoraDeLeitura()];
+    const desfazer: Array<() => void> = [montarMenu(), montarNavegacao(), montarIdiomas(), acompanharDensidade(), montarAncoraDeLeitura()];
     const tem = (m: Modulo) => chave.split(",").includes(m);
 
     // revisão privada, só para teste do adaptador: ?camadas=fade usa o caminho com fade da experiência anterior;

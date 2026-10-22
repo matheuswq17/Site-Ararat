@@ -48,7 +48,7 @@ export function PaginaEvidencias({ idioma }: { idioma: Idioma }) {
         </div>
       </section>
 
-      <section className="sec tom" aria-labelledby="es-t">
+      <section className="sec tom" id="estudos" aria-labelledby="es-t">
         <div className="w">
           <h2 id="es-t" className="titulo-sec titulo-medio" style={{ marginBottom: 32 }}>{X.estudosTitulo}</h2>
           <div className="estudos">

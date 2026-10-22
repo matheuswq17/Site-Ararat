@@ -9,6 +9,7 @@ export const pt: Conteudo = {
     ["evidence", "Evidências"],
     ["company", "Empresa"],
   ],
+  navSecoes: "Seções de",
   estagio: {
     validacao: "Validação externa em andamento",
     desenv: "Em desenvolvimento",

@@ -7,6 +7,7 @@ export const en = {
     ["evidence", "Evidence"],
     ["company", "Company"],
   ],
+  navSecoes: "Sections in",
   estagio: {
     validacao: "External validation in progress",
     desenv: "In development",

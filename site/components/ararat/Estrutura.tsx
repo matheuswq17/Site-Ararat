@@ -10,6 +10,7 @@ const mostraImagens = () => (Object.keys(CAPTURAS) as ArquivoCaptura[]).some(exi
 import { BotaoPausa, Lk } from "./base";
 import { Controladores } from "./Controladores";
 import { EntradaPagina } from "./EntradaPagina";
+import { gruposNavegacao, type GrupoNavegacao } from "@/lib/ararat/navegacao";
 
 type ChavePagina = Pagina | `pessoa:${string}`;
 const MARCA = "/ararat/marca/ararat-horizontal-negativo.svg";
@@ -26,10 +27,28 @@ function Idiomas({ idioma, pagina }: { idioma: Idioma; pagina: ChavePagina }) {
   );
 }
 
+function ItemNavegacao({ item, idioma, atual, movel }: { item: GrupoNavegacao; idioma: Idioma; atual: Pagina; movel?: boolean }) {
+  const id = `nav-${movel ? 'movel' : 'desktop'}-${item.chave}`;
+  return (
+    <li className="nav-grupo" data-nav-grupo="">
+      <Lk className="nav-principal" href={item.href} aria-current={item.chave === atual ? 'page' : undefined}>{item.rotulo}</Lk>
+      <details className="nav-expansor">
+        <summary className="nav-expande" aria-label={`${conteudo(idioma).navSecoes} ${item.rotulo}`} aria-controls={id}>
+          <svg viewBox="0 0 12 12" aria-hidden="true"><path d="m2 4 4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.3" /></svg>
+        </summary>
+        <div className="nav-painel" id={id}>
+          <p className="nav-painel-titulo" aria-hidden="true">{item.rotulo}</p>
+          <ul>{item.atalhos.map(a => <li key={a.href}><Lk href={a.href}>{a.rotulo}<span aria-hidden="true">→</span></Lk></li>)}</ul>
+        </div>
+      </details>
+    </li>
+  );
+}
+
 function Cabecalho({ idioma, pagina }: { idioma: Idioma; pagina: ChavePagina }) {
   const c = conteudo(idioma);
   const atual = secaoDaPagina(pagina);
-  const itens = c.nav.map(([k, rotulo]) => ({ k: k as Pagina, rotulo, href: href(k as Pagina, idioma) }));
+  const itens = gruposNavegacao(idioma);
   return (
     <>
       <a className="pular" href="#conteudo">{c.pular}</a>
@@ -42,7 +61,7 @@ function Cabecalho({ idioma, pagina }: { idioma: Idioma; pagina: ChavePagina }) 
             <img src={MARCA} alt="ARARAT" width={173} height={20} />
           </Lk>
           <nav className="nav" aria-label={c.extra.principal}>
-            {itens.map((i) => <Lk key={i.k} href={i.href} aria-current={i.k === atual ? "page" : undefined}>{i.rotulo}</Lk>)}
+            <ul className="nav-lista">{itens.map(i => <ItemNavegacao key={i.chave} item={i} idioma={idioma} atual={atual} />)}</ul>
           </nav>
           <Idiomas idioma={idioma} pagina={pagina} />
           {pagina === "home" ? <BotaoPausa idioma={idioma} className="pausa pausa-cab" /> : null}
@@ -53,7 +72,7 @@ function Cabecalho({ idioma, pagina }: { idioma: Idioma; pagina: ChavePagina }) 
             </summary>
             <div className="painel-menu" id="painel-menu">
               <nav aria-label={c.extra.menuPrincipal}>
-                <ul>{itens.map((i) => <li key={i.k}><Lk href={i.href} aria-current={i.k === atual ? "page" : undefined}>{i.rotulo}</Lk></li>)}</ul>
+                <ul>{itens.map(i => <ItemNavegacao key={i.chave} item={i} idioma={idioma} atual={atual} movel />)}</ul>
               </nav>
               <Idiomas idioma={idioma} pagina={pagina} />
             </div>
@@ -75,8 +94,8 @@ function Rodape({ idioma, pagina }: { idioma: Idioma; pagina: ChavePagina }) {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={MARCA} alt="ARARAT" width={173} height={20} />
           </Lk>
-          {c.nav.map(([k, r]) => <Lk key={k} href={href(k as Pagina, idioma)}>{r}</Lk>)}
-          <Lk href={href("company", idioma, "contato")}>{c.contato}</Lk>
+          {c.nav.map(([k, r]) => <Lk className="rod-link" key={k} href={href(k as Pagina, idioma)}>{r}</Lk>)}
+          <Lk className="rod-link" href={href("company", idioma, "contato")}>{c.contato}</Lk>
         </div>
         {/* crédito das imagens PROSTATEx só onde elas são exibidas (revisão privada); a variante sem capturas não as mostra */}
         <p className="aviso">{mostraImagens() ? c.rodape.aviso : c.rodape.avisoSemImagens}</p>
