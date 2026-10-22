@@ -48,6 +48,7 @@ App Next.js em `site/`. A experiência nova ocupa `/` (inglês, principal), `/pt
 - WOFF2 variável latino (28.872 bytes) e latino estendido (60.088 bytes), hospedados no próprio site, licença SIL OFL. Origem e referências em `public/ararat/fontes/README-SourceSans3.md`. Sem Adobe Fonts ou CDN em execução.
 - O `<head>` espera a família/pesos novos antes das medidas da abertura e do SplitText. O ritmo das animações, os pacotes e a marca SVG não mudam.
 - O token histórico `--serif` continua como alias dos títulos, agora apontando para a família sans-serif escolhida. Lora e Inter permanecem em disco para preservar as versões anteriores; não são preloaded no site novo.
+- Na abertura, os limites de largura do título e da descrição usam `10em` e `28em`, equivalentes às larguras anteriores. Não voltar aos `16ch`/`44ch` da fonte antiga: o glifo zero é mais estreito nesta família e mudava a composição da montanha. O teste de movimento público confere a mesma composição da produção em 7 janelas, nos três idiomas.
 - Ao trocar fontes, conferir quebras, máscaras, acentos, idiomas, zoom e restauração no navegador. Não copiar quebras de linha da fonte anterior nem compensar a rolagem por script.
 
 ## Textos e SEO (21/10/2026)

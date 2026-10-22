@@ -13,6 +13,28 @@ const check = (nome, teste, detalhe) => {
   console.log(`${teste ? "ok" : "FALHA"}: ${nome}`);
 };
 try {
+  // A troca de fonte deve preservar a composição publicada nas mesmas janelas: a métrica "ch" não pode
+  // estreitar o título e trocar a montanha superior por uma coluna lateral em um desktop alto.
+  for (const [width, height, variante, arteW] of [
+    [1920, 1030, "horizonte", 1100], [1920, 1080, "horizonte", 1100], [1440, 900, "horizonte", 860],
+    [1366, 768, "lateral", 860], [1280, 720, "lateral", 750], [1280, 600, "lateral", 750],
+    [390, 844, "celular", 390],
+  ]) for (const rota of ["/pt", "/", "/es"]) {
+    const ctx = await browser.newContext({ viewport: { width, height }, reducedMotion: "reduce" });
+    const p = await ctx.newPage();
+    await p.goto(base + rota);
+    await p.waitForFunction(() => document.querySelector("[data-hero]")?.hasAttribute("data-composta"));
+    const r = await p.evaluate(() => {
+      const hero = document.querySelector("[data-hero]"), arte = hero.querySelector("[data-arte]").getBoundingClientRect();
+      const texto = hero.querySelector("[data-txt]").getBoundingClientRect();
+      return { variante: hero.dataset.variante, arteW: arte.width, arteFundo: arte.bottom, textoTopo: texto.top,
+        centro: arte.left + arte.width / 2, largura: innerWidth };
+    });
+    check(`${rota} ${width}x${height}: composição e enquadramento preservados na troca de fonte`,
+      r.variante === variante && r.arteW === arteW && (variante === "lateral" ||
+        (r.arteFundo <= r.textoTopo && Math.abs(r.centro - r.largura / 2) < 1)), r);
+    await ctx.close();
+  }
   for (const largura of [1366, 390]) for (const rota of ["/pt", "/", "/es"]) {
     const ctx = await browser.newContext({ viewport: { width: largura, height: 844 } });
     await ctx.addInitScript(() => {
