@@ -312,7 +312,7 @@ export const en = {
       },
     ],
     pagina_titulo: "Prostate MRI, component by component.",
-    pagina_lead: "ARARAT Model brings together four components for prostate MRI, each with its own task and stage. The gland segmentation and lesion localization models were developed by the team; the PI-RADS classifier is being refined. The gland and zone masks shown on this site were generated in ARARAT Hub and displayed in ARARAT Viewer; the workflow is designed so that every output reaches the radiologist's review.",
+    pagina_lead: "ARARAT Model brings together four components for prostate MRI, each with its own task and stage. The gland segmentation and lesion localization models were developed by the team. The gland and zone masks shown on this site were generated in ARARAT Hub and displayed in ARARAT Viewer; the workflow is designed so that every output reaches the radiologist's review.",
     tabela_titulo: "The four components",
     fluxo_titulo: "Where the components fit",
     fluxo: [
@@ -379,7 +379,7 @@ export const en = {
       {
         id: "pirads",
         nome: "PI-RADS lesion classification",
-        tarefa: "Will propose a PI-RADS category for each lesion, as a reviewable finding. A first version was trained and is being refined; it does not yet produce categories for use.",
+        tarefa: "Will propose a PI-RADS category for each lesion, as a reviewable finding. Classifier being refined; integration and availability will be reported once confirmed.",
         papel: "Assigns the final category.",
         estagio: "novo",
         mostrado: false,
@@ -406,8 +406,8 @@ export const en = {
       rotulo: "Research in progress",
       nome: "Clinical risk: images and clinical data",
       tarefa: "Investigates how to combine computational image analysis with clinical data to estimate prostate cancer risk.",
-      papel: "Keeps the PI-RADS category, assigned from the images.",
-      nota: "No results published. It is not an available software function and is separate from PI-RADS classification.",
+      papel: "Interprets the images and assigns the PI-RADS category; this research evaluates a different outcome.",
+      nota: "No results published. Integration and availability not yet confirmed.",
       estagio: "investigacao",
     },
   },
@@ -569,7 +569,7 @@ export const en = {
   },
   evidencia: {
     titulo: "What each study evaluated, task by task.",
-    lead: "Each study answers one question about one task. Evidence for one component does not validate another or the platform: the published radiomics study, for example, does not evaluate the segmentation models or the PI-RADS classifier.",
+    lead: "Each study answers one question about one task. Evidence for one component does not validate another or the platform.",
     col: ["Task", "Question", "Evidence today", "Does not show"],
     linhas: [
       [
@@ -637,8 +637,8 @@ export const en = {
           "PROSTATEx public collection (TCIA).",
           "Internal evaluation.",
           "Published — Clinical Radiology, 2026.",
-          "ISUP classification research; it does not apply to the ARARAT Model components for prostate MRI.",
-          "Detection, PI-RADS classification, the segmentation components or the platform.",
+          "ISUP classification research; it does not validate the current segmentation or PI-RADS classification models.",
+          "Detection or the platform.",
         ],
       },
       {
@@ -665,7 +665,7 @@ export const en = {
           "Not published yet.",
           "To be reported with the results.",
           "In progress.",
-          "The prostate MRI front; the components included will be reported with the results.",
+          "The prostate MRI front.",
           "Until results are published, it is not evidence for any specific component.",
         ],
       },
@@ -748,8 +748,8 @@ export const en = {
       tarefa: "Clinical risk from images and clinical data (research)",
       estagio: "investigacao",
       pergunta: "Does combining image analysis with clinical data help estimate prostate cancer risk?",
-      hoje: "Research line in progress; results not yet published.",
-      nao: "A PI-RADS category, a management recommendation or an available software function",
+      hoje: "Results not yet published; integration and availability not confirmed.",
+      nao: "A PI-RADS category or a management recommendation",
     },
     {
       id: "isup",
@@ -1042,7 +1042,7 @@ export const en = {
     ],
     prostate: [
       "Prostate MRI AI: segmentation, lesions and PI-RADS | ARARAT",
-      "Prostate segmentation, suspicious lesion localization and PI-RADS classification on prostate MRI: each component's task and stage, and the radiologist's role.",
+      "Prostate segmentation, lesion localization and a PI-RADS classifier being refined for prostate MRI; external validation in progress.",
     ],
     thyroid: [
       "Thyroid ultrasound | ARARAT",
@@ -1054,7 +1054,7 @@ export const en = {
     ],
     evidence: [
       "Research and evidence in prostate MRI | ARARAT",
-      "What each study evaluated and which task it applies to: radiomics for ISUP classification, prostate and lesion segmentation, and external validation.",
+      "A published radiomics study, a segmentation manuscript not yet published and external validation in progress: what each evaluated and its limits.",
     ],
     company: [
       "Company and team | ARARAT",
@@ -1140,7 +1140,7 @@ export const en = {
     fluxo_nota: "The models run while the Hub prepares the case; their outputs reach the Viewer for review.",
     model_titulo: "Four components for prostate MRI",
     viewer_rotulo: "In the Viewer",
-    prostata_lead: "ARARAT Model brings together four components for prostate MRI, each with its own task and stage. The gland segmentation and lesion localization models were developed by the team; the PI-RADS classifier is being refined. The workflow is designed so that every output reaches the radiologist's review in ARARAT Viewer.",
+    prostata_lead: "ARARAT Model brings together four components for prostate MRI, each with its own task and stage. The gland segmentation and lesion localization models were developed by the team. The workflow is designed so that every output reaches the radiologist's review in ARARAT Viewer.",
     urologia_texto: "The radiologist reviews the model outputs in the Viewer and prepares the report, with key images and the measurements they recorded.",
     ver_documentar: "How the Viewer documents, on the Platform",
   },
