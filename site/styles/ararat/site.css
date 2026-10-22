@@ -1,5 +1,5 @@
 /* Site ARARAT — estilos da integração do Atlas clínico (portfolio-site-v1, 14/10/2026).
-   Base: CSS do protótipo (base → var-a → refino → atlas), sem a camada de revisão; Lora/Inter/mineral/cobre valem em
+   Base: CSS do protótipo (base → var-a → refino → atlas), sem a camada de revisão; Source Sans 3/mineral/cobre valem em
    body.atlas (todas as páginas do site novo). Aplicação CANDIDATA do sistema visual; a logo 03D2 segue provisória.
    Ajustes e composições das páginas internas: integracao.css (carregado depois). */
 /* ===== origem: protótipo Atlas clínico, gen/base.css (revisão 13/10/2026) ===== */
@@ -702,17 +702,23 @@ html:has(dialog[open]){overflow:hidden} /* trava a rolagem do fundo só com diá
 }
 
 /* ===== origem: protótipo Atlas clínico, gen/atlas.css (revisão 13/10/2026) ===== */
-/* Atlas clínico — aplicação CANDIDATA (13/10/2026). Não é Brand System aprovado; a logo 03D2 segue provisória.
-   Lora: títulos editoriais. Inter: leitura, dados e controles. Paleta mineral/clínica; cobre só em navegação, ação e
+/* Atlas clínico — origem visual (13/10/2026); tipografia escolhida em 22/10/2026. A logo 03D2 segue provisória.
+   Source Sans 3 Light: títulos editoriais. Regular: leitura, dados e controles. Paleta mineral/clínica; cobre só em navegação, ação e
    conexão editorial — nunca em mídia, máscara ou medida. Carregado depois de base/var-a/refino; só vale em body.atlas. */
 @font-face{font-family:"Inter";src:url("/ararat/fontes/Inter-latin-wght.woff2") format("woff2");font-weight:100 900;font-display:swap;
  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:"Lora";src:url("/ararat/fontes/Lora-latin-wght.woff2") format("woff2");font-weight:400 700;font-display:swap;
  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+/* WOFF2 variável local: Light 300, Regular 400 e pesos reais de ênfase até 700. Fontes anteriores ficam para as comparações. */
+@font-face{font-family:"Source Sans 3";src:url("/ararat/fontes/SourceSans3-latin-ext-wght.woff2") format("woff2");font-style:normal;font-weight:300 700;font-display:swap;
+ unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Source Sans 3";src:url("/ararat/fontes/SourceSans3-latin-wght.woff2") format("woff2");font-style:normal;font-weight:300 700;font-display:swap;
+ unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 
 body.atlas{
- --sans:"Inter",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
- --serif:"Lora",Georgia,"Times New Roman",serif;
+ --sans:"Source Sans 3",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+ /* Nome histórico do token de títulos; a família escolhida agora é sans-serif. */
+ --serif:var(--sans);
  /* mineral (claro) */
  --min-0:#F2F1EC;--min-1:#E6E4DD;--min-linha:#CBC7BD;--tinta:#171B1E;--min-suave:#545B60;
  /* clínico (escuro) */
@@ -736,9 +742,9 @@ body.atlas{
 .atlas .hero .base{border-top-color:var(--clin-linha)}
 .atlas .escura .estagios,.atlas .hero .estagios{color:#C9CCCD;--estagio-cor:var(--clin-fg)}
 
-/* ---------- tipografia: Lora nos títulos editoriais, Inter no resto ---------- */
-.atlas .hero h1,.atlas .titulo-sec,.atlas .cap-titulo,.atlas .pub-atlas h3,.atlas .h-menor,.atlas .atlas-conf h3,.atlas .tres-col h3{font-family:var(--serif);font-weight:500}
-.atlas .hero h1{letter-spacing:-.018em;line-height:1.02;font-size:clamp(46px,5vw,74px);max-width:16ch}
+/* ---------- tipografia: Source Sans 3 Light nos títulos, Regular na leitura e nos controles ---------- */
+.atlas .hero h1,.atlas .titulo-sec,.atlas .cap-titulo,.atlas .pub-atlas h3,.atlas .h-menor,.atlas .atlas-conf h3,.atlas .tres-col h3{font-family:var(--serif);font-weight:300}
+.atlas .hero h1{letter-spacing:-.015em;line-height:1.02;font-size:clamp(46px,5vw,74px);max-width:16ch}
 .atlas .hero[data-variante=lateral] h1{font-size:clamp(40px,4.2vw,62px)}
 @media (min-width:900px) and (max-height:700px){.atlas .hero h1,.atlas .hero[data-variante=lateral] h1{font-size:clamp(36px,3.1vw,42px)}}
 @media (max-width:899px){.atlas .hero h1{font-size:clamp(30px,8.9vw,46px);line-height:1.04}}
@@ -749,6 +755,9 @@ body.atlas{
 .atlas .lead{font-size:clamp(17px,1.35vw,19px);line-height:1.6}
 .atlas .rotulo-sec{font-size:13px;letter-spacing:.06em;text-transform:uppercase;font-weight:500}
 .atlas .estagios,.atlas .estagio-chip,.atlas .legenda,.atlas .abas button,.atlas .btn,.atlas .link-seta{font-family:var(--sans)}
+.atlas .nav a,.atlas .idiomas,.atlas .menu-btn,.atlas .painel-menu a,.atlas .abas button,.atlas .btn,.atlas .link-seta,
+.atlas .cap-nav a,.atlas .d-leituras button,.atlas .rostos summary,
+.atlas .demo-topo .demo-semjs>summary,.atlas .demo-texto>summary{font-weight:400}
 
 /* ---------- cabeçalho: item ativo e foco/hover com cobre ---------- */
 .atlas .nav a{position:relative;transition:color 120ms cubic-bezier(.2,0,0,1)}

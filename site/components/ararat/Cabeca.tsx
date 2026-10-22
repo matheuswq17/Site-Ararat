@@ -1,7 +1,7 @@
 import { REVISAO_PRIVADA, TEXTOS, TRANSICOES } from "@/lib/ararat/ambiente";
 
 /** Conteúdo comum do <head> dos três layouts do site (EN/PT/ES). */
-const FONTES_JS = "window.ARARAT_FONTES=(document.fonts&&document.fonts.load)?Promise.race([Promise.all(['500 74px Lora','400 18px Inter','500 18px Inter','600 16px Inter'].map(function(f){return document.fonts.load(f)})).then(function(){return document.fonts.ready}),new Promise(function(r){setTimeout(r,3000)})]):Promise.resolve();document.documentElement.classList.add('js');";
+const FONTES_JS = `window.ARARAT_FONTES=(document.fonts&&document.fonts.load)?Promise.race([Promise.all(['300 74px "Source Sans 3"','400 18px "Source Sans 3"','500 18px "Source Sans 3"','600 16px "Source Sans 3"'].map(function(f){return document.fonts.load(f)})).then(function(){return document.fonts.ready}).catch(function(){return document.fonts.ready}),new Promise(function(r){setTimeout(r,3000)})]):Promise.resolve();document.documentElement.classList.add('js');`;
 
 /**
  * Transição aprovada (styles/ararat/transicoes.css e EntradaPagina.tsx); comparação só na revisão privada.
@@ -24,9 +24,8 @@ const TEXTO_JS = `(function(){var d=document.documentElement,m='${REVISAO_PRIVAD
 export function CabecaArarat() {
   return (
     <>
-      <link rel="preload" href="/ararat/fontes/Inter-latin-wght.woff2" as="font" type="font/woff2" crossOrigin="" />
-      <link rel="preload" href="/ararat/fontes/Lora-latin-wght.woff2" as="font" type="font/woff2" crossOrigin="" />
-      {/* A abertura só mede depois de Lora e Inter carregadas (teto de 3 s); a classe .js liga os estilos que dependem de script */}
+      <link rel="preload" href="/ararat/fontes/SourceSans3-latin-wght.woff2" as="font" type="font/woff2" crossOrigin="" />
+      {/* Abertura e SplitText esperam a fonte (teto de 3 s); em falha, seguem com a fonte de apoio. Latin-ext sob demanda. */}
       <script dangerouslySetInnerHTML={{ __html: FONTES_JS }} />
       {TRANSICOES ? <script dangerouslySetInnerHTML={{ __html: TRANSICAO_JS }} /> : null}
       {TEXTOS ? <script dangerouslySetInnerHTML={{ __html: TEXTO_JS }} /> : null}

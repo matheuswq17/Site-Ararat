@@ -11,6 +11,7 @@ App Next.js em `site/`. A experiência nova ocupa `/` (inglês, principal), `/pt
 | Uma captura (Hub, Viewer, camadas) | `site/lib/ararat/midia.ts` (manifesto: tamanho, tipo, permissão) |
 | Foto da equipe | `site/public/ararat/time/` + `FOTOS` em `midia.ts` + `equipe` no conteúdo |
 | Estilo comum | `site/styles/ararat/site.css` (base do Atlas) e `integracao.css` (páginas internas) |
+| Tipografia | Source Sans 3: títulos Light 300; leitura e controles Regular 400. Arquivos locais e licença em `site/public/ararat/fontes/`; preload/sincronismo em `Cabeca.tsx` |
 | Estrutura de uma página | `site/components/ararat/` (`Home`, `Plataforma`, `Solucoes`, `Evidencias`, `Empresa`) |
 | Comportamento (montanha, camadas, palco, demonstração, biografia) | `site/lib/ararat/cliente/` |
 | Título, descrição e Open Graph | `meta` no conteúdo (todas as páginas, inclusive a Home: `meta.home`); montagem em `site/lib/ararat/metadados.ts` |
@@ -40,6 +41,14 @@ App Next.js em `site/`. A experiência nova ocupa `/` (inglês, principal), `/pt
    - nunca definir `ARARAT_REVISAO_PRIVADA` num ambiente aberto;
    - promover para produção só por pedido explícito.
 6. **Domínio definitivo:** quando houver, definir `ARARAT_SITE_URL`. Isso ativa canonical, `og:url` e hreflang absolutos. Retirar `noindex` só na publicação aprovada (`metadados.ts`).
+
+## Tipografia (22/10/2026)
+
+- Source Sans 3 substitui Lora/Inter no site novo: Light 300 nos títulos editoriais e Regular 400 em leitura e controles. Ênfases e rótulos pequenos mantêm pesos reais de 500 a 700.
+- WOFF2 variável latino (28.872 bytes) e latino estendido (60.088 bytes), hospedados no próprio site, licença SIL OFL. Origem e referências em `public/ararat/fontes/README-SourceSans3.md`. Sem Adobe Fonts ou CDN em execução.
+- O `<head>` espera a família/pesos novos antes das medidas da abertura e do SplitText. O ritmo das animações, os pacotes e a marca SVG não mudam.
+- O token histórico `--serif` continua como alias dos títulos, agora apontando para a família sans-serif escolhida. Lora e Inter permanecem em disco para preservar as versões anteriores; não são preloaded no site novo.
+- Ao trocar fontes, conferir quebras, máscaras, acentos, idiomas, zoom e restauração no navegador. Não copiar quebras de linha da fonte anterior nem compensar a rolagem por script.
 
 ## Textos e SEO (21/10/2026)
 
