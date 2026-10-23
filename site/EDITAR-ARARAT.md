@@ -149,6 +149,21 @@ App Next.js em `site/`. A experiência nova ocupa `/` (inglês, principal), `/pt
 - **Rodapé:** o crédito "Imagens: coleção PROSTATEx…" só aparece se alguma captura pode ser exibida na variante
   (`rodape.aviso`); sem capturas, `rodape.avisoSemImagens` (só a frase da revisão pelo radiologista).
 
+## Vídeo "Hub e Viewer em ação" (22/10/2026)
+
+- Seção `#video` da Plataforma (logo depois da apresentação), chamada discreta na Home (apresentação dos produtos) e
+  atalho no submenu da Plataforma. Textos em `plataforma.video` nos três idiomas (o texto dentro do vídeo é em português).
+- Um vídeo em dois enquadramentos (`VIDEO_DEMO` em `lib/ararat/midia.ts`): horizontal; vertical até 699 px. O formato é
+  escolhido no clique; antes disso só a capa do formato da tela é pedida. Sem autoplay e sem loop; pausa global para o
+  vídeo, retomar não reproduz; sair da página para e interrompe a transferência (`lib/ararat/cliente/video.ts`).
+- **Publicação aprovada pelo proprietário em 22/10/2026**, após validação com a equipe. Os dois derivados otimizados
+  (16,3 MB horizontal / 14,2 MB vertical) e capas ficam em `public/ararat/video/03d2-v2/`, servidos no mesmo domínio.
+  Só os dois MP4 têm exceção exata no `.gitignore`; ambos são binários no Git. Originais e demais capturas continuam
+  fora desta autorização. Substituições futuras devem usar outra versão de pasta e passar por nova conferência.
+- Teste: `node tests/ararat/verifica-video.mjs URL --publico --canal=msedge` usa os MP4 reais no Edge instalado e
+  confere leitura parcial (Range), ambos os formatos e bloqueios privados. `--canal=chrome` também é suportado;
+  `--webm` mantém o modo histórico de teste de cópias, sem servir de prova de reprodução MP4.
+
 ## Variáveis de ambiente
 
 | Variável | Efeito |

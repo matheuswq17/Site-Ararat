@@ -48,3 +48,7 @@
 **/*.mp4
 **/*.webm
 **/*.pdf
+
+# Derivados otimizados da demonstração, publicação aprovada pelo proprietário em 22/10/2026.
+!/site/public/ararat/video/03d2-v2/ararat-hub-viewer-demo-03d2-v2-16x9.mp4
+!/site/public/ararat/video/03d2-v2/ararat-hub-viewer-demo-03d2-v2-9x16.mp4

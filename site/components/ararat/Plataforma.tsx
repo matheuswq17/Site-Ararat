@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { conteudo, type Idioma } from "@/lib/ararat/conteudo";
 import { href } from "@/lib/ararat/rotas";
-import { comCapturas, DEMO_ASSETS, demoDisponivel, exibivel, PACOTES } from "@/lib/ararat/midia";
+import { comCapturas, DEMO_ASSETS, demoDisponivel, exibivel, PACOTES, srcVideo, VIDEO_DEMO, videoDisponivel } from "@/lib/ararat/midia";
 import { AvisoP, BotaoPausa, ImgCaptura, LinkOriginal, Quadro, Seta, Lk } from "./base";
 import type { ArquivoCaptura } from "@/lib/ararat/midia";
 
@@ -153,6 +153,57 @@ function TopoPlataforma({ idioma, children }: { idioma: Idioma; children?: React
   );
 }
 
+/** "Hub e Viewer em ação" (#video): UM player, formato escolhido no clique (horizontal; vertical até
+ *  VIDEO_DEMO.verticalAte px). Sem autoplay, sem loop, sem download antes do clique: a capa vem de <picture> (só a do
+ *  formato da tela) e o <video> só é criado pelo cliente (lib/ararat/cliente/video.ts). A área é reservada pelo CSS
+ *  (proporção do formato). Sem JS: <noscript> com o player nativo (preload="none"). Resumo textual sempre presente. */
+function VideoDemo({ idioma }: { idioma: Idioma }) {
+  if (!videoDisponivel()) return null;
+  const c = conteudo(idioma), V = c.plataforma.video, H = VIDEO_DEMO.horizontal, Vt = VIDEO_DEMO.vertical;
+  const mqV = `(max-width: ${VIDEO_DEMO.verticalAte}px)`;
+  return (
+    <section className="sec escura plat-video" id="video" aria-labelledby="video-t">
+      <div className="w">
+        <div className="cabeca-sec">
+          <span className="rotulo-sec">{V.rotulo}</span>
+          <h2 id="video-t" className="titulo-sec titulo-medio">{V.titulo}</h2>
+          <p className="lead">{V.lead}</p>
+        </div>
+        <div className="video-demo" data-video-demo="" data-mq={mqV} data-src-h={srcVideo(H.arquivo)} data-src-v={srcVideo(Vt.arquivo)}
+          data-rotulo={V.rotulo_video} data-falha={V.falha}>
+          <div className="video-quadro" data-video-quadro="">
+            <button type="button" className="video-capa" data-video-play="" aria-label={`${V.reproduzir}: ${V.titulo} (${V.duracao})`}>
+              <picture>
+                <source media={mqV} srcSet={srcVideo(Vt.capa)} width={Vt.w / 2} height={Vt.h / 2} />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={srcVideo(H.capa)} width={H.w / 2} height={H.h / 2} alt="" loading="lazy" decoding="async" />
+              </picture>
+              <span className="video-acao" aria-hidden="true">
+                <span className="video-play"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor" /></svg></span>
+                <span className="video-dur">{V.reproduzir} · <time dateTime="PT1M55S">{V.duracao}</time></span>
+              </span>
+            </button>
+            <noscript>
+              <video className="video-nativo" controls preload="none" playsInline poster={srcVideo(H.capa)} aria-label={V.rotulo_video}>
+                <source src={srcVideo(H.arquivo)} type="video/mp4" />
+              </video>
+            </noscript>
+            <p className="video-msg" data-video-msg="" role="status" aria-live="polite" hidden />
+          </div>
+        </div>
+        <div className="video-info">
+          <p className="legenda">{V.nota}</p>
+          <p className="legenda">{V.limite}</p>
+          <details className="video-resumo">
+            <summary>{V.resumo_titulo}</summary>
+            <ol>{V.resumo.map(([tt, x]) => <li key={tt}><span className="mono">{tt}</span><span>{x}</span></li>)}</ol>
+          </details>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /** Variante SEM capturas: as seis tarefas em texto (o que faz, itens, papel do radiologista), sem demonstração,
  *  sem quadros vazios e sem legendas ou avisos de régua/prévia que só existem para acompanhar as imagens. */
 function PlataformaSemCapturas({ idioma }: { idioma: Idioma }) {
@@ -161,6 +212,7 @@ function PlataformaSemCapturas({ idioma }: { idioma: Idioma }) {
   return (
     <>
       <TopoPlataforma idioma={idioma} />
+      <VideoDemo idioma={idioma} />
       <section className="sec clara plat-hub" aria-label="ARARAT Hub">
         <div className="w">
           <div className="rad-intro"><span className="rotulo-sec">{Pl.radiologista_rotulo}</span><p className="lead">{Pl.radiologista}</p></div>
@@ -196,6 +248,7 @@ export function PaginaPlataforma({ idioma }: { idioma: Idioma }) {
   return (
     <>
       <TopoPlataforma idioma={idioma}><Demo idioma={idioma} /></TopoPlataforma>
+      <VideoDemo idioma={idioma} />
 
       <section className="sec clara plat-hub" aria-label="ARARAT Hub">
         <div className="w">

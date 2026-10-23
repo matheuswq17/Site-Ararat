@@ -41,7 +41,7 @@ try {
   for (const path of ['/pt','/','/es']) {
     await p.goto(base+path);
     const links = await p.locator('header .nav .nav-painel a').evaluateAll(es => es.map(e => e.getAttribute('href')));
-    check(path+': atalhos localizados', links.length === 13 && links.every(x => path === '/pt' ? x.startsWith('/pt/') : path === '/es' ? x.startsWith('/es/') : !/^\/(pt|es)(\/|$)/.test(x)));
+    check(path+': atalhos localizados', links.length === 13 + (links.some(x => x.endsWith('#video')) ? 1 : 0) && links.every(x => path === '/pt' ? x.startsWith('/pt/') : path === '/es' ? x.startsWith('/es/') : !/^\/(pt|es)(\/|$)/.test(x)));
     for (const href of links) {
       const [route,anchor] = href.split('#'); const r=await p.request.get(base+route); const html=await r.text();
       check('Destino existente '+href, r.status() === 200 && (!anchor || html.includes('id="'+anchor+'"')));

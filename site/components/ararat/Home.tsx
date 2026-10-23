@@ -1,6 +1,6 @@
 import { conteudo, IDIOMAS, type Idioma } from "@/lib/ararat/conteudo";
 import { href, type Pagina } from "@/lib/ararat/rotas";
-import { comCapturas, demoDisponivel, exibivel, PACOTES, type ArquivoCaptura } from "@/lib/ararat/midia";
+import { comCapturas, demoDisponivel, exibivel, PACOTES, videoDisponivel, type ArquivoCaptura } from "@/lib/ararat/midia";
 import { Aviso, BotaoPausa, CapturaTexto, EstagioLi, ImgCaptura, LinkOriginal, Ponto, Quadro, Seta, ChipEstagio, Lk } from "./base";
 import { Camadas } from "./Camadas";
 import { MONTANHA_CANDIDATA, MONTANHA_CANDIDATA_ANTERIOR } from "@/lib/ararat/montanha-candidata";
@@ -199,6 +199,13 @@ function Capitulos({ idioma }: { idioma: Idioma }) {
   );
 }
 
+/** Chamada discreta para o vídeo da Plataforma (#video); o player não se repete na Home. Só quando o vídeo está
+ *  liberado para a variante. */
+function ChamadaVideo({ idioma }: { idioma: Idioma }) {
+  if (!videoDisponivel()) return null;
+  return <p className="mais video-chamada"><Lk className="link-seta" href={href("platform", idioma, "video")}>{conteudo(idioma).plataforma.video.chamada}</Lk></p>;
+}
+
 /** Variante SEM capturas: os três produtos em colunas de texto — tarefa, itens, estágio e limites —, sem palco,
  *  abas, descrições de tela, avisos da régua ou legenda de origem (eles só existem para acompanhar as imagens). */
 function CasoSemCapturas({ idioma }: { idioma: Idioma }) {
@@ -218,6 +225,7 @@ function CasoSemCapturas({ idioma }: { idioma: Idioma }) {
             <ol className="fluxo">{C.fluxo.map(([a, b]) => <li key={a}><span className="f-passo">{a}</span><span className="f-prod">{b}</span></li>)}</ol>
             <p className="fluxo-nota">{S.fluxo_nota}</p>
           </div>
+          <ChamadaVideo idioma={idioma} />
         </div>
         <div className="produtos-texto">
           <article className="prod-col" id="cap-model" aria-labelledby="cap-model-t">
@@ -273,6 +281,7 @@ function Caso({ idioma }: { idioma: Idioma }) {
             <ol className="fluxo">{C.fluxo.map(([a, b]) => <li key={a}><span className="f-passo">{a}</span><span className="f-prod">{b}</span></li>)}</ol>
             <p className="fluxo-nota">{C.fluxo_nota}</p>
           </div>
+          <ChamadaVideo idioma={idioma} />
         </div>
         <div className="atlas-grade" data-atlas="" data-palco={palcoPossivel ? "pendente" : undefined}>
           <div className="palco-col">

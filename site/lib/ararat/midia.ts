@@ -51,6 +51,24 @@ export const srcCaptura = (f: ArquivoCaptura) =>
  *  própria para texto (não a mesma página com cada imagem trocada pela descrição). */
 export const comCapturas = () => (Object.keys(CAPTURAS) as ArquivoCaptura[]).every(exibivel);
 
+/** Vídeo demonstrativo do Hub e do Viewer (03d2 v2, 22/10/2026): UM vídeo em dois enquadramentos da mesma sequência
+ *  (horizontal no desktop, vertical em telas estreitas). Publicação desta demonstração aprovada pelo proprietário
+ *  em 22/10/2026 após validação com a equipe. Só os derivados otimizados e suas capas são públicos; os originais e
+ *  as demais capturas continuam fora desta autorização. Arquivos versionados no próprio site, sem serviço externo. */
+export type FormatoVideo = { arquivo: string; capa: string; w: number; h: number; bytes: number };
+export const VIDEO_DEMO = {
+  versao: "03d2-v2",
+  permissao: "publica" as Permissao,
+  base: "/ararat/video/03d2-v2/",
+  duracao: 115.5,
+  horizontal: { arquivo: "ararat-hub-viewer-demo-03d2-v2-16x9.mp4", capa: "ararat-hub-viewer-demo-03d2-v2-16x9-capa.webp", w: 1920, h: 1080, bytes: 16316810 } as FormatoVideo,
+  vertical: { arquivo: "ararat-hub-viewer-demo-03d2-v2-9x16.mp4", capa: "ararat-hub-viewer-demo-03d2-v2-9x16-capa.webp", w: 1080, h: 1920, bytes: 14192788 } as FormatoVideo,
+  /** largura máxima (px) em que o formato vertical é escolhido */
+  verticalAte: 699,
+};
+export const videoDisponivel = () => VIDEO_DEMO.permissao === "publica" || REVISAO_PRIVADA;
+export const srcVideo = (f: string) => VIDEO_DEMO.base + f;
+
 /** A demonstração guiada usa as capturas do pacote plataforma-fluxo-0.1.0 (mesma permissão pendente). */
 export const DEMO_ASSETS = "/privado/plataforma-fluxo-0.1.0/assets/";
 export const demoDisponivel = () => REVISAO_PRIVADA;
