@@ -1,3 +1,4 @@
+import { FundoVideo } from "./FundoVideo";
 import type { ReactNode } from "react";
 import { conteudo, type Idioma } from "@/lib/ararat/conteudo";
 import { href } from "@/lib/ararat/rotas";
@@ -129,7 +130,8 @@ function Tarefa({ g, children, classe }: { g: Grupo; idioma: Idioma; children?: 
 function TopoPlataforma({ idioma, children }: { idioma: Idioma; children?: ReactNode }) {
   const c = conteudo(idioma), Pl = c.plataforma;
   return (
-    <section className="sec escura topo-pag plat-topo" aria-labelledby="pl-h1">
+    <section className="sec escura topo-pag plat-topo topo-com-fundo" aria-labelledby="pl-h1">
+      <FundoVideo idioma={idioma} />
       <div className="w">
         <span className="estrato" aria-hidden="true" />
         <div className="plat-topo-grade">

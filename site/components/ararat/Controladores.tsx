@@ -12,6 +12,7 @@ import { montarEntradas } from "@/lib/ararat/cliente/entradas";
 import { montarControleRevisao, montarTextos, prepararEntrada } from "@/lib/ararat/cliente/textos";
 import { montarDemo } from "@/lib/ararat/cliente/demo";
 import { montarVideo } from "@/lib/ararat/cliente/video";
+import { montarFundoVideo } from "@/lib/ararat/cliente/fundo-video";
 import { montarNavegacao } from "@/lib/ararat/cliente/navegacao";
 import { montarBios } from "@/lib/ararat/cliente/bio";
 import { parametro } from "@/lib/ararat/cliente/externo";
@@ -81,6 +82,8 @@ export function Controladores({ idioma, modulos }: { idioma: Idioma; modulos: Mo
     // vídeo "Hub e Viewer em ação": só existe no HTML quando liberado para a variante (videoDisponivel)
     const video = document.querySelector<HTMLElement>("[data-video-demo]");
     if (video) desfazer.push(montarVideo(video, { pref: movimento }));
+    const fundo = document.querySelector<HTMLElement>("[data-video-fundo]");
+    if (fundo) desfazer.push(montarFundoVideo(fundo, { pref: movimento }));
     if (tem("bio")) desfazer.push(montarBios());
     // movimento editorial: atual (padrão) ou candidato da rodada de 16/10 — só na revisão privada
     // (?editorial=atual|candidato, guardado na aba). Na pública parametro() é null e fica o atual.

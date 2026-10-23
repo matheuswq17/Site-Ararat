@@ -70,7 +70,7 @@ if (PUBLICO) {
         const q = document.querySelector("[data-video-quadro]"), r = q.getBoundingClientRect();
         const head = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--head")) || 64;
         return { titulo: s.querySelector("h2").textContent, antes: prev?.className, depois: next?.className, w: r.width, h: r.height,
-          cabe: r.height <= innerHeight - head, video: !!document.querySelector("main video"), play: !!document.querySelector("[data-video-play]"),
+          cabe: r.height <= innerHeight - head, video: !!document.querySelector("[data-video-demo] video"), play: !!document.querySelector("[data-video-play]"),
           dur: document.querySelector(".video-dur")?.textContent, resumo: document.querySelectorAll(".video-resumo li").length, cls: window.__cls, over: document.documentElement.scrollWidth - innerWidth };
       });
       const prop = fmt === "16x9" ? 16 / 9 : 9 / 16;
@@ -96,7 +96,7 @@ if (PUBLICO) {
     await p.focus("[data-video-play]");
     await p.keyboard.press("Enter");
     await p.waitForTimeout(2500);
-    const x = await p.evaluate(() => { const v = document.querySelector("main video"); return v ? { foco: document.activeElement === v, controls: v.controls, autoplay: v.hasAttribute("autoplay"), loop: v.loop, t: v.currentTime, pausado: v.paused, erro: v.error?.code ?? null, botao: !document.querySelector("[data-pausa]")?.hidden } : null; });
+    const x = await p.evaluate(() => { const v = document.querySelector("[data-video-demo] video"); return v ? { foco: document.activeElement === v, controls: v.controls, autoplay: v.hasAttribute("autoplay"), loop: v.loop, t: v.currentTime, pausado: v.paused, erro: v.error?.code ?? null, botao: !document.querySelector("[data-pausa]")?.hidden } : null; });
     const mp4 = [...new Set(pedidos.filter((q) => q.url.endsWith(".mp4")).map((q) => q.url))];
     ok("player", `${w}x${h}: Enter na capa cria o player com foco, controles nativos, sem autoplay/loop no HTML`, x && x.foco && x.controls && !x.autoplay && !x.loop, x || {});
     ok("rede", `${w}x${h}: só o formato ${fmt} é pedido`, mp4.length === 1 && mp4[0].includes(fmt), { mp4 });
@@ -105,17 +105,17 @@ if (PUBLICO) {
       ok("pausa", `${w}x${h}: botão de pausa global aparece durante a reprodução`, x && x.botao, x || {});
       await p.evaluate(() => window.ARARAT_MOVIMENTO.definir(true));
       await p.waitForTimeout(400);
-      const pa = await p.evaluate(() => document.querySelector("main video").paused);
+      const pa = await p.evaluate(() => document.querySelector("[data-video-demo] video").paused);
       await p.evaluate(() => window.ARARAT_MOVIMENTO.definir(false));
       await p.waitForTimeout(800);
-      const re = await p.evaluate(() => document.querySelector("main video").paused);
+      const re = await p.evaluate(() => document.querySelector("[data-video-demo] video").paused);
       ok("pausa", `${w}x${h}: pausa global interrompe; retomar as animações não reproduz`, pa === true && re === true, { pa, re });
-      await p.evaluate(() => document.querySelector("main video").play());
+      await p.evaluate(() => document.querySelector("[data-video-demo] video").play());
       await p.waitForTimeout(700);
-      const sk = await p.evaluate(() => { const v = document.querySelector("main video"); v.currentTime = 60; return new Promise((r) => v.addEventListener("seeked", () => r(Math.round(v.currentTime)), { once: true })); });
+      const sk = await p.evaluate(() => { const v = document.querySelector("[data-video-demo] video"); v.currentTime = 60; return new Promise((r) => v.addEventListener("seeked", () => r(Math.round(v.currentTime)), { once: true })); });
       ok("player", `${w}x${h}: busca`, sk === 60, { sk });
       // saída da página: navegação no app para outra página
-      const antes = await p.evaluate(() => { window.__v = document.querySelector("main video"); return !window.__v.paused; });
+      const antes = await p.evaluate(() => { window.__v = document.querySelector("[data-video-demo] video"); return !window.__v.paused; });
       await p.evaluate(() => document.querySelector('a[href="/pt/pesquisa"]').click()); // navegação no app (Link)
       await p.waitForURL(/\/pt\/pesquisa/); await p.waitForTimeout(800);
       const depois = await p.evaluate(() => ({ pausado: window.__v.paused, src: window.__v.getAttribute("src"), conectado: window.__v.isConnected }));

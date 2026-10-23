@@ -7,6 +7,7 @@
     "next": "/_next/ responde (código e dados do Next); /_next/image só com url liberada"
   },
   "pastasPublic": {
+    "ararat/fundos/mineral-v1": { "classe": "fundo-aprovado", "exposicao": "publica", "git": true, "nota": "Fundo decorativo autorizado pelo proprietário em 23/10/2026: dois MP4 derivados sem áudio e poster, somente em Soluções, Plataforma e Empresa. Não libera os originais nem os estudos privados." },
     "ararat/video/03d2-v2": { "classe": "video-aprovado", "exposicao": "publica", "git": true, "nota": "Demonstração Hub/Viewer autorizada pelo proprietário em 22/10/2026: somente dois MP4 derivados otimizados e suas capas. Não libera outras capturas, originais ou revisões." },
     "ararat": { "classe": "site-novo", "exposicao": "publica", "git": true, "nota": "fontes (OFL), marca 03D2 (provisória), pacotes do Motion (sha256 conferidos), fotos da equipe (já versionadas antes)" },
     "previa/home-montanha-1.2.1-03d2": { "classe": "site-novo", "exposicao": "publica", "git": true, "nota": "pacote da montanha 1.2.1-03d2 usado pela Home nova" },

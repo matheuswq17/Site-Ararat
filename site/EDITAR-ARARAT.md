@@ -172,3 +172,8 @@ App Next.js em `site/`. A experiência nova ocupa `/` (inglês, principal), `/pt
 | `ARARAT_SITE_URL` | Domínio confirmado (ainda não existe) |
 | `ARARAT_BUILD_DIR` | Pasta do build (o abridor usa `.next-revisao` e `.next-publico`) |
 | `ARARAT_RAIZ_DEPENDENCIAS` | Raiz do Turbopack quando `node_modules` é junção/link para outro checkout (o abridor define, ex.: `C:\mvp_ararat_site`). Sem a variável, nada muda |
+
+
+## Fundo decorativo aprovado (23/10/2026)
+
+Soluções, Plataforma e Empresa compartilham `FundoVideo`, nos três idiomas, sem parâmetro de revisão. A mídia versionada fica em `/ararat/fundos/mineral-v1/`: desktop 803.561 bytes, celular 198.651 bytes e poster 44.446 bytes. Os dois derivados não têm faixa de áudio. A opacidade aprovada é 0,26 no desktop e 0,18 no celular, sem alterar altura ou texto. A pausa global, movimento reduzido, economia de dados, aba oculta e saída da área visível interrompem a reprodução; sem JavaScript ou em falha permanece o poster. Os originais e os estudos mineral/estratos continuam privados. A fonte, a Home, o vídeo demonstrativo e os pacotes do Motion não foram alterados.

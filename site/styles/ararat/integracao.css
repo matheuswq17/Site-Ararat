@@ -257,3 +257,20 @@
 .video-chamada{margin-top:22px}
 @media (max-width:699px){.video-acao{left:12px;top:12px}.video-dur{font-size:14px}}
 .video-resumo .mono{font-family:var(--mono);font-size:13.5px;color:var(--escura-fg)}
+
+/* Legendas legíveis sobre a pedra, sem deslocar texto ou alterar a arte. */
+.topo-com-fundo .plat-produtos span{position:relative;isolation:isolate;justify-self:start}
+.topo-com-fundo .plat-produtos span::before{content:"";position:absolute;inset:-2px -5px;z-index:-1;border-radius:3px;background:#101314eb;box-shadow:0 0 8px 5px #101314b3;pointer-events:none}
+
+/* Fundo em vídeo aprovado: Soluções, Plataforma e Empresa. A arte acompanha, não disputa com o texto. */
+.vis-video,.vis-video-pausa{display:none}
+.topo-com-fundo{position:relative;overflow:hidden;isolation:isolate}
+.topo-com-fundo > .w{position:relative;z-index:1}
+.topo-com-fundo .vis-video-camada{display:block;position:absolute;inset:0;z-index:0;pointer-events:none}
+.topo-com-fundo .vis-video{display:block;position:absolute;inset:0;opacity:.26;mix-blend-mode:screen;-webkit-mask-image:linear-gradient(to right,transparent 28%,#000 70%),linear-gradient(to bottom,transparent 0,#000 16%,#000 70%,transparent 100%);mask-image:linear-gradient(to right,transparent 28%,#000 70%),linear-gradient(to bottom,transparent 0,#000 16%,#000 70%,transparent 100%);-webkit-mask-composite:source-in;mask-composite:intersect}
+.vis-video img,.vis-video video{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:right center}
+.vis-video video{opacity:0}
+.vis-video[data-fundo-pronto="1"] video{opacity:1}
+.topo-com-fundo .vis-video-pausa{display:block;position:absolute;right:max(24px,calc((100vw - 1176px)/2));bottom:24px;z-index:2}
+@media(max-width:899px){.topo-com-fundo .vis-video{bottom:auto;height:180px;opacity:.18;-webkit-mask-image:linear-gradient(to right,transparent 12%,#000 75%),linear-gradient(to bottom,#000 10%,transparent 100%);mask-image:linear-gradient(to right,transparent 12%,#000 75%),linear-gradient(to bottom,#000 10%,transparent 100%)}.topo-com-fundo .vis-video-pausa{right:20px;bottom:16px}}
+@media(prefers-reduced-motion:reduce){.vis-video video,.vis-video-pausa{display:none!important}}

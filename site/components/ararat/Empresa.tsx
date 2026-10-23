@@ -2,6 +2,7 @@ import { conteudo, type Idioma } from "@/lib/ararat/conteudo";
 import { href, type Pagina } from "@/lib/ararat/rotas";
 import { FOTOS } from "@/lib/ararat/midia";
 import { Lk } from "./base";
+import { FundoVideo } from "./FundoVideo";
 
 /* Empresa: propósito documentado (sem história inventada), o trabalho de hoje, a equipe real com biografias e o
  * contato honesto. Biografia: janela modal acessível com JS (bio.ts); sem JS, cada cartão leva à página da pessoa. */
@@ -31,7 +32,8 @@ export function PaginaEmpresa({ idioma }: { idioma: Idioma }) {
   const c = conteudo(idioma), Em = c.empresa;
   return (
     <>
-      <section className="sec escura topo-pag" aria-labelledby="em-h1">
+      <section className="sec escura topo-pag topo-com-fundo" aria-labelledby="em-h1">
+        <FundoVideo idioma={idioma} />
         <div className="w">
           <span className="estrato" aria-hidden="true" />
           <div className="cabeca-sec" style={{ marginBottom: 0 }}>

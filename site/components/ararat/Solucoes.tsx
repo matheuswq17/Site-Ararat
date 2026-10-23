@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import { FundoVideo } from "./FundoVideo";
 import { conteudo, type Idioma } from "@/lib/ararat/conteudo";
 import { href } from "@/lib/ararat/rotas";
 import { ChipEstagio, EstagioLi, Ponto, Lk } from "./base";
@@ -9,9 +10,10 @@ import { Camadas } from "./Camadas";
  * DEMONSTRAÇÃO (o que este site mostra), VALIDAÇÃO (informada só no nível da frente de próstata) e DISPONIBILIDADE
  * (ainda não publicada). PI-RADS descreve só o modelo novo. Tireoide: proporcional ao que existe — sem produto pronto. */
 
-function Topo({ titulo, lead, children, id }: { titulo: string; lead: string; children?: React.ReactNode; id: string }) {
+function Topo({ titulo, lead, children, id, idioma, fundo = false }: { titulo: string; lead: string; children?: React.ReactNode; id: string; idioma: Idioma; fundo?: boolean }) {
   return (
-    <section className="sec escura topo-pag" aria-labelledby={id}>
+    <section className={`sec escura topo-pag${fundo ? " topo-com-fundo" : ""}`} aria-labelledby={id}>
+      {fundo ? <FundoVideo idioma={idioma} /> : null}
       <div className="w">
         <span className="estrato" aria-hidden="true" />
         <div className="cabeca-sec" style={{ marginBottom: 0 }}>
@@ -42,7 +44,7 @@ export function PaginaSolucoes({ idioma }: { idioma: Idioma }) {
   const cap = comCapturas();
   return (
     <>
-      <Topo titulo={S.titulo} lead={S.lead} id="so-h1" />
+      <Topo idioma={idioma} fundo titulo={S.titulo} lead={S.lead} id="so-h1" />
       <section className="sec escura frente-prostata" aria-labelledby="fp-t">
         <div className="w">
           <div className="frente-cab">
@@ -87,7 +89,7 @@ export function PaginaProstata({ idioma }: { idioma: Idioma }) {
   const cap = comCapturas(), S = c.semMidia;
   return (
     <>
-      <Topo titulo={P.pagina_titulo} lead={cap ? P.pagina_lead : S.prostata_lead} id="pr-h1">
+      <Topo idioma={idioma} titulo={P.pagina_titulo} lead={cap ? P.pagina_lead : S.prostata_lead} id="pr-h1">
         <ul className="estagios" style={{ marginTop: 8 }}>
           <EstagioLi idioma={idioma} chave="frente_validacao" rotulo={P.frente} />
           <EstagioLi idioma={idioma} chave="novo" rotulo={X.piradsClassificacao} />
@@ -166,7 +168,7 @@ export function PaginaTireoide({ idioma }: { idioma: Idioma }) {
   const c = conteudo(idioma), T = c.tireoide, X = c.extra;
   return (
     <>
-      <Topo titulo={T.titulo} lead={T.lead} id="ti-h1"><ul className="estagios"><EstagioLi idioma={idioma} chave="desenv" /></ul></Topo>
+      <Topo idioma={idioma} titulo={T.titulo} lead={T.lead} id="ti-h1"><ul className="estagios"><EstagioLi idioma={idioma} chave="desenv" /></ul></Topo>
       <section className="sec clara">
         <div className="w duas-col">
           <p className="lead" style={{ color: "var(--ink)" }}>{T.texto}</p>
