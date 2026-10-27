@@ -1,3 +1,4 @@
+import { MARCA_BASE } from "./marca";
 import type { Metadata, Viewport } from "next";
 import { conteudo, IDIOMAS, LOCALE_OG, type Idioma } from "./conteudo";
 import { href, ROTAS, type Pagina } from "./rotas";
@@ -25,7 +26,7 @@ export function metadados(chave: Pagina | `pessoa:${string}`, idioma: Idioma, ti
     ...(absoluto ? { metadataBase: new URL(SITE_URL), alternates: { canonical: href(chave, idioma), languages: { ...linguas, "x-default": href(chave, "en") } } } : {}),
     openGraph: { siteName: "ARARAT", type: "website", title, description, locale: LOCALE_OG[idioma], ...(absoluto ? { url: href(chave, idioma) } : {}) },
     twitter: { card: "summary", title, description },
-    icons: { icon: [{ url: "/ararat/marca/favicon.svg", type: "image/svg+xml" }] },
+    icons: { icon: [{ url: MARCA_BASE + "/favicon.ico", sizes: "16x16 32x32 48x48" }, { url: MARCA_BASE + "/favicon.svg", type: "image/svg+xml" }], apple: [{ url: MARCA_BASE + "/apple-touch-icon-180.png", sizes: "180x180", type: "image/png" }] },
   };
 }
 

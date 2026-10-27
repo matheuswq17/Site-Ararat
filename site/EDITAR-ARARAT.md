@@ -177,3 +177,10 @@ App Next.js em `site/`. A experiência nova ocupa `/` (inglês, principal), `/pt
 ## Fundo decorativo aprovado (23/10/2026)
 
 Soluções, Plataforma e Empresa compartilham `FundoVideo`, nos três idiomas, sem parâmetro de revisão. A mídia versionada fica em `/ararat/fundos/mineral-v1/`: desktop 803.561 bytes, celular 198.651 bytes e poster 44.446 bytes. Os dois derivados não têm faixa de áudio. A opacidade aprovada é 0,26 no desktop e 0,18 no celular, sem alterar altura ou texto. A pausa global, movimento reduzido, economia de dados, aba oculta e saída da área visível interrompem a reprodução; sem JavaScript ou em falha permanece o poster. Os originais e os estudos mineral/estratos continuam privados. A fonte, a Home, o vídeo demonstrativo e os pacotes do Motion não foram alterados.
+
+
+## Identidade ARARAT v2.0 (26/10/2026)
+
+A marca do site passa a usar os assets versionados em `/ararat/marca-v2/`, selecionados do `ARARAT_Brand_System_v2.0.zip` fornecido pelo proprietário. A origem, o SHA-256 do ZIP e os hashes dos arquivos estão em `integracao.json`. A assinatura compacta mantém a moldura e segue a aplicação do kit: 40 px no cabeçalho desktop, 32 px no celular e no rodapé, sem alterar os 64/56 px do cabeçalho. Hub e Viewer usam as assinaturas compactas de 32 px. A assinatura Model, que já existia no site mas não veio no kit, foi composta com o mesmo símbolo, ARARAT em curvas e a receita de produto do kit: Source Sans 3 Light 300, cap 34/100, tracking 0,12 em e intervalo 0,62 cap. Os SVG fornecidos não foram redesenhados. A linha de terreno substitui o divisor antigo mantendo sua área.
+
+Source Sans 3 e suas licenças já eram idênticas ao pacote e foram preservadas. O contexto mineral/clínico com cobre permanece conforme as aplicações e os tokens de contexto do próprio kit. Não foram importados os novos vídeos de revelação nem a proposta futura para a Home: montanha, GSAP e fundo em vídeo aprovados continuam preservados. Os assets antigos permanecem disponíveis para comparações históricas. Nenhum original, PDF, gravação, captura de revisão ou gerador privado foi incluído.

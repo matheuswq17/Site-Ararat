@@ -1,0 +1,91 @@
+{
+  "pacote": "ARARAT_Brand_System_v2.0",
+  "versao": "2.0",
+  "dataIntegracao": "2026-10-26",
+  "sha256Zip": "18ea00b17ea570884e9435b22122a5db19a8f664ca95178a9cf7d6b3e7272fd4",
+  "arquivosConferidos": 464,
+  "arquivos": [
+    {
+      "arquivo": "assinatura-horizontal-compacta-negativo.svg",
+      "origem": "01_logo/assinatura-horizontal-compacta/ararat-assinatura-horizontal-compacta-negativo.svg",
+      "bytes": 18746,
+      "sha256": "bd025909d455d177c4316d41ec7d156ce9117c1ce489285b1aca39614455059f"
+    },
+    {
+      "arquivo": "assinatura-horizontal-compacta-positivo.svg",
+      "origem": "01_logo/assinatura-horizontal-compacta/ararat-assinatura-horizontal-compacta-positivo.svg",
+      "bytes": 18746,
+      "sha256": "c13dba63ba987ea256e4c4a2c34050cef1fc68f316c7d7725ad2c0b1a25bf920"
+    },
+    {
+      "arquivo": "marca-completa-negativo.svg",
+      "origem": "01_logo/marca-completa/ararat-marca-completa-negativo.svg",
+      "bytes": 20495,
+      "sha256": "1e40d837a2dfba995063b6459f2b8606364b7acffd018b39a1a2fba603e83d8d"
+    },
+    {
+      "arquivo": "marca-completa-positivo.svg",
+      "origem": "01_logo/marca-completa/ararat-marca-completa-positivo.svg",
+      "bytes": 20495,
+      "sha256": "221f592b0eb0f058e8d9b8c57da8b67104523189c97a1d5792b4b7198e2c3295"
+    },
+    {
+      "arquivo": "ararat-hub-compacta-negativo.svg",
+      "origem": "01_logo/produtos/ararat-hub-compacta-negativo.svg",
+      "bytes": 19813,
+      "sha256": "1478c0d737d5cf094f00ca17d3615794688e5a8bcfd370f33f6d6b824e6ed85c"
+    },
+    {
+      "arquivo": "ararat-viewer-compacta-negativo.svg",
+      "origem": "01_logo/produtos/ararat-viewer-compacta-negativo.svg",
+      "bytes": 20067,
+      "sha256": "03535e14560bddebd9dd71c8c33f17fe2332502fed165f6d455a1525d9ad6b95"
+    },
+    {
+      "arquivo": "linha-de-terreno.svg",
+      "origem": "06_grafismos/ararat-linha-de-terreno.svg",
+      "bytes": 2883,
+      "sha256": "88342398f80fe7bea3c84af90fb2ff903c67dde32d3dc7f0628fe0c2830d585b"
+    },
+    {
+      "arquivo": "favicon.svg",
+      "origem": "01_logo/favicon/favicon.svg",
+      "bytes": 16068,
+      "sha256": "fc8f144ba22ca85dcd8fd30d28e9e365fe94a4de951899fbfa9e699af9dbaf49"
+    },
+    {
+      "arquivo": "favicon.ico",
+      "origem": "01_logo/favicon/favicon.ico",
+      "bytes": 3009,
+      "sha256": "72094fea6d7c986bf6ff011685a7d523022ec9be201963907e5a6f6db84286ad"
+    },
+    {
+      "arquivo": "apple-touch-icon-180.png",
+      "origem": "01_logo/favicon/apple-touch-icon-180.png",
+      "bytes": 5071,
+      "sha256": "aaa3bd71d0041df0b4b1e439a0509da0af44a17e164d299602b677079354fc89"
+    },
+    {
+      "arquivo": "LICENCAS.md",
+      "origem": "LICENCAS.md",
+      "bytes": 883,
+      "sha256": "f5e88c6b3a82fe5435c8bcfc86f4dcca92739a170b4d228c53e35823edf283d5"
+    },
+    {
+      "arquivo": "ararat-model-compacta-negativo.svg",
+      "origem": "Derivação da assinatura compacta do pacote: MODEL, Source Sans 3 Light 300, cap 34, tracking .12em, espaço .62 cap; símbolo e ARARAT preservados.",
+      "bytes": 20334,
+      "sha256": "9e2af2fb31c8e31ecb1c92729fcccd5545db15ed9bf73abe531bab44dd077c4f"
+    }
+  ],
+  "derivacaoModel": {
+    "HUB": {
+      "largura_reproduzida": 451.53495289280335,
+      "largura_pacote": 451.54
+    },
+    "VIEWER": {
+      "largura_reproduzida": 538.7174172881156,
+      "largura_pacote": 538.72
+    }
+  }
+}

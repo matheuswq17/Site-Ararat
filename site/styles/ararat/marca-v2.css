@@ -1,0 +1,10 @@
+/* Brand System v2.0. Alvo: 08_aplicacoes/site/cabecalho-rodape.html, versão compacta.
+ * Mantém os temas mineral/clínico/cobre documentados no kit como contexto do site.
+ * As fontes locais já são as mesmas do kit: Light 300 nos títulos, Regular 400 na leitura.
+ * A montanha, os vídeos e a coreografia não fazem parte desta troca de identidade. */
+.atlas .cab .marca{flex:none;min-width:0;min-height:44px}
+.atlas .cab .marca img{position:relative;top:-.5px;height:40px;width:auto;max-width:none}
+.atlas .rodape .rod-marca img{height:32px;width:auto}
+.atlas .cap-logo,.atlas .plat-produtos img{height:32px;width:auto;max-width:100%;object-fit:contain}
+.atlas .estrato{background-image:url("/ararat/marca-v2/linha-de-terreno.svg")}
+@media(max-width:899px){.atlas .cab .marca img{height:32px;width:auto;max-width:none}}

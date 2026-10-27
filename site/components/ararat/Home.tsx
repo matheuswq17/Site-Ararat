@@ -1,3 +1,4 @@
+import { MARCAS_PRODUTO } from "@/lib/ararat/marca";
 import { conteudo, IDIOMAS, type Idioma } from "@/lib/ararat/conteudo";
 import { href, type Pagina } from "@/lib/ararat/rotas";
 import { comCapturas, demoDisponivel, exibivel, PACOTES, videoDisponivel, type ArquivoCaptura } from "@/lib/ararat/midia";
@@ -86,9 +87,7 @@ function Abertura({ idioma }: { idioma: Idioma }) {
   );
 }
 
-// Largura das marcas a 20 px de altura (viewBox dos SVG em public/ararat/marca/…-negativo.svg). Sem ela a marca tinha
-// largura 0 até carregar, e o cabeçalho do capítulo mudava de 1 para 2 linhas depois (+34 px no Viewer em 1280×720).
-const LARGURA_LOGO: Record<string, number> = { model: 267, hub: 230, viewer: 280 };
+// As dimensões das assinaturas v2 ficam reservadas em MARCAS_PRODUTO, antes do download.
 
 function Vista({ idioma, id, arquivo, alt, legenda, origem, aviso, ui, claro, alta }:
   { idioma: Idioma; id: string; arquivo: ArquivoCaptura; alt: string; legenda: string; origem: string; aviso?: string; ui?: boolean; claro?: boolean; alta?: boolean }) {
@@ -186,7 +185,7 @@ function Capitulos({ idioma }: { idioma: Idioma }) {
         <article key={k.id} className="capitulo" id={`cap-${k.id}`} data-capitulo={k.id} aria-labelledby={`cap-${k.id}-t`}>
           <header className="cap-cab">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className="cap-logo" src={`/ararat/marca/ararat-${k.id}-negativo.svg`} alt={k.prod} width={LARGURA_LOGO[k.id]} height={20} />
+            <img className="cap-logo" src={MARCAS_PRODUTO[k.id].src} alt={k.prod} width={MARCAS_PRODUTO[k.id].width} height={32} />
             <span className="cap-passos">{k.passos}</span>
           </header>
           <h3 id={`cap-${k.id}-t`} className="cap-titulo">{k.titulo}</h3>
@@ -230,7 +229,7 @@ function CasoSemCapturas({ idioma }: { idioma: Idioma }) {
         <div className="produtos-texto">
           <article className="prod-col" id="cap-model" aria-labelledby="cap-model-t">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className="cap-logo" src="/ararat/marca/ararat-model-negativo.svg" alt={mod.prod} width={LARGURA_LOGO.model} height={20} />
+            <img className="cap-logo" src={MARCAS_PRODUTO.model.src} alt={mod.prod} width={MARCAS_PRODUTO.model.width} height={32} />
             <h3 id="cap-model-t" className="cap-titulo">{S.model_titulo}</h3>
             <p className="cap-texto">{c.home.prod[0][2]}</p>
             <ul className="prod-comps">
@@ -242,7 +241,7 @@ function CasoSemCapturas({ idioma }: { idioma: Idioma }) {
           </article>
           <article className="prod-col" id="cap-hub" aria-labelledby="cap-hub-t">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className="cap-logo" src="/ararat/marca/ararat-hub-negativo.svg" alt={hub.prod} width={LARGURA_LOGO.hub} height={20} />
+            <img className="cap-logo" src={MARCAS_PRODUTO.hub.src} alt={hub.prod} width={MARCAS_PRODUTO.hub.width} height={32} />
             <h3 id="cap-hub-t" className="cap-titulo">{g.receber.titulo}</h3>
             <p className="cap-texto">{g.receber.texto}</p>
             <ul className="t-itens">{g.receber.itens.map((i) => <li key={i}>{i}</li>)}</ul>
@@ -250,7 +249,7 @@ function CasoSemCapturas({ idioma }: { idioma: Idioma }) {
           </article>
           <article className="prod-col" id="cap-viewer" aria-labelledby="cap-viewer-t">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className="cap-logo" src="/ararat/marca/ararat-viewer-negativo.svg" alt={vw.prod} width={LARGURA_LOGO.viewer} height={20} />
+            <img className="cap-logo" src={MARCAS_PRODUTO.viewer.src} alt={vw.prod} width={MARCAS_PRODUTO.viewer.width} height={32} />
             <h3 id="cap-viewer-t" className="cap-titulo">{vw.titulo}</h3>
             <p className="cap-texto">{vw.texto}</p>
             <ul className="prod-tarefas" aria-label={S.viewer_rotulo}>{viewer.map((x) => <li key={x.id}><Lk href={href("platform", idioma, x.id)}>{x.titulo}</Lk></li>)}</ul>

@@ -1,3 +1,4 @@
+import { MARCAS_PRODUTO } from "@/lib/ararat/marca";
 import { FundoVideo } from "./FundoVideo";
 import type { ReactNode } from "react";
 import { conteudo, type Idioma } from "@/lib/ararat/conteudo";
@@ -143,7 +144,7 @@ function TopoPlataforma({ idioma, children }: { idioma: Idioma; children?: React
             {(["hub", "viewer"] as const).map((k) => (
               <li key={k}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={`/ararat/marca/ararat-${k}-negativo.svg`} alt={`ARARAT ${k === "hub" ? "Hub" : "Viewer"}`} height={24} />
+                <img src={MARCAS_PRODUTO[k].src} alt={`ARARAT ${k === "hub" ? "Hub" : "Viewer"}`} width={MARCAS_PRODUTO[k].width} height={32} />
                 <span>{(k === "hub" ? c.percurso.passos.slice(0, 2) : c.percurso.passos.slice(2)).map(([, tt]) => tt).join(" · ")}</span>
               </li>
             ))}

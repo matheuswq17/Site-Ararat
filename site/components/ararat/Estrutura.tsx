@@ -1,3 +1,4 @@
+import { MARCA_HORIZONTAL } from "@/lib/ararat/marca";
 import type { ReactNode } from "react";
 import { conteudo, IDIOMAS, type Idioma } from "@/lib/ararat/conteudo";
 import { href, secaoDaPagina, type Pagina } from "@/lib/ararat/rotas";
@@ -13,7 +14,7 @@ import { EntradaPagina } from "./EntradaPagina";
 import { gruposNavegacao, type GrupoNavegacao } from "@/lib/ararat/navegacao";
 
 type ChavePagina = Pagina | `pessoa:${string}`;
-const MARCA = "/ararat/marca/ararat-horizontal-negativo.svg";
+const MARCA = MARCA_HORIZONTAL;
 
 function Idiomas({ idioma, pagina }: { idioma: Idioma; pagina: ChavePagina }) {
   const c = conteudo(idioma);
@@ -58,7 +59,7 @@ function Cabecalho({ idioma, pagina }: { idioma: Idioma; pagina: ChavePagina }) 
         <div className="w">
           <Lk className="marca" href={href("home", idioma)} aria-label={`ARARAT — ${c.extra.inicio}`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={MARCA} alt="ARARAT" width={173} height={20} />
+            <img src={MARCA} alt="ARARAT" width={132.016} height={40} />
           </Lk>
           <nav className="nav" aria-label={c.extra.principal}>
             <ul className="nav-lista">{itens.map(i => <ItemNavegacao key={i.chave} item={i} idioma={idioma} atual={atual} />)}</ul>
@@ -92,7 +93,7 @@ function Rodape({ idioma, pagina }: { idioma: Idioma; pagina: ChavePagina }) {
         <div className="cols">
           <Lk className="rod-marca" href={href("home", idioma)} aria-label={`ARARAT — ${c.extra.inicio}`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={MARCA} alt="ARARAT" width={173} height={20} />
+            <img src={MARCA} alt="ARARAT" width={105.613} height={32} />
           </Lk>
           {c.nav.map(([k, r]) => <Lk className="rod-link" key={k} href={href(k as Pagina, idioma)}>{r}</Lk>)}
           <Lk className="rod-link" href={href("company", idioma, "contato")}>{c.contato}</Lk>
